@@ -30,7 +30,7 @@ pub fn to_string_x(v: Value) -> String {
                     let mut s = "".to_owned();
                     s.push_str(to_string(v).as_str().unwrap_or(""));
                     for v in iter {
-                        s.push_str(",");
+                        s.push(',');
                         s.push_str(to_string(v).as_str().unwrap_or(""));
                     }
                     s
@@ -82,7 +82,7 @@ pub fn to_string(v: Value) -> Value {
                     let mut s = "".to_owned();
                     s.push_str(to_string(v).as_str().unwrap_or(""));
                     for v in iter {
-                        s.push_str(",");
+                        s.push(',');
                         s.push_str(to_string(v).as_str().unwrap_or(""));
                     }
                     json!(s)

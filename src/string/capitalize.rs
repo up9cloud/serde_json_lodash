@@ -7,7 +7,7 @@ pub fn x_capitalize_x(s: &str) -> String {
     } else if s.len() == 1 {
         s.to_uppercase()
     } else {
-        let mut ss = s.chars().nth(0).unwrap().to_uppercase().to_string();
+        let mut ss = s.chars().next().unwrap().to_uppercase().to_string();
         ss.push_str(&s[1..].to_lowercase());
         ss
     }
@@ -36,10 +36,10 @@ pub fn capitalize_x(v: Value) -> String {
                 Some(v) => {
                     let mut s = format!("[{}", capitalize_x(v));
                     for v in iter {
-                        s.push_str(",");
+                        s.push(',');
                         s.push_str(&crate::to_string_x(v));
                     }
-                    s.push_str("]");
+                    s.push(']');
                     s
                 }
                 None => "[]".into(),
@@ -80,10 +80,10 @@ pub fn capitalize(v: Value) -> Value {
                 Some(v) => {
                     let mut s = format!("[{}", capitalize_x(v));
                     for v in iter {
-                        s.push_str(",");
+                        s.push(',');
                         s.push_str(&crate::to_string_x(v));
                     }
-                    s.push_str("]");
+                    s.push(']');
                     json!(s)
                 }
                 None => json!("[]"),
