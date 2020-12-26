@@ -316,9 +316,5 @@ pub fn to_safe_integer() {
 }
 #[doc(hidden)]
 pub use to_safe_integer as toSafeInteger;
-#[doc(hidden)]
-pub fn to_string() {
-    todo!()
-}
-#[doc(hidden)]
-pub use to_string as toString;
+mod to_string;
+pub use to_string::*;

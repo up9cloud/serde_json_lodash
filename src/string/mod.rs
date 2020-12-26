@@ -3,10 +3,8 @@ pub fn camel_case() {
     todo!()
 }
 pub use camel_case as camelCase;
-#[doc(hidden)]
-pub fn capitalize() {
-    todo!()
-}
+mod capitalize;
+pub use capitalize::*;
 #[doc(hidden)]
 pub fn deburr() {
     todo!()

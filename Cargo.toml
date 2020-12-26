@@ -11,3 +11,13 @@ edition = "2018"
 
 [dependencies]
 serde_json = "1"
+
+[dev-dependencies]
+criterion = "0.3"
+
+[lib]
+bench = false
+
+[[bench]]
+name = "criterion"
+harness = false
