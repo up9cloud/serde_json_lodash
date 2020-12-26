@@ -8,7 +8,7 @@ fn merge_2_array(object: Value, source: Value) -> Value {
         return source;
     }
     let source_vec = source.as_array().unwrap();
-    if source_vec.len() == 0 {
+    if source_vec.is_empty() {
         return object;
     }
     for (i, v) in source_vec.iter().enumerate() {
