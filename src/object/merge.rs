@@ -14,15 +14,17 @@ fn merge_2_array(object: Value, source: Value) -> Value {
     for (i, v) in source_vec.iter().enumerate() {
         if i > object_vec_len - 1 {
             new_v.push(v.clone());
-        } else {
-            if v.is_object() && object_vec[i].is_object() {
-                new_v.push(merge_2_object(object_vec[i].clone(), v.clone()));
-            } else if v.is_array() && object_vec[i].is_array() {
-                new_v.push(merge_2_array(object_vec[i].clone(), v.clone()));
-            } else {
-                new_v.push(v.clone())
-            }
+            continue;
         }
+        if v.is_object() && object_vec[i].is_object() {
+            new_v.push(merge_2_object(object_vec[i].clone(), v.clone()));
+            continue;
+        }
+        if v.is_array() && object_vec[i].is_array() {
+            new_v.push(merge_2_array(object_vec[i].clone(), v.clone()));
+            continue;
+        }
+        new_v.push(v.clone())
     }
     json!(new_v)
 }
