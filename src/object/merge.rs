@@ -79,7 +79,7 @@ fn merge_2_object(mut object: Value, source: Value) -> Value {
     }
     object
 }
-/// https://lodash.com/docs/#merge
+/// See [lodash merge](https://lodash.com/docs/#merge)
 ///
 /// Examples:
 ///

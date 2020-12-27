@@ -1,12 +1,10 @@
 use crate::lib::{json, Value};
 
-#[doc(hidden)]
-/// Useless, but still...
+///
 pub fn x_to_string_x(v: &str) -> &str {
     v
 }
-#[doc(hidden)]
-/// Useless, but still...
+///
 pub fn x_to_string(v: &str) -> Value {
     json!(v)
 }
@@ -41,7 +39,7 @@ pub fn to_string_x(v: Value) -> String {
         Value::Object(_) => "Map<String, Value>".into(), // I don't think put [object Object] here is a good idea, so...
     }
 }
-/// https://lodash.com/docs/#toString
+/// See [lodash toString](https://lodash.com/docs/#toString)
 ///
 /// Examples:
 ///

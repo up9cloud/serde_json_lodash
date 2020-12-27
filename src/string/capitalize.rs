@@ -12,8 +12,7 @@ pub fn x_capitalize_x(s: &str) -> String {
         ss
     }
 }
-#[doc(hidden)]
-/// Useless, but still...
+///
 pub fn x_capitalize(s: &str) -> Value {
     json!(x_capitalize_x(s))
 }
@@ -48,7 +47,7 @@ pub fn capitalize_x(v: Value) -> String {
         Value::Object(_) => crate::to_string_x(v),
     }
 }
-/// https://lodash.com/docs/#capitalize
+/// See [lodash capitalize](https://lodash.com/docs/#capitalize)
 ///
 /// Examples:
 ///
