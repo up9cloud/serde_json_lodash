@@ -79,13 +79,24 @@ fn merge_2_object(mut object: Value, source: Value) -> Value {
     }
     object
 }
+///
+pub fn merge(object: Value, source: Value) -> Value {
+    if object.is_object() && source.is_object() {
+        return merge_2_object(object, source);
+    }
+    if object.is_array() && source.is_array() {
+        return merge_2_array(object, source);
+    }
+    object
+}
 /// See [lodash merge](https://lodash.com/docs/#merge)
 ///
 /// Examples:
 ///
 /// ```rust
+/// #[macro_use] extern crate serde_json_lodash;
 /// use serde_json::json;
-/// use serde_json_lodash::merge;
+///
 /// let object = json!({
 ///   "a": [{ "b": 2 }, { "d": 4 }]
 /// });
@@ -95,16 +106,37 @@ fn merge_2_object(mut object: Value, source: Value) -> Value {
 /// });
 ///
 /// assert_eq!(
-///   merge(object, other),
+///   merge!(object, other),
 ///   json!({ 'a': [{ 'b': 2, 'c': 3 }, { 'd': 4, 'e': 5 }] })
 /// );
 /// ```
-pub fn merge(object: Value, source: Value) -> Value {
-    if object.is_object() && source.is_object() {
-        return merge_2_object(object, source);
-    }
-    if object.is_array() && source.is_array() {
-        return merge_2_array(object, source);
-    }
-    object
+///
+/// More examples:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(merge!(), json!({}));
+/// # assert_eq!(
+/// #   merge!(json!({'a':1}), json!({'b':2}), ),
+/// #   json!({'a':1, 'b':2})
+/// # );
+/// assert_eq!(
+///   merge!(json!({'a':1}), json!({'b':2}), json!({'c':3})),
+///   json!({'a': 1, 'b': 2, 'c': 3})
+/// );
+/// # assert_eq!(
+/// #   merge!(json!({'a':1}), json!({'b':2}), json!({'c':3}), ),
+/// #   json!({'a': 1, 'b': 2, 'c': 3})
+/// # );
+/// ```
+#[macro_export]
+macro_rules! merge {
+    () => (json!({}));
+    ($a:expr, $b:expr $(,)*) => {
+        $crate::merge($a, $b)
+    };
+    ($a:expr, $b:expr, $($rest:tt)*) => {
+        $crate::merge!($crate::merge($a, $b), $($rest)*)
+    };
 }
