@@ -33,32 +33,20 @@ pub fn capitalize_x(v: Value) -> String {
             let mut iter = vec.into_iter();
             match iter.next() {
                 Some(v) => {
-                    let mut s = format!("[{}", capitalize_x(v));
+                    let mut s = format!("{}", capitalize_x(v));
                     for v in iter {
                         s.push(',');
                         s.push_str(&crate::to_string_x(v));
                     }
-                    s.push(']');
                     s
                 }
-                None => "[]".into(),
+                None => "".into(),
             }
         }
         Value::Object(_) => crate::to_string_x(v),
     }
 }
-/// See [lodash capitalize](https://lodash.com/docs/#capitalize)
 ///
-/// Examples:
-///
-/// ```rust
-/// use serde_json::json;
-/// use serde_json_lodash::capitalize;
-/// assert_eq!(
-///   capitalize(json!("FRED")),
-///   json!("Fred")
-/// );
-/// ```
 pub fn capitalize(v: Value) -> Value {
     match v {
         Value::Null => json!(""),
@@ -77,19 +65,53 @@ pub fn capitalize(v: Value) -> Value {
             let mut iter = vec.into_iter();
             match iter.next() {
                 Some(v) => {
-                    let mut s = format!("[{}", capitalize_x(v));
+                    let mut s = format!("{}", capitalize_x(v));
                     for v in iter {
                         s.push(',');
                         s.push_str(&crate::to_string_x(v));
                     }
-                    s.push(']');
                     json!(s)
                 }
-                None => json!("[]"),
+                None => json!(""),
             }
         }
         Value::Object(_) => {
             json!(crate::to_string_x(v))
         }
     }
+}
+/// See [lodash capitalize](https://lodash.com/docs/#capitalize)
+///
+/// Examples:
+///
+/// ```rust
+/// #[macro_use] extern crate serde_json_lodash;
+/// use serde_json::json;
+/// assert_eq!(
+///   capitalize!(json!("FRED")),
+///   json!("Fred")
+/// );
+/// ```
+///
+/// More examples:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(capitalize!(), json!(""));
+/// # assert_eq!(capitalize!(json!([])), json!(""));
+/// # assert_eq!(capitalize!(json!(['a',2])), json!("A,2"));
+/// # assert_eq!(capitalize!(json!({})), json!("Map<String, Value>"));
+/// ```
+#[macro_export]
+macro_rules! capitalize {
+    () => (
+        json!("")
+    );
+    ($a:expr $(,)*) => {
+        $crate::capitalize($a)
+    };
+    ($a:expr, $($rest:tt)*) => ({
+        $crate::capitalize($a)
+    });
 }
