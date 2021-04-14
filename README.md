@@ -28,13 +28,10 @@
 ## Dev
 
 ```bash
-cargo watch \
-	-x "test" \
-	-w "Cargo.toml" \
-	-w "src"
+cargo watch -x "test" -w "Cargo.toml" -w "src"
 ```
 
-> test lodash.js
+> verify lodash.js api
 
 ```console
 $ npm i
@@ -46,4 +43,11 @@ undefined
 > _.toString()
 ''
 >
+```
+
+> Bump version
+
+```bash
+cargo bump patch # same as npm version
+# and remember do git commit and push!
 ```
