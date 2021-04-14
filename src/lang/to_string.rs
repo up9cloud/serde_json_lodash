@@ -103,12 +103,21 @@ pub use to_string as toString;
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
 /// assert_eq!(to_string!(), json!(""));
+/// assert_eq!(
+///   to_string!(json!([1,2]), json!("")),
+///   json!("1,2")
+/// );
 /// assert_eq!(to_string!(json!({})), json!("Map<String, Value>"));
 /// ```
 #[macro_export]
 macro_rules! to_string {
-    () => (json!(""));
-    ($($arg:tt)*$(,)*) => ({
-        $crate::to_string($($arg)*)
+    () => (
+        json!("")
+    );
+    ($a:expr $(,)*) => {
+        $crate::to_string($a)
+    };
+    ($a:expr, $($rest:tt)*) => ({
+        $crate::to_string($a)
     });
 }

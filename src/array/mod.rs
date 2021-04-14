@@ -1,7 +1,6 @@
-#[doc(hidden)]
-pub fn chunk() {
-    todo!()
-}
+
+mod chunk;
+pub use chunk::*;
 #[doc(hidden)]
 pub fn compact() {
     todo!()

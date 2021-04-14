@@ -87,6 +87,9 @@ pub fn merge(object: Value, source: Value) -> Value {
     if object.is_array() && source.is_array() {
         return merge_2_array(object, source);
     }
+    // TODO:
+    // object with array
+    // array with object
     object
 }
 /// See [lodash merge](https://lodash.com/docs/#merge)
@@ -132,7 +135,12 @@ pub fn merge(object: Value, source: Value) -> Value {
 /// ```
 #[macro_export]
 macro_rules! merge {
-    () => (json!({}));
+    () => (
+        json!({})
+    );
+    ($a:expr $(,)*) => {
+        $crate::merge($a, json!)
+    };
     ($a:expr, $b:expr $(,)*) => {
         $crate::merge($a, $b)
     };
