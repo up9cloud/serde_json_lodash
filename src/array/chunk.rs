@@ -55,14 +55,14 @@ pub fn chunk(v: Value, size: usize) -> Value {
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
 /// assert_eq!(chunk!(), json!([]));
-/// # assert_eq!(chunk!(json!([1,2,3]), 0), json!([]));
-/// # assert_eq!(chunk!(json!(true)), json!([]));
-/// # assert_eq!(chunk!(json!(1)), json!([]));
-/// # assert_eq!(chunk!(json!("abc")), json!(["a","b","c"]));
-/// # assert_eq!(chunk!(json!("abc"), 2), json!([["a","b"],["c"]]));
-/// # assert_eq!(chunk!(json!("a世界"), 2), json!([["a","世"],["界"]]));
-/// # assert_eq!(chunk!(json!([true, 1, 'a', {}, []]), 2), json!([ [ true, 1 ], [ 'a', {} ], [ [] ] ]));
-/// # assert_eq!(chunk!(json!({})), json!([]));
+/// assert_eq!(chunk!(json!([1,2,3]), 0), json!([]));
+/// assert_eq!(chunk!(json!(true)), json!([]));
+/// assert_eq!(chunk!(json!(1)), json!([]));
+/// assert_eq!(chunk!(json!("abc")), json!(["a","b","c"]));
+/// assert_eq!(chunk!(json!("abc"), 2), json!([["a","b"],["c"]]));
+/// assert_eq!(chunk!(json!("a世界"), 2), json!([["a","世"],["界"]]));
+/// assert_eq!(chunk!(json!([true, 1, 'a', {}, []]), 2), json!([ [ true, 1 ], [ 'a', {} ], [ [] ] ]));
+/// assert_eq!(chunk!(json!({})), json!([]));
 /// ```
 #[macro_export]
 macro_rules! chunk {

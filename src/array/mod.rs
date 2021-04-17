@@ -1,10 +1,7 @@
-
 mod chunk;
 pub use chunk::*;
-#[doc(hidden)]
-pub fn compact() {
-    todo!()
-}
+mod compact;
+pub use compact::*;
 #[doc(hidden)]
 pub fn concat() {
     todo!()
