@@ -25,6 +25,13 @@ pub use drop_right::*;
 #[doc(hidden)]
 pub use drop_right as dropRight;
 #[doc(hidden)]
+#[macro_export]
+macro_rules! dropRight {
+    ($($rest:tt)*) => {
+        $crate::drop_right!($($rest)*)
+    };
+}
+#[doc(hidden)]
 pub fn drop_right_while() {
     todo!()
 }
@@ -36,10 +43,8 @@ pub fn drop_while() {
 }
 #[doc(hidden)]
 pub use drop_while as dropWhile;
-#[doc(hidden)]
-pub fn fill() {
-    todo!()
-}
+mod fill;
+pub use fill::*;
 #[doc(hidden)]
 pub fn find_index() {
     todo!()
