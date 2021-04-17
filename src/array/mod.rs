@@ -4,10 +4,8 @@ mod compact;
 pub use compact::*;
 mod concat;
 pub use concat::*;
-#[doc(hidden)]
-pub fn difference() {
-    todo!()
-}
+mod difference;
+pub use difference::*;
 #[doc(hidden)]
 pub fn difference_by() {
     todo!()
