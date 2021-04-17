@@ -33,7 +33,7 @@ pub fn capitalize_x(v: Value) -> String {
             let mut iter = vec.into_iter();
             match iter.next() {
                 Some(v) => {
-                    let mut s = format!("{}", capitalize_x(v));
+                    let mut s = capitalize_x(v);
                     for v in iter {
                         s.push(',');
                         s.push_str(&crate::to_string_x(v));
@@ -65,7 +65,7 @@ pub fn capitalize(v: Value) -> Value {
             let mut iter = vec.into_iter();
             match iter.next() {
                 Some(v) => {
-                    let mut s = format!("{}", capitalize_x(v));
+                    let mut s = capitalize_x(v);
                     for v in iter {
                         s.push(',');
                         s.push_str(&crate::to_string_x(v));

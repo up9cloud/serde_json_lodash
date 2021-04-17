@@ -2,7 +2,7 @@ use crate::lib::{json, Value};
 
 ///
 pub fn chunk(v: Value, size: usize) -> Value {
-    if size <= 0 {
+    if size == 0 {
         return json!([]);
     }
     match v {

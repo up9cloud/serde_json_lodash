@@ -48,9 +48,9 @@ $ npm i
 $ node
 Welcome to Node.js v15.14.0.
 Type ".help" for more information.
-> const _ = require('lodash')
+> const l = require('lodash')
 undefined
-> _.toString()
+> l.toString()
 ''
 >
 ```

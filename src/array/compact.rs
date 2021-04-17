@@ -10,7 +10,7 @@ pub fn compact(v: Value) -> Value {
             let vec: Vec<Value> = s.chars()
                 .map(|v| Value::String(v.to_string()))
                 .collect();
-            return Value::Array(vec)
+            Value::Array(vec)
         },
         Value::Array(vec) => {
             let result = vec.into_iter()
@@ -22,7 +22,7 @@ pub fn compact(v: Value) -> Value {
                             Some(v) => v != 0,
                             None => false,
                         },
-                        Value::String(s) => *s != "".to_owned(),
+                        Value::String(s) => !s.is_empty(),
                         Value::Array(_) => true,
                         Value::Object(_) => true,
                     }
