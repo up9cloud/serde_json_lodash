@@ -28,14 +28,17 @@ jobs:
           command: clippy
           args: -- -D warnings
       # - uses: actions-rs/cargo@v1
+      #   if: contains(github.ref, 'tags/v')
       #   with:
       #     command: build
       #     args: --release --all-features
       - uses: actions-rs/cargo@v1
+        if: contains(github.ref, 'tags/v')
         with:
           command: login
           args: ${{secrets.CRATES_IO_TOKEN}}
       - uses: actions-rs/cargo@v1
+        if: contains(github.ref, 'tags/v')
         with:
           command: publish
       - uses: up9cloud/action-notify@master
