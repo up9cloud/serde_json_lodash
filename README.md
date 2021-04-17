@@ -33,12 +33,14 @@ fn main() {
 
 - All functions should be same as lodash as possible
 - Every function from lodash.js should be implemented with 1 `macro`, 1 `fn`:
-  - `macro` should be exactly same api as lodash.js version. (the main inputs and return value should only be `serde_json::Value` or `std::ops::Fn`)
+  - `macro` should be exactly same api as lodash.js version. (the main inputs and return value should be `serde_json::Value` or `std::ops::Fn`)
     - e.q. `capitalize!(Value) -> Value`
   - `fn`
     - e.q. `capitalize(Value) -> Value`
-- If the input parameters are options, we don't use Value as type, use primitive type
-  - e.q. `_.chunk(array, [size=1])` => `::check(json!([1,2,3]), 2)`, size should be `usize`, not `Value::Number`
+- If the input parameters are options, using primitive type instead Value
+  - e.q. `_.chunk(array, [size=1])` => `::check!(json!([1,2,3]), 2)`, size should be `usize`, not `Value::Number`
+- If return value is statistic, using primitive type instead Value
+  - e.q. `_.findIndex(array, [predicate=_.identity])` => `::find_index!(json!([{"a":true},{"a":false}]), json!("a")) -> usize`, return value should be `usize`, not `Value::Number`
 - If the original function allows optional parameters:
   - known amount, e.q. `_.get(object, path, [defaultValue])`, the ported version fn should be `::get(object, path, defaultValue)`, no optional
   - infinity amount, e.q. `_.merge(object, [...sources])`, the ported version fn should be `::merge(object, source)`, no more optionals

@@ -74,3 +74,14 @@ macro_rules! drop_right {
         $crate::drop_right($a, $b)
     };
 }
+
+#[doc(hidden)]
+pub use drop_right as dropRight;
+
+#[doc(hidden)]
+#[macro_export]
+macro_rules! dropRight {
+    ($($rest:tt)*) => {
+        $crate::drop_right!($($rest)*)
+    };
+}
