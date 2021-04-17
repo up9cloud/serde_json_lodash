@@ -20,10 +20,8 @@ pub fn difference_with() {
 pub use difference_with as differenceWith;
 mod drop;
 pub use drop::*;
-#[doc(hidden)]
-pub fn drop_right() {
-    todo!()
-}
+mod drop_right;
+pub use drop_right::*;
 #[doc(hidden)]
 pub use drop_right as dropRight;
 #[doc(hidden)]
