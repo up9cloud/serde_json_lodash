@@ -1,6 +1,33 @@
 # serde_json_lodash
 
+[![crates.io](https://img.shields.io/crates/v/serde_json_lodash?label=latest)](https://crates.io/crates/serde_json_lodash)
+[![build status](https://github.com/up9cloud/serde_json_lodash/workflows/CI/badge.svg?branch=main&event=push)](https://github.com/up9cloud/serde_json_lodash/actions)
+![Downloads](https://img.shields.io/crates/d/serde_json_lodash.svg)
+
 [serde_json::Value](https://docs.serde.rs/serde_json/value/enum.Value.html) with [lodash.js](https://github.com/lodash/lodash) spec, makes life easier.
+
+## Usage
+
+> Cargo.toml
+
+```toml
+[dependencies]
+serde_json = "*"
+serde_json_lodash = "0.1"
+```
+
+> main.rs
+
+```rs
+#[macro_use] extern crate serde_json_lodash;
+use serde_json::json;
+fn main() {
+  assert_eq!(
+    capitalize!(json!("FRED")),
+    json!("Fred")
+  );
+}
+```
 
 ## Contributes
 
