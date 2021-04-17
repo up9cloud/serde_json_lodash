@@ -2,10 +2,8 @@ mod chunk;
 pub use chunk::*;
 mod compact;
 pub use compact::*;
-#[doc(hidden)]
-pub fn concat() {
-    todo!()
-}
+mod concat;
+pub use concat::*;
 #[doc(hidden)]
 pub fn difference() {
     todo!()
