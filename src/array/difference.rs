@@ -19,35 +19,30 @@ pub fn difference(v1: Value, v2: Value) -> Value {
         Value::Array(vec) => {
             'outer: for v in v1.iter() {
                 match v {
-                    Value::Null |
-                    Value::Bool(_) |
-                    Value::Number(_) |
-                    Value::String(_) => {
+                    Value::Null | Value::Bool(_) | Value::Number(_) | Value::String(_) => {
                         for vv in vec.iter() {
                             match vv {
                                 Value::Null => {
                                     if v.is_null() {
                                         continue 'outer;
                                     }
-                                },
-                                Value::Bool(_) |
-                                Value::Number(_) |
-                                Value::String(_) => {
+                                }
+                                Value::Bool(_) | Value::Number(_) | Value::String(_) => {
                                     if v == vv {
                                         continue 'outer;
                                     }
-                                },
+                                }
                                 Value::Array(_) => continue,
                                 Value::Object(_) => continue,
                             }
                         }
-                    },
+                    }
                     Value::Array(_) => (),
                     Value::Object(_) => (),
                 }
                 result.push(v.clone())
             }
-        },
+        }
         Value::Object(_) => return Value::Array(v1),
     };
     Value::Array(result)
@@ -82,9 +77,9 @@ pub fn difference(v1: Value, v2: Value) -> Value {
 /// ```
 #[macro_export]
 macro_rules! difference {
-    () => (
+    () => {
         json!([])
-    );
+    };
     ($a:expr $(,)*) => {
         $crate::difference($a, json!([]))
     };

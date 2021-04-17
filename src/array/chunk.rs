@@ -11,19 +11,19 @@ pub fn chunk(v: Value, size: usize) -> Value {
         Value::Number(_) => json!([]),
         Value::String(s) => {
             if size == 1 {
-                let vec: Vec<Value> = s.chars()
-                    .map(|v| Value::String(v.to_string()))
-                    .collect();
-                return Value::Array(vec)
+                let vec: Vec<Value> = s.chars().map(|v| Value::String(v.to_string())).collect();
+                return Value::Array(vec);
             }
             let chars: Vec<char> = s.chars().collect();
-            let vec = &chars.chunks(size)
+            let vec = &chars
+                .chunks(size)
                 .map(|chunk| chunk.iter().map(|c| Value::String(c.to_string())).collect())
                 .collect::<Vec<Value>>();
             Value::Array(vec.to_owned())
-        },
+        }
         Value::Array(vec) => {
-            let result = vec.chunks(size)
+            let result = vec
+                .chunks(size)
                 .map(|chunk| chunk.iter().map(|item| item.to_owned()).collect())
                 .collect::<Vec<Value>>();
             Value::Array(result)
@@ -66,15 +66,15 @@ pub fn chunk(v: Value, size: usize) -> Value {
 /// ```
 #[macro_export]
 macro_rules! chunk {
-    () => (
+    () => {
         json!([])
-    );
-    ($a:expr $(,)*) => (
+    };
+    ($a:expr $(,)*) => {
         $crate::chunk($a, 1)
-    );
-    ($a:expr, $b:expr $(,)*) => (
+    };
+    ($a:expr, $b:expr $(,)*) => {
         $crate::chunk($a, $b)
-    );
+    };
     ($a:expr, $b:expr, $($rest:tt)*) => {
         $crate::chunk($a, $b)
     };

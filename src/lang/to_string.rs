@@ -111,13 +111,13 @@ pub use to_string as toString;
 /// ```
 #[macro_export]
 macro_rules! to_string {
-    () => (
+    () => {
         json!("")
-    );
+    };
     ($a:expr $(,)*) => {
         $crate::to_string($a)
     };
-    ($a:expr, $($rest:tt)*) => ({
+    ($a:expr, $($rest:tt)*) => {
         $crate::to_string($a)
-    });
+    };
 }

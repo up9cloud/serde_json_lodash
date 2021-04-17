@@ -7,25 +7,22 @@ pub fn compact(v: Value) -> Value {
         Value::Bool(_) => json!([]),
         Value::Number(_) => json!([]),
         Value::String(s) => {
-            let vec: Vec<Value> = s.chars()
-                .map(|v| Value::String(v.to_string()))
-                .collect();
+            let vec: Vec<Value> = s.chars().map(|v| Value::String(v.to_string())).collect();
             Value::Array(vec)
-        },
+        }
         Value::Array(vec) => {
-            let result = vec.into_iter()
-                .filter(|v| {
-                    match v {
-                        Value::Null => false,
-                        Value::Bool(b) => *b,
-                        Value::Number(n) => match n.as_i64() {
-                            Some(v) => v != 0,
-                            None => false,
-                        },
-                        Value::String(s) => !s.is_empty(),
-                        Value::Array(_) => true,
-                        Value::Object(_) => true,
-                    }
+            let result = vec
+                .into_iter()
+                .filter(|v| match v {
+                    Value::Null => false,
+                    Value::Bool(b) => *b,
+                    Value::Number(n) => match n.as_i64() {
+                        Some(v) => v != 0,
+                        None => false,
+                    },
+                    Value::String(s) => !s.is_empty(),
+                    Value::Array(_) => true,
+                    Value::Object(_) => true,
                 })
                 .collect::<Vec<_>>();
             Value::Array(result)
@@ -62,12 +59,12 @@ pub fn compact(v: Value) -> Value {
 /// ```
 #[macro_export]
 macro_rules! compact {
-    () => (
+    () => {
         json!([])
-    );
-    ($a:expr $(,)*) => (
+    };
+    ($a:expr $(,)*) => {
         $crate::compact($a)
-    );
+    };
     ($a:expr, $($rest:tt)*) => {
         $crate::compact($a)
     };

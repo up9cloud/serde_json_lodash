@@ -105,13 +105,13 @@ pub fn capitalize(v: Value) -> Value {
 /// ```
 #[macro_export]
 macro_rules! capitalize {
-    () => (
+    () => {
         json!("")
-    );
+    };
     ($a:expr $(,)*) => {
         $crate::capitalize($a)
     };
-    ($a:expr, $($rest:tt)*) => ({
+    ($a:expr, $($rest:tt)*) => {
         $crate::capitalize($a)
-    });
+    };
 }

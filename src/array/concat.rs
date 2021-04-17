@@ -19,7 +19,7 @@ pub fn concat(v: Value, v2: Value) -> Value {
             for v in vec.into_iter() {
                 result.push(v)
             }
-        },
+        }
         Value::Object(_) => result.push(v2),
     };
     Value::Array(result)
