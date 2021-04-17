@@ -18,7 +18,7 @@ serde_json_lodash = "0.1"
 
 > main.rs
 
-```rs
+```rust
 #[macro_use] extern crate serde_json_lodash;
 use serde_json::json;
 fn main() {
@@ -49,7 +49,7 @@ fn main() {
     - e.q. `capitalize_x(Value) -> String`
   - `fn` with both `x_` and `_x`
     - e.q. `x_capitalize_x(&str) -> &str`
-  - Implementing depends on that function accept multiple types or not.
+  - It depends on that function accept multiple types or not.
     - e.q. `_.merge({a:1}, {b:2})`, `_.merge([1], [2])`, we don't know which type should be for, so we don't implement
 - `Examples:` section should be exactly same as the examples in lodash doc. If we need more examples, they should be put in the `More Examples:` section
 - Test cases should all be in the `More examples` section, we relied on rust's powerful doc testing

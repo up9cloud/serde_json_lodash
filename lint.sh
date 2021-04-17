@@ -1,4 +1,4 @@
 #!/bin/bash -x
 
-rustup run nightly cargo clippy -Zunstable-options
 cargo fmt --all -- --check
+rustup run nightly cargo clippy -Zunstable-options
