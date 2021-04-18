@@ -5,6 +5,8 @@
 #![deny(missing_docs)]
 #![deny(warnings)]
 
+mod macros;
+
 mod lib {
     pub use serde_json::{Value, json};
 }

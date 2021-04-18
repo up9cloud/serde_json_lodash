@@ -40,10 +40,8 @@ mod find_index;
 pub use find_index::*;
 mod find_last_index;
 pub use find_last_index::*;
-#[doc(hidden)]
-pub fn first() {
-    todo!()
-}
+mod first;
+pub use first::*;
 #[doc(hidden)]
 pub fn flatten() {
     todo!()
@@ -66,8 +64,8 @@ pub fn from_pairs() {
 }
 #[doc(hidden)]
 pub use from_pairs as fromPairs;
-#[doc(hidden)]
-pub use first as head;
+mod head;
+pub use head::*;
 #[doc(hidden)]
 pub fn index_of() {
     todo!()
