@@ -104,14 +104,3 @@ macro_rules! find_index {
         $crate::find_index($a, $b, $c)
     };
 }
-
-#[doc(hidden)]
-pub use find_index as findIndex;
-
-#[doc(hidden)]
-#[macro_export]
-macro_rules! findIndex {
-    ($($rest:tt)*) => {
-        $crate::find_index!($($rest)*)
-    };
-}

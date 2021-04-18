@@ -5,6 +5,9 @@
 #![deny(missing_docs)]
 #![deny(warnings)]
 
+#[cfg(feature = "camel")]
+extern crate paste;
+
 mod macros;
 
 mod lib {
@@ -25,16 +28,10 @@ mod util;
 mod properties;
 mod methods;
 
-pub use array::*;
-pub use collection::*;
-pub use date::*;
-pub use function::*;
-pub use lang::*;
-pub use math::*;
-pub use number::*;
-pub use object::*;
-pub use seq::*;
-pub use string::*;
-pub use util::*;
-pub use properties::*;
-pub use methods::*;
+mod lib_snake;
+pub use lib_snake::*;
+
+#[cfg(feature = "camel")]
+mod lib_camel;
+#[cfg(feature = "camel")]
+pub use lib_camel::*;

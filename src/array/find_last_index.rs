@@ -109,14 +109,3 @@ macro_rules! find_last_index {
         $crate::find_last_index($a, $b, $c)
     };
 }
-
-#[doc(hidden)]
-pub use find_last_index as findLastIndex;
-
-#[doc(hidden)]
-#[macro_export]
-macro_rules! findLastIndex {
-    ($($rest:tt)*) => {
-        $crate::find_last_index!($($rest)*)
-    };
-}

@@ -10,6 +10,8 @@ edition = "2018"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [features]
+# wait for this PR: https://github.com/dtolnay/paste/pull/62
+# default = ["camel"]
 camel = ["paste"]
 
 [dependencies]
