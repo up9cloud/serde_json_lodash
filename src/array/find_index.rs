@@ -74,17 +74,17 @@ pub fn find_index(array: Value, predicate: fn(&Value) -> bool, from_index: usize
 /// assert_eq!(find_index!(json!([{"a":null},{"a":false},{"a":0},{"a":""},{"a":[]}]), |_| true), 0);
 /// assert_eq!(find_index!(json!([{"a":null},{"a":false},{"a":0},{"a":""},{"a":[]}]), |_| true, 1), 1);
 /// assert_eq!(find_index!(json!({})), -1);
-/// // assert_eq!(find_index!(json!([{"a":null},{"a":false},{"a":0},{"a":""},{"a":[]}]), 4));
-/// // assert_eq!(find_index!(json!([null,false,0,"",{}]), json!(null)), 4);
-/// // assert_eq!(find_index!(json!([null,false,0,"",{}]), json!(false)), -1);
-/// // assert_eq!(find_index!(json!([null,false,0,"",{}]), json!(0)), -1);
-/// // assert_eq!(find_index!(json!([null,false,1,"",{}]), json!(1)), -1);
-/// // assert_eq!(find_index!(json!([null,false,0,"",{}]), json!("")), -1);
-/// // assert_eq!(find_index!(json!([null,false,0,"",{}]), json!([])), -1);
-/// // assert_eq!(find_index!(json!([null,false,0,"",{}]), json!({})), 0);
-/// // assert_eq!(find_index!(json!([null,false,0,"",{}]), json!({"a":1})), -1);
-/// // assert_eq!(find_index!(json!([null,false,0,"",{a:1}]), json!({"a":1})), 4);
-/// // assert_eq!(find_index!(json!([null,false,0,"",{a:1}]), json!({"a":2})), -1);
+/// # // assert_eq!(find_index!(json!([{"a":null},{"a":false},{"a":0},{"a":""},{"a":[]}]), 4));
+/// # // assert_eq!(find_index!(json!([null,false,0,"",{}]), json!(null)), 4);
+/// # // assert_eq!(find_index!(json!([null,false,0,"",{}]), json!(false)), -1);
+/// # // assert_eq!(find_index!(json!([null,false,0,"",{}]), json!(0)), -1);
+/// # // assert_eq!(find_index!(json!([null,false,1,"",{}]), json!(1)), -1);
+/// # // assert_eq!(find_index!(json!([null,false,0,"",{}]), json!("")), -1);
+/// # // assert_eq!(find_index!(json!([null,false,0,"",{}]), json!([])), -1);
+/// # // assert_eq!(find_index!(json!([null,false,0,"",{}]), json!({})), 0);
+/// # // assert_eq!(find_index!(json!([null,false,0,"",{}]), json!({"a":1})), -1);
+/// # // assert_eq!(find_index!(json!([null,false,0,"",{"a":1}]), json!({"a":1})), 4);
+/// # // assert_eq!(find_index!(json!([null,false,0,"",{"a":1}]), json!({"a":2})), -1);
 /// ```
 #[macro_export]
 macro_rules! find_index {

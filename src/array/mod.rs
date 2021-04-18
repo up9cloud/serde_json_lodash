@@ -38,12 +38,8 @@ mod fill;
 pub use fill::*;
 mod find_index;
 pub use find_index::*;
-#[doc(hidden)]
-pub fn find_last_index() {
-    todo!()
-}
-#[doc(hidden)]
-pub use find_last_index as findLastIndex;
+mod find_last_index;
+pub use find_last_index::*;
 #[doc(hidden)]
 pub fn first() {
     todo!()
