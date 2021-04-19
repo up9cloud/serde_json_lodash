@@ -42,10 +42,8 @@ mod find_last_index;
 pub use find_last_index::*;
 mod first;
 pub use first::*;
-#[doc(hidden)]
-pub fn flatten() {
-    todo!()
-}
+mod flatten;
+pub use flatten::*;
 #[doc(hidden)]
 pub fn flatten_deep() {
     todo!()
