@@ -44,12 +44,8 @@ mod first;
 pub use first::*;
 mod flatten;
 pub use flatten::*;
-#[doc(hidden)]
-pub fn flatten_deep() {
-    todo!()
-}
-#[doc(hidden)]
-pub use flatten_deep as flattenDeep;
+mod flatten_deep;
+pub use flatten_deep::*;
 #[doc(hidden)]
 pub fn flatten_depth() {
     todo!()

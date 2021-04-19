@@ -52,6 +52,7 @@ macro_rules! build_multi {
 build_multi![
     find_index
     find_last_index
+    flatten_deep
 
     to_string
 ];
