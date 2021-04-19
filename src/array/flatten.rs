@@ -44,7 +44,7 @@ pub fn flatten(v: Value) -> Value {
         Value::Object(_) => json!([]),
     }
 }
-/// See [lodash flatten](https://lodash.com/docs/#flatten)
+/// Description can be found in [lodash flatten](https://lodash.com/docs/#flatten)
 ///
 /// Examples:
 ///

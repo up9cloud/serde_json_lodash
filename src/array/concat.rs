@@ -25,7 +25,7 @@ pub fn concat(v: Value, v2: Value) -> Value {
     Value::Array(result)
 }
 
-/// See [lodash concat](https://lodash.com/docs/#concat)
+/// Description can be found in [lodash concat](https://lodash.com/docs/#concat)
 ///
 /// Examples:
 ///

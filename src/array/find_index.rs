@@ -23,7 +23,7 @@ pub fn find_index(array: Value, predicate: fn(&Value) -> bool, from_index: usize
     -1
 }
 
-/// See [lodash findIndex](https://lodash.com/docs/#findIndex)
+/// Description can be found in [lodash findIndex](https://lodash.com/docs/#findIndex)
 ///
 /// Examples:
 ///

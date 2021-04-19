@@ -18,7 +18,7 @@ pub fn drop(v: Value, n: usize) -> Value {
     }
 }
 
-/// See [lodash drop](https://lodash.com/docs/#drop)
+/// Description can be found in [lodash drop](https://lodash.com/docs/#drop)
 ///
 /// Examples:
 ///

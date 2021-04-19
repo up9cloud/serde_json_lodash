@@ -37,10 +37,10 @@ fn main() {
     - e.q. `capitalize!(Value) -> Value`
   - `fn`
     - e.q. `capitalize(Value) -> Value`
-- If the input parameters are options, using primitive type instead Value
+- If the input parameters are options, not data, using primitive type instead Value
   - e.q. `_.chunk(array, [size=1])` => `::check!(json!([1,2,3]), 2)`, size should be `usize`, not `Value::Number`
 - If return value is statistic, using primitive type instead Value
-  - e.q. `_.findIndex(array, [predicate=_.identity])` => `::find_index!(json!([{"a":true},{"a":false}]), json!("a")) -> usize`, return value should be `usize`, not `Value::Number`
+  - e.q. `_.findIndex(array, ...)` => `::find_index(Value, ...) -> isize`, return value should be `isize`, not `Value::Number`
 - If the original function allows optional parameters:
   - known amount, e.q. `_.get(object, path, [defaultValue])`, the ported version fn should be `::get(object, path, defaultValue)`, no optional
   - infinity amount, e.q. `_.merge(object, [...sources])`, the ported version fn should be `::merge(object, source)`, no more optionals
@@ -53,7 +53,7 @@ fn main() {
     - e.q. `x_capitalize_x(&str) -> &str`
   - It depends on that function accept multiple types or not.
     - e.q. `_.merge({a:1}, {b:2})`, `_.merge([1], [2])`, we don't know which type should be for, so we don't implement
-- `Examples:` section should be exactly same as the examples in lodash doc. If we need more examples, they should be put in the `More Examples:` section
+- `Examples:` section should be exactly same as the examples in lodash doc. If we need more examples, they should be written in the `More Examples:` section
 - Test cases should all be in the `More examples` section, we relied on rust's powerful doc testing
 
 ## Dev

@@ -26,7 +26,7 @@ pub fn fill(mut array: Value, value: Value, start: usize, end: usize) -> Value {
     array
 }
 
-/// See [lodash fill](https://lodash.com/docs/#fill)
+/// Description can be found in [lodash fill](https://lodash.com/docs/#fill)
 ///
 /// Examples:
 ///

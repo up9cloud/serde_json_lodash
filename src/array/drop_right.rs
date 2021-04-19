@@ -19,7 +19,7 @@ pub fn drop_right(v: Value, n: usize) -> Value {
     }
 }
 
-/// See [lodash dropRight](https://lodash.com/docs/#dropRight)
+/// Description can be found in [lodash dropRight](https://lodash.com/docs/#dropRight)
 ///
 /// Examples:
 ///

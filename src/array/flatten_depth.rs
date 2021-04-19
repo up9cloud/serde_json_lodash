@@ -48,7 +48,7 @@ pub fn flatten_depth(v: Value, depth: usize) -> Value {
     }
 }
 
-/// See [lodash flattenDepth](https://lodash.com/docs/#flattenDepth)
+/// Description can be found in [lodash flattenDepth](https://lodash.com/docs/#flattenDepth)
 ///
 /// Examples:
 ///

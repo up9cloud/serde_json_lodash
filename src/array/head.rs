@@ -21,7 +21,7 @@ pub fn head(v: Value) -> Value {
         Value::Object(_) => json!(null),
     }
 }
-/// See [lodash head](https://lodash.com/docs/#head)
+/// Description can be found in [lodash head](https://lodash.com/docs/#head)
 ///
 /// Examples:
 ///

@@ -32,7 +32,7 @@ pub fn chunk(v: Value, size: usize) -> Value {
     }
 }
 
-/// See [lodash chunk](https://lodash.com/docs/#chunk)
+/// Description can be found in [lodash chunk](https://lodash.com/docs/#chunk)
 ///
 /// Examples:
 ///

@@ -31,7 +31,7 @@ pub fn compact(v: Value) -> Value {
     }
 }
 
-/// See [lodash compact](https://lodash.com/docs/#compact)
+/// Description can be found in [lodash compact](https://lodash.com/docs/#compact)
 ///
 /// Examples:
 ///

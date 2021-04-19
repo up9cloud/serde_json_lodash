@@ -80,7 +80,7 @@ pub fn capitalize(v: Value) -> Value {
         }
     }
 }
-/// See [lodash capitalize](https://lodash.com/docs/#capitalize)
+/// Description can be found in [lodash capitalize](https://lodash.com/docs/#capitalize)
 ///
 /// Examples:
 ///

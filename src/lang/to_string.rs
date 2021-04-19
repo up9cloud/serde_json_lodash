@@ -79,7 +79,7 @@ pub fn to_string(v: Value) -> Value {
 #[doc(hidden)]
 pub use to_string as toString;
 
-/// See [lodash toString](https://lodash.com/docs/#toString)
+/// Description can be found in [lodash toString](https://lodash.com/docs/#toString)
 ///
 /// Examples:
 ///

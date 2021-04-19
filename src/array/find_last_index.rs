@@ -24,7 +24,7 @@ pub fn find_last_index(array: Value, predicate: fn(&Value) -> bool, from_index: 
     -1
 }
 
-/// See [lodash findLastIndex](https://lodash.com/docs/#findLastIndex)
+/// Description can be found in [lodash findLastIndex](https://lodash.com/docs/#findLastIndex)
 ///
 /// Examples:
 ///

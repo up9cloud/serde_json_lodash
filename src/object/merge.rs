@@ -92,7 +92,7 @@ pub fn merge(object: Value, source: Value) -> Value {
     // array with object
     object
 }
-/// See [lodash merge](https://lodash.com/docs/#merge)
+/// Description can be found in [lodash merge](https://lodash.com/docs/#merge)
 ///
 /// Examples:
 ///
