@@ -48,12 +48,8 @@ mod flatten_deep;
 pub use flatten_deep::*;
 mod flatten_depth;
 pub use flatten_depth::*;
-#[doc(hidden)]
-pub fn from_pairs() {
-    todo!()
-}
-#[doc(hidden)]
-pub use from_pairs as fromPairs;
+mod from_pairs;
+pub use from_pairs::*;
 mod head;
 pub use head::*;
 #[doc(hidden)]

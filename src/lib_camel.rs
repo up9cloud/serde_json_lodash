@@ -54,6 +54,7 @@ build_multi![
     find_last_index
     flatten_deep
     flatten_depth
+    from_pairs
 
     to_string
 ];

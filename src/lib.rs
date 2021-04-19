@@ -11,7 +11,11 @@ extern crate paste;
 mod macros;
 
 mod lib {
-    pub use serde_json::{Value, json};
+    pub use serde_json::{Value, Map, json};
+
+    pub fn get_type_name<T>(_: &T) -> &'static str {
+        std::any::type_name::<T>()
+    }
 }
 
 mod array;

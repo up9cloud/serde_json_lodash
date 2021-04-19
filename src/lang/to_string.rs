@@ -1,8 +1,4 @@
-use crate::lib::{json, Value};
-
-fn get_type_name<T>(_: &T) -> &'static str {
-    std::any::type_name::<T>()
-}
+use crate::lib::{json, Value, get_type_name};
 
 ///
 pub fn x_to_string_x(v: &str) -> &str {
