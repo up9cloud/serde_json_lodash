@@ -1,6 +1,6 @@
 # serde_json_lodash
 
-[![crates.io](https://img.shields.io/crates/v/serde_json_lodash?label=latest)](https://crates.io/crates/serde_json_lodash)
+[![Documentation](https://img.shields.io/crates/v/serde_json_lodash?label=latest)](https://docs.rs/serde_json_lodash)
 [![build status](https://github.com/up9cloud/serde_json_lodash/workflows/CI/badge.svg?branch=main&event=push)](https://github.com/up9cloud/serde_json_lodash/actions)
 ![Downloads](https://img.shields.io/crates/d/serde_json_lodash.svg)
 

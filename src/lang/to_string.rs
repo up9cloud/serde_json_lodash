@@ -1,5 +1,9 @@
 use crate::lib::{json, Value};
 
+fn get_type_name<T>(_: &T) -> &'static str {
+    std::any::type_name::<T>()
+}
+
 ///
 pub fn x_to_string_x(v: &str) -> &str {
     v
@@ -36,7 +40,7 @@ pub fn to_string_x(v: Value) -> String {
                 None => "".into(),
             }
         }
-        Value::Object(_) => "Map<String, Value>".into(), // I don't think put [object Object] here is a good idea, so...
+        Value::Object(o) => get_type_name(&o).into(), // I don't think put [object Object] here is a good idea, so...
     }
 }
 ///
@@ -69,7 +73,7 @@ pub fn to_string(v: Value) -> Value {
                 None => json!(""),
             }
         }
-        Value::Object(_) => json!("Map<String, Value>"), // rust version equals the js output, [object Object]
+        Value::Object(o) => json!(get_type_name(&o)), // rust version equals the js output, [object Object]
     }
 }
 #[doc(hidden)]
@@ -107,7 +111,7 @@ pub use to_string as toString;
 ///   to_string!(json!([1,2]), json!("")),
 ///   json!("1,2")
 /// );
-/// assert_eq!(to_string!(json!({})), json!("Map<String, Value>"));
+/// assert_eq!(to_string!(json!({})), json!("serde_json::map::Map<alloc::string::String, serde_json::value::Value>"));
 /// ```
 #[macro_export]
 macro_rules! to_string {

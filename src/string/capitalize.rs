@@ -101,7 +101,7 @@ pub fn capitalize(v: Value) -> Value {
 /// assert_eq!(capitalize!(), json!(""));
 /// assert_eq!(capitalize!(json!([])), json!(""));
 /// assert_eq!(capitalize!(json!(['a',2])), json!("A,2"));
-/// assert_eq!(capitalize!(json!({})), json!("Map<String, Value>"));
+/// assert_eq!(capitalize!(json!({})), json!("serde_json::map::Map<alloc::string::String, serde_json::value::Value>"));
 /// ```
 #[macro_export]
 macro_rules! capitalize {
