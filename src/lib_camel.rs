@@ -53,6 +53,7 @@ build_multi![
     find_index
     find_last_index
     flatten_deep
+    flatten_depth
 
     to_string
 ];

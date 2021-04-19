@@ -46,12 +46,8 @@ mod flatten;
 pub use flatten::*;
 mod flatten_deep;
 pub use flatten_deep::*;
-#[doc(hidden)]
-pub fn flatten_depth() {
-    todo!()
-}
-#[doc(hidden)]
-pub use flatten_depth as flattenDepth;
+mod flatten_depth;
+pub use flatten_depth::*;
 #[doc(hidden)]
 pub fn from_pairs() {
     todo!()
