@@ -3,21 +3,19 @@ use crate::lib::{Value};
 ///
 pub fn find_index(array: Value, predicate: fn(&Value) -> bool, from_index: usize) -> isize {
     match array {
-        Value::Null |
-        Value::Bool(_) |
-        Value::Number(_) |
-        Value::String(_) |
-        Value::Object(_) => return -1,
+        Value::Null | Value::Bool(_) | Value::Number(_) | Value::String(_) | Value::Object(_) => {
+            return -1
+        }
         Value::Array(vec) => {
-            if vec.len() == 0 {
-                return -1
+            if vec.is_empty() {
+                return -1;
             }
             if from_index >= vec.len() {
-                return -1
+                return -1;
             }
-            for i in from_index.. {
-                if predicate(&vec[i]) {
-                    return i as isize
+            for (i, item) in vec.iter().enumerate().skip(from_index) {
+                if predicate(item) {
+                    return i as isize;
                 }
             }
         }
@@ -88,9 +86,9 @@ pub fn find_index(array: Value, predicate: fn(&Value) -> bool, from_index: usize
 /// ```
 #[macro_export]
 macro_rules! find_index {
-    () => (
+    () => {
         -1
-    );
+    };
     ($a:expr $(,)*) => {
         -1
     };

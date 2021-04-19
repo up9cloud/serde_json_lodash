@@ -67,10 +67,7 @@ cargo watch -x "test" -w "Cargo.toml" -w "src"
 
 # Bump version
 cargo bump patch --git-tag # same as npm version
-# Then remember do git commit and push!
-# git add .
-# git cz
-# git push && git push --tags
+git push && git push --tags
 ```
 
 > Check lodash.js api

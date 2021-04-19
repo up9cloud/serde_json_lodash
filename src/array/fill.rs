@@ -5,11 +5,9 @@ use crate::lib::{json, Value};
 ///
 pub fn fill(mut array: Value, value: Value, start: usize, end: usize) -> Value {
     let vec = match array {
-        Value::Null |
-        Value::Bool(_) |
-        Value::Number(_) |
-        Value::String(_) |
-        Value::Object(_) => return json!([]),
+        Value::Null | Value::Bool(_) | Value::Number(_) | Value::String(_) | Value::Object(_) => {
+            return json!([])
+        }
         Value::Array(ref mut vec) => {
             let real_end = {
                 if end > vec.len() {
@@ -18,11 +16,11 @@ pub fn fill(mut array: Value, value: Value, start: usize, end: usize) -> Value {
                     end
                 }
             };
-            for n in start..real_end {
-                let _ = mem::replace(&mut vec[n], value.clone());
+            for item in vec.iter_mut().take(real_end).skip(start) {
+                let _ = mem::replace(item, value.clone());
             }
             vec
-        },
+        }
     };
     *array.as_array_mut().unwrap() = vec.to_vec();
     array
@@ -68,9 +66,9 @@ pub fn fill(mut array: Value, value: Value, start: usize, end: usize) -> Value {
 /// ```
 #[macro_export]
 macro_rules! fill {
-    () => (
+    () => {
         json!([])
-    );
+    };
     ($a:expr $(,)*) => {
         $crate::fill($a, json!(null), 0, $a.as_array().unwrap_or(&vec![]).len())
     };

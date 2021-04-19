@@ -3,19 +3,19 @@ use crate::lib::{json, Value};
 ///
 pub fn x_flatten_depth_x(vec: Vec<Value>, depth: usize) -> Vec<Value> {
     if depth == 0 {
-        return vec
+        return vec;
     }
-    if vec.len() == 0 {
-        return vec![]
+    if vec.is_empty() {
+        return vec![];
     }
     let mut result = vec![];
     for item in vec.into_iter() {
         match item {
-            Value::Null |
-            Value::Bool(_) |
-            Value::String(_) |
-            Value::Number(_) |
-            Value::Object(_) => {
+            Value::Null
+            | Value::Bool(_)
+            | Value::String(_)
+            | Value::Number(_)
+            | Value::Object(_) => {
                 result.push(item);
             }
             Value::Array(vec) => {
@@ -33,18 +33,18 @@ pub fn flatten_depth(v: Value, depth: usize) -> Value {
         Value::Null => json!([]),
         Value::Bool(_) => json!([]),
         Value::String(s) => {
-            if s == "" {
-                return json!([])
+            if s.is_empty() {
+                return json!([]);
             }
             Value::Array(
                 s.chars()
                     .map(|c| Value::String(c.to_string()))
-                    .collect::<Vec<Value>>()
+                    .collect::<Vec<Value>>(),
             )
-        },
+        }
         Value::Number(_) => json!([]),
         Value::Array(vec) => Value::Array(x_flatten_depth_x(vec, depth)),
-        Value::Object(_) => json!([])
+        Value::Object(_) => json!([]),
     }
 }
 
@@ -86,9 +86,9 @@ pub fn flatten_depth(v: Value, depth: usize) -> Value {
 /// ```
 #[macro_export]
 macro_rules! flatten_depth {
-    () => (
+    () => {
         json!([])
-    );
+    };
     ($a:expr $(,)*) => {
         $crate::flatten_depth($a, 1)
     };

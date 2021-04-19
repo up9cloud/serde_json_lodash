@@ -6,19 +6,19 @@ pub fn head(v: Value) -> Value {
         Value::Null => json!(null),
         Value::Bool(_) => json!(null),
         Value::String(s) => {
-            if s == "" {
-                return json!(null)
+            if s.is_empty() {
+                return json!(null);
             }
-            json!(s.chars().nth(0))
-        },
+            json!(s.chars().next())
+        }
         Value::Number(_) => json!(null),
         Value::Array(vec) => {
-            if vec.len() == 0 {
-                return json!(null)
+            if vec.is_empty() {
+                return json!(null);
             }
             vec.first().unwrap().clone()
         }
-        Value::Object(_) => json!(null)
+        Value::Object(_) => json!(null),
     }
 }
 /// See [lodash head](https://lodash.com/docs/#head)

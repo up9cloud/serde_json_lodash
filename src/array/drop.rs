@@ -13,7 +13,7 @@ pub fn drop(v: Value, n: usize) -> Value {
             }
             let (_, right) = vec.split_at(n);
             Value::Array(right.to_vec())
-        },
+        }
         Value::Object(_) => json!([]),
     }
 }

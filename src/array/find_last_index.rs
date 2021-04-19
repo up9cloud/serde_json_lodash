@@ -3,14 +3,12 @@ use crate::lib::{Value};
 ///
 pub fn find_last_index(array: Value, predicate: fn(&Value) -> bool, from_index: usize) -> isize {
     match array {
-        Value::Null |
-        Value::Bool(_) |
-        Value::Number(_) |
-        Value::String(_) |
-        Value::Object(_) => return -1,
+        Value::Null | Value::Bool(_) | Value::Number(_) | Value::String(_) | Value::Object(_) => {
+            return -1
+        }
         Value::Array(ref vec) => {
-            if vec.len() == 0 {
-                return -1
+            if vec.is_empty() {
+                return -1;
             }
             let mut real_from_index = from_index;
             if from_index >= vec.len() {
@@ -18,7 +16,7 @@ pub fn find_last_index(array: Value, predicate: fn(&Value) -> bool, from_index: 
             }
             for i in (0..=real_from_index).rev() {
                 if predicate(&vec[i]) {
-                    return i as isize
+                    return i as isize;
                 }
             }
         }
@@ -90,18 +88,16 @@ pub fn find_last_index(array: Value, predicate: fn(&Value) -> bool, from_index: 
 /// ```
 #[macro_export]
 macro_rules! find_last_index {
-    () => (
+    () => {
         -1
-    );
+    };
     ($a:expr $(,)*) => {
         -1
     };
-    ($a:expr, $b:expr $(,)*) => {
-        {
-            let from_index = $a.as_array().unwrap_or(&vec![]).len() - 1;
-            $crate::find_last_index($a, $b, from_index)
-        }
-    };
+    ($a:expr, $b:expr $(,)*) => {{
+        let from_index = $a.as_array().unwrap_or(&vec![]).len() - 1;
+        $crate::find_last_index($a, $b, from_index)
+    }};
     ($a:expr, $b:expr, $c:expr $(,)*) => {
         $crate::find_last_index($a, $b, $c)
     };

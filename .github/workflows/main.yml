@@ -3,8 +3,8 @@ on: [push]
 name: CI
 
 jobs:
-  ci:
-    name: Rust project
+  check:
+    name: Check all
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -18,15 +18,53 @@ jobs:
           components: rustfmt, clippy
       - uses: actions-rs/cargo@v1
         with:
-          command: test
-      - uses: actions-rs/cargo@v1
-        with:
           command: fmt
           args: --all -- --check
       - uses: actions-rs/cargo@v1
         with:
           command: clippy
           args: -- -D warnings
+      - uses: up9cloud/action-notify@master
+        if: failure() == true
+        env:
+          GITHUB_JOB_STATUS: ${{ job.status }}
+          TELEGRAM_BOT_TOKEN: ${{secrets.TELEGRAM_BOT_TOKEN}}
+          TELEGRAM_CHAT_ID: ${{secrets.TELEGRAM_CHAT_ID}}
+
+  test:
+    needs: [check]
+    name: Test
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        rust:
+          - stable
+          - beta
+          - nightly
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: ${{ matrix.rust }}
+      - uses: actions-rs/cargo@v1
+        with:
+          command: test
+      - uses: up9cloud/action-notify@master
+        if: failure() == true
+        env:
+          GITHUB_JOB_STATUS: ${{ job.status }}
+          TELEGRAM_BOT_TOKEN: ${{secrets.TELEGRAM_BOT_TOKEN}}
+          TELEGRAM_CHAT_ID: ${{secrets.TELEGRAM_CHAT_ID}}
+
+  publish:
+    needs: [test]
+    name: Publish to cargo.rs
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        rust:
+          - stable
+    steps:
       # - uses: actions-rs/cargo@v1
       #   if: contains(github.ref, 'tags/v')
       #   with:

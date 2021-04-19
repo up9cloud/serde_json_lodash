@@ -9,5 +9,6 @@ build_link!(
     /// assert_eq!(first!(), json!(null));
     /// assert_eq!(first!(json!("東京")), json!("東"));
     /// ```
-    first, head
+    first,
+    head
 );

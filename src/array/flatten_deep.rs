@@ -2,17 +2,17 @@ use crate::lib::{json, Value};
 
 ///
 pub fn x_flatten_deep_x(vec: Vec<Value>) -> Vec<Value> {
-    if vec.len() == 0 {
-        return vec![]
+    if vec.is_empty() {
+        return vec![];
     }
     let mut result = vec![];
     for item in vec.into_iter() {
         match item {
-            Value::Null |
-            Value::Bool(_) |
-            Value::String(_) |
-            Value::Number(_) |
-            Value::Object(_) => {
+            Value::Null
+            | Value::Bool(_)
+            | Value::String(_)
+            | Value::Number(_)
+            | Value::Object(_) => {
                 result.push(item);
             }
             Value::Array(vec) => {
@@ -30,18 +30,18 @@ pub fn flatten_deep(v: Value) -> Value {
         Value::Null => json!([]),
         Value::Bool(_) => json!([]),
         Value::String(s) => {
-            if s == "" {
-                return json!([])
+            if s.is_empty() {
+                return json!([]);
             }
             Value::Array(
                 s.chars()
                     .map(|c| Value::String(c.to_string()))
-                    .collect::<Vec<Value>>()
+                    .collect::<Vec<Value>>(),
             )
-        },
+        }
         Value::Number(_) => json!([]),
         Value::Array(vec) => Value::Array(x_flatten_deep_x(vec)),
-        Value::Object(_) => json!([])
+        Value::Object(_) => json!([]),
     }
 }
 /// See [lodash flattenDeep](https://lodash.com/docs/#flattenDeep)
