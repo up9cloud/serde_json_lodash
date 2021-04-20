@@ -56,10 +56,8 @@ mod index_of;
 pub use index_of::*;
 mod initial;
 pub use initial::*;
-#[doc(hidden)]
-pub fn intersection() {
-    todo!()
-}
+mod intersection;
+pub use intersection::*;
 #[doc(hidden)]
 pub fn intersection_by() {
     todo!()
