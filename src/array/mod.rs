@@ -70,10 +70,8 @@ pub fn intersection_with() {
 }
 #[doc(hidden)]
 pub use intersection_with as intersectionWith;
-#[doc(hidden)]
-pub fn join() {
-    todo!()
-}
+mod join;
+pub use join::*;
 #[doc(hidden)]
 pub fn last() {
     todo!()

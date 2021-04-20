@@ -26,7 +26,6 @@ pub fn drop_right(v: Value, n: usize) -> Value {
 /// ```rust
 /// #[macro_use] extern crate serde_json_lodash;
 /// use serde_json::json;
-// => [1, 2, 3]
 /// assert_eq!(
 ///   drop_right!(json!([1, 2, 3])),
 ///   json!([1, 2])
