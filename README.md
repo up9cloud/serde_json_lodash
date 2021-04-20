@@ -30,30 +30,33 @@ fn main() {
 
 ## Contributes
 
-- All functions should be same as lodash as possible
-- Every function from lodash.js should be implemented with 1 `macro`, 1 `fn`:
-  - `macro` should be exactly same api as lodash.js version. (the main inputs and return value should be `serde_json::Value` or `std::ops::Fn`)
-    - e.q. `capitalize!(Value) -> Value`
-  - `fn`
-    - e.q. `capitalize(Value) -> Value`
-- If the input parameters are options, not data, using primitive type instead Value
-  - e.q. `_.chunk(array, [size=1])` => `::check!(json!([1,2,3]), 2)`, size should be `usize`, not `Value::Number`
-- If return value is statistic, using primitive type instead Value
-  - e.q. `_.findIndex(array, ...)` => `::find_index(Value, ...) -> isize`, return value should be `isize`, not `Value::Number`
+All implements should be same as lodash as possible
+
+How?
+
+- Every function from lodash.js should be implemented both `fn` and `macro` (for optional parameters usages)
+- The main inputs and return value should be *`serde_json::Value`*, except:
+  - If the input parameters are options, not data, using *primitive type* instead Value
+    - e.q. `_.chunk(array, [size=1])` => `::check!(json!([1,2,3]), 2)`, size should be `usize`, not `Value::Number`
+  - Some cases we use *`std::ops::Fn`* as input parameter
+    - e.q. `_.findIndex(array, predicate, ...)` => `::find_index(..., predicate: fn(&Value) -> bool, ...)`
+  - If return value is statistic, using *primitive type* instead Value
+    - e.q. `_.findIndex(...)` => `::find_index(...) -> isize`, return value should be `isize`, not `Value::Number`
+  - Because there is no `undefined` type in json, so if original function return `undefined`, the ported fn should always return Value::Null
 - If the original function allows optional parameters:
-  - known amount, e.q. `_.get(object, path, [defaultValue])`, the ported version fn should be `::get(object, path, defaultValue)`, no optional
-  - infinity amount, e.q. `_.merge(object, [...sources])`, the ported version fn should be `::merge(object, source)`, no more optionals
-- It might implement helper functions also.
-  - `fn` with `x_` prefix: input is not Value
+  - known amount, e.q. `_.get(object, path, [defaultValue])`, the ported version fn should be `::get(object, path, defaultValue)`, *optional should become required*
+  - infinity amount, e.q. `_.merge(object, [...sources])`, the ported version fn should be `::merge(object, source)`, *should only keep one, depends on how the function works, and no more optionals*
+- It might implement helper functions, e.q.:
+  - `fn` with *`x_` prefix*: input is not Value
     - e.q. `x_capitalize(&str) -> Value`
-  - `fn` with `_x` suffix: output is not Value
+  - `fn` with *`_x` suffix*: output is not Value
     - e.q. `capitalize_x(Value) -> String`
-  - `fn` with both `x_` and `_x`
+  - `fn` with *both `x_` and `_x`*
     - e.q. `x_capitalize_x(&str) -> &str`
-  - It depends on that function accept multiple types or not.
-    - e.q. `_.merge({a:1}, {b:2})`, `_.merge([1], [2])`, we don't know which type should be for, so we don't implement
-- `Examples:` section should be exactly same as the examples in lodash doc. If we need more examples, they should be written in the `More Examples:` section
-- Test cases should all be in the `More examples` section, we relied on rust's powerful doc testing
+  - If the function accept multiple types, we can only choose one to implement
+    - e.q. `_.merge({a:1}, {b:2})`, `_.merge([1], [2])` => ...
+- `Examples:` section should be exactly same as the examples in lodash doc.
+- Test cases should all be written in the `More examples` section, we relied on powerful rust's doc test
 
 ## Dev
 
