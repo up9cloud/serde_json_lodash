@@ -1,6 +1,6 @@
 [package]
 name = "serde_json_lodash"
-version = "0.1.8"
+version = "0.1.9"
 authors = ["up9cloud <8325632+up9cloud@users.noreply.github.com>"]
 description = "lodash.js ported version, work with serde_json::Value"
 keywords = ["serde", "serde_json", "json", "lodash"]
