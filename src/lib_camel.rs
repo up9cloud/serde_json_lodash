@@ -58,4 +58,6 @@ build_multi![
     index_of
 
     to_string
+
+    to_lower
 ];

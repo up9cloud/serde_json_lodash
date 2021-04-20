@@ -99,12 +99,8 @@ pub use starts_with as startsWith;
 pub fn template() {
     todo!()
 }
-#[doc(hidden)]
-pub fn to_lower() {
-    todo!()
-}
-#[doc(hidden)]
-pub use to_lower as toLower;
+mod to_lower;
+pub use to_lower::*;
 #[doc(hidden)]
 pub fn to_upper() {
     todo!()
