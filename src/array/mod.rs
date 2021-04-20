@@ -72,10 +72,8 @@ pub fn intersection_with() {
 pub use intersection_with as intersectionWith;
 mod join;
 pub use join::*;
-#[doc(hidden)]
-pub fn last() {
-    todo!()
-}
+mod last;
+pub use last::*;
 #[doc(hidden)]
 pub fn last_index_of() {
     todo!()
