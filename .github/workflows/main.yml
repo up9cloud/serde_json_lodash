@@ -1,4 +1,4 @@
-on: [push]
+on: [push, pull_request]
 
 name: CI
 
@@ -66,17 +66,17 @@ jobs:
           - stable
     steps:
       # - uses: actions-rs/cargo@v1
-      #   if: contains(github.ref, 'tags/v')
+      #   if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/)
       #   with:
       #     command: build
       #     args: --release --all-features
       - uses: actions-rs/cargo@v1
-        if: contains(github.ref, 'tags/v')
+        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/)
         with:
           command: login
           args: ${{secrets.CRATES_IO_TOKEN}}
       - uses: actions-rs/cargo@v1
-        if: contains(github.ref, 'tags/v')
+        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/)
         with:
           command: publish
       - uses: up9cloud/action-notify@master
