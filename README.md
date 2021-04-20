@@ -12,7 +12,6 @@
 
 ```toml
 [dependencies]
-serde_json = "*"
 serde_json_lodash = "0.1"
 ```
 
@@ -65,9 +64,8 @@ cargo watch -x "test" -w "Cargo.toml" -w "src"
 # Lint
 ./lint.sh
 
-# Bump version
-cargo bump patch --git-tag # same as npm version
-git push && git push --tags
+# Bump version and push
+./bump_push.sh
 ```
 
 > Check lodash.js api
