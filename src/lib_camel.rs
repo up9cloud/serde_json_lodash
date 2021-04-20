@@ -55,6 +55,7 @@ build_multi![
     flatten_deep
     flatten_depth
     from_pairs
+    index_of
 
     to_string
 ];

@@ -52,12 +52,8 @@ mod from_pairs;
 pub use from_pairs::*;
 mod head;
 pub use head::*;
-#[doc(hidden)]
-pub fn index_of() {
-    todo!()
-}
-#[doc(hidden)]
-pub use index_of as indexOf;
+mod index_of;
+pub use index_of::*;
 #[doc(hidden)]
 pub fn initial() {
     todo!()
