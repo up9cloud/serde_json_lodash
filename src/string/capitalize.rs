@@ -1,4 +1,4 @@
-use crate::lib::{json, Value};
+use crate::lib::{json, Value, get_type_name};
 
 ///
 pub fn x_capitalize_x(s: &str) -> String {
@@ -33,52 +33,28 @@ pub fn capitalize_x(v: Value) -> String {
             let mut iter = vec.into_iter();
             match iter.next() {
                 Some(v) => {
-                    let mut s = capitalize_x(v);
+                    let mut s = {
+                        if v.is_null() {
+                            "Null".into()
+                        } else {
+                            capitalize_x(v)
+                        }
+                    };
                     for v in iter {
                         s.push(',');
-                        s.push_str(&crate::to_string_x(v));
+                        s.push_str(&crate::to_lower_x(v));
                     }
                     s
                 }
                 None => "".into(),
             }
         }
-        Value::Object(_) => crate::to_string_x(v),
+        Value::Object(o) => x_capitalize_x(get_type_name(&o)),
     }
 }
 ///
 pub fn capitalize(v: Value) -> Value {
-    match v {
-        Value::Null => json!(""),
-        Value::Bool(b) => {
-            if b {
-                json!("True")
-            } else {
-                json!("False")
-            }
-        }
-        Value::String(s) => x_capitalize(&s),
-        Value::Number(n) => {
-            json!(n.to_string())
-        }
-        Value::Array(vec) => {
-            let mut iter = vec.into_iter();
-            match iter.next() {
-                Some(v) => {
-                    let mut s = capitalize_x(v);
-                    for v in iter {
-                        s.push(',');
-                        s.push_str(&crate::to_string_x(v));
-                    }
-                    json!(s)
-                }
-                None => json!(""),
-            }
-        }
-        Value::Object(_) => {
-            json!(crate::to_string_x(v))
-        }
-    }
+    Value::String(capitalize_x(v))
 }
 /// Description can be found in [lodash capitalize](https://lodash.com/docs/#capitalize)
 ///
@@ -99,9 +75,13 @@ pub fn capitalize(v: Value) -> Value {
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
 /// assert_eq!(capitalize!(), json!(""));
+/// assert_eq!(capitalize!(json!(null)), json!(""));
+/// assert_eq!(capitalize!(json!(false)), json!("False"));
+/// assert_eq!(capitalize!(json!(-0)), json!("0")); // rust world -0 is 0
+/// assert_eq!(capitalize!(json!("")), json!(""));
 /// assert_eq!(capitalize!(json!([])), json!(""));
-/// assert_eq!(capitalize!(json!(['a',2])), json!("A,2"));
-/// assert_eq!(capitalize!(json!({})), json!("serde_json::map::Map<alloc::string::String, serde_json::value::Value>"));
+/// assert_eq!(capitalize!(json!([null,'A',{}])), json!("Null,a,serde_json::map::map<alloc::string::string, serde_json::value::value>"));
+/// assert_eq!(capitalize!(json!({})), json!("Serde_json::map::map<alloc::string::string, serde_json::value::value>"));
 /// ```
 #[macro_export]
 macro_rules! capitalize {
