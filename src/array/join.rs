@@ -8,17 +8,20 @@ pub fn join_x(v: Value, sep: &str) -> String {
         Value::Number(_) => "".into(),
         Value::String(s) => {
             if s.is_empty() {
-                return "".into()
+                return "".into();
             }
-            s.chars().map(|c| c.into()).collect::<Vec<String>>().join(sep)
-        },
+            s.chars()
+                .map(|c| c.into())
+                .collect::<Vec<String>>()
+                .join(sep)
+        }
         Value::Array(vec) => {
             let mut result = vec![];
             for item in vec.into_iter() {
                 result.push(crate::to_string_x(item));
             }
             result.join(sep)
-        },
+        }
         Value::Object(_) => "".into(),
     }
 }
@@ -52,7 +55,7 @@ pub fn join(v: Value, sep: &str) -> Value {
 /// assert_eq!(join!(json!(0)), json!(""));
 /// assert_eq!(join!(json!("")), json!(""));
 /// assert_eq!(join!(json!("ab")), json!("a,b"));
-/// assert_eq!(join!(json!("初音")), json!("初,音"));
+/// assert_eq!(join!(json!("初音"), "🥰"), json!("初🥰音"));
 /// assert_eq!(join!(json!([])), json!(""));
 /// assert_eq!(join!(json!([{},[],[1,[2,[3]]]])), json!("serde_json::map::Map<alloc::string::String, serde_json::value::Value>,,1,2,3"));
 /// assert_eq!(join!(json!({})), json!(""));
