@@ -65,6 +65,10 @@ jobs:
         rust:
           - stable
     steps:
+      - uses: actions/checkout@v2
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: ${{ matrix.rust }}
       # - uses: actions-rs/cargo@v1
       #   if: ${{ github.event_name == 'push' && startsWith(github.ref, 'refs/tags/') }}
       #   with:
