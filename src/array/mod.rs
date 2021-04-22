@@ -74,12 +74,8 @@ mod join;
 pub use join::*;
 mod last;
 pub use last::*;
-#[doc(hidden)]
-pub fn last_index_of() {
-    todo!()
-}
-#[doc(hidden)]
-pub use last_index_of as lastIndexOf;
+mod last_index_of;
+pub use last_index_of::*;
 #[doc(hidden)]
 pub fn nth() {
     todo!()

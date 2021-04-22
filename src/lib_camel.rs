@@ -56,6 +56,7 @@ build_multi![
     flatten_depth
     from_pairs
     index_of
+    last_index_of
 
     to_string
 
@@ -63,6 +64,4 @@ build_multi![
 ];
 
 #[cfg(feature = "lazy_static")]
-build_multi![
-    unique_id
-];
+build_multi![unique_id];
