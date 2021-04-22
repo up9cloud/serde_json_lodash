@@ -12,11 +12,13 @@ edition = "2018"
 [features]
 # wait for this PR: https://github.com/dtolnay/paste/pull/62
 # default = ["camel"]
+all = ["camel", "lazy_static"]
 camel = ["paste"]
 
 [dependencies]
 serde_json = "1"
 paste = { version = "1", optional = true }
+lazy_static = { version = "1", optional = true }
 
 [dev-dependencies]
 criterion = "0.3"

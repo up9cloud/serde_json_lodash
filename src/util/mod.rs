@@ -166,9 +166,8 @@ pub fn to_path() {
 }
 #[doc(hidden)]
 pub use to_path as toPath;
-#[doc(hidden)]
-pub fn unique_id() {
-    todo!()
-}
-#[doc(hidden)]
-pub use unique_id as uniqueId;
+
+#[cfg(feature = "lazy_static")]
+mod unique_id;
+#[cfg(feature = "lazy_static")]
+pub use unique_id::*;

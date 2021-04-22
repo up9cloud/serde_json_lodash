@@ -19,6 +19,7 @@ macro_rules! build_link {
                 ///
                 pub use $crate::$to as $from;
 
+                /// Same as [$to]
                 $(#[doc = $doc])*
                 #[macro_export]
                 macro_rules! $from {

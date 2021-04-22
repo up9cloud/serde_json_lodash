@@ -61,3 +61,8 @@ build_multi![
 
     to_lower
 ];
+
+#[cfg(feature = "lazy_static")]
+build_multi![
+    unique_id
+];

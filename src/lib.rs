@@ -8,6 +8,9 @@
 #[cfg(feature = "camel")]
 extern crate paste;
 
+#[cfg(feature = "lazy_static")]
+extern crate lazy_static;
+
 mod macros;
 
 mod lib {

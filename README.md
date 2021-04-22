@@ -62,7 +62,7 @@ How?
 
 ```bash
 # Up
-cargo watch -x "test" -w "Cargo.toml" -w "src"
+cargo watch -x "test --features lazy_static" -w "Cargo.toml" -w "src"
 
 # Lint
 ./lint.sh
