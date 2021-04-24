@@ -76,10 +76,8 @@ mod last;
 pub use last::*;
 mod last_index_of;
 pub use last_index_of::*;
-#[doc(hidden)]
-pub fn nth() {
-    todo!()
-}
+mod nth;
+pub use nth::*;
 #[doc(hidden)]
 pub fn pull() {
     todo!()
