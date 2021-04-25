@@ -78,10 +78,8 @@ mod last_index_of;
 pub use last_index_of::*;
 mod nth;
 pub use nth::*;
-#[doc(hidden)]
-pub fn pull() {
-    todo!()
-}
+mod pull;
+pub use pull::*;
 #[doc(hidden)]
 pub fn pull_all() {
     todo!()
