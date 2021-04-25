@@ -82,12 +82,8 @@ mod pull;
 pub use pull::*;
 mod pull_all;
 pub use pull_all::*;
-#[doc(hidden)]
-pub fn pull_all_by() {
-    todo!()
-}
-#[doc(hidden)]
-pub use pull_all_by as pullAllBy;
+mod pull_all_by;
+pub use pull_all_by::*;
 #[doc(hidden)]
 pub fn pull_all_with() {
     todo!()
