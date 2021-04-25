@@ -59,6 +59,7 @@ build_multi![
     last_index_of
     pull_all
     pull_all_by
+    pull_all_with
 
     to_string
 
