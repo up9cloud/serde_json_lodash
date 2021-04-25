@@ -67,6 +67,9 @@ cargo watch -x "test --features lazy_static" -w "Cargo.toml" -w "src"
 # Lint
 ./lint.sh
 
+# Preview doc
+cargo doc --open
+
 # Bump version and push
 ./bump_push.sh
 ```

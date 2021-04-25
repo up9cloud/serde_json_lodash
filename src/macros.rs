@@ -14,12 +14,11 @@ macro_rules! build_link {
         $from:ident,
         $to:ident
     ) => {
+        ///
+        pub use $crate::$to as $from;
+
         with_dollar_sign! {
             ($d:tt) => {
-                ///
-                pub use $crate::$to as $from;
-
-                /// Same as [$to]
                 $(#[doc = $doc])*
                 #[macro_export]
                 macro_rules! $from {

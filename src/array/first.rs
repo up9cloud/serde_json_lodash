@@ -1,5 +1,5 @@
 build_link!(
-    /// Description can be found in [lodash first](https://lodash.com/docs/#first)
+    /// Same as [head!]. Description can be found in [lodash first](https://lodash.com/docs/#first)
     ///
     /// More examples:
     ///
