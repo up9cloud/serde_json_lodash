@@ -80,12 +80,8 @@ mod nth;
 pub use nth::*;
 mod pull;
 pub use pull::*;
-#[doc(hidden)]
-pub fn pull_all() {
-    todo!()
-}
-#[doc(hidden)]
-pub use pull_all as pullAll;
+mod pull_all;
+pub use pull_all::*;
 #[doc(hidden)]
 pub fn pull_all_by() {
     todo!()

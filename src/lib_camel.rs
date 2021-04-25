@@ -57,6 +57,7 @@ build_multi![
     from_pairs
     index_of
     last_index_of
+    pull_all
 
     to_string
 
