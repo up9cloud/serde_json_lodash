@@ -160,13 +160,8 @@ pub use stub_true as stubTrue;
 pub fn times() {
     todo!()
 }
-#[doc(hidden)]
-pub fn to_path() {
-    todo!()
-}
-#[doc(hidden)]
-pub use to_path as toPath;
-
+mod to_path;
+pub use to_path::*;
 #[cfg(feature = "lazy_static")]
 mod unique_id;
 #[cfg(feature = "lazy_static")]

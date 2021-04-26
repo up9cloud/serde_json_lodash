@@ -64,6 +64,8 @@ build_multi![
     to_string
 
     to_lower
+
+    to_path
 ];
 
 #[cfg(feature = "lazy_static")]
