@@ -39,7 +39,7 @@ pub fn find_index(array: Value, predicate: fn(&Value) -> bool, from_index: usize
 ///   find_index!(users, |o| o["user"] == "barney".to_string()),
 ///   json!(0)
 /// );
-/// // conflict with fn, no implemented
+/// // conflict with fn, not implemented
 /// // assert_eq!(
 /// //   find_index!(users, json!({ "user": "fred", "active": false })),
 /// //   json!(1)

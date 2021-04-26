@@ -65,6 +65,10 @@ build_multi![
 
     to_lower
 
+    stub_array
+    stub_false
+    stub_object
+    stub_string
     stub_true
     to_path
 ];

@@ -41,7 +41,7 @@ pub fn pull_all_by(mut array: Value, values: Value, iteratee: fn(&Value) -> &Val
 /// #[macro_use] extern crate serde_json_lodash;
 /// use serde_json::json;
 /// let array = json!([{ 'x': 1 }, { 'x': 2 }, { 'x': 3 }, { 'x': 1 }]);
-/// // conflict with fn, no implemented
+/// // conflict with fn, not implemented
 /// // assert_eq!(
 /// //   pull_all_by!(array, json!([{ 'x': 1 }, { 'x': 3 }]), "x"),
 /// //   json!(0)

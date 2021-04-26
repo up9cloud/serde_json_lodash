@@ -126,30 +126,14 @@ pub fn run_in_context() {
 }
 #[doc(hidden)]
 pub use run_in_context as runInContext;
-#[doc(hidden)]
-pub fn stub_array() {
-    todo!()
-}
-#[doc(hidden)]
-pub use stub_array as stubArray;
-#[doc(hidden)]
-pub fn stub_false() {
-    todo!()
-}
-#[doc(hidden)]
-pub use stub_false as stubFalse;
-#[doc(hidden)]
-pub fn stub_object() {
-    todo!()
-}
-#[doc(hidden)]
-pub use stub_object as stubObject;
-#[doc(hidden)]
-pub fn stub_string() {
-    todo!()
-}
-#[doc(hidden)]
-pub use stub_string as stubString;
+mod stub_array;
+pub use stub_array::*;
+mod stub_false;
+pub use stub_false::*;
+mod stub_object;
+pub use stub_object::*;
+mod stub_string;
+pub use stub_string::*;
 mod stub_true;
 pub use stub_true::*;
 mod times;

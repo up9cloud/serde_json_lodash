@@ -40,7 +40,7 @@ pub fn find_last_index(array: Value, predicate: fn(&Value) -> bool, from_index: 
 ///   find_last_index!(users, |o| o["user"] == "pebbles".to_string()),
 ///   json!(2)
 /// );
-/// // conflict with fn, no implemented
+/// // conflict with fn, not implemented
 /// // assert_eq!(
 /// //   find_last_index!(users, json!({ "user": "barney", "active": true })),
 /// //   json!(0)
