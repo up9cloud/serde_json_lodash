@@ -65,6 +65,7 @@ build_multi![
 
     to_lower
 
+    stub_true
     to_path
 ];
 

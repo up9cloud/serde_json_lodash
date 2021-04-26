@@ -150,16 +150,10 @@ pub fn stub_string() {
 }
 #[doc(hidden)]
 pub use stub_string as stubString;
-#[doc(hidden)]
-pub fn stub_true() {
-    todo!()
-}
-#[doc(hidden)]
-pub use stub_true as stubTrue;
-#[doc(hidden)]
-pub fn times() {
-    todo!()
-}
+mod stub_true;
+pub use stub_true::*;
+mod times;
+pub use times::*;
 mod to_path;
 pub use to_path::*;
 #[cfg(feature = "lazy_static")]
