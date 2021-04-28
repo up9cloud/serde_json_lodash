@@ -60,6 +60,7 @@ build_multi![
     pull_all
     pull_all_by
     pull_all_with
+    pull_at
 
     to_string
 
