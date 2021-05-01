@@ -110,16 +110,10 @@ pub fn property_of() {
 }
 #[doc(hidden)]
 pub use property_of as propertyOf;
-#[doc(hidden)]
-pub fn range() {
-    todo!()
-}
-#[doc(hidden)]
-pub fn range_right() {
-    todo!()
-}
-#[doc(hidden)]
-pub use range_right as rangeRight;
+mod range;
+pub use range::*;
+mod range_right;
+pub use range_right::*;
 #[doc(hidden)]
 pub fn run_in_context() {
     todo!()

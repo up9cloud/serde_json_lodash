@@ -62,10 +62,12 @@ build_multi![
     pull_all_with
     pull_at
 
+    to_safe_integer
     to_string
 
     to_lower
 
+    range_right
     stub_array
     stub_false
     stub_object

@@ -310,11 +310,7 @@ pub fn to_plain_object() {
 }
 #[doc(hidden)]
 pub use to_plain_object as toPlainObject;
-#[doc(hidden)]
-pub fn to_safe_integer() {
-    todo!()
-}
-#[doc(hidden)]
-pub use to_safe_integer as toSafeInteger;
+mod to_safe_integer;
+pub use to_safe_integer::*;
 mod to_string;
 pub use to_string::*;
