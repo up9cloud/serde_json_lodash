@@ -12,12 +12,12 @@ pub fn to_safe_integer_x(v: Value) -> isize {
             }
         }
         Value::Number(n) => {
-            if n.is_f64() {
-                n.as_f64().unwrap() as isize
+            if n.is_u64() {
+                n.as_u64().unwrap() as isize
             } else if n.is_i64() {
                 n.as_i64().unwrap() as isize
             } else {
-                n.as_u64().unwrap() as isize
+                n.as_f64().unwrap() as isize
             }
         }
         Value::String(s) => {
