@@ -1,6 +1,6 @@
 use crate::lib::{json, Value};
 
-///
+/// See lodash [compact](https://lodash.com/docs/#compact)
 pub fn compact(v: Value) -> Value {
     match v {
         Value::Null => json!([]),
@@ -31,7 +31,7 @@ pub fn compact(v: Value) -> Value {
     }
 }
 
-/// Description can be found in [lodash compact](https://lodash.com/docs/#compact)
+/// Based on [compact()]
 ///
 /// Examples:
 ///

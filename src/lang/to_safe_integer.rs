@@ -36,12 +36,57 @@ pub fn to_safe_integer_x(v: Value) -> isize {
         Value::Object(_) => 0,
     }
 }
-///
+/// See lodash [toSafeInteger](https://lodash.com/docs/#toSafeInteger)
 pub fn to_safe_integer(v: Value) -> Value {
     json!(to_safe_integer_x(v))
 }
 
-/// Description can be found in [lodash toSafeInteger](https://lodash.com/docs/#toSafeInteger)
+/// Based on [to_safe_integer_x()]
+///
+/// Examples:
+///
+/// ```rust
+/// # #![allow(overflowing_literals)]
+/// #[macro_use] extern crate serde_json_lodash;
+/// use serde_json::json;
+/// assert_eq!(
+///   to_safe_integer_x!(json!(3.2)),
+///   3
+/// );
+/// //assert_eq!(
+/// //  to_safe_integer_x!(json!(isize::MIN)), // serde_json will convert this to Number(-9223372036854775808)
+/// //  0
+/// //);
+/// //assert_eq!(
+/// //  to_safe_integer_x!(json!(f64::INFINITY)), // serde_json will convert this to Value::Null
+/// //  9007199254740991 // serde_json will convert this to Number(-1)
+/// //);
+/// assert_eq!(
+///   to_safe_integer_x!(json!("3.2")),
+///   3
+/// );
+/// ```
+///
+/// More examples:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(to_safe_integer_x!(), 0);
+/// ```
+#[macro_export]
+macro_rules! to_safe_integer_x {
+    () => {
+        0
+    };
+    ($a:expr $(,)*) => {
+        $crate::to_safe_integer_x($a)
+    };
+    ($a:expr, $($rest:tt)*) => {
+        $crate::to_safe_integer_x($a)
+    };
+}
+/// Based on [to_safe_integer()]
 ///
 /// Examples:
 ///

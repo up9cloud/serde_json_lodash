@@ -1,6 +1,6 @@
 use crate::lib::{Value};
 
-///
+/// See lodash [findIndex](https://lodash.com/docs/#findIndex)
 pub fn find_index(array: Value, predicate: fn(&Value) -> bool, from_index: usize) -> isize {
     match array {
         Value::Null | Value::Bool(_) | Value::Number(_) | Value::String(_) | Value::Object(_) => {
@@ -23,7 +23,7 @@ pub fn find_index(array: Value, predicate: fn(&Value) -> bool, from_index: usize
     -1
 }
 
-/// Description can be found in [lodash findIndex](https://lodash.com/docs/#findIndex)
+/// Based on [find_index()]
 ///
 /// Examples:
 ///

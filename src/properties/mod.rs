@@ -1,4 +1,4 @@
-///
+/// See lodash [VERSION](https://lodash.com/docs/#VERSION)
 pub const VERSION: &str = env!("CARGO_PKG_VERSION");
 // #[doc(hidden)]
 // pub fn templateSettings() { todo!() }

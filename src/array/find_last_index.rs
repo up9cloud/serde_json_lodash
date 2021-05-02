@@ -1,6 +1,6 @@
 use crate::lib::{Value};
 
-///
+/// See lodash [findLastIndex](https://lodash.com/docs/#findLastIndex)
 pub fn find_last_index(array: Value, predicate: fn(&Value) -> bool, from_index: usize) -> isize {
     match array {
         Value::Null | Value::Bool(_) | Value::Number(_) | Value::String(_) | Value::Object(_) => {
@@ -24,7 +24,7 @@ pub fn find_last_index(array: Value, predicate: fn(&Value) -> bool, from_index: 
     -1
 }
 
-/// Description can be found in [lodash findLastIndex](https://lodash.com/docs/#findLastIndex)
+/// Based on [find_last_index()]
 ///
 /// Examples:
 ///

@@ -1,11 +1,11 @@
 use crate::lib::{Value};
 
-///
+/// See lodash [stubString](https://lodash.com/docs/#stubString)
 pub fn stub_string() -> Box<dyn Fn() -> Value> {
     Box::new(|| Value::String("".to_owned()))
 }
 
-/// Description can be found in [lodash stubString](https://lodash.com/docs/#stubString)
+/// Based on [stub_string()]
 ///
 /// Examples:
 ///

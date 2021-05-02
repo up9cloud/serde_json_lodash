@@ -1,6 +1,6 @@
 use crate::lib::{json, Value};
 
-///
+/// See lodash [drop](https://lodash.com/docs/#drop)
 pub fn drop(v: Value, n: usize) -> Value {
     match v {
         Value::Null => json!([]),
@@ -18,7 +18,7 @@ pub fn drop(v: Value, n: usize) -> Value {
     }
 }
 
-/// Description can be found in [lodash drop](https://lodash.com/docs/#drop)
+/// Based on [drop()]
 ///
 /// Examples:
 ///

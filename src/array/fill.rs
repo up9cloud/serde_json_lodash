@@ -2,7 +2,7 @@ use std::mem;
 
 use crate::lib::{json, Value};
 
-///
+/// See lodash [fill](https://lodash.com/docs/#fill)
 pub fn fill(mut array: Value, value: Value, start: usize, end: usize) -> Value {
     let vec = match array {
         Value::Null | Value::Bool(_) | Value::Number(_) | Value::String(_) | Value::Object(_) => {
@@ -26,7 +26,7 @@ pub fn fill(mut array: Value, value: Value, start: usize, end: usize) -> Value {
     array
 }
 
-/// Description can be found in [lodash fill](https://lodash.com/docs/#fill)
+/// Based on [fill()]
 ///
 /// Examples:
 ///

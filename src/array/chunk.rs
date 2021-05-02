@@ -1,6 +1,6 @@
 use crate::lib::{json, Value};
 
-///
+/// See lodash [chunk](https://lodash.com/docs/#chunk)
 pub fn chunk(v: Value, size: usize) -> Value {
     if size == 0 {
         return json!([]);
@@ -32,7 +32,7 @@ pub fn chunk(v: Value, size: usize) -> Value {
     }
 }
 
-/// Description can be found in [lodash chunk](https://lodash.com/docs/#chunk)
+/// Based on [chunk()]
 ///
 /// Examples:
 ///

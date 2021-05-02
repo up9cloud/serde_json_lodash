@@ -10,16 +10,17 @@ macro_rules! with_dollar_sign {
 
 macro_rules! build_link {
     (
-        $(#[doc = $doc:tt])*
+        $(#[doc = $doc_fn:tt])*
         $from:ident,
+        $(#[doc = $doc_macro:tt])*
         $to:ident
     ) => {
-        ///
+        $(#[doc = $doc_fn])*
         pub use $crate::$to as $from;
 
         with_dollar_sign! {
             ($d:tt) => {
-                $(#[doc = $doc])*
+                $(#[doc = $doc_macro])*
                 #[macro_export]
                 macro_rules! $from {
                     ($d($d rest:tt)*) => {

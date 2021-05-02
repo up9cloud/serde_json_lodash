@@ -1,5 +1,5 @@
 use crate::lib::{json, Value};
-
+use crate::{to_safe_integer_x};
 ///
 pub fn x_range_x(start: isize, end: isize, step: isize) -> Vec<isize> {
     let mut result = vec![];
@@ -53,44 +53,164 @@ pub fn x_range(start: isize, end: isize, step: isize) -> Value {
     )
 }
 ///
-pub fn range(start: isize, end: isize, step: isize) -> Value {
-    x_range(start, end, step)
+pub fn range_x(start: Value, end: Value, step: isize) -> Vec<isize> {
+    x_range_x(to_safe_integer_x(start), to_safe_integer_x(end), step)
+}
+/// See lodash [range](https://lodash.com/docs/#range)
+pub fn range(start: Value, end: Value, step: isize) -> Value {
+    x_range(to_safe_integer_x(start), to_safe_integer_x(end), step)
 }
 
-/// Description can be found in [lodash range](https://lodash.com/docs/#range)
+/// Based on [x_range_x()]
 ///
 /// Examples:
 ///
 /// ```rust
 /// #[macro_use] extern crate serde_json_lodash;
 /// use serde_json::json;
-// => []
 /// assert_eq!(
-///   range!(4),
+///   x_range_x!(4),
+///   vec![0_isize, 1, 2, 3]
+/// );
+/// assert_eq!(
+///   x_range_x!(-4),
+///   vec![0_isize, -1, -2, -3]
+/// );
+/// assert_eq!(
+///   x_range_x!(1, 5),
+///   vec![1_isize, 2, 3, 4]
+/// );
+/// assert_eq!(
+///   x_range_x!(0, 20, 5),
+///   vec![0_isize, 5, 10, 15]
+/// );
+/// assert_eq!(
+///   x_range_x!(0, -4, -1),
+///   vec![0_isize, -1, -2, -3]
+/// );
+/// assert_eq!(
+///   x_range_x!(1, 4, 0),
+///   vec![1_isize, 1, 1]
+/// );
+/// let expect: Vec<isize> = vec![];
+/// assert_eq!(
+///   x_range_x!(0),
+///   expect
+/// );
+/// ```
+///
+/// More examples:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// let expect: Vec<isize> = vec![];
+/// assert_eq!(x_range_x!(), expect);
+/// ```
+#[macro_export]
+macro_rules! x_range_x {
+    () => {{
+        let a: Vec<isize> = vec![];
+        a
+    }};
+    ($a:expr $(,)*) => {{
+        if $a >= 0 {
+            $crate::x_range_x(0, $a, 1)
+        } else {
+            $crate::x_range_x(0, $a, -1)
+        }
+    }};
+    ($a:expr, $b:expr $(,)*) => {
+        $crate::x_range_x($a, $b, 1)
+    };
+    ($a:expr, $b:expr, $c:expr $(,)*) => {
+        $crate::x_range_x($a, $b, $c)
+    };
+    ($a:expr, $b:expr, $c:expr, $($rest:tt)*) => {
+        $crate::x_range_x($a, $b, $c)
+    };
+}
+/// Based on [x_range()]
+#[macro_export]
+macro_rules! x_range {
+    () => {
+        json!([])
+    };
+    ($a:expr $(,)*) => {{
+        if $a >= 0 {
+            $crate::x_range(0, $a, 1)
+        } else {
+            $crate::x_range(0, $a, -1)
+        }
+    }};
+    ($a:expr, $b:expr $(,)*) => {
+        $crate::x_range($a, $b, 1)
+    };
+    ($a:expr, $b:expr, $c:expr $(,)*) => {
+        $crate::x_range($a, $b, $c)
+    };
+    ($a:expr, $b:expr, $c:expr, $($rest:tt)*) => {
+        $crate::x_range($a, $b, $c)
+    };
+}
+/// Based on [range_x()]
+#[macro_export]
+macro_rules! range_x {
+    () => {{
+        let a: Vec<isize> = vec![];
+        a
+    }};
+    ($a:expr $(,)*) => {{
+        let end = $crate::to_safe_integer_x($a);
+        if end >= 0 {
+            $crate::x_range_x(0, end, 1)
+        } else {
+            $crate::x_range_x(0, end, -1)
+        }
+    }};
+    ($a:expr, $b:expr $(,)*) => {
+        $crate::range_x($a, $b, 1)
+    };
+    ($a:expr, $b:expr, $c:expr $(,)*) => {
+        $crate::range_x($a, $b, $c)
+    };
+    ($a:expr, $b:expr, $c:expr, $($rest:tt)*) => {
+        $crate::range_x($a, $b, $c)
+    };
+}
+/// Based on [range()]
+///
+/// Examples:
+///
+/// ```rust
+/// #[macro_use] extern crate serde_json_lodash;
+/// use serde_json::json;
+/// assert_eq!(
+///   range!(json!(4)),
 ///   json!([0, 1, 2, 3])
 /// );
 /// assert_eq!(
-///   range!(-4),
+///   range!(json!(-4)),
 ///   json!([0, -1, -2, -3])
 /// );
 /// assert_eq!(
-///   range!(1, 5),
+///   range!(json!(1), json!(5)),
 ///   json!([1, 2, 3, 4])
 /// );
 /// assert_eq!(
-///   range!(0, 20, 5),
+///   range!(json!(0), json!(20), 5),
 ///   json!([0, 5, 10, 15])
 /// );
 /// assert_eq!(
-///   range!(0, -4, -1),
+///   range!(json!(0), json!(-4), -1),
 ///   json!([0, -1, -2, -3])
 /// );
 /// assert_eq!(
-///   range!(1, 4, 0),
+///   range!(json!(1), json!(4), 0),
 ///   json!([1, 1, 1])
 /// );
 /// assert_eq!(
-///   range!(0),
+///   range!(json!(0)),
 ///   json!([])
 /// );
 /// ```
@@ -108,10 +228,11 @@ macro_rules! range {
         json!([])
     };
     ($a:expr $(,)*) => {{
-        if $a >= 0 {
-            $crate::range(0, $a, 1)
+        let end = $crate::to_safe_integer_x($a);
+        if end >= 0 {
+            $crate::x_range(0, end, 1)
         } else {
-            $crate::range(0, $a, -1)
+            $crate::x_range(0, end, -1)
         }
     }};
     ($a:expr, $b:expr $(,)*) => {

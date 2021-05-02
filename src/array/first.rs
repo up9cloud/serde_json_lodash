@@ -1,5 +1,7 @@
 build_link!(
-    /// Same as [head!]. Description can be found in [lodash first](https://lodash.com/docs/#first)
+    /// See lodash [first](https://lodash.com/docs/#first)
+    first,
+    /// Based on [first()]
     ///
     /// More examples:
     ///
@@ -9,6 +11,5 @@ build_link!(
     /// assert_eq!(first!(), json!(null));
     /// assert_eq!(first!(json!("東京")), json!("東"));
     /// ```
-    first,
     head
 );

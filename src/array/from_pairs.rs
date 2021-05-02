@@ -60,7 +60,7 @@ fn arrays_to_object(vec: Vec<Value>) -> Value {
     Value::Object(map)
 }
 
-///
+/// See lodash [fromPairs](https://lodash.com/docs/#fromPairs)
 pub fn from_pairs(v: Value) -> Value {
     match v {
         Value::Null => json!({}),
@@ -72,7 +72,7 @@ pub fn from_pairs(v: Value) -> Value {
     }
 }
 
-/// Description can be found in [lodash fromPairs](https://lodash.com/docs/#fromPairs)
+/// Based on [from_pairs()]
 ///
 /// Examples:
 ///

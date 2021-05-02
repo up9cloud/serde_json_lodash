@@ -1,5 +1,9 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value};
 
+#[doc(hidden)]
+pub fn _empty_array() -> Vec<Value> {
+    vec![]
+}
 ///
 pub fn intersection_x(v1: Value, v2: Value) -> Vec<Value> {
     let mut result = vec![];
@@ -43,20 +47,53 @@ pub fn intersection_x(v1: Value, v2: Value) -> Vec<Value> {
     }
     result
 }
-///
+/// See lodash [intersection](https://lodash.com/docs/#intersection)
 pub fn intersection(v1: Value, v2: Value) -> Value {
     Value::Array(intersection_x(v1, v2))
 }
 
-#[doc(hidden)]
-pub fn _return_self_if_array(v: Value) -> Value {
-    if v.is_array() {
-        return v;
-    }
-    json!([])
+/// Based on [intersection_x()]
+///
+/// Examples:
+///
+/// ```rust
+/// #[macro_use] extern crate serde_json_lodash;
+/// use serde_json::json;
+/// assert_eq!(
+///   intersection_x!(json!([2, 1]), json!([2, 3])),
+///   vec![json!(2)]
+/// );
+/// ```
+///
+/// More examples:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::{json, Value};
+/// let expect: Vec<Value> = vec![];
+/// assert_eq!(intersection_x!(), expect);
+/// assert_eq!(intersection_x!(json!([3, 2, 1]), json!([2, 3, 4]), json!([3, 2, 0])), vec![json!(3), json!(2)])
+/// ```
+#[macro_export]
+macro_rules! intersection_x {
+    () => (
+        $crate::_empty_array()
+    );
+    ($a:expr $(,)*) => {{
+        if $a.is_array() {
+            $a.as_array().unwrap_or_else($crate::_empty_array)
+        } else {
+            $crate::_empty_array()
+        }
+    }};
+    ($a:expr, $b:expr $(,)*) => {
+        $crate::intersection_x($a, $b)
+    };
+    ($a:expr, $b:expr, $($rest:tt)*) => {
+        $crate::intersection_x!($crate::intersection($a, $b), $($rest)*)
+    };
 }
-
-/// Description can be found in [lodash intersection](https://lodash.com/docs/#intersection)
+/// Based on [intersection()]
 ///
 /// Examples:
 ///
@@ -85,15 +122,20 @@ pub fn _return_self_if_array(v: Value) -> Value {
 /// assert_eq!(intersection!(json!([null,false,0,"","ab",[],{}])), json!([null,false,0,"","ab",[],{}]));
 /// assert_eq!(intersection!(json!([null,false,0,"","ab",[],{}]), json!([])), json!([]));
 /// assert_eq!(intersection!(json!([null,false,0,"","ab",[],{}]), json!([null,false,0,"","ab",[],{}])), json!([null,false,0,"","ab"]));
+/// assert_eq!(intersection!(json!([null, false, 1]), json!([null,false,0]), json!([false, 2, null])), json!([null,false]));
 /// ```
 #[macro_export]
 macro_rules! intersection {
     () => (
         json!([])
     );
-    ($a:expr $(,)*) => {
-        $crate::_return_self_if_array($a)
-    };
+    ($a:expr $(,)*) => {{
+        if $a.is_array() {
+            $a
+        } else {
+            json!([])
+        }
+    }};
     ($a:expr, $b:expr $(,)*) => {
         $crate::intersection($a, $b)
     };

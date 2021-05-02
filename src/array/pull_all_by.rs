@@ -1,6 +1,6 @@
 use crate::lib::{Value};
 
-///
+/// See lodash [pullAllBy](https://lodash.com/docs/#pullAllBy)
 pub fn pull_all_by(mut array: Value, values: Value, iteratee: fn(&Value) -> &Value) -> Value {
     let new_vec = match array {
         Value::Null | Value::Bool(_) | Value::Number(_) | Value::String(_) | Value::Object(_) => {
@@ -33,7 +33,7 @@ pub fn pull_all_by(mut array: Value, values: Value, iteratee: fn(&Value) -> &Val
     array
 }
 
-/// Description can be found in [lodash pullAllBy](https://lodash.com/docs/#pullAllBy)
+/// Based on [pull_all_by()]
 ///
 /// Examples:
 ///

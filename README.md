@@ -21,10 +21,24 @@ serde_json_lodash = "0.1"
 #[macro_use] extern crate serde_json_lodash;
 use serde_json::json;
 fn main() {
+  // macro style, optional parameters
   assert_eq!(
-    capitalize!(json!("FRED")),
-    json!("Fred")
+    merge!(json!({'a':1}), json!({'b':2}), json!({'c':3})),
+    json!({'a': 1, 'b': 2, 'c': 3})
   );
+
+  // fn style, fixed parameters
+  use serde_json_lodash::merge;
+  assert_eq!(
+    merge(json!({'a':1}), json!({'b':2})),
+    json!({'a': 1, 'b': 2})
+  );
+
+  // `x_`, `_x` helpers for simple types
+  assert_eq!(capitalize!(json!("FRED")), json!("Fred"));
+  assert_eq!(x_capitalize!("FRED"), json!("Fred"));
+  assert_eq!(capitalize_x!(json!("FRED")), "Fred".to_owned());
+  assert_eq!(x_capitalize_x!("FRED"), "Fred".to_owned());
 }
 ```
 
@@ -36,25 +50,27 @@ How?
 
 - Every function from lodash.js should be implemented both `fn` and `macro` (for optional parameters usages)
 - The main inputs and return value should be *`serde_json::Value`*, except:
-  - If the input parameters are options, not data, using *primitive type* instead Value
-    - e.q. `_.chunk(array, [size=1])` => `::check!(json!([1,2,3]), 2)`, size should be `usize`, not `Value::Number`
+  - If the input parameters are options, not data, always using *primitive type* instead Value
+    - e.q. `_.chunk(array, [size=1])` => `::chunk(json!([1,2,3]), 2)`, size should be `usize`, not `Value::Number`
   - Some cases we use *`std::ops::Fn`* as input parameter
     - e.q. `_.findIndex(array, predicate, ...)` => `::find_index(..., predicate: fn(&Value) -> bool, ...)`
   - If return value is statistic, using *primitive type* instead Value
     - e.q. `_.findIndex(...)` => `::find_index(...) -> isize`, return value should be `isize`, not `Value::Number`
-  - Because there is no `undefined` type in json, so if original function return `undefined`, the ported fn should always return Value::Null
+  - Because there is no `undefined` type in serde_json, so if the original function return `undefined`, the ported version should return Value::Null
 - If the original function allows optional parameters:
-  - known amount, e.q. `_.get(object, path, [defaultValue])`, the ported version fn should be `::get(object, path, defaultValue)`, *optional should become required*
-  - infinity amount, e.q. `_.merge(object, [...sources])`, the ported version fn should be `::merge(object, source)`, *should only keep one, depends on how the function works, and no more optionals*
-- It might implement helper functions, e.q.:
-  - `fn` with *`x_` prefix*: input is not Value
+  - known amount, then the ported fn should *should be as required*
+    - e.q. `_.get(object, path, [defaultValue])` => `::get(object, path, defaultValue)`
+  - infinity amount, the ported fn should *only keep one, and no more optionals*
+    - e.q. `_.merge(object, [...sources])` => `::merge(object, source)`, but macro could `::merge!(object, source1, source2, ...)`
+- It might implement helper functions, for different input and output types:
+  - with *`x_` prefix*: input is not Value
     - e.q. `x_capitalize(&str) -> Value`
-  - `fn` with *`_x` suffix*: output is not Value
+  - with *`_x` suffix*: output is not Value
     - e.q. `capitalize_x(Value) -> String`
-  - `fn` with *both `x_` and `_x`*
+  - with *both `x_` and `_x`*
     - e.q. `x_capitalize_x(&str) -> &str`
-  - If the function accept multiple types, we can only choose one to implement
-    - e.q. `_.merge({a:1}, {b:2})`, `_.merge([1], [2])` => ...
+  - If the function accept multiple types, the helper functions should only choose one type to implement
+    - e.q. `_.toString([1,2])`, `_.toString(123)` => `::x_to_string(v: &str) -> Value`
 - `Examples:` section should be exactly same as the examples in lodash doc.
 - Test cases should all be written in the `More examples` section, we relied on powerful rust's doc test
 
@@ -70,7 +86,7 @@ cargo watch -x "test --features lazy_static" -w "Cargo.toml" -w "src"
 # Preview doc
 cargo doc --open
 
-# Bump version and push
+# Bump patch version and push
 ./bump_push.sh
 ```
 

@@ -1,6 +1,6 @@
 use crate::lib::{Value};
 
-///
+/// See lodash [lastIndexOf](https://lodash.com/docs/#lastIndexOf)
 pub fn last_index_of(array: Value, value: Value, from_index: usize) -> isize {
     match value {
         Value::Null | Value::Bool(_) | Value::Number(_) | Value::String(_) => match array {
@@ -22,7 +22,7 @@ pub fn last_index_of(array: Value, value: Value, from_index: usize) -> isize {
     }
 }
 
-/// Description can be found in [lodash lastIndexOf](https://lodash.com/docs/#lastIndexOf)
+/// Based on [last_index_of()]
 ///
 /// Examples:
 ///

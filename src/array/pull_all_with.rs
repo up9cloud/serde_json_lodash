@@ -1,6 +1,6 @@
 use crate::lib::{Value};
 
-///
+/// See lodash [pullAllWith](https://lodash.com/docs/#pullAllWith)
 pub fn pull_all_with(
     mut array: Value,
     values: Value,
@@ -35,7 +35,7 @@ pub fn pull_all_with(
     array
 }
 
-/// Description can be found in [lodash pullAllWith](https://lodash.com/docs/#pullAllWith)
+/// Based on [pull_all_with()]
 ///
 /// Examples:
 ///

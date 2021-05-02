@@ -1,6 +1,6 @@
 use crate::lib::{Value};
 
-///
+/// See lodash [concat](https://lodash.com/docs/#concat)
 pub fn concat(v: Value, v2: Value) -> Value {
     let mut result = match v {
         Value::Null => vec![v],
@@ -25,7 +25,7 @@ pub fn concat(v: Value, v2: Value) -> Value {
     Value::Array(result)
 }
 
-/// Description can be found in [lodash concat](https://lodash.com/docs/#concat)
+/// Based on [concat()]
 ///
 /// Examples:
 ///

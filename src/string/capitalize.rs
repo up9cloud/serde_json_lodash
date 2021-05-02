@@ -52,11 +52,70 @@ pub fn capitalize_x(v: Value) -> String {
         Value::Object(o) => x_capitalize_x(get_type_name(&o)),
     }
 }
-///
+/// See lodash [capitalize](https://lodash.com/docs/#capitalize)
 pub fn capitalize(v: Value) -> Value {
     Value::String(capitalize_x(v))
 }
-/// Description can be found in [lodash capitalize](https://lodash.com/docs/#capitalize)
+
+/// Based on [x_capitalize_x()]
+///
+/// Examples:
+///
+/// ```rust
+/// #[macro_use] extern crate serde_json_lodash;
+/// use serde_json::json;
+/// assert_eq!(
+///   x_capitalize_x!("FRED"),
+///   "Fred".to_owned()
+/// );
+/// ```
+///
+/// More examples:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(x_capitalize_x!(), "".to_owned());
+/// ```
+#[macro_export]
+macro_rules! x_capitalize_x {
+    () => {
+        "".to_owned()
+    };
+    ($a:expr $(,)*) => {
+        $crate::x_capitalize_x($a)
+    };
+    ($a:expr, $($rest:tt)*) => {
+        $crate::x_capitalize_x($a)
+    };
+}
+/// Based on [x_capitalize()]
+#[macro_export]
+macro_rules! x_capitalize {
+    () => {
+        json!("")
+    };
+    ($a:expr $(,)*) => {
+        $crate::x_capitalize($a)
+    };
+    ($a:expr, $($rest:tt)*) => {
+        $crate::x_capitalize($a)
+    };
+}
+/// Based on [capitalize_x()]
+#[macro_export]
+macro_rules! capitalize_x {
+    () => {
+        "".to_owned()
+    };
+    ($a:expr $(,)*) => {
+        $crate::capitalize_x($a)
+    };
+    ($a:expr, $($rest:tt)*) => {
+        $crate::capitalize_x($a)
+    };
+}
+/// Based on [capitalize()]
 ///
 /// Examples:
 ///

@@ -26,12 +26,47 @@ pub fn join_x(v: Value, sep: &str) -> String {
     }
 }
 
-///
+/// See lodash [join](https://lodash.com/docs/#join)
 pub fn join(v: Value, sep: &str) -> Value {
     Value::String(join_x(v, sep))
 }
 
-/// Description can be found in [lodash join](https://lodash.com/docs/#join)
+/// Based on [join_x()]
+///
+/// Examples:
+///
+/// ```rust
+/// #[macro_use] extern crate serde_json_lodash;
+/// use serde_json::json;
+/// assert_eq!(
+///   join_x!(json!(['a', 'b', 'c']), "~"),
+///   "a~b~c".to_owned()
+/// );
+/// ```
+///
+/// More examples:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(join!(), "".to_owned());
+/// ```
+#[macro_export]
+macro_rules! join_x {
+    () => {
+        "".to_owned()
+    };
+    ($a:expr $(,)*) => {
+        $crate::join_x($a, ",")
+    };
+    ($a:expr, $b:expr $(,)*) => {
+        $crate::join_x($a, $b)
+    };
+    ($a:expr, $b:expr, $($rest:tt)*) => {
+        $crate::join_x($a, $b)
+    };
+}
+/// Based on [join()]
 ///
 /// Examples:
 ///

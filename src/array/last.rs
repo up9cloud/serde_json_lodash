@@ -1,6 +1,6 @@
 use crate::lib::{json, Value};
 
-///
+/// See lodash [last](https://lodash.com/docs/#last)
 pub fn last(v: Value) -> Value {
     match v {
         Value::Null => json!(null),
@@ -21,7 +21,7 @@ pub fn last(v: Value) -> Value {
         Value::Object(_) => json!(null),
     }
 }
-/// Description can be found in [lodash last](https://lodash.com/docs/#last)
+/// Based on [last()]
 ///
 /// Examples:
 ///

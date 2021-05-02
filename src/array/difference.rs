@@ -1,6 +1,6 @@
 use crate::lib::{Value};
 
-///
+/// See lodash [difference](https://lodash.com/docs/#difference)
 pub fn difference(v1: Value, v2: Value) -> Value {
     let mut result = vec![];
     let v1 = match v1 {
@@ -48,7 +48,7 @@ pub fn difference(v1: Value, v2: Value) -> Value {
     Value::Array(result)
 }
 
-/// Description can be found in [lodash concat](https://lodash.com/docs/#concat)
+/// Based on [difference()]
 ///
 /// Examples:
 ///

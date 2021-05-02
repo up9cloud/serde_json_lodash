@@ -1,6 +1,6 @@
 use crate::lib::{json, Value};
 
-///
+/// See lodash [head](https://lodash.com/docs/#head)
 pub fn head(v: Value) -> Value {
     match v {
         Value::Null => json!(null),
@@ -21,7 +21,7 @@ pub fn head(v: Value) -> Value {
         Value::Object(_) => json!(null),
     }
 }
-/// Description can be found in [lodash head](https://lodash.com/docs/#head)
+/// Based on [head()]
 ///
 /// Examples:
 ///

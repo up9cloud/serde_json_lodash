@@ -1,11 +1,11 @@
 use crate::lib::{json, Value};
 
-///
+/// See lodash [stubFalse](https://lodash.com/docs/#stubFalse)
 pub fn stub_false() -> Box<dyn Fn() -> Value> {
     Box::new(|| json!(false))
 }
 
-/// Description can be found in [lodash stubFalse](https://lodash.com/docs/#stubFalse)
+/// Based on [stub_false()]
 ///
 /// Examples:
 ///

@@ -1,11 +1,11 @@
 use crate::lib::{Value};
 
-///
+/// See lodash [stubTrue](https://lodash.com/docs/#stubTrue)
 pub fn stub_true() -> Box<dyn Fn() -> Value> {
     Box::new(|| Value::Bool(true))
 }
 
-/// Description can be found in [lodash stubTrue](https://lodash.com/docs/#stubTrue)
+/// Based on [stub_true()]
 ///
 /// Examples:
 ///

@@ -35,11 +35,78 @@ pub fn to_lower_x(v: Value) -> String {
         Value::Object(o) => x_to_lower_x(get_type_name(&o)),
     }
 }
-///
+/// See lodash [toLower](https://lodash.com/docs/#toLower)
 pub fn to_lower(v: Value) -> Value {
     Value::String(to_lower_x(v))
 }
-/// Description can be found in [lodash toLower](https://lodash.com/docs/#toLower)
+
+/// Based on [x_to_lower_x()]
+///
+/// Examples:
+///
+/// ```rust
+/// #[macro_use] extern crate serde_json_lodash;
+/// use serde_json::json;
+/// assert_eq!(
+///   x_to_lower_x!("--Foo-Bar--"),
+///   "--foo-bar--".to_owned()
+/// );
+/// assert_eq!(
+///   x_to_lower_x!("fooBar"),
+///   "foobar".to_owned()
+/// );
+/// assert_eq!(
+///   x_to_lower_x!("__FOO_BAR__"),
+///   "__foo_bar__".to_owned()
+/// );
+/// ```
+///
+/// More examples:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(x_to_lower_x!(), "".to_owned());
+/// ```
+#[macro_export]
+macro_rules! x_to_lower_x {
+    () => {
+        "".to_owned()
+    };
+    ($a:expr $(,)*) => {
+        $crate::x_to_lower_x($a)
+    };
+    ($a:expr, $($rest:tt)*) => {
+        $crate::x_to_lower_x($a)
+    };
+}
+/// Based on [x_to_lower()]
+#[macro_export]
+macro_rules! x_to_lower {
+    () => {
+        json!("")
+    };
+    ($a:expr $(,)*) => {
+        $crate::x_to_lower($a)
+    };
+    ($a:expr, $($rest:tt)*) => {
+        $crate::x_to_lower($a)
+    };
+}
+/// Based on [to_lower_x()]
+#[macro_export]
+macro_rules! to_lower_x {
+    () => {
+        "".to_owned()
+    };
+    ($a:expr $(,)*) => {
+        $crate::to_lower_x($a)
+    };
+    ($a:expr, $($rest:tt)*) => {
+        $crate::to_lower_x($a)
+    };
+}
+/// Based on [to_lower()]
 ///
 /// Examples:
 ///

@@ -79,7 +79,7 @@ fn merge_2_object(mut object: Value, source: Value) -> Value {
     }
     object
 }
-///
+/// See lodash [merge](https://lodash.com/docs/#merge)
 pub fn merge(object: Value, source: Value) -> Value {
     if object.is_object() && source.is_object() {
         return merge_2_object(object, source);
@@ -92,7 +92,7 @@ pub fn merge(object: Value, source: Value) -> Value {
     // array with object
     object
 }
-/// Description can be found in [lodash merge](https://lodash.com/docs/#merge)
+/// Based on [merge()]
 ///
 /// Examples:
 ///

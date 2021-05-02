@@ -1,6 +1,6 @@
 use crate::lib::{json, Value};
 
-///
+/// See lodash [initial](https://lodash.com/docs/#initial)
 pub fn initial(v: Value) -> Value {
     match v {
         Value::Null => json!([]),
@@ -24,7 +24,8 @@ pub fn initial(v: Value) -> Value {
         Value::Object(_) => json!([]),
     }
 }
-/// Description can be found in [lodash initial](https://lodash.com/docs/#initial)
+
+/// Based on [initial()]
 ///
 /// Examples:
 ///

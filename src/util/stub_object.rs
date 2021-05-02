@@ -1,11 +1,11 @@
 use crate::lib::{json, Value};
 
-///
+/// See lodash [stubObject](https://lodash.com/docs/#stubObject)
 pub fn stub_object() -> Box<dyn Fn() -> Value> {
     Box::new(|| json!({}))
 }
 
-/// Description can be found in [lodash stubObject](https://lodash.com/docs/#stubObject)
+/// Based on [stub_object()]
 ///
 /// Examples:
 ///

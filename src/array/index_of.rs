@@ -1,6 +1,6 @@
 use crate::lib::{Value};
 
-///
+/// See lodash [indexOf](https://lodash.com/docs/#indexOf)
 pub fn index_of(array: Value, value: Value, from_index: usize) -> isize {
     match value {
         Value::Null | Value::Bool(_) | Value::Number(_) | Value::String(_) => match array {
@@ -22,7 +22,7 @@ pub fn index_of(array: Value, value: Value, from_index: usize) -> isize {
     }
 }
 
-/// Description can be found in [lodash indexOf](https://lodash.com/docs/#indexOf)
+/// Based on [index_of()]
 ///
 /// Examples:
 ///

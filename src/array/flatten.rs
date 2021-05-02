@@ -24,7 +24,7 @@ pub fn x_flatten_x(vec: Vec<Value>) -> Vec<Value> {
     }
     result
 }
-///
+/// See lodash [flatten](https://lodash.com/docs/#flatten)
 pub fn flatten(v: Value) -> Value {
     match v {
         Value::Null => json!([]),
@@ -44,7 +44,7 @@ pub fn flatten(v: Value) -> Value {
         Value::Object(_) => json!([]),
     }
 }
-/// Description can be found in [lodash flatten](https://lodash.com/docs/#flatten)
+/// Based on [flatten()]
 ///
 /// Examples:
 ///

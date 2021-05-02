@@ -27,7 +27,7 @@ pub fn x_flatten_depth_x(vec: Vec<Value>, depth: usize) -> Vec<Value> {
     }
     result
 }
-///
+/// See lodash [flattenDepth](https://lodash.com/docs/#flattenDepth)
 pub fn flatten_depth(v: Value, depth: usize) -> Value {
     match v {
         Value::Null => json!([]),
@@ -48,7 +48,7 @@ pub fn flatten_depth(v: Value, depth: usize) -> Value {
     }
 }
 
-/// Description can be found in [lodash flattenDepth](https://lodash.com/docs/#flattenDepth)
+/// Based on [flatten_depth()]
 ///
 /// Examples:
 ///

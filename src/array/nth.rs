@@ -1,6 +1,6 @@
 use crate::lib::{json, Value};
 
-///
+/// See lodash [nth](https://lodash.com/docs/#nth)
 pub fn nth(v: Value, n: isize) -> Value {
     match v {
         Value::Null => json!(null),
@@ -51,7 +51,7 @@ pub fn nth(v: Value, n: isize) -> Value {
     }
 }
 
-/// Description can be found in [lodash nth](https://lodash.com/docs/#nth)
+/// Based on [nth()]
 ///
 /// Examples:
 ///
