@@ -4,6 +4,31 @@ use crate::lib::{json, Value, get_type_name};
 pub fn x_to_string(v: &str) -> Value {
     json!(v)
 }
+
+#[doc(hidden)]
+pub fn json_array_to_string_x(vec: Vec<Value>) -> String {
+    let mut iter = vec.into_iter();
+    match iter.next() {
+        Some(v) => {
+            let mut s = "".to_owned();
+            if v.is_null() {
+                s.push_str("null");
+            } else {
+                s.push_str(&*to_string_x(v));
+            }
+            for v in iter {
+                s.push(',');
+                if v.is_null() {
+                    s.push_str("null");
+                } else {
+                    s.push_str(&*to_string_x(v));
+                }
+            }
+            s
+        }
+        None => "".into(),
+    }
+}
 ///
 pub fn to_string_x(v: Value) -> String {
     match v {
@@ -17,29 +42,7 @@ pub fn to_string_x(v: Value) -> String {
         }
         Value::Number(n) => n.to_string(),
         Value::String(s) => s,
-        Value::Array(vec) => {
-            let mut iter = vec.into_iter();
-            match iter.next() {
-                Some(v) => {
-                    let mut s = "".to_owned();
-                    if v.is_null() {
-                        s.push_str("null");
-                    } else {
-                        s.push_str(&*to_string_x(v));
-                    }
-                    for v in iter {
-                        s.push(',');
-                        if v.is_null() {
-                            s.push_str("null");
-                        } else {
-                            s.push_str(&*to_string_x(v));
-                        }
-                    }
-                    s
-                }
-                None => "".into(),
-            }
-        }
+        Value::Array(vec) => json_array_to_string_x(vec),
         Value::Object(o) => get_type_name(&o).into(), // I don't think put [object Object] here is a good idea, so...
     }
 }

@@ -1,7 +1,5 @@
-#[doc(hidden)]
-pub fn add() {
-    todo!()
-}
+mod add;
+pub use add::*;
 #[doc(hidden)]
 pub fn ceil() {
     todo!()
