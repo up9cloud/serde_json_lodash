@@ -226,6 +226,7 @@ macro_rules! to_path_x {
 /// assert_eq!(to_path!(json!(r#"a['b"#)), json!(["a",r#"'b"#]));
 /// assert_eq!(to_path!(json!(r#"a["b"#)), json!(["a",r#""b"#]));
 /// assert_eq!(to_path!(json!([])), json!([]));
+/// assert_eq!(to_path!(json!(["x", 0, "y", "z"])), json!(["x", "0", "y", "z"]));
 /// assert_eq!(to_path!(json!({})), json!(["serde_json::map::Map<alloc::string::String, serde_json::value::Value>"]));
 /// assert_eq!(to_path!(json!({"a":1})), json!(["serde_json::map::Map<alloc::string::String, serde_json::value::Value>"]));
 /// ```

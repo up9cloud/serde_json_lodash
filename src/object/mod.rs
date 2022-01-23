@@ -180,10 +180,8 @@ pub use pick_by as pickBy;
 pub fn result() {
     todo!()
 }
-#[doc(hidden)]
-pub fn set() {
-    todo!()
-}
+mod set;
+pub use set::*;
 #[doc(hidden)]
 pub fn set_with() {
     todo!()

@@ -84,6 +84,9 @@ How?
 # Up
 ./dev.sh
 
+# Watch and test single file
+./dev.sh --doc set
+
 # Lint
 ./lint.sh
 
