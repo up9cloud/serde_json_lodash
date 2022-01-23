@@ -96,10 +96,10 @@ pub fn functions_in() {
 }
 #[doc(hidden)]
 pub use functions_in as functionsIn;
-#[doc(hidden)]
-pub fn get() {
-    todo!()
-}
+
+mod get;
+pub use get::*;
+
 #[doc(hidden)]
 pub fn has() {
     todo!()
