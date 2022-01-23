@@ -40,22 +40,13 @@ extern crate lazy_static;
 
 mod macros;
 
-mod lib {
+///
+pub mod lib {
     pub use serde_json::{json, Value, Map, Number};
-
-    pub fn get_type_name<T>(_: &T) -> &'static str {
-        std::any::type_name::<T>()
-    }
-    // pub fn undefined() -> Value {
-    //     json!(null)
-    // }
-    pub fn nan() -> Value {
-        json!(f64::NAN)
-    }
-    // pub fn infinity() -> Value {
-    //     json!(f64::INFINITY)
-    // }
 }
+
+#[doc(hidden)]
+pub mod internal;
 
 mod array;
 mod collection;

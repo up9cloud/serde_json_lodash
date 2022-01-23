@@ -1,9 +1,7 @@
 mod add;
 pub use add::*;
-#[doc(hidden)]
-pub fn ceil() {
-    todo!()
-}
+mod ceil;
+pub use ceil::*;
 #[doc(hidden)]
 pub fn divide() {
     todo!()

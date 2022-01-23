@@ -1,4 +1,5 @@
-use crate::lib::{json, Value, Number, nan};
+use crate::lib::{json, Value, Number};
+use crate::internal::{value_nan, value_to_option_number, vec_value_to_option_number};
 use crate::{to_string_x, json_array_to_string_x};
 
 ///
@@ -45,46 +46,16 @@ fn x_add_bool_x(n: Number, b: bool) -> Number {
         Number::from_f64(n.as_f64().unwrap() + v).unwrap()
     }
 }
-
-fn json_array_to_number(vec: Vec<Value>) -> Option<Number> {
-    match vec.len() {
-        0 => Some(0.into()),
-        1 => value_to_number(vec[0].clone()),
-        _ => None,
-    }
-}
-fn value_to_number(value: Value) -> Option<Number> {
-    match value {
-        Value::Null => Some(0.into()),
-        Value::Bool(_) => None,
-        Value::Number(n) => Some(n),
-        Value::String(s) => {
-            if s.is_empty() {
-                Some(0.into())
-            } else if let Ok(n) = s.parse::<usize>() {
-                Some(n.into())
-            } else if let Ok(n) = s.parse::<isize>() {
-                Some(n.into())
-            } else if let Ok(n) = s.parse::<f64>() {
-                Number::from_f64(n)
-            } else {
-                None
-            }
-        }
-        Value::Array(vec) => json_array_to_number(vec),
-        Value::Object(_) => None,
-    }
-}
-fn json_array_to_json_number(vec: Vec<Value>) -> Value {
-    match json_array_to_number(vec) {
+fn array_to_value_number(vec: Vec<Value>) -> Value {
+    match vec_value_to_option_number(vec) {
         Some(n) => Value::Number(n),
-        None => nan(),
+        None => value_nan(),
     }
 }
-fn value_to_json_number(value: Value) -> Value {
-    match value_to_number(value) {
+fn value_to_value_number(value: Value) -> Value {
+    match value_to_option_number(value) {
         Some(n) => Value::Number(n),
-        None => nan(),
+        None => value_nan(),
     }
 }
 
@@ -102,8 +73,8 @@ pub fn add(augend: Value, addend: Value) -> Value {
             }
             Value::Number(_) => addend,
             Value::String(s) => json!(format!("null{}", s)),
-            Value::Array(_) => value_to_json_number(addend),
-            Value::Object(_) => nan(),
+            Value::Array(_) => value_to_value_number(addend),
+            Value::Object(_) => value_nan(),
         },
         Value::Bool(b) => match addend {
             Value::Null => json!(0),
@@ -118,21 +89,20 @@ pub fn add(augend: Value, addend: Value) -> Value {
             }
             Value::Number(n) => Value::Number(x_add_bool_x(n, b)),
             Value::String(s) => {
-                let v = if b { "true" } else { "false" };
-                json!(format!("{}{}", v, s))
+                json!(format!("{}{}", b, s))
             }
             Value::Array(vec) => {
                 if b {
-                    if let Some(n) = json_array_to_number(vec) {
+                    if let Some(n) = vec_value_to_option_number(vec) {
                         Value::Number(x_add_bool_x(n, b))
                     } else {
-                        nan()
+                        value_nan()
                     }
                 } else {
-                    json_array_to_json_number(vec)
+                    array_to_value_number(vec)
                 }
             }
-            Value::Object(_) => nan(),
+            Value::Object(_) => value_nan(),
         },
         Value::Number(n) => match addend {
             Value::Null => Value::Number(n),
@@ -142,56 +112,56 @@ pub fn add(augend: Value, addend: Value) -> Value {
             Value::Array(vec) => match vec.len() {
                 0 => Value::Number(n),
                 1 => {
-                    if let Some(n2) = json_array_to_number(vec) {
+                    if let Some(n2) = vec_value_to_option_number(vec) {
                         Value::Number(x_add_x(n, n2))
                     } else {
-                        nan()
+                        value_nan()
                     }
                 }
-                _ => nan(),
+                _ => value_nan(),
             },
-            Value::Object(_) => nan(),
+            Value::Object(_) => value_nan(),
         },
         Value::String(mut s) => {
             s.push_str(&to_string_x(addend));
             Value::String(s)
         }
         Value::Array(vec) => match addend {
-            Value::Null => json_array_to_json_number(vec),
+            Value::Null => array_to_value_number(vec),
             Value::Bool(b) => {
                 if b {
-                    if let Some(n) = json_array_to_number(vec) {
+                    if let Some(n) = vec_value_to_option_number(vec) {
                         Value::Number(x_add_bool_x(n, b))
                     } else {
-                        nan()
+                        value_nan()
                     }
                 } else {
-                    json_array_to_json_number(vec)
+                    array_to_value_number(vec)
                 }
             }
             Value::Number(n) => match vec.len() {
                 0 => Value::Number(n),
                 1 => {
-                    if let Some(n2) = json_array_to_number(vec) {
+                    if let Some(n2) = vec_value_to_option_number(vec) {
                         Value::Number(x_add_x(n2, n))
                     } else {
-                        nan()
+                        value_nan()
                     }
                 }
-                _ => nan(),
+                _ => value_nan(),
             },
             Value::String(s) => Value::String(format!("{}{}", json_array_to_string_x(vec), s)),
             Value::Array(vec2) => {
-                if let Some(n) = json_array_to_number(vec) {
-                    if let Some(n2) = json_array_to_number(vec2) {
+                if let Some(n) = vec_value_to_option_number(vec) {
+                    if let Some(n2) = vec_value_to_option_number(vec2) {
                         return Value::Number(x_add_x(n, n2));
                     }
                 }
-                nan()
+                value_nan()
             }
-            Value::Object(_) => nan(),
+            Value::Object(_) => value_nan(),
         },
-        Value::Object(_) => nan(),
+        Value::Object(_) => value_nan(),
     }
 }
 

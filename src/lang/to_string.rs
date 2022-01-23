@@ -1,4 +1,5 @@
-use crate::lib::{json, Value, get_type_name};
+use crate::lib::{json, Value};
+use crate::internal::{type_name};
 
 ///
 pub fn x_to_string(v: &str) -> Value {
@@ -43,7 +44,7 @@ pub fn to_string_x(v: Value) -> String {
         Value::Number(n) => n.to_string(),
         Value::String(s) => s,
         Value::Array(vec) => json_array_to_string_x(vec),
-        Value::Object(o) => get_type_name(&o).into(), // I don't think put [object Object] here is a good idea, so...
+        Value::Object(o) => type_name(&o).into(), // I don't think put [object Object] here is a good idea, so...
     }
 }
 /// See lodash [toString](https://lodash.com/docs/#toString)

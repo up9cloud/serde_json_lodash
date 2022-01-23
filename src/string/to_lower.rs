@@ -1,4 +1,5 @@
-use crate::lib::{json, Value, get_type_name};
+use crate::lib::{json, Value};
+use crate::internal::{type_name};
 
 ///
 pub fn x_to_lower_x(s: &str) -> String {
@@ -32,7 +33,7 @@ pub fn to_lower_x(v: Value) -> String {
             }
             result.join(",")
         }
-        Value::Object(o) => x_to_lower_x(get_type_name(&o)),
+        Value::Object(o) => x_to_lower_x(type_name(&o)),
     }
 }
 /// See lodash [toLower](https://lodash.com/docs/#toLower)

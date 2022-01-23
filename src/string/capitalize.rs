@@ -1,4 +1,5 @@
-use crate::lib::{json, Value, get_type_name};
+use crate::lib::{json, Value};
+use crate::internal::{type_name};
 
 ///
 pub fn x_capitalize_x(s: &str) -> String {
@@ -49,7 +50,7 @@ pub fn capitalize_x(v: Value) -> String {
                 None => "".into(),
             }
         }
-        Value::Object(o) => x_capitalize_x(get_type_name(&o)),
+        Value::Object(o) => x_capitalize_x(type_name(&o)),
     }
 }
 /// See lodash [capitalize](https://lodash.com/docs/#capitalize)
