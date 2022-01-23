@@ -1,6 +1,4 @@
-use crate::lib::{
-    json,
-    Value};
+use crate::lib::{json, Value};
 use crate::internal::value_undefined;
 use crate::to_path_x;
 
@@ -20,17 +18,17 @@ pub fn set(mut object: Value, path: Value, value: Value) -> Value {
                     let len = vec.len();
                     if len <= i {
                         let v = cur.as_array_mut().unwrap();
-                        for _ in len..(i+1) {
+                        for _ in len..(i + 1) {
                             v.push(value_undefined());
                         }
                     }
                     cur = cur.get_mut(i).unwrap()
-                },
+                }
                 Err(_) => return object,
             },
             Value::Object(map) => {
                 if !map.contains_key(k) {
-                    let v = if ii + 1 <= i_max && p_vec[ii + 1].parse::<usize>().is_ok() {
+                    let v = if ii < i_max && p_vec[ii + 1].parse::<usize>().is_ok() {
                         json!([])
                     } else {
                         json!({})
@@ -38,15 +36,15 @@ pub fn set(mut object: Value, path: Value, value: Value) -> Value {
                     cur.as_object_mut().unwrap().insert(k.to_owned(), v);
                 }
                 cur = cur.get_mut(k).unwrap()
-            },
+            }
             _ => match k.parse::<usize>() {
                 Ok(i) => {
                     *cur = json!([]);
-                    for _ in 0..i+1 {
+                    for _ in 0..i + 1 {
                         cur.as_array_mut().unwrap().push(value_undefined())
                     }
                     cur = &mut cur[i];
-                },
+                }
                 Err(_) => {
                     *cur = json!({k: {}});
                     cur = &mut cur[k];
@@ -60,7 +58,7 @@ pub fn set(mut object: Value, path: Value, value: Value) -> Value {
             Ok(n) => match cur.get_mut(n) {
                 Some(v) => {
                     *v = value;
-                },
+                }
                 None => {
                     let inner = cur.as_array_mut().unwrap();
                     for _ in inner.len()..n {
@@ -74,9 +72,9 @@ pub fn set(mut object: Value, path: Value, value: Value) -> Value {
         Value::Object(_) => match cur.get_mut(k.to_owned()) {
             Some(v) => {
                 *v = value;
-            },
+            }
             None => {
-                cur.as_object_mut().unwrap().insert(k.to_owned(), value);
+                cur.as_object_mut().unwrap().insert(k, value);
             }
         },
         _ => match k.parse::<usize>() {
@@ -88,9 +86,9 @@ pub fn set(mut object: Value, path: Value, value: Value) -> Value {
                 }
                 inner.push(value);
                 *cur = base;
-            },
+            }
             Err(_) => {
-                *cur = json!({k: value});
+                *cur = json!({ k: value });
             }
         },
     }
@@ -135,9 +133,9 @@ pub fn set(mut object: Value, path: Value, value: Value) -> Value {
 /// ```
 #[macro_export]
 macro_rules! set {
-    () => (
+    () => {
         $crate::internal::value_undefined()
-    );
+    };
     ($a:expr $(,)*) => {
         $a
     };

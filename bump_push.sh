@@ -1,4 +1,6 @@
-#!/bin/bash -xe
+#!/bin/bash -e
+
+./lint.sh
 
 # major, minor, patch
 if [ -z "$1" ]; then

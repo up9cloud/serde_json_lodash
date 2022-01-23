@@ -24,13 +24,6 @@ jobs:
         with:
           command: clippy
           args: -- -D warnings
-      - uses: up9cloud/action-notify@master
-        if: failure() == true
-        env:
-          GITHUB_JOB_STATUS: ${{ job.status }}
-          TELEGRAM_BOT_TOKEN: ${{secrets.TELEGRAM_BOT_TOKEN}}
-          TELEGRAM_CHAT_ID: ${{secrets.TELEGRAM_CHAT_ID}}
-
   test:
     needs: [check]
     name: Test
@@ -49,13 +42,6 @@ jobs:
       - uses: actions-rs/cargo@v1
         with:
           command: test
-      - uses: up9cloud/action-notify@master
-        if: failure() == true
-        env:
-          GITHUB_JOB_STATUS: ${{ job.status }}
-          TELEGRAM_BOT_TOKEN: ${{secrets.TELEGRAM_BOT_TOKEN}}
-          TELEGRAM_CHAT_ID: ${{secrets.TELEGRAM_CHAT_ID}}
-
   publish:
     needs: [test]
     name: Publish to cargo.rs
@@ -83,9 +69,27 @@ jobs:
         if: ${{ github.event_name == 'push' && startsWith(github.ref, 'refs/tags/') }}
         with:
           command: publish
+  notify:
+    if: cancelled() == false
+    needs:
+      - check
+      - test
+      - publish
+    runs-on: ubuntu-latest
+    steps:
+      - id: set_status
+        run: |
+          if [ "${{needs.check.result}}" = "success" ] &&
+            [ "${{needs.test.result}}" = "success" ] &&
+            [ "${{needs.publish.result}}" = "success" ]; then
+            echo "::set-output name=status::success"
+          else
+            echo "::set-output name=status::failure"
+            exit 2
+          fi
       - uses: up9cloud/action-notify@master
         if: cancelled() == false
         env:
-          GITHUB_JOB_STATUS: ${{ job.status }}
+          GITHUB_JOB_STATUS: ${{steps.set_status.outputs.status}}
           TELEGRAM_BOT_TOKEN: ${{secrets.TELEGRAM_BOT_TOKEN}}
           TELEGRAM_CHAT_ID: ${{secrets.TELEGRAM_CHAT_ID}}

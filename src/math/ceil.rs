@@ -1,8 +1,5 @@
 use crate::lib::{Value, Number};
-use crate::internal::{
-    number_nan,
-    value_nan,
-    value_to_option_number};
+use crate::internal::{number_nan, value_nan, value_to_option_number};
 
 ///
 pub fn x_ceil_x(n: Number, precision: isize) -> Number {
@@ -11,42 +8,41 @@ pub fn x_ceil_x(n: Number, precision: isize) -> Number {
             let f = n.as_f64().unwrap();
             let x = 10_f64.powi(precision as i32);
             let result = (f * x).ceil() / x;
-            return Number::from(result as u64)
+            return Number::from(result as u64);
         } else {
-            return n
+            return n;
         }
-    } else if n.is_i64() {
+    }
+    if n.is_i64() {
         if precision < 0 {
             let f = n.as_f64().unwrap();
             let x = 10_f64.powi(precision as i32);
             let result = (f * x).ceil() / x;
-            return Number::from(result as i64)
+            return Number::from(result as i64);
         } else {
-            return n
-        }
-    } else { // f64
-        if precision == 0{
-            let result = n.as_f64().unwrap().ceil();
-            if result < 0.0 {
-                return Number::from(result as i64)
-            } else {
-                return Number::from(result as u64)
-            }
-        } else {
-            let f = n.as_f64().unwrap();
-            let x = 10_f64.powi(precision as i32);
-            let result = (f * x).ceil() / x;
-            if precision < 0 {
-                if result < 0.0 {
-                    return Number::from(result as i64)
-                } else {
-                    return Number::from(result as u64)
-                }
-            } else {
-                return Number::from_f64(result).unwrap_or(number_nan())
-            }
+            return n;
         }
     }
+    // f64
+    if precision == 0 {
+        let result = n.as_f64().unwrap().ceil();
+        if result < 0.0 {
+            return Number::from(result as i64);
+        } else {
+            return Number::from(result as u64);
+        }
+    }
+    let f = n.as_f64().unwrap();
+    let x = 10_f64.powi(precision as i32);
+    let result = (f * x).ceil() / x;
+    if precision < 0 {
+        if result < 0.0 {
+            return Number::from(result as i64);
+        } else {
+            return Number::from(result as u64);
+        }
+    }
+    Number::from_f64(result).unwrap_or_else(number_nan)
 }
 ///
 pub fn x_ceil(number: Number, precision: isize) -> Value {
@@ -56,7 +52,7 @@ pub fn x_ceil(number: Number, precision: isize) -> Value {
 pub fn ceil(number: Value, precision: isize) -> Value {
     match value_to_option_number(number) {
         Some(n) => x_ceil(n, precision),
-        None => value_nan()
+        None => value_nan(),
     }
 }
 

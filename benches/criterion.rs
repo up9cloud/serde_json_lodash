@@ -51,14 +51,22 @@ pub fn criterion_extract_value_number(c: &mut Criterion) {
         (Number::from(1), "u64"),
         (Number::from(-1), "i64"),
         (Number::from_f64(0.0).unwrap(), "f64"),
-    ].iter() {
-        group.bench_with_input(BenchmarkId::new("is_* => as_*", k), n, 
-            |b, i| b.iter(|| is_as(black_box(i.clone()))));
-        group.bench_with_input(BenchmarkId::new("let Some(n) = as_*", k), n, 
-            |b, i| b.iter(|| let_some_as(black_box(i.clone()))));
+    ]
+    .iter()
+    {
+        group.bench_with_input(BenchmarkId::new("is_* => as_*", k), n, |b, i| {
+            b.iter(|| is_as(black_box(i.clone())))
+        });
+        group.bench_with_input(BenchmarkId::new("let Some(n) = as_*", k), n, |b, i| {
+            b.iter(|| let_some_as(black_box(i.clone())))
+        });
     }
     group.finish();
 }
 
-criterion_group!(benches, criterion_capitalize, criterion_extract_value_number);
+criterion_group!(
+    benches,
+    criterion_capitalize,
+    criterion_extract_value_number
+);
 criterion_main!(benches);

@@ -1,6 +1,4 @@
-use crate::lib::{
-    json,
-    Value};
+use crate::lib::{json, Value};
 use crate::to_path_x;
 
 /// See lodash [get](https://lodash.com/docs/#get)
@@ -12,30 +10,28 @@ pub fn get(object: Value, path: Value, default: Value) -> Value {
     let mut cur: Value = object;
     for k in p_vec.iter() {
         cur = match cur {
-            Value::String(s) => {
-                match k.parse::<usize>() {
-                    Ok(n) => match s.chars().nth(n) {
-                        Some(s) => json!(s),
-                        None => return default,
-                    },
-                    Err(_) => return default,
-                }
+            Value::String(s) => match k.parse::<usize>() {
+                Ok(n) => match s.chars().nth(n) {
+                    Some(s) => json!(s),
+                    None => return default,
+                },
+                Err(_) => return default,
             },
             Value::Array(_) => match k.parse::<usize>() {
                 Ok(n) => match cur.get(n) {
                     Some(v) => v.clone(),
-                    None => return default
+                    None => return default,
                 },
                 Err(_) => return default,
             },
             Value::Object(_) => match cur.get(k) {
                 Some(v) => v.clone(),
-                None => return default
+                None => return default,
             },
-            _ => return default
+            _ => return default,
         }
     }
-    return cur
+    cur
 }
 /// Based on [get()]
 ///
@@ -78,9 +74,9 @@ pub fn get(object: Value, path: Value, default: Value) -> Value {
 /// ```
 #[macro_export]
 macro_rules! get {
-    () => (
+    () => {
         $crate::internal::value_undefined()
-    );
+    };
     ($a:expr $(,)*) => {
         $crate::internal::value_undefined()
     };
