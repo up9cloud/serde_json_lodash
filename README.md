@@ -10,7 +10,7 @@
 
 ```toml
 [dependencies]
-serde_json_lodash = "0.1"
+serde_json_lodash = "0.2"
 ```
 
 ## Usage
@@ -67,7 +67,7 @@ Functions whose result is itself a **function** (`debounce`, `curry`,
 `serde_json::Value` and are intentionally left unimplemented. Each such stub is
 annotated in the source with the reason.
 
-## Development
+## Dev memo
 
 ```bash
 ./dev.sh              # watch + test everything
@@ -76,12 +76,28 @@ cargo test --doc set  # run one function's doc tests once
 
 ./lint.sh             # cargo fmt + clippy
 cargo doc --open      # preview docs
-
-./bump_push.sh        # bump patch version, tag, push (CI publishes to crates.io)
 ```
 
 Tests live in the doc comments: the `Examples:` block mirrors the lodash
 documentation for that function, and `More examples:` covers edge cases.
+
+### Releasing a new version
+
+- Commit all your changes first (a clean working tree keeps the tag accurate).
+- Bump the version and create the git tag with [`cargo-bump`](https://crates.io/crates/cargo-bump):
+
+   ```bash
+   cargo bump patch --git-tag   # 0.1.16 -> 0.1.17 (bug fixes)
+   cargo bump minor --git-tag   # 0.1.16 -> 0.2.0  (new features)
+   cargo bump major --git-tag   # 0.1.16 -> 1.0.0  (breaking changes)
+   ```
+
+- Update the install version in this README's [Install](#install) section if the new version needs a different `serde_json_lodash = "..."` requirement.
+- Push the commit and the tag — pushing the tag triggers CI to publish to crates.io:
+
+   ```bash
+   git push && git push --tags
+   ```
 
 ### Checking lodash's real behavior
 

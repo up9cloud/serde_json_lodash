@@ -34,9 +34,12 @@ cargo doc --open
 npm i && node
 > const l = require('lodash')
 
-# Bump patch version, tag, and push (CI publishes to crates.io on tag push)
-./bump_push.sh
+# Release: commit first, then bump + tag (pushing the tag makes CI publish to crates.io)
+cargo bump patch --git-tag   # or minor / major
+git push && git push --tags
 ```
+
+Update the `serde_json_lodash = "..."` version in README.md's Install section when a release changes the required version.
 
 Edition is 2024. Features: `camel` (camelCase aliases — the default feature), `lazy_static`, `all` (both). The crate has `#![deny(missing_docs)]` and `#![deny(warnings)]`, so any public item without a doc comment (even an empty `///`) fails the build. `src/seq`, `src/properties`, and `src/methods` are not re-exported from `src/lib_snake.rs` (they hold only commented-out chaining/template-settings stubs); do not add empty glob re-exports of them or the build fails under `#![deny(warnings)]`.
 
