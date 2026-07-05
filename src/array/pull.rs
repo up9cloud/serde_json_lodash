@@ -4,7 +4,7 @@ use crate::lib::{Value};
 pub fn pull(mut array: Value, value: Value) -> Value {
     let new_vec = match array {
         Value::Null | Value::Bool(_) | Value::Number(_) | Value::String(_) | Value::Object(_) => {
-            return array
+            return array;
         }
         Value::Array(ref vec) => {
             match value {

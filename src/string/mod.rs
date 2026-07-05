@@ -1,149 +1,62 @@
-#[doc(hidden)]
-pub fn camel_case() {
-    todo!()
-}
-pub use camel_case as camelCase;
+mod camel_case;
+pub use camel_case::*;
 mod capitalize;
 pub use capitalize::*;
-#[doc(hidden)]
-pub fn deburr() {
-    todo!()
-}
-#[doc(hidden)]
-pub fn ends_with() {
-    todo!()
-}
-#[doc(hidden)]
-pub use ends_with as endsWith;
-#[doc(hidden)]
-pub fn escape() {
-    todo!()
-}
-#[doc(hidden)]
-pub fn escape_reg_exp() {
-    todo!()
-}
-#[doc(hidden)]
-pub use escape_reg_exp as escapeRegExp;
-#[doc(hidden)]
-pub fn kebab_case() {
-    todo!()
-}
-#[doc(hidden)]
-pub use kebab_case as kebabCase;
-#[doc(hidden)]
-pub fn lower_case() {
-    todo!()
-}
-#[doc(hidden)]
-pub use lower_case as lowerCase;
-#[doc(hidden)]
-pub fn lower_first() {
-    todo!()
-}
-#[doc(hidden)]
-pub use lower_first as lowerFirst;
-#[doc(hidden)]
-pub fn pad() {
-    todo!()
-}
-#[doc(hidden)]
-pub fn pad_end() {
-    todo!()
-}
-#[doc(hidden)]
-pub use pad_end as padEnd;
-#[doc(hidden)]
-pub fn pad_start() {
-    todo!()
-}
-#[doc(hidden)]
-pub use pad_start as padStart;
-#[doc(hidden)]
-pub fn parse_int() {
-    todo!()
-}
-#[doc(hidden)]
-pub use parse_int as parseInt;
-#[doc(hidden)]
-pub fn repeat() {
-    todo!()
-}
-#[doc(hidden)]
-pub fn replace() {
-    todo!()
-}
-#[doc(hidden)]
-pub fn snake_case() {
-    todo!()
-}
-#[doc(hidden)]
-pub use snake_case as snakeCase;
-#[doc(hidden)]
-pub fn split() {
-    todo!()
-}
-#[doc(hidden)]
-pub fn start_case() {
-    todo!()
-}
-#[doc(hidden)]
-pub use start_case as startCase;
-#[doc(hidden)]
-pub fn starts_with() {
-    todo!()
-}
-#[doc(hidden)]
-pub use starts_with as startsWith;
-#[doc(hidden)]
+mod deburr;
+pub use deburr::*;
+mod ends_with;
+pub use ends_with::*;
+mod escape;
+pub use escape::*;
+mod escape_reg_exp;
+pub use escape_reg_exp::*;
+mod kebab_case;
+pub use kebab_case::*;
+mod lower_case;
+pub use lower_case::*;
+mod lower_first;
+pub use lower_first::*;
+mod pad;
+pub use pad::*;
+mod pad_end;
+pub use pad_end::*;
+mod pad_start;
+pub use pad_start::*;
+mod parse_int;
+pub use parse_int::*;
+mod repeat;
+pub use repeat::*;
+mod replace;
+pub use replace::*;
+mod snake_case;
+pub use snake_case::*;
+mod split;
+pub use split::*;
+mod start_case;
+pub use start_case::*;
+mod starts_with;
+pub use starts_with::*;
+/// **Not ported.** Compiles a string into a render function; requires a template engine, out of scope.
 pub fn template() {
     todo!()
 }
 mod to_lower;
 pub use to_lower::*;
-#[doc(hidden)]
-pub fn to_upper() {
-    todo!()
-}
-#[doc(hidden)]
-pub use to_upper as toUpper;
-#[doc(hidden)]
-pub fn trim() {
-    todo!()
-}
-#[doc(hidden)]
-pub fn trim_end() {
-    todo!()
-}
-#[doc(hidden)]
-pub use trim_end as trimEnd;
-#[doc(hidden)]
-pub fn trim_start() {
-    todo!()
-}
-#[doc(hidden)]
-pub use trim_start as trimStart;
-#[doc(hidden)]
-pub fn truncate() {
-    todo!()
-}
-#[doc(hidden)]
-pub fn unescape() {
-    todo!()
-}
-#[doc(hidden)]
-pub fn upper_case() {
-    todo!()
-}
-#[doc(hidden)]
-pub use upper_case as upperCase;
-#[doc(hidden)]
-pub fn upper_first() {
-    todo!()
-}
-#[doc(hidden)]
-pub use upper_first as upperFirst;
-#[doc(hidden)]
-pub fn words() {
-    todo!()
-}
+mod to_upper;
+pub use to_upper::*;
+mod trim;
+pub use trim::*;
+mod trim_end;
+pub use trim_end::*;
+mod trim_start;
+pub use trim_start::*;
+mod truncate;
+pub use truncate::*;
+mod unescape;
+pub use unescape::*;
+mod upper_case;
+pub use upper_case::*;
+mod upper_first;
+pub use upper_first::*;
+mod words;
+pub use words::*;

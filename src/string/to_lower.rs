@@ -1,15 +1,15 @@
 use crate::lib::{json, Value};
 use crate::internal::{type_name};
 
-///
+/// `x_`/`_x` helper for [to_lower()]: takes a primitive argument and returns a primitive value.
 pub fn x_to_lower_x(s: &str) -> String {
     s.to_lowercase()
 }
-///
+/// `x_` helper for [to_lower()]: takes a primitive argument instead of a [`Value`](crate::lib::Value).
 pub fn x_to_lower(s: &str) -> Value {
     json!(x_to_lower_x(s))
 }
-///
+/// `_x` helper for [to_lower()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
 pub fn to_lower_x(v: Value) -> String {
     match v {
         Value::Null => "".into(),

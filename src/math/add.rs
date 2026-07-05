@@ -2,7 +2,7 @@ use crate::lib::{json, Value, Number};
 use crate::internal::{value_nan, value_to_option_number, vec_value_to_option_number};
 use crate::{to_string_x, json_array_to_string_x};
 
-///
+/// `x_`/`_x` helper for [add()]: takes a primitive argument and returns a primitive value.
 pub fn x_add_x(n: Number, n2: Number) -> Number {
     if n.is_u64() {
         let inner_n = n.as_u64().unwrap();
@@ -152,10 +152,11 @@ pub fn add(augend: Value, addend: Value) -> Value {
             },
             Value::String(s) => Value::String(format!("{}{}", json_array_to_string_x(vec), s)),
             Value::Array(vec2) => {
-                if let Some(n) = vec_value_to_option_number(vec) {
-                    if let Some(n2) = vec_value_to_option_number(vec2) {
-                        return Value::Number(x_add_x(n, n2));
-                    }
+                if let (Some(n), Some(n2)) = (
+                    vec_value_to_option_number(vec),
+                    vec_value_to_option_number(vec2),
+                ) {
+                    return Value::Number(x_add_x(n, n2));
                 }
                 value_nan()
             }

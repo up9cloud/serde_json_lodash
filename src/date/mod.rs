@@ -1,4 +1,2 @@
-#[doc(hidden)]
-pub fn now() {
-    todo!()
-}
+mod now;
+pub use now::*;

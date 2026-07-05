@@ -28,7 +28,7 @@ fn value_to_kv(v: &Value) -> Option<(String, Option<Value>)> {
             None
         }
         Value::Array(vec) => {
-            if let Some(k) = vec.get(0) {
+            if let Some(k) = vec.first() {
                 let k = item_to_string(k);
                 if let Some(v) = vec.get(1) {
                     return Some((k, Some(v.clone())));

@@ -6,7 +6,7 @@ pub fn pull_at(array: &mut Value, indexes: Vec<usize>) -> Value {
         Value::Null | Value::Bool(_) | Value::Number(_) | Value::String(_) | Value::Object(_) => {
             (vec![], vec![Value::Null; indexes.len()])
         }
-        Value::Array(ref vec) => {
+        Value::Array(vec) => {
             let mut pulled_vec = vec![];
             let mut new_vec = vec![];
             let mut uniq_vec = vec![false; vec.len()];

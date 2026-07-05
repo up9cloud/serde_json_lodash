@@ -1,0 +1,41 @@
+use crate::lib::{json, Value};
+use crate::internal::uniq_by_key;
+
+/// See lodash [sortedUniq](https://lodash.com/docs/#sortedUniq)
+pub fn sorted_uniq(array: Value) -> Value {
+    match array {
+        Value::Array(vec) => Value::Array(uniq_by_key(vec, |v| v.clone())),
+        _ => json!([]),
+    }
+}
+
+/// Based on [sorted_uniq()]
+///
+/// Examples:
+///
+/// ```rust
+/// #[macro_use] extern crate serde_json_lodash;
+/// use serde_json::json;
+/// assert_eq!(sorted_uniq!(json!([1, 1, 2])), json!([1, 2]));
+/// ```
+///
+/// More examples:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(sorted_uniq!(), json!([]));
+/// assert_eq!(sorted_uniq!(json!([1, 2, 2, 3])), json!([1, 2, 3]));
+/// ```
+#[macro_export]
+macro_rules! sorted_uniq {
+    () => {
+        json!([])
+    };
+    ($a:expr $(,)*) => {
+        $crate::sorted_uniq($a)
+    };
+    ($a:expr, $($rest:tt)*) => {
+        $crate::sorted_uniq($a)
+    };
+}

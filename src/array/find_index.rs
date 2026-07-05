@@ -4,7 +4,7 @@ use crate::lib::{Value};
 pub fn find_index(array: Value, predicate: fn(&Value) -> bool, from_index: usize) -> isize {
     match array {
         Value::Null | Value::Bool(_) | Value::Number(_) | Value::String(_) | Value::Object(_) => {
-            return -1
+            return -1;
         }
         Value::Array(vec) => {
             if vec.is_empty() {

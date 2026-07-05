@@ -1,7 +1,7 @@
 use crate::lib::{json, Value};
 use crate::internal::{type_name};
 
-///
+/// `x_`/`_x` helper for [capitalize()]: takes a primitive argument and returns a primitive value.
 pub fn x_capitalize_x(s: &str) -> String {
     if s.is_empty() {
         s.into()
@@ -13,11 +13,11 @@ pub fn x_capitalize_x(s: &str) -> String {
         ss
     }
 }
-///
+/// `x_` helper for [capitalize()]: takes a primitive argument instead of a [`Value`](crate::lib::Value).
 pub fn x_capitalize(s: &str) -> Value {
     json!(x_capitalize_x(s))
 }
-///
+/// `_x` helper for [capitalize()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
 pub fn capitalize_x(v: Value) -> String {
     match v {
         Value::Null => "".into(),

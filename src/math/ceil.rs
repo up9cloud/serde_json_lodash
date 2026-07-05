@@ -1,7 +1,7 @@
 use crate::lib::{Value, Number};
 use crate::internal::{number_nan, value_nan, value_to_option_number};
 
-///
+/// `x_`/`_x` helper for [ceil()]: takes a primitive argument and returns a primitive value.
 pub fn x_ceil_x(n: Number, precision: isize) -> Number {
     if n.is_u64() {
         if precision < 0 {
@@ -44,7 +44,7 @@ pub fn x_ceil_x(n: Number, precision: isize) -> Number {
     }
     Number::from_f64(result).unwrap_or_else(number_nan)
 }
-///
+/// `x_` helper for [ceil()]: takes a primitive argument instead of a [`Value`](crate::lib::Value).
 pub fn x_ceil(number: Number, precision: isize) -> Value {
     Value::Number(x_ceil_x(number, precision))
 }

@@ -1,6 +1,6 @@
 use crate::lib::{Value};
 
-///
+/// `_x` helper for [join()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
 pub fn join_x(v: Value, sep: &str) -> String {
     match v {
         Value::Null => "".into(),

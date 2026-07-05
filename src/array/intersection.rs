@@ -4,12 +4,12 @@ use crate::lib::{Value};
 pub fn _empty_array() -> Vec<Value> {
     vec![]
 }
-///
+/// `_x` helper for [intersection()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
 pub fn intersection_x(v1: Value, v2: Value) -> Vec<Value> {
     let mut result = vec![];
     let vec1 = match v1 {
         Value::Null | Value::Bool(_) | Value::Number(_) | Value::String(_) | Value::Object(_) => {
-            return result
+            return result;
         }
         Value::Array(vec) => {
             if vec.is_empty() {
@@ -20,7 +20,7 @@ pub fn intersection_x(v1: Value, v2: Value) -> Vec<Value> {
     };
     match v2 {
         Value::Null | Value::Bool(_) | Value::Number(_) | Value::String(_) | Value::Object(_) => {
-            return result
+            return result;
         }
         Value::Array(vec2) => {
             if vec2.is_empty() {

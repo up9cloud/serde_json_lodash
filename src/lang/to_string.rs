@@ -1,13 +1,12 @@
 use crate::lib::{json, Value};
 use crate::internal::{type_name};
 
-///
+/// `x_` helper for [to_string()]: takes a primitive argument instead of a [`Value`](crate::lib::Value).
 pub fn x_to_string(v: &str) -> Value {
     json!(v)
 }
 
-#[doc(hidden)]
-pub fn json_array_to_string_x(vec: Vec<Value>) -> String {
+pub(crate) fn json_array_to_string_x(vec: Vec<Value>) -> String {
     let mut iter = vec.into_iter();
     match iter.next() {
         Some(v) => {
@@ -15,14 +14,14 @@ pub fn json_array_to_string_x(vec: Vec<Value>) -> String {
             if v.is_null() {
                 s.push_str("null");
             } else {
-                s.push_str(&*to_string_x(v));
+                s.push_str(&to_string_x(v));
             }
             for v in iter {
                 s.push(',');
                 if v.is_null() {
                     s.push_str("null");
                 } else {
-                    s.push_str(&*to_string_x(v));
+                    s.push_str(&to_string_x(v));
                 }
             }
             s
@@ -30,7 +29,7 @@ pub fn json_array_to_string_x(vec: Vec<Value>) -> String {
         None => "".into(),
     }
 }
-///
+/// `_x` helper for [to_string()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
 pub fn to_string_x(v: Value) -> String {
     match v {
         Value::Null => "".into(),

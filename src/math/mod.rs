@@ -2,63 +2,29 @@ mod add;
 pub use add::*;
 mod ceil;
 pub use ceil::*;
-#[doc(hidden)]
-pub fn divide() {
-    todo!()
-}
-#[doc(hidden)]
-pub fn floor() {
-    todo!()
-}
-#[doc(hidden)]
-pub fn max() {
-    todo!()
-}
-#[doc(hidden)]
-pub fn max_by() {
-    todo!()
-}
-#[doc(hidden)]
-pub use max_by as maxBy;
-#[doc(hidden)]
-pub fn mean() {
-    todo!()
-}
-#[doc(hidden)]
-pub fn mean_by() {
-    todo!()
-}
-#[doc(hidden)]
-pub use mean_by as meanBy;
-#[doc(hidden)]
-pub fn min() {
-    todo!()
-}
-#[doc(hidden)]
-pub fn min_by() {
-    todo!()
-}
-#[doc(hidden)]
-pub use min_by as minBy;
-#[doc(hidden)]
-pub fn multiply() {
-    todo!()
-}
-#[doc(hidden)]
-pub fn round() {
-    todo!()
-}
-#[doc(hidden)]
-pub fn subtract() {
-    todo!()
-}
-#[doc(hidden)]
-pub fn sum() {
-    todo!()
-}
-#[doc(hidden)]
-pub fn sum_by() {
-    todo!()
-}
-#[doc(hidden)]
-pub use sum_by as sumBy;
+mod divide;
+pub use divide::*;
+mod floor;
+pub use floor::*;
+mod max;
+pub use max::*;
+mod max_by;
+pub use max_by::*;
+mod mean;
+pub use mean::*;
+mod mean_by;
+pub use mean_by::*;
+mod min;
+pub use min::*;
+mod min_by;
+pub use min_by::*;
+mod multiply;
+pub use multiply::*;
+mod round;
+pub use round::*;
+mod subtract;
+pub use subtract::*;
+mod sum;
+pub use sum::*;
+mod sum_by;
+pub use sum_by::*;

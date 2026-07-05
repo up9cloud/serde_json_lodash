@@ -1,7 +1,7 @@
 use crate::lib::{json, Value};
 use crate::{to_string, to_string_x};
 
-///
+/// `x_`/`_x` helper for [to_path()]: takes a primitive argument and returns a primitive value.
 pub fn x_to_path_x(s: &str) -> Vec<String> {
     let mut vec = vec![];
     let mut prev = "".to_owned();
@@ -11,7 +11,7 @@ pub fn x_to_path_x(s: &str) -> Vec<String> {
         match c {
             '.' => {
                 if in_square {
-                    current.push_str(&c.to_string());
+                    current.push(c);
                 } else if prev != "]" {
                     vec.push(current);
                     current = "".to_owned();
@@ -42,7 +42,7 @@ pub fn x_to_path_x(s: &str) -> Vec<String> {
                 current = "".to_owned();
             }
             _ => {
-                current.push_str(&c.to_string());
+                current.push(c);
             }
         }
         prev = c.to_string();
@@ -52,7 +52,7 @@ pub fn x_to_path_x(s: &str) -> Vec<String> {
     }
     vec
 }
-///
+/// `x_` helper for [to_path()]: takes a primitive argument instead of a [`Value`](crate::lib::Value).
 pub fn x_to_path(s: &str) -> Value {
     let mut vec = vec![];
     let mut prev = "".to_owned();
@@ -62,7 +62,7 @@ pub fn x_to_path(s: &str) -> Value {
         match c {
             '.' => {
                 if in_square {
-                    current.push_str(&c.to_string());
+                    current.push(c);
                 } else if prev != "]" {
                     vec.push(json!(current));
                     current = "".to_owned();
@@ -93,7 +93,7 @@ pub fn x_to_path(s: &str) -> Value {
                 current = "".to_owned();
             }
             _ => {
-                current.push_str(&c.to_string());
+                current.push(c);
             }
         }
         prev = c.to_string();
@@ -103,7 +103,7 @@ pub fn x_to_path(s: &str) -> Value {
     }
     Value::Array(vec)
 }
-///
+/// `_x` helper for [to_path()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
 pub fn to_path_x(value: Value) -> Vec<String> {
     match value {
         Value::Null => vec![],

@@ -1,29 +1,26 @@
 macro_rules! build_camel_case {
     (
         $(#[doc = $doc:tt])*
-        $id:ident
+        $from:ident,
+        $to:ident
     ) => {
-        paste::paste! {
-            with_dollar_sign! {
-                ($d:tt) => {
-                    #[doc(hidden)]
-                    pub use $id as [<$id:camel>];
+        with_dollar_sign! {
+            ($d:tt) => {
+                #[doc(hidden)]
+                pub use $crate::$to as $from;
 
-                    #[doc(hidden)]
-                    $(#[doc = $doc])*
-                    #[macro_export]
-                    macro_rules! [<$id:camel>] {
-                        ($d($d rest:tt)*) => {
-                            $crate::$id!($d($d rest)*)
-                        }
+                #[doc(hidden)]
+                $(#[doc = $doc])*
+                #[macro_export]
+                macro_rules! $from {
+                    ($d($d rest:tt)*) => {
+                        $crate::$to!($d($d rest)*)
                     }
                 }
             }
         }
     }
 }
-
-pub use crate::lib_snake::*;
 
 build_camel_case!(
     /// More examples:
@@ -33,48 +30,175 @@ build_camel_case!(
     /// # use serde_json::json;
     /// assert_eq!(dropRight!(), json!([]));
     /// ```
+    dropRight,
     drop_right
 );
 
 macro_rules! build_multi {
     [
-        $($id:ident)+
+        $($from:ident => $to:ident)+
     ] => {
         $(
             build_camel_case!(
-                ///
-                $id
+                /// camelCase alias of the snake_case function/macro of the same name.
+                $from,
+                $to
             );
         )+
     }
 }
 
 build_multi![
-    find_index
-    find_last_index
-    flatten_deep
-    flatten_depth
-    from_pairs
-    index_of
-    last_index_of
-    pull_all
-    pull_all_by
-    pull_all_with
-    pull_at
+    findIndex => find_index
+    findLastIndex => find_last_index
+    flattenDeep => flatten_deep
+    flattenDepth => flatten_depth
+    fromPairs => from_pairs
+    indexOf => index_of
+    lastIndexOf => last_index_of
+    pullAll => pull_all
+    pullAllBy => pull_all_by
+    pullAllWith => pull_all_with
+    pullAt => pull_at
 
-    to_safe_integer
-    to_string
+    defaultTo => default_to
+    countBy => count_by
+    eachRight => each_right
+    forEach => each
+    forEachRight => each_right
+    findLast => find_last
+    flatMap => flat_map
+    flatMapDeep => flat_map_deep
+    flatMapDepth => flat_map_depth
+    groupBy => group_by
+    keyBy => key_by
+    orderBy => order_by
+    reduceRight => reduce_right
+    sampleSize => sample_size
+    sortBy => sort_by
+    differenceBy => difference_by
+    differenceWith => difference_with
+    dropRightWhile => drop_right_while
+    dropWhile => drop_while
+    intersectionBy => intersection_by
+    intersectionWith => intersection_with
+    sortedIndex => sorted_index
+    sortedIndexBy => sorted_index_by
+    sortedIndexOf => sorted_index_of
+    sortedLastIndex => sorted_last_index
+    sortedLastIndexBy => sorted_last_index_by
+    sortedLastIndexOf => sorted_last_index_of
+    sortedUniq => sorted_uniq
+    sortedUniqBy => sorted_uniq_by
+    takeRight => take_right
+    takeRightWhile => take_right_while
+    takeWhile => take_while
+    unionBy => union_by
+    unionWith => union_with
+    uniqBy => uniq_by
+    uniqWith => uniq_with
+    unzipWith => unzip_with
+    xorBy => xor_by
+    xorWith => xor_with
+    zipObject => zip_object
+    zipObjectDeep => zip_object_deep
+    zipWith => zip_with
+    assignWith => assign_with
+    mergeWith => merge_with
+    defaultsDeep => defaults_deep
+    findKey => find_key
+    findLastKey => find_last_key
+    forOwn => for_own
+    forOwnRight => for_own_right
+    invertBy => invert_by
+    mapKeys => map_keys
+    mapValues => map_values
+    omitBy => omit_by
+    pickBy => pick_by
+    toPairs => to_pairs
+    inRange => in_range
+    maxBy => max_by
+    meanBy => mean_by
+    minBy => min_by
+    sumBy => sum_by
+    castArray => cast_array
+    cloneDeep => clone_deep
+    cloneDeepWith => clone_deep_with
+    cloneWith => clone_with
+    conformsTo => conforms_to
+    isArguments => is_arguments
+    isArray => is_array
+    isArrayBuffer => is_array_buffer
+    isArrayLike => is_array_like
+    isArrayLikeObject => is_array_like_object
+    isBoolean => is_boolean
+    isBuffer => is_buffer
+    isDate => is_date
+    isElement => is_element
+    isEmpty => is_empty
+    isEqual => is_equal
+    isEqualWith => is_equal_with
+    isError => is_error
+    isFinite => is_finite
+    isFunction => is_function
+    isInteger => is_integer
+    isLength => is_length
+    isMap => is_map
+    isMatch => is_match
+    isMatchWith => is_match_with
+    isNaN => is_nan
+    isNative => is_native
+    isNil => is_nil
+    isNull => is_null
+    isNumber => is_number
+    isObject => is_object
+    isObjectLike => is_object_like
+    isPlainObject => is_plain_object
+    isRegExp => is_reg_exp
+    isSafeInteger => is_safe_integer
+    isSet => is_set
+    isString => is_string
+    isSymbol => is_symbol
+    isTypedArray => is_typed_array
+    isUndefined => is_undefined
+    isWeakMap => is_weak_map
+    isWeakSet => is_weak_set
+    toArray => to_array
+    toFinite => to_finite
+    toInteger => to_integer
+    toLength => to_length
+    toNumber => to_number
+    toPlainObject => to_plain_object
+    toSafeInteger => to_safe_integer
+    toString => to_string
 
-    to_lower
+    camelCase => camel_case
+    endsWith => ends_with
+    escapeRegExp => escape_reg_exp
+    kebabCase => kebab_case
+    lowerCase => lower_case
+    lowerFirst => lower_first
+    padEnd => pad_end
+    padStart => pad_start
+    parseInt => parse_int
+    snakeCase => snake_case
+    startCase => start_case
+    startsWith => starts_with
+    toLower => to_lower
+    toUpper => to_upper
+    trimEnd => trim_end
+    trimStart => trim_start
+    upperCase => upper_case
+    upperFirst => upper_first
 
-    range_right
-    stub_array
-    stub_false
-    stub_object
-    stub_string
-    stub_true
-    to_path
+    rangeRight => range_right
+    stubArray => stub_array
+    stubFalse => stub_false
+    stubObject => stub_object
+    stubString => stub_string
+    stubTrue => stub_true
+    toPath => to_path
 ];
 
 #[cfg(feature = "lazy_static")]
-build_multi![unique_id];
+build_multi![uniqueId => unique_id];

@@ -1,6 +1,6 @@
 use crate::lib::{json, Value};
 
-///
+/// `_x` helper for [to_safe_integer()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
 pub fn to_safe_integer_x(v: Value) -> isize {
     match v {
         Value::Null => 0,

@@ -1,138 +1,61 @@
-#[doc(hidden)]
-pub fn count_by() {
-    todo!()
-}
-#[doc(hidden)]
-pub use count_by as countBy;
-#[doc(hidden)]
-pub fn each() {
-    todo!()
-}
-#[doc(hidden)]
-pub fn each_right() {
-    todo!()
-}
-#[doc(hidden)]
-pub use each_right as eachRight;
-#[doc(hidden)]
-pub fn every() {
-    todo!()
-}
-#[doc(hidden)]
-pub fn filter() {
-    todo!()
-}
-#[doc(hidden)]
-pub fn find() {
-    todo!()
-}
-#[doc(hidden)]
-pub fn find_last() {
-    todo!()
-}
-#[doc(hidden)]
-pub use find_last as findLast;
-#[doc(hidden)]
-pub fn flat_map() {
-    todo!()
-}
-#[doc(hidden)]
-pub use flat_map as flatMap;
-#[doc(hidden)]
-pub fn flat_map_deep() {
-    todo!()
-}
-#[doc(hidden)]
-pub use flat_map_deep as flatMapDeep;
-#[doc(hidden)]
-pub fn flat_map_depth() {
-    todo!()
-}
-#[doc(hidden)]
-pub use flat_map_depth as flatMapDepth;
+mod collect;
+mod count_by;
+pub use count_by::*;
+mod each;
+pub use each::*;
 #[doc(hidden)]
 pub use each as for_each;
-#[doc(hidden)]
-pub use each as forEach;
+mod each_right;
+pub use each_right::*;
 #[doc(hidden)]
 pub use each_right as for_each_right;
-#[doc(hidden)]
-pub use each_right as forEachRight;
-#[doc(hidden)]
-pub fn group_by() {
-    todo!()
-}
-#[doc(hidden)]
-pub use group_by as groupBy;
-#[doc(hidden)]
-pub fn includes() {
-    todo!()
-}
-#[doc(hidden)]
+mod every;
+pub use every::*;
+mod filter;
+pub use filter::*;
+mod find;
+pub use find::*;
+mod find_last;
+pub use find_last::*;
+mod flat_map;
+pub use flat_map::*;
+mod flat_map_deep;
+pub use flat_map_deep::*;
+mod flat_map_depth;
+pub use flat_map_depth::*;
+mod group_by;
+pub use group_by::*;
+mod includes;
+pub use includes::*;
+/// **Not ported.** Invokes a named method on each element; JSON values have no methods.
 pub fn invoke_map() {
     todo!()
 }
 #[doc(hidden)]
 pub use invoke_map as invokeMap;
-#[doc(hidden)]
-pub fn key_by() {
-    todo!()
-}
-#[doc(hidden)]
-pub use key_by as keyBy;
-#[doc(hidden)]
-pub fn map() {
-    todo!()
-}
-#[doc(hidden)]
-pub fn order_by() {
-    todo!()
-}
-#[doc(hidden)]
-pub use order_by as orderBy;
-#[doc(hidden)]
-pub fn partition() {
-    todo!()
-}
-#[doc(hidden)]
-pub fn reduce() {
-    todo!()
-}
-#[doc(hidden)]
-pub fn reduce_right() {
-    todo!()
-}
-#[doc(hidden)]
-pub use reduce_right as reduceRight;
-#[doc(hidden)]
-pub fn reject() {
-    todo!()
-}
-#[doc(hidden)]
-pub fn sample() {
-    todo!()
-}
-#[doc(hidden)]
-pub fn sample_size() {
-    todo!()
-}
-#[doc(hidden)]
-pub use sample_size as sampleSize;
-#[doc(hidden)]
-pub fn shuffle() {
-    todo!()
-}
-#[doc(hidden)]
-pub fn size() {
-    todo!()
-}
-#[doc(hidden)]
-pub fn some() {
-    todo!()
-}
-#[doc(hidden)]
-pub fn sort_by() {
-    todo!()
-}
-#[doc(hidden)]
-pub use sort_by as sortBy;
+mod key_by;
+pub use key_by::*;
+mod map;
+pub use map::*;
+mod order_by;
+pub use order_by::*;
+mod partition;
+pub use partition::*;
+mod reduce;
+pub use reduce::*;
+mod reduce_right;
+pub use reduce_right::*;
+mod reject;
+pub use reject::*;
+mod sample;
+pub use sample::*;
+mod sample_size;
+pub use sample_size::*;
+mod shuffle;
+pub use shuffle::*;
+mod size;
+pub use size::*;
+mod some;
+pub use some::*;
+mod sort_by;
+pub use sort_by::*;

@@ -1,110 +1,102 @@
-#[doc(hidden)]
+/// **Not ported.** Invokes a function and captures thrown errors; no function to invoke in JSON.
 pub fn attempt() {
     todo!()
 }
-#[doc(hidden)]
+/// **Not ported.** Binds object methods in place; JSON objects have no methods.
 pub fn bind_all() {
     todo!()
 }
 #[doc(hidden)]
 pub use bind_all as bindAll;
-#[doc(hidden)]
+/// **Not ported.** Returns a function chosen from predicate/function pairs; not a Value.
 pub fn cond() {
     todo!()
 }
-#[doc(hidden)]
+/// **Not ported.** Returns a predicate function from a spec; not a Value.
 pub fn conforms() {
     todo!()
 }
-#[doc(hidden)]
+/// **Not ported.** Returns a function that returns a constant; not a Value.
 pub fn constant() {
     todo!()
 }
-#[doc(hidden)]
-pub fn default_to() {
-    todo!()
-}
-#[doc(hidden)]
-pub use default_to as defaultTo;
-#[doc(hidden)]
+mod default_to;
+pub use default_to::*;
+/// **Not ported.** Composes functions left-to-right; not a Value.
 pub fn flow() {
     todo!()
 }
-#[doc(hidden)]
+/// **Not ported.** Composes functions right-to-left; not a Value.
 pub fn flow_right() {
     todo!()
 }
 #[doc(hidden)]
 pub use flow_right as flowRight;
-#[doc(hidden)]
-pub fn identity() {
-    todo!()
-}
-#[doc(hidden)]
+mod identity;
+pub use identity::*;
+/// **Not ported.** Returns a function implementing the lodash iteratee shorthand; not a Value.
 pub fn iteratee() {
     todo!()
 }
-#[doc(hidden)]
+/// **Not ported.** Returns a predicate function from a source object; not a Value.
 pub fn matches() {
     todo!()
 }
-#[doc(hidden)]
+/// **Not ported.** Returns a predicate function for a path/value; not a Value.
 pub fn matches_property() {
     todo!()
 }
 #[doc(hidden)]
 pub use matches_property as matchesProperty;
-#[doc(hidden)]
+/// **Not ported.** Returns a function that invokes a method at a path; not a Value.
 pub fn method() {
     todo!()
 }
-#[doc(hidden)]
+/// **Not ported.** Returns a function that invokes a method of an object; not a Value.
 pub fn method_of() {
     todo!()
 }
 #[doc(hidden)]
 pub use method_of as methodOf;
-#[doc(hidden)]
+/// **Not ported.** Adds functions to an object/lodash; JSON objects hold no functions.
 pub fn mixin() {
     todo!()
 }
-#[doc(hidden)]
+/// **Not ported.** Restores the global `_` binding; not applicable to a Rust library.
 pub fn no_conflict() {
     todo!()
 }
 #[doc(hidden)]
 pub use no_conflict as noConflict;
-#[doc(hidden)]
-pub fn noop() {
-    todo!()
-}
-#[doc(hidden)]
+mod noop;
+pub use noop::*;
+/// **Not ported.** Returns a function selecting the nth argument; not a Value.
 pub fn nth_arg() {
     todo!()
 }
 #[doc(hidden)]
 pub use nth_arg as nthArg;
-#[doc(hidden)]
+/// **Not ported.** Returns a function invoking several iteratees; not a Value.
 pub fn over() {
     todo!()
 }
-#[doc(hidden)]
+/// **Not ported.** Returns a function AND-ing several predicates; not a Value.
 pub fn over_every() {
     todo!()
 }
 #[doc(hidden)]
 pub use over_every as overEvery;
-#[doc(hidden)]
+/// **Not ported.** Returns a function OR-ing several predicates; not a Value.
 pub fn over_some() {
     todo!()
 }
 #[doc(hidden)]
 pub use over_some as overSome;
-#[doc(hidden)]
+/// **Not ported.** Returns a getter function for a path; not a Value.
 pub fn property() {
     todo!()
 }
-#[doc(hidden)]
+/// **Not ported.** Returns a getter function bound to an object; not a Value.
 pub fn property_of() {
     todo!()
 }
@@ -114,7 +106,7 @@ mod range;
 pub use range::*;
 mod range_right;
 pub use range_right::*;
-#[doc(hidden)]
+/// **Not ported.** Creates a lodash bound to a context; not applicable to a Rust library.
 pub fn run_in_context() {
     todo!()
 }

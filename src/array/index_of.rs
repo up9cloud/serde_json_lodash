@@ -72,9 +72,7 @@ macro_rules! index_of {
     ($a:expr $(,)*) => {
         -1
     };
-    ($a:expr, $b:expr $(,)*) => {{
-        $crate::index_of($a, $b, 0)
-    }};
+    ($a:expr, $b:expr $(,)*) => {{ $crate::index_of($a, $b, 0) }};
     ($a:expr, $b:expr, $c:expr $(,)*) => {
         $crate::index_of($a, $b, $c)
     };

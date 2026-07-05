@@ -8,7 +8,7 @@ pub fn pull_all_with(
 ) -> Value {
     let new_vec = match array {
         Value::Null | Value::Bool(_) | Value::Number(_) | Value::String(_) | Value::Object(_) => {
-            return array
+            return array;
         }
         Value::Array(ref vec) => {
             let values_vec = match values {

@@ -1,13 +1,13 @@
 use crate::lib::{json, Value};
 
 use crate::{to_safe_integer_x, x_range_x};
-///
+/// `x_`/`_x` helper for [range_right()]: takes a primitive argument and returns a primitive value.
 pub fn x_range_right_x(start: isize, end: isize, step: isize) -> Vec<isize> {
     let mut vec = x_range_x(start, end, step);
     vec.reverse();
     vec
 }
-///
+/// `x_` helper for [range_right()]: takes a primitive argument instead of a [`Value`](crate::lib::Value).
 pub fn x_range_right(start: isize, end: isize, step: isize) -> Value {
     Value::Array(
         x_range_right_x(start, end, step)
@@ -16,7 +16,7 @@ pub fn x_range_right(start: isize, end: isize, step: isize) -> Value {
             .collect::<Vec<Value>>(),
     )
 }
-///
+/// `_x` helper for [range_right()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
 pub fn range_right_x(start: Value, end: Value, step: isize) -> Vec<isize> {
     x_range_right_x(to_safe_integer_x(start), to_safe_integer_x(end), step)
 }

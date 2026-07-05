@@ -1,6 +1,6 @@
 use crate::lib::{json, Value};
 use crate::{to_safe_integer_x};
-///
+/// `x_`/`_x` helper for [range()]: takes a primitive argument and returns a primitive value.
 pub fn x_range_x(start: isize, end: isize, step: isize) -> Vec<isize> {
     let mut result = vec![];
     // handle infinity cases
@@ -43,7 +43,7 @@ pub fn x_range_x(start: isize, end: isize, step: isize) -> Vec<isize> {
     }
     result
 }
-///
+/// `x_` helper for [range()]: takes a primitive argument instead of a [`Value`](crate::lib::Value).
 pub fn x_range(start: isize, end: isize, step: isize) -> Value {
     Value::Array(
         x_range_x(start, end, step)
@@ -52,7 +52,7 @@ pub fn x_range(start: isize, end: isize, step: isize) -> Value {
             .collect::<Vec<Value>>(),
     )
 }
-///
+/// `_x` helper for [range()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
 pub fn range_x(start: Value, end: Value, step: isize) -> Vec<isize> {
     x_range_x(to_safe_integer_x(start), to_safe_integer_x(end), step)
 }

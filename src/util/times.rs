@@ -1,7 +1,7 @@
 use crate::lib::{Value};
 use crate::to_safe_integer_x;
 
-///
+/// `x_` helper for [times()]: takes a primitive argument instead of a [`Value`](crate::lib::Value).
 pub fn x_times(n: usize, iteratee: fn(usize) -> Value) -> Value {
     let mut vec = vec![];
     for i in 0..n {

@@ -4,20 +4,16 @@ version = "0.1.16"
 authors = ["up9cloud <8325632+up9cloud@users.noreply.github.com>"]
 description = "lodash.js ported version, work with serde_json::Value"
 keywords = ["serde", "serde_json", "json", "lodash"]
-license-file = "LICENSE"
-edition = "2018"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+license = "MIT"
+edition = "2024"
 
 [features]
-# wait for this PR: https://github.com/dtolnay/paste/pull/62
-# default = ["camel"]
+default = ["camel"]
 all = ["camel", "lazy_static"]
-camel = ["paste"]
+camel = []
 
 [dependencies]
 serde_json = "1"
-paste = { version = "1", optional = true }
 lazy_static = { version = "1", optional = true }
 
 [dev-dependencies]

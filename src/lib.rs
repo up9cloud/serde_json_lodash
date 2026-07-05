@@ -32,15 +32,10 @@
 #![deny(missing_docs)]
 #![deny(warnings)]
 
-#[cfg(feature = "camel")]
-extern crate paste;
-
-#[cfg(feature = "lazy_static")]
-extern crate lazy_static;
-
 mod macros;
 
-///
+/// Re-exports of the [`serde_json`] types this crate operates on, so callers
+/// can name them without a direct `serde_json` dependency.
 pub mod lib {
     pub use serde_json::{json, Value, Map, Number};
 }

@@ -4,109 +4,93 @@
 [![build status](https://github.com/up9cloud/serde_json_lodash/workflows/CI/badge.svg?branch=main&event=push)](https://github.com/up9cloud/serde_json_lodash/actions)
 ![Downloads](https://img.shields.io/crates/d/serde_json_lodash.svg)
 
-[serde_json::Value](https://docs.serde.rs/serde_json/value/enum.Value.html) with [lodash.js](https://github.com/lodash/lodash) spec, makes life easier.
+[lodash.js](https://lodash.com/docs) ported to Rust, operating on [`serde_json::Value`](https://docs.rs/serde_json/latest/serde_json/enum.Value.html).
 
-## Usage
-
-> Cargo.toml
+## Install
 
 ```toml
 [dependencies]
 serde_json_lodash = "0.1"
 ```
 
-> main.rs
+## Usage
 
 ```rust
 #[macro_use] extern crate serde_json_lodash;
 use serde_json::json;
+
 fn main() {
-  // macro style, optional parameters
-  assert_eq!(
-    merge!(json!({'a':1}), json!({'b':2}), json!({'c':3})),
-    json!({'a': 1, 'b': 2, 'c': 3})
-  );
+    // Macro form: variadic / optional arguments, like the JS original
+    assert_eq!(
+        merge!(json!({"a": 1}), json!({"b": 2}), json!({"c": 3})),
+        json!({"a": 1, "b": 2, "c": 3})
+    );
 
-  // fn style, fixed parameters
-  use serde_json_lodash::merge;
-  assert_eq!(
-    merge(json!({'a':1}), json!({'b':2})),
-    json!({'a': 1, 'b': 2})
-  );
-
-  // `x_`, `_x` helpers for simple types
-  assert_eq!(capitalize!(json!("FRED")), json!("Fred"));
-  assert_eq!(x_capitalize!("FRED"), json!("Fred"));
-  assert_eq!(capitalize_x!(json!("FRED")), "Fred".to_owned());
-  assert_eq!(x_capitalize_x!("FRED"), "Fred".to_owned());
+    // Function form: fixed arguments
+    use serde_json_lodash::capitalize;
+    assert_eq!(capitalize(json!("FRED")), json!("Fred"));
 }
 ```
 
-## Concepts
+Every function comes in a `fn` and a `macro` flavor. Use the macro when you
+want lodash's optional/variadic arguments; use the function for a fixed
+signature.
 
-All implements should be same as lodash as possible
+### Naming: `Value` in, `Value` out — plus `x_` / `_x` helpers
 
-How?
+Inputs and outputs are `serde_json::Value` by default. For convenience each
+function may also provide primitive-typed helpers:
 
-- Every function from lodash.js should be implemented both `fn` and `macro`
-  - marco is for optional parameters usages
-- The main inputs and return values should be *`serde_json::Value`*, excepts:
-  - Inputs:
-    - If the input parameters are options, not data, always using *primitive type* instead Value
-      - e.q. `_.chunk(array, [size=1])` => `::chunk(json!([1,2,3]), 2)`, size should be `usize`, not `Value::Number`
-    - Some cases we use *`std::ops::Fn`* as input parameter
-      - e.q. `_.findIndex(array, predicate, ...)` => `::find_index(..., predicate: fn(&Value) -> bool, ...)`
-  - Retune values:
-    - If return value is statistic, using *primitive type* instead Value
-      - e.q. `_.findIndex(...)` => `::find_index(...) -> isize`, return value should be `isize`, not `Value::Number`
-    - Because there is no `undefined` type in serde_json, so if the original function return `undefined`, the ported version should return Value::Null
-- If the original function allows optional parameters:
-  - known amount, then the ported fn should *should be as required*
-    - e.q. `_.get(object, path, [defaultValue])` => `::get(object, path, defaultValue)`
-  - infinity amount, the ported fn should *only keep one, and no more optionals*
-    - e.q. `_.merge(object, [...sources])` => `::merge(object, source)`, but macro could `::merge!(object, source1, source2, ...)`
-- It might implement helper functions, for different input and output types:
-  - with *`x_` prefix*: input is not Value, will be downgrade type
-    - e.q. `x_capitalize(&str) -> Value`
-  - with *`_x` suffix*: output is not Value, will be downgrade type
-    - e.q. `capitalize_x(Value) -> String`
-  - with *both `x_` and `_x`*
-    - e.q. `x_capitalize_x(&str) -> &str`, `x_add_x(n: Number, n2: Number) -> Number`
-  - If the function accept multiple types, the helper functions will only choose one type to implement
-    - e.q. `_.toString([1,2])`, `_.toString(123)` => `::x_to_string(v: &str) -> Value`
-- About the test cases:
-  - `Examples:` section should be exactly same as the examples in lodash doc.
-  - More test cases should all be put in the `More examples` section, we relied on powerful rust's doc test
+| Form            | Input      | Output     | Example                                    |
+| --------------- | ---------- | ---------- | ------------------------------------------ |
+| `capitalize`    | `Value`    | `Value`    | `capitalize(json!("FRED")) // json!("Fred")` |
+| `x_capitalize`  | `&str`     | `Value`    | `x_capitalize("FRED")     // json!("Fred")` |
+| `capitalize_x`  | `Value`    | `String`   | `capitalize_x(json!("FRED")) // "Fred"`    |
+| `x_capitalize_x`| `&str`     | `String`   | `x_capitalize_x("FRED")   // "Fred"`       |
 
-## Dev memo
+`x_` = primitive input, `_x` = primitive output. Options that are not data
+(sizes, indexes) use primitive types (`usize`, `isize`); predicates use
+`Fn(&Value) -> bool`. Since JSON has no `undefined`, functions that would
+return it return `Value::Null`.
+
+## Features
+
+- `camel` *(default)* — also exposes camelCase aliases (`camelCase!`, `isEmpty!`, …) next to the snake_case names.
+- `lazy_static` — enables `unique_id` / `uniqueId`.
+- `all` — everything above.
+
+## What isn't ported
+
+Functions whose result is itself a **function** (`debounce`, `curry`,
+`memoize`, `flow`, `iteratee`, `property`, …) or that invoke object
+**methods** (`invoke`, `invokeMap`, `create`) have no meaningful mapping onto
+`serde_json::Value` and are intentionally left unimplemented. Each such stub is
+annotated in the source with the reason.
+
+## Development
 
 ```bash
-# Up
-./dev.sh
+./dev.sh              # watch + test everything
+./dev.sh --doc set    # watch + test one function's doc tests
+cargo test --doc set  # run one function's doc tests once
 
-# Watch and test single file
-./dev.sh --doc set
+./lint.sh             # cargo fmt + clippy
+cargo doc --open      # preview docs
 
-# Lint
-./lint.sh
-
-# Preview doc
-cargo doc --open
-
-# Bump patch version and push
-./bump_push.sh
+./bump_push.sh        # bump patch version, tag, push (CI publishes to crates.io)
 ```
 
-> Check lodash.js api
+Tests live in the doc comments: the `Examples:` block mirrors the lodash
+documentation for that function, and `More examples:` covers edge cases.
+
+### Checking lodash's real behavior
 
 ```console
-$ npm i
-$ node
-Welcome to Node.js v15.14.0.
+# node
+Welcome to Node.js v24.1.0.
 Type ".help" for more information.
-> const l = require('lodash')
+> const {default: l} = await import('lodash')
 undefined
-> l.toString()
-''
->
+> l.capitalize('FRED')
+'Fred'
 ```

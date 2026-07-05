@@ -1,0 +1,44 @@
+use crate::lib::{json, Value};
+
+/// See lodash [reverse](https://lodash.com/docs/#reverse)
+pub fn reverse(array: Value) -> Value {
+    match array {
+        Value::Array(mut vec) => {
+            vec.reverse();
+            Value::Array(vec)
+        }
+        _ => json!([]),
+    }
+}
+
+/// Based on [reverse()]
+///
+/// Examples:
+///
+/// ```rust
+/// #[macro_use] extern crate serde_json_lodash;
+/// use serde_json::json;
+/// assert_eq!(reverse!(json!([1, 2, 3])), json!([3, 2, 1]));
+/// ```
+///
+/// More examples:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(reverse!(), json!([]));
+/// assert_eq!(reverse!(json!(null)), json!([]));
+/// assert_eq!(reverse!(json!([])), json!([]));
+/// ```
+#[macro_export]
+macro_rules! reverse {
+    () => {
+        json!([])
+    };
+    ($a:expr $(,)*) => {
+        $crate::reverse($a)
+    };
+    ($a:expr, $($rest:tt)*) => {
+        $crate::reverse($a)
+    };
+}

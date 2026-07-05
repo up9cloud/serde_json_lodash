@@ -1,6 +1,6 @@
 use crate::lib::{json, Value};
 
-///
+/// `x_`/`_x` helper for [flatten_depth()]: takes a primitive argument and returns a primitive value.
 pub fn x_flatten_depth_x(vec: Vec<Value>, depth: usize) -> Vec<Value> {
     if depth == 0 {
         return vec;

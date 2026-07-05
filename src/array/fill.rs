@@ -6,16 +6,10 @@ use crate::lib::{json, Value};
 pub fn fill(mut array: Value, value: Value, start: usize, end: usize) -> Value {
     let vec = match array {
         Value::Null | Value::Bool(_) | Value::Number(_) | Value::String(_) | Value::Object(_) => {
-            return json!([])
+            return json!([]);
         }
         Value::Array(ref mut vec) => {
-            let real_end = {
-                if end > vec.len() {
-                    vec.len()
-                } else {
-                    end
-                }
-            };
+            let real_end = { if end > vec.len() { vec.len() } else { end } };
             for item in vec.iter_mut().take(real_end).skip(start) {
                 let _ = mem::replace(item, value.clone());
             }

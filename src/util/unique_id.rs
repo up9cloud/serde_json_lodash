@@ -3,17 +3,17 @@ use crate::lib::{json, Value};
 lazy_static::lazy_static! {
     static ref COUNT: Mutex<usize> = Mutex::new(0);
 }
-///
+/// `x_`/`_x` helper for [unique_id()]: takes a primitive argument and returns a primitive value.
 pub fn x_unique_id_x(prefix: &str) -> String {
     let mut c = COUNT.lock().unwrap();
     *c += 1;
     format!("{}{}", prefix, c)
 }
-///
+/// `x_` helper for [unique_id()]: takes a primitive argument instead of a [`Value`](crate::lib::Value).
 pub fn x_unique_id(prefix: &str) -> Value {
     json!(x_unique_id_x(prefix))
 }
-///
+/// `_x` helper for [unique_id()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
 pub fn unique_id_x(prefix: &str) -> String {
     x_unique_id_x(prefix)
 }

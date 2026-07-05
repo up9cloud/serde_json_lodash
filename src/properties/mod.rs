@@ -1,14 +1,8 @@
 /// See lodash [VERSION](https://lodash.com/docs/#VERSION)
 pub const VERSION: &str = env!("CARGO_PKG_VERSION");
-// #[doc(hidden)]
-// pub fn templateSettings() { todo!() }
-// #[doc(hidden)]
-// pub fn templateSettings.escape() { todo!() }
-// #[doc(hidden)]
-// pub fn templateSettings.evaluate() { todo!() }
-// #[doc(hidden)]
-// pub fn templateSettings.imports() { todo!() }
-// #[doc(hidden)]
-// pub fn templateSettings.interpolate() { todo!() }
-// #[doc(hidden)]
-// pub fn templateSettings.variable() { todo!() }
+
+// The other lodash "Properties" entry, `_.templateSettings` (with its
+// `.escape` / `.evaluate` / `.interpolate` / `.imports` / `.variable`
+// sub-fields), configures the string template engine. That engine is not
+// ported (see `template`), and the dotted names are not valid Rust
+// identifiers, so nothing is exposed for it here.

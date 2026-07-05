@@ -6,34 +6,18 @@ mod concat;
 pub use concat::*;
 mod difference;
 pub use difference::*;
-#[doc(hidden)]
-pub fn difference_by() {
-    todo!()
-}
-#[doc(hidden)]
-pub use difference_by as differenceBy;
-#[doc(hidden)]
-pub fn difference_with() {
-    todo!()
-}
-#[doc(hidden)]
-pub use difference_with as differenceWith;
+mod difference_by;
+pub use difference_by::*;
+mod difference_with;
+pub use difference_with::*;
 mod drop;
 pub use drop::*;
 mod drop_right;
 pub use drop_right::*;
-#[doc(hidden)]
-pub fn drop_right_while() {
-    todo!()
-}
-#[doc(hidden)]
-pub use drop_right_while as dropRightWhile;
-#[doc(hidden)]
-pub fn drop_while() {
-    todo!()
-}
-#[doc(hidden)]
-pub use drop_while as dropWhile;
+mod drop_right_while;
+pub use drop_right_while::*;
+mod drop_while;
+pub use drop_while::*;
 mod fill;
 pub use fill::*;
 mod find_index;
@@ -58,18 +42,10 @@ mod initial;
 pub use initial::*;
 mod intersection;
 pub use intersection::*;
-#[doc(hidden)]
-pub fn intersection_by() {
-    todo!()
-}
-#[doc(hidden)]
-pub use intersection_by as intersectionBy;
-#[doc(hidden)]
-pub fn intersection_with() {
-    todo!()
-}
-#[doc(hidden)]
-pub use intersection_with as intersectionWith;
+mod intersection_by;
+pub use intersection_by::*;
+mod intersection_with;
+pub use intersection_with::*;
 mod join;
 pub use join::*;
 mod last;
@@ -88,173 +64,68 @@ mod pull_all_with;
 pub use pull_all_with::*;
 mod pull_at;
 pub use pull_at::*;
-#[doc(hidden)]
-pub fn remove() {
-    todo!()
-}
-#[doc(hidden)]
-pub fn reverse() {
-    todo!()
-}
-#[doc(hidden)]
-pub fn slice() {
-    todo!()
-}
-#[doc(hidden)]
-pub fn sorted_index() {
-    todo!()
-}
-#[doc(hidden)]
-pub use sorted_index as sortedIndex;
-#[doc(hidden)]
-pub fn sorted_index_by() {
-    todo!()
-}
-#[doc(hidden)]
-pub use sorted_index_by as sortedIndexBy;
-#[doc(hidden)]
-pub fn sorted_index_of() {
-    todo!()
-}
-#[doc(hidden)]
-pub use sorted_index_of as sortedIndexOf;
-#[doc(hidden)]
-pub fn sorted_last_index() {
-    todo!()
-}
-#[doc(hidden)]
-pub use sorted_last_index as sortedLastIndex;
-#[doc(hidden)]
-pub fn sorted_last_index_by() {
-    todo!()
-}
-#[doc(hidden)]
-pub use sorted_last_index_by as sortedLastIndexBy;
-#[doc(hidden)]
-pub fn sorted_last_index_of() {
-    todo!()
-}
-#[doc(hidden)]
-pub use sorted_last_index_of as sortedLastIndexOf;
-#[doc(hidden)]
-pub fn sorted_uniq() {
-    todo!()
-}
-#[doc(hidden)]
-pub use sorted_uniq as sortedUniq;
-#[doc(hidden)]
-pub fn sorted_uniq_by() {
-    todo!()
-}
-#[doc(hidden)]
-pub use sorted_uniq_by as sortedUniqBy;
-#[doc(hidden)]
-pub fn tail() {
-    todo!()
-}
-#[doc(hidden)]
-pub fn take() {
-    todo!()
-}
-#[doc(hidden)]
-pub fn take_right() {
-    todo!()
-}
-#[doc(hidden)]
-pub use take_right as takeRight;
-#[doc(hidden)]
-pub fn take_right_while() {
-    todo!()
-}
-#[doc(hidden)]
-pub use take_right_while as takeRightWhile;
-#[doc(hidden)]
-pub fn take_while() {
-    todo!()
-}
-#[doc(hidden)]
-pub use take_while as takeWhile;
-#[doc(hidden)]
-pub fn union() {
-    todo!()
-}
-#[doc(hidden)]
-pub fn union_by() {
-    todo!()
-}
-#[doc(hidden)]
-pub use union_by as unionBy;
-#[doc(hidden)]
-pub fn union_with() {
-    todo!()
-}
-#[doc(hidden)]
-pub use union_with as unionWith;
-#[doc(hidden)]
-pub fn uniq() {
-    todo!()
-}
-#[doc(hidden)]
-pub fn uniq_by() {
-    todo!()
-}
-#[doc(hidden)]
-pub use uniq_by as uniqBy;
-#[doc(hidden)]
-pub fn uniq_with() {
-    todo!()
-}
-#[doc(hidden)]
-pub use uniq_with as uniqWith;
-#[doc(hidden)]
-pub fn unzip() {
-    todo!()
-}
-#[doc(hidden)]
-pub fn unzip_with() {
-    todo!()
-}
-#[doc(hidden)]
-pub use unzip_with as unzipWith;
-#[doc(hidden)]
-pub fn without() {
-    todo!()
-}
-#[doc(hidden)]
-pub fn xor() {
-    todo!()
-}
-#[doc(hidden)]
-pub fn xor_by() {
-    todo!()
-}
-#[doc(hidden)]
-pub use xor_by as xorBy;
-#[doc(hidden)]
-pub fn xor_with() {
-    todo!()
-}
-#[doc(hidden)]
-pub use xor_with as xorWith;
-#[doc(hidden)]
-pub fn zip() {
-    todo!()
-}
-#[doc(hidden)]
-pub fn zip_object() {
-    todo!()
-}
-#[doc(hidden)]
-pub use zip_object as zipObject;
-#[doc(hidden)]
-pub fn zip_object_deep() {
-    todo!()
-}
-#[doc(hidden)]
-pub use zip_object_deep as zipObjectDeep;
-#[doc(hidden)]
-pub fn zip_with() {
-    todo!()
-}
-#[doc(hidden)]
-pub use zip_with as zipWith;
+mod remove;
+pub use remove::*;
+mod reverse;
+pub use reverse::*;
+mod slice;
+pub use slice::*;
+mod sorted_index;
+pub use sorted_index::*;
+mod sorted_index_by;
+pub use sorted_index_by::*;
+mod sorted_index_of;
+pub use sorted_index_of::*;
+mod sorted_last_index;
+pub use sorted_last_index::*;
+mod sorted_last_index_by;
+pub use sorted_last_index_by::*;
+mod sorted_last_index_of;
+pub use sorted_last_index_of::*;
+mod sorted_uniq;
+pub use sorted_uniq::*;
+mod sorted_uniq_by;
+pub use sorted_uniq_by::*;
+mod tail;
+pub use tail::*;
+mod take;
+pub use take::*;
+mod take_right;
+pub use take_right::*;
+mod take_right_while;
+pub use take_right_while::*;
+mod take_while;
+pub use take_while::*;
+mod union;
+pub use union::*;
+mod union_by;
+pub use union_by::*;
+mod union_with;
+pub use union_with::*;
+mod uniq;
+pub use uniq::*;
+mod uniq_by;
+pub use uniq_by::*;
+mod uniq_with;
+pub use uniq_with::*;
+mod unzip;
+pub use unzip::*;
+mod unzip_with;
+pub use unzip_with::*;
+mod without;
+pub use without::*;
+mod xor;
+pub use xor::*;
+mod xor_by;
+pub use xor_by::*;
+mod xor_with;
+pub use xor_with::*;
+/// [zip()] and its variadic backing function
+pub mod zip;
+pub use zip::*;
+mod zip_object;
+pub use zip_object::*;
+mod zip_object_deep;
+pub use zip_object_deep::*;
+mod zip_with;
+pub use zip_with::*;
