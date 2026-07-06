@@ -11,6 +11,8 @@
 ```toml
 [dependencies]
 serde_json_lodash = "0.2"
+# for camelCase aliases (isEmpty, hasIn, …):
+# serde_json_lodash = { version = "0.2", features = ["camel"] }
 ```
 
 ## Usage
@@ -61,12 +63,14 @@ Every name exists as a `fn` and a macro, for both the base and `_x` form.
 
 ## Features
 
-| Feature       | Default | Description                                                                                                                                                       |
-| ------------- | :-----: | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `alias`       |         | Aliasing machinery + snake_case lodash aliases (`first`, `entries`, `has_in`, …). Without it, use the canonical name (`head`, not `first`). Pulls in the optional [`paste`](https://crates.io/crates/paste) crate. |
-| `camel`       |    ✓    | camelCase aliases (`isEmpty`, `hasIn`, …) and their `X`-suffixed `_x` forms (`isEmptyX`). Requires (and enables) `alias`.                                          |
-| `lazy_static` |         | Enables `unique_id` / `uniqueId`.                                                                                                                                 |
-| `all`         |         | `camel` + `lazy_static`.                                                                                                                                          |
+No features are enabled by default (snake_case fns/macros only). Opt in as needed:
+
+| Feature       | Description                                                                                                                                                       |
+| ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `alias`       | Aliasing machinery + snake_case lodash aliases (`first`, `entries`, `has_in`, …). Without it, use the canonical name (`head`, not `first`). Pulls in the optional [`paste`](https://crates.io/crates/paste) crate. |
+| `camel`       | camelCase aliases (`isEmpty`, `hasIn`, …) and their `X`-suffixed `_x` forms (`isEmptyX`). Requires (and enables) `alias`.                                          |
+| `lazy_static` | Enables `unique_id` / `uniqueId`.                                                                                                                                 |
+| `all`         | `camel` + `lazy_static`.                                                                                                                                          |
 
 Each alias re-exports the whole family (`fn`, macro, and both `_x` variants);
 snake aliases keep the `_x` suffix (`has_in_x`), camelCase aliases use `X` (`hasInX`).

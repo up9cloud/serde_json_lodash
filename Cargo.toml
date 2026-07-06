@@ -8,7 +8,7 @@ license = "MIT"
 edition = "2024"
 
 [features]
-default = ["camel"]
+default = []
 all = ["camel", "lazy_static"]
 alias = ["dep:paste"]
 camel = ["alias"]
