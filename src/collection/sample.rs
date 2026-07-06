@@ -53,3 +53,10 @@ macro_rules! sample {
         $crate::sample($a)
     };
 }
+
+/// `_x` helper for [sample()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [sample()] and read the returned `Value`.
+pub fn sample_x() {
+    todo!()
+}

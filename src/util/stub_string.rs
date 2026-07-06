@@ -28,3 +28,10 @@ macro_rules! stub_string {
         $crate::stub_string()
     };
 }
+
+/// `_x` helper for [stub_string()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [stub_string()] and read the returned `Value`.
+pub fn stub_string_x() {
+    todo!()
+}

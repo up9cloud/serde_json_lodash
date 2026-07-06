@@ -55,3 +55,10 @@ macro_rules! each {
         $crate::each($a, $b)
     };
 }
+
+/// `_x` helper for [each()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [each()] and read the returned `Value`.
+pub fn each_x() {
+    todo!()
+}

@@ -80,3 +80,10 @@ macro_rules! drop_right {
         $crate::drop_right($a, $b)
     };
 }
+
+/// `_x` helper for [drop_right()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [drop_right()] and read the returned `Value`.
+pub fn drop_right_x() {
+    todo!()
+}

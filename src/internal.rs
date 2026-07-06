@@ -193,7 +193,7 @@ pub(crate) fn words_vec(s: &str) -> Vec<String> {
 // lodash compound case functions (camelCase, kebabCase, ...) all work on
 // `words(deburr(string).replace(/['’]/g, ''))`
 pub(crate) fn compound_words(s: &str) -> Vec<String> {
-    let deburred = crate::x_deburr_x(s);
+    let deburred = crate::deburr_x(s);
     let no_apos: String = deburred
         .chars()
         .filter(|c| *c != '\'' && *c != '\u{2019}')

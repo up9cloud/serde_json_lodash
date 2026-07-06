@@ -55,3 +55,10 @@ macro_rules! find_last {
         $crate::find_last($a, $b)
     };
 }
+
+/// `_x` helper for [find_last()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [find_last()] and read the returned `Value`.
+pub fn find_last_x() {
+    todo!()
+}

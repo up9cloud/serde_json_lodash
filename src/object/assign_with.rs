@@ -75,3 +75,10 @@ macro_rules! assign_with {
         $crate::assign_with($a, $b, $c)
     };
 }
+
+/// `_x` helper for [assign_with()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [assign_with()] and read the returned `Value`.
+pub fn assign_with_x() {
+    todo!()
+}

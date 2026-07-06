@@ -60,3 +60,10 @@ macro_rules! update {
         $crate::update($a, $b, $c)
     };
 }
+
+/// `_x` helper for [update()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [update()] and read the returned `Value`.
+pub fn update_x() {
+    todo!()
+}

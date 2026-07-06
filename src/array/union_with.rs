@@ -66,3 +66,10 @@ macro_rules! union_with {
         $crate::union_with($a, $b, $c)
     };
 }
+
+/// `_x` helper for [union_with()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [union_with()] and read the returned `Value`.
+pub fn union_with_x() {
+    todo!()
+}

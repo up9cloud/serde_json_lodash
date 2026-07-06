@@ -58,3 +58,10 @@ macro_rules! for_own {
         $crate::for_own($a, $b)
     };
 }
+
+/// `_x` helper for [for_own()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [for_own()] and read the returned `Value`.
+pub fn for_own_x() {
+    todo!()
+}

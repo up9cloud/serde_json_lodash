@@ -85,3 +85,10 @@ macro_rules! merge_with {
         $crate::merge_with($a, $b, $c)
     };
 }
+
+/// `_x` helper for [merge_with()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [merge_with()] and read the returned `Value`.
+pub fn merge_with_x() {
+    todo!()
+}

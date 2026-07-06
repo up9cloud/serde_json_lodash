@@ -54,3 +54,10 @@ macro_rules! take {
         $crate::take($a, $b)
     };
 }
+
+/// `_x` helper for [take()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [take()] and read the returned `Value`.
+pub fn take_x() {
+    todo!()
+}

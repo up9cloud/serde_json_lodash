@@ -54,3 +54,10 @@ macro_rules! each_right {
         $crate::each_right($a, $b)
     };
 }
+
+/// `_x` helper for [each_right()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [each_right()] and read the returned `Value`.
+pub fn each_right_x() {
+    todo!()
+}

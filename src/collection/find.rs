@@ -54,3 +54,10 @@ macro_rules! find {
         $crate::find($a, $b)
     };
 }
+
+/// `_x` helper for [find()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [find()] and read the returned `Value`.
+pub fn find_x() {
+    todo!()
+}

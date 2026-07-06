@@ -85,3 +85,10 @@ macro_rules! pull_at {
         $crate::pull_at($a, $b) // TODO: support multiple parameters...
     };
 }
+
+/// `_x` helper for [pull_at()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [pull_at()] and read the returned `Value`.
+pub fn pull_at_x() {
+    todo!()
+}

@@ -61,3 +61,10 @@ macro_rules! uniq_with {
         $crate::uniq_with($a, $b)
     };
 }
+
+/// `_x` helper for [uniq_with()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [uniq_with()] and read the returned `Value`.
+pub fn uniq_with_x() {
+    todo!()
+}

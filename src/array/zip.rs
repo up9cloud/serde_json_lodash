@@ -68,3 +68,10 @@ macro_rules! zip {
         $crate::zip_arrays(vec![$($a),+])
     };
 }
+
+/// `_x` helper for [zip()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [zip()] and read the returned `Value`.
+pub fn zip_x() {
+    todo!()
+}

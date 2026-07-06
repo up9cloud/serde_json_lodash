@@ -58,3 +58,10 @@ macro_rules! flat_map {
         $crate::flat_map($a, $b)
     };
 }
+
+/// `_x` helper for [flat_map()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [flat_map()] and read the returned `Value`.
+pub fn flat_map_x() {
+    todo!()
+}

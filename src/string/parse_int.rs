@@ -122,3 +122,10 @@ macro_rules! x_parse_int {
         $crate::x_parse_int($a, $b)
     };
 }
+
+/// `_x` helper for [parse_int()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [parse_int()] and read the returned `Value`.
+pub fn parse_int_x() {
+    todo!()
+}

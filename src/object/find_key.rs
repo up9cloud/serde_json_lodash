@@ -62,3 +62,10 @@ macro_rules! find_key {
         $crate::find_key($a, $b)
     };
 }
+
+/// `_x` helper for [find_key()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [find_key()] and read the returned `Value`.
+pub fn find_key_x() {
+    todo!()
+}

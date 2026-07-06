@@ -73,3 +73,10 @@ macro_rules! xor {
         acc
     }};
 }
+
+/// `_x` helper for [xor()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [xor()] and read the returned `Value`.
+pub fn xor_x() {
+    todo!()
+}

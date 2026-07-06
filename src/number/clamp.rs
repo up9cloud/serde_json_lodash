@@ -60,3 +60,10 @@ macro_rules! clamp {
         $crate::clamp($a, $b, $c)
     };
 }
+
+/// `_x` helper for [clamp()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [clamp()] and read the returned `Value`.
+pub fn clamp_x() {
+    todo!()
+}

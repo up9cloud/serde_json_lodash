@@ -68,3 +68,10 @@ macro_rules! mean {
         $crate::mean($a)
     };
 }
+
+/// `_x` helper for [mean()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [mean()] and read the returned `Value`.
+pub fn mean_x() {
+    todo!()
+}

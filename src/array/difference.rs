@@ -97,3 +97,10 @@ macro_rules! difference {
         $crate::difference($a, $b)
     };
 }
+
+/// `_x` helper for [difference()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [difference()] and read the returned `Value`.
+pub fn difference_x() {
+    todo!()
+}

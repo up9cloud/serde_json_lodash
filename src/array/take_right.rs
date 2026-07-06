@@ -54,3 +54,10 @@ macro_rules! take_right {
         $crate::take_right($a, $b)
     };
 }
+
+/// `_x` helper for [take_right()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [take_right()] and read the returned `Value`.
+pub fn take_right_x() {
+    todo!()
+}

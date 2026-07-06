@@ -70,3 +70,10 @@ macro_rules! zip_with {
         $crate::zip_with($a, $b, $c)
     };
 }
+
+/// `_x` helper for [zip_with()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [zip_with()] and read the returned `Value`.
+pub fn zip_with_x() {
+    todo!()
+}

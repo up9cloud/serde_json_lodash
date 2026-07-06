@@ -63,3 +63,10 @@ macro_rules! drop_right_while {
         $crate::drop_right_while($a, $b)
     };
 }
+
+/// `_x` helper for [drop_right_while()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [drop_right_while()] and read the returned `Value`.
+pub fn drop_right_while_x() {
+    todo!()
+}

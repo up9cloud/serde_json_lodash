@@ -70,3 +70,10 @@ macro_rules! invert_by {
         $crate::invert_by($a, $b)
     };
 }
+
+/// `_x` helper for [invert_by()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [invert_by()] and read the returned `Value`.
+pub fn invert_by_x() {
+    todo!()
+}

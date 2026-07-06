@@ -69,3 +69,10 @@ macro_rules! difference_with {
         $crate::difference_with($a, $b, $c)
     };
 }
+
+/// `_x` helper for [difference_with()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [difference_with()] and read the returned `Value`.
+pub fn difference_with_x() {
+    todo!()
+}

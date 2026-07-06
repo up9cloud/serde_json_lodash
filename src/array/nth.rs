@@ -110,3 +110,10 @@ macro_rules! nth {
         $crate::nth($a, $b)
     };
 }
+
+/// `_x` helper for [nth()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [nth()] and read the returned `Value`.
+pub fn nth_x() {
+    todo!()
+}

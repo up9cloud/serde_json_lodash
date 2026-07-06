@@ -113,3 +113,10 @@ macro_rules! times {
         $crate::times($a, $b)
     };
 }
+
+/// `_x` helper for [times()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [times()] and read the returned `Value`.
+pub fn times_x() {
+    todo!()
+}

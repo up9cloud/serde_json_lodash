@@ -62,3 +62,10 @@ macro_rules! map_keys {
         $crate::map_keys($a, $b)
     };
 }
+
+/// `_x` helper for [map_keys()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [map_keys()] and read the returned `Value`.
+pub fn map_keys_x() {
+    todo!()
+}

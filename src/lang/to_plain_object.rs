@@ -64,3 +64,10 @@ macro_rules! to_plain_object {
         $crate::to_plain_object($a)
     };
 }
+
+/// `_x` helper for [to_plain_object()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [to_plain_object()] and read the returned `Value`.
+pub fn to_plain_object_x() {
+    todo!()
+}

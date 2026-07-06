@@ -70,3 +70,10 @@ macro_rules! clone_deep_with {
         $crate::clone_deep_with($a, $b)
     };
 }
+
+/// `_x` helper for [clone_deep_with()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [clone_deep_with()] and read the returned `Value`.
+pub fn clone_deep_with_x() {
+    todo!()
+}

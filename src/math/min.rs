@@ -67,3 +67,10 @@ macro_rules! min {
         $crate::min($a)
     };
 }
+
+/// `_x` helper for [min()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [min()] and read the returned `Value`.
+pub fn min_x() {
+    todo!()
+}

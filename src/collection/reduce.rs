@@ -61,3 +61,10 @@ macro_rules! reduce {
         $crate::reduce($a, $b, $c)
     };
 }
+
+/// `_x` helper for [reduce()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [reduce()] and read the returned `Value`.
+pub fn reduce_x() {
+    todo!()
+}

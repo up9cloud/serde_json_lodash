@@ -60,3 +60,10 @@ macro_rules! multiply {
         $crate::multiply($a, $b)
     };
 }
+
+/// `_x` helper for [multiply()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [multiply()] and read the returned `Value`.
+pub fn multiply_x() {
+    todo!()
+}

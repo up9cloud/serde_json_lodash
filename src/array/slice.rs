@@ -73,3 +73,10 @@ macro_rules! slice {
         $crate::slice($a, $b, $c)
     };
 }
+
+/// `_x` helper for [slice()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [slice()] and read the returned `Value`.
+pub fn slice_x() {
+    todo!()
+}

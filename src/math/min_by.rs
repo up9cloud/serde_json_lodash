@@ -67,3 +67,10 @@ macro_rules! min_by {
         $crate::min_by($a, $b)
     };
 }
+
+/// `_x` helper for [min_by()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [min_by()] and read the returned `Value`.
+pub fn min_by_x() {
+    todo!()
+}

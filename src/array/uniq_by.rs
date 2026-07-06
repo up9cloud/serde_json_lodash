@@ -54,3 +54,10 @@ macro_rules! uniq_by {
         $crate::uniq_by($a, $b)
     };
 }
+
+/// `_x` helper for [uniq_by()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [uniq_by()] and read the returned `Value`.
+pub fn uniq_by_x() {
+    todo!()
+}

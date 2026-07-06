@@ -62,3 +62,10 @@ macro_rules! find_last_key {
         $crate::find_last_key($a, $b)
     };
 }
+
+/// `_x` helper for [find_last_key()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [find_last_key()] and read the returned `Value`.
+pub fn find_last_key_x() {
+    todo!()
+}

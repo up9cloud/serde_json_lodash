@@ -62,3 +62,10 @@ macro_rules! pick {
         $crate::pick($a, $b)
     };
 }
+
+/// `_x` helper for [pick()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [pick()] and read the returned `Value`.
+pub fn pick_x() {
+    todo!()
+}

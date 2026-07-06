@@ -67,3 +67,10 @@ macro_rules! max_by {
         $crate::max_by($a, $b)
     };
 }
+
+/// `_x` helper for [max_by()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [max_by()] and read the returned `Value`.
+pub fn max_by_x() {
+    todo!()
+}

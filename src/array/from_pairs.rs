@@ -126,3 +126,10 @@ macro_rules! from_pairs {
         $crate::from_pairs($a)
     };
 }
+
+/// `_x` helper for [from_pairs()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [from_pairs()] and read the returned `Value`.
+pub fn from_pairs_x() {
+    todo!()
+}

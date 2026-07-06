@@ -53,3 +53,10 @@ macro_rules! sample_size {
         $crate::sample_size($a, $b)
     };
 }
+
+/// `_x` helper for [sample_size()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [sample_size()] and read the returned `Value`.
+pub fn sample_size_x() {
+    todo!()
+}

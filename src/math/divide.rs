@@ -60,3 +60,10 @@ macro_rules! divide {
         $crate::divide($a, $b)
     };
 }
+
+/// `_x` helper for [divide()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [divide()] and read the returned `Value`.
+pub fn divide_x() {
+    todo!()
+}

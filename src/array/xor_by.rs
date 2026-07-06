@@ -77,3 +77,10 @@ macro_rules! xor_by {
         $crate::xor_by($a, $b, $c)
     };
 }
+
+/// `_x` helper for [xor_by()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [xor_by()] and read the returned `Value`.
+pub fn xor_by_x() {
+    todo!()
+}

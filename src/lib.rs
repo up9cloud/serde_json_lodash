@@ -21,11 +21,12 @@
 //!     json!({'a': 1, 'b': 2})
 //!   );
 //!
-//!   // `x_`, `_x` helpers for simple types
+//!   // primitive in / primitive out: the base fn & macro accept a `&str`/`String`
+//!   // primitive as well as a `json!` value; the `_x` form returns a primitive.
 //!   assert_eq!(capitalize!(json!("FRED")), json!("Fred"));
-//!   assert_eq!(x_capitalize!("FRED"), json!("Fred"));
+//!   assert_eq!(capitalize!("FRED"), json!("Fred"));
 //!   assert_eq!(capitalize_x!(json!("FRED")), "Fred".to_owned());
-//!   assert_eq!(x_capitalize_x!("FRED"), "Fred".to_owned());
+//!   assert_eq!(capitalize_x!("FRED"), "Fred".to_owned());
 //! }
 //! ```
 //!
@@ -39,12 +40,17 @@
 //!   arguments, type coercion and JSON-specific quirks.
 //!
 //! Every other form is **auxiliary**: the plain function
-//! ([`capitalize()`](fn@capitalize)) and the `x_` / `_x` primitive-typed helpers
-//! together with their macros ([`x_capitalize()`](fn@x_capitalize),
-//! [`capitalize_x()`](fn@capitalize_x), [`x_capitalize_x()`](fn@x_capitalize_x),
-//! `x_capitalize!`, `capitalize_x!`, …). An auxiliary item's `Additional cases:`
-//! is there only to **show how to call that particular form** — one short
-//! example — not to re-cover the edge cases.
+//! ([`capitalize()`](fn@capitalize)) and the `_x` primitive-output helper with
+//! its macro ([`capitalize_x()`](fn@capitalize_x), `capitalize_x!`). An
+//! auxiliary item's `Additional cases:` is there only to **show how to call
+//! that particular form** — one short example — not to re-cover the edge cases.
+//!
+//! For functions where an argument may reasonably be a primitive (e.g. a string
+//! function's input), the base fn and macro are generic over
+//! [`Into`]`<`[`Value`](crate::lib::Value)`>`, so a `&str`/`String`/number
+//! primitive can be passed directly instead of wrapping it in `json!`. Where a
+//! result has no single primitive form (a collection or a runtime-dynamic
+//! value), the `_x` helper is a `todo!()` marker documenting that.
 //!
 //! So: to understand a function's behavior, read its primary macro; to see how
 //! to call a specific form (fn vs macro, `Value` vs primitive), glance at that

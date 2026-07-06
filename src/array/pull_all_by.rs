@@ -95,3 +95,10 @@ macro_rules! pull_all_by {
         $crate::pull_all_by($a, $b, $c)
     };
 }
+
+/// `_x` helper for [pull_all_by()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [pull_all_by()] and read the returned `Value`.
+pub fn pull_all_by_x() {
+    todo!()
+}

@@ -60,3 +60,10 @@ macro_rules! subtract {
         $crate::subtract($a, $b)
     };
 }
+
+/// `_x` helper for [subtract()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [subtract()] and read the returned `Value`.
+pub fn subtract_x() {
+    todo!()
+}

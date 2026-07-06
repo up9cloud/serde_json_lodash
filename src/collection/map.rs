@@ -60,3 +60,10 @@ macro_rules! map {
         $crate::map($a, $b)
     };
 }
+
+/// `_x` helper for [map()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [map()] and read the returned `Value`.
+pub fn map_x() {
+    todo!()
+}

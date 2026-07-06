@@ -50,3 +50,10 @@ macro_rules! to_array {
         $crate::to_array($a)
     };
 }
+
+/// `_x` helper for [to_array()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [to_array()] and read the returned `Value`.
+pub fn to_array_x() {
+    todo!()
+}

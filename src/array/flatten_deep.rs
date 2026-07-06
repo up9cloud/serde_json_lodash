@@ -120,3 +120,10 @@ macro_rules! x_flatten_deep_x {
         $crate::x_flatten_deep_x($a)
     };
 }
+
+/// `_x` helper for [flatten_deep()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [flatten_deep()] and read the returned `Value`.
+pub fn flatten_deep_x() {
+    todo!()
+}

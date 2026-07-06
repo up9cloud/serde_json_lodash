@@ -51,15 +51,8 @@ static DEBURR_MAP: &[(&str, &str)] = &[
     ("ŉ", "'n"),
 ];
 
-/// `x_`/`_x` helper for [deburr()]: takes a primitive argument and returns a primitive value.
-/// Additional cases:
-///
-/// ```rust
-/// # use serde_json_lodash::x_deburr_x;
-/// # use serde_json::json;
-/// assert_eq!(x_deburr_x("déjà vu"), "deja vu".to_owned());
-/// ```
-pub fn x_deburr_x(s: &str) -> String {
+// internal `&str`/primitive worker for [deburr()] / [deburr_x()]
+fn x_deburr_x(s: &str) -> String {
     let mut out = String::with_capacity(s.len());
     'outer: for c in s.chars() {
         // combining diacritical marks are stripped
@@ -78,17 +71,7 @@ pub fn x_deburr_x(s: &str) -> String {
     }
     out
 }
-/// `x_` helper for [deburr()]: takes a primitive argument instead of a [`Value`](crate::lib::Value).
-/// Additional cases:
-///
-/// ```rust
-/// # use serde_json_lodash::x_deburr;
-/// # use serde_json::json;
-/// assert_eq!(x_deburr("déjà vu"), json!("deja vu"));
-/// ```
-pub fn x_deburr(s: &str) -> Value {
-    json!(x_deburr_x(s))
-}
+
 /// `_x` helper for [deburr()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
 /// Additional cases:
 ///
@@ -97,9 +80,11 @@ pub fn x_deburr(s: &str) -> Value {
 /// # use serde_json::json;
 /// assert_eq!(deburr_x(json!("déjà vu")), "deja vu".to_owned());
 /// ```
-pub fn deburr_x(v: Value) -> String {
+pub fn deburr_x<A: Into<Value>>(v: A) -> String {
+    let v = v.into();
     x_deburr_x(&crate::to_string_x(v))
 }
+
 /// See lodash [deburr](https://lodash.com/docs/#deburr)
 /// Additional cases:
 ///
@@ -108,7 +93,8 @@ pub fn deburr_x(v: Value) -> String {
 /// # use serde_json::json;
 /// assert_eq!(deburr(json!("déjà vu")), json!("deja vu"));
 /// ```
-pub fn deburr(v: Value) -> Value {
+pub fn deburr<A: Into<Value>>(v: A) -> Value {
+    let v = v.into();
     json!(deburr_x(v))
 }
 
@@ -133,8 +119,6 @@ pub fn deburr(v: Value) -> Value {
 /// assert_eq!(deburr!(), json!(""));
 /// assert_eq!(deburr!(json!(null)), json!(""));
 /// assert_eq!(deburr!(json!("Æthelred")), json!("Aethelred"));
-/// assert_eq!(x_deburr!("crème brûlée"), json!("creme brulee"));
-/// assert_eq!(x_deburr_x!("ss"), "ss".to_owned());
 /// assert_eq!(deburr_x!(json!(123)), "123".to_owned());
 /// ```
 #[macro_export]
@@ -149,26 +133,7 @@ macro_rules! deburr {
         $crate::deburr($a)
     };
 }
-/// Based on [x_deburr()]
-#[macro_export]
-/// Additional cases:
-///
-/// ```rust
-/// # #[macro_use] extern crate serde_json_lodash;
-/// # use serde_json::json;
-/// assert_eq!(x_deburr!("déjà vu"), json!("deja vu"));
-/// ```
-macro_rules! x_deburr {
-    () => {
-        $crate::lib::json!("")
-    };
-    ($a:expr $(,)*) => {
-        $crate::x_deburr($a)
-    };
-    ($a:expr, $($rest:tt)*) => {
-        $crate::x_deburr($a)
-    };
-}
+
 /// Based on [deburr_x()]
 #[macro_export]
 /// Additional cases:
@@ -187,25 +152,5 @@ macro_rules! deburr_x {
     };
     ($a:expr, $($rest:tt)*) => {
         $crate::deburr_x($a)
-    };
-}
-/// Based on [x_deburr_x()]
-#[macro_export]
-/// Additional cases:
-///
-/// ```rust
-/// # #[macro_use] extern crate serde_json_lodash;
-/// # use serde_json::json;
-/// assert_eq!(x_deburr_x!("déjà vu"), "deja vu".to_owned());
-/// ```
-macro_rules! x_deburr_x {
-    () => {
-        "".to_owned()
-    };
-    ($a:expr $(,)*) => {
-        $crate::x_deburr_x($a)
-    };
-    ($a:expr, $($rest:tt)*) => {
-        $crate::x_deburr_x($a)
     };
 }

@@ -70,3 +70,10 @@ macro_rules! order_by {
         $crate::order_by($a, $b, $c)
     };
 }
+
+/// `_x` helper for [order_by()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [order_by()] and read the returned `Value`.
+pub fn order_by_x() {
+    todo!()
+}

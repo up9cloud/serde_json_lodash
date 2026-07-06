@@ -82,3 +82,10 @@ macro_rules! random {
         $crate::random($a, $b, $c)
     };
 }
+
+/// `_x` helper for [random()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [random()] and read the returned `Value`.
+pub fn random_x() {
+    todo!()
+}

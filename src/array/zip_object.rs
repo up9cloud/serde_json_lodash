@@ -63,3 +63,10 @@ macro_rules! zip_object {
         $crate::zip_object($a, $b)
     };
 }
+
+/// `_x` helper for [zip_object()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [zip_object()] and read the returned `Value`.
+pub fn zip_object_x() {
+    todo!()
+}

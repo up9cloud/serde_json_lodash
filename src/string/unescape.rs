@@ -1,31 +1,14 @@
 use crate::lib::{json, Value};
 
-/// `x_`/`_x` helper for [unescape()]: takes a primitive argument and returns a primitive value.
-/// Additional cases:
-///
-/// ```rust
-/// # use serde_json_lodash::x_unescape_x;
-/// # use serde_json::json;
-/// assert_eq!(x_unescape_x("fred, barney, &amp; pebbles"), "fred, barney, & pebbles".to_owned());
-/// ```
-pub fn x_unescape_x(s: &str) -> String {
+// internal `&str`/primitive worker for [unescape()] / [unescape_x()]
+fn x_unescape_x(s: &str) -> String {
     s.replace("&lt;", "<")
         .replace("&gt;", ">")
         .replace("&quot;", "\"")
         .replace("&#39;", "'")
         .replace("&amp;", "&")
 }
-/// `x_` helper for [unescape()]: takes a primitive argument instead of a [`Value`](crate::lib::Value).
-/// Additional cases:
-///
-/// ```rust
-/// # use serde_json_lodash::x_unescape;
-/// # use serde_json::json;
-/// assert_eq!(x_unescape("fred, barney, &amp; pebbles"), json!("fred, barney, & pebbles"));
-/// ```
-pub fn x_unescape(s: &str) -> Value {
-    json!(x_unescape_x(s))
-}
+
 /// `_x` helper for [unescape()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
 /// Additional cases:
 ///
@@ -34,9 +17,11 @@ pub fn x_unescape(s: &str) -> Value {
 /// # use serde_json::json;
 /// assert_eq!(unescape_x(json!("fred, barney, &amp; pebbles")), "fred, barney, & pebbles".to_owned());
 /// ```
-pub fn unescape_x(v: Value) -> String {
+pub fn unescape_x<A: Into<Value>>(v: A) -> String {
+    let v = v.into();
     x_unescape_x(&crate::to_string_x(v))
 }
+
 /// See lodash [unescape](https://lodash.com/docs/#unescape)
 /// Additional cases:
 ///
@@ -45,7 +30,8 @@ pub fn unescape_x(v: Value) -> String {
 /// # use serde_json::json;
 /// assert_eq!(unescape(json!("fred, barney, &amp; pebbles")), json!("fred, barney, & pebbles"));
 /// ```
-pub fn unescape(v: Value) -> Value {
+pub fn unescape<A: Into<Value>>(v: A) -> Value {
+    let v = v.into();
     json!(unescape_x(v))
 }
 
@@ -84,46 +70,6 @@ macro_rules! unescape {
     };
 }
 
-/// Based on [x_unescape_x()]
-#[macro_export]
-/// Additional cases:
-///
-/// ```rust
-/// # #[macro_use] extern crate serde_json_lodash;
-/// # use serde_json::json;
-/// assert_eq!(x_unescape_x!("fred, barney, &amp; pebbles"), "fred, barney, & pebbles".to_owned());
-/// ```
-macro_rules! x_unescape_x {
-    () => {
-        "".to_owned()
-    };
-    ($a:expr $(,)*) => {
-        $crate::x_unescape_x($a)
-    };
-    ($a:expr, $($rest:tt)*) => {
-        $crate::x_unescape_x($a)
-    };
-}
-/// Based on [x_unescape()]
-#[macro_export]
-/// Additional cases:
-///
-/// ```rust
-/// # #[macro_use] extern crate serde_json_lodash;
-/// # use serde_json::json;
-/// assert_eq!(x_unescape!("fred, barney, &amp; pebbles"), json!("fred, barney, & pebbles"));
-/// ```
-macro_rules! x_unescape {
-    () => {
-        $crate::lib::json!("")
-    };
-    ($a:expr $(,)*) => {
-        $crate::x_unescape($a)
-    };
-    ($a:expr, $($rest:tt)*) => {
-        $crate::x_unescape($a)
-    };
-}
 /// Based on [unescape_x()]
 #[macro_export]
 /// Additional cases:

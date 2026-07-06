@@ -64,3 +64,10 @@ macro_rules! take_right_while {
         $crate::take_right_while($a, $b)
     };
 }
+
+/// `_x` helper for [take_right_while()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [take_right_while()] and read the returned `Value`.
+pub fn take_right_while_x() {
+    todo!()
+}

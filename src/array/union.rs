@@ -55,3 +55,10 @@ macro_rules! union {
         acc
     }};
 }
+
+/// `_x` helper for [union()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [union()] and read the returned `Value`.
+pub fn union_x() {
+    todo!()
+}

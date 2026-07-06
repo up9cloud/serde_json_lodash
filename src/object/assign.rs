@@ -62,3 +62,10 @@ macro_rules! assign {
         acc
     }};
 }
+
+/// `_x` helper for [assign()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [assign()] and read the returned `Value`.
+pub fn assign_x() {
+    todo!()
+}

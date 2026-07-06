@@ -51,3 +51,10 @@ macro_rules! unzip {
         $crate::unzip($a)
     };
 }
+
+/// `_x` helper for [unzip()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [unzip()] and read the returned `Value`.
+pub fn unzip_x() {
+    todo!()
+}

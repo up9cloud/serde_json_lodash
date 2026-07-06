@@ -45,3 +45,10 @@ macro_rules! functions {
         $crate::functions($a)
     };
 }
+
+/// `_x` helper for [functions()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [functions()] and read the returned `Value`.
+pub fn functions_x() {
+    todo!()
+}

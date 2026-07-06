@@ -76,3 +76,10 @@ macro_rules! pull {
         $crate::pull!($crate::pull($a, $b), $($rest)*)
     };
 }
+
+/// `_x` helper for [pull()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [pull()] and read the returned `Value`.
+pub fn pull_x() {
+    todo!()
+}

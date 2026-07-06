@@ -85,3 +85,10 @@ macro_rules! unset {
         $crate::unset($a, $b)
     };
 }
+
+/// `_x` helper for [unset()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [unset()] and read the returned `Value`.
+pub fn unset_x() {
+    todo!()
+}

@@ -1,32 +1,15 @@
 use crate::lib::{json, Value};
 use crate::internal;
 
-/// `x_`/`_x` helper for [lower_case()]: takes a primitive argument and returns a primitive value.
-/// Additional cases:
-///
-/// ```rust
-/// # use serde_json_lodash::x_lower_case_x;
-/// # use serde_json::json;
-/// assert_eq!(x_lower_case_x("--Foo-Bar--"), "foo bar".to_owned());
-/// ```
-pub fn x_lower_case_x(s: &str) -> String {
+// internal `&str`/primitive worker for [lower_case()] / [lower_case_x()]
+fn x_lower_case_x(s: &str) -> String {
     internal::compound_words(s)
         .iter()
         .map(|w| w.to_lowercase())
         .collect::<Vec<_>>()
         .join(" ")
 }
-/// `x_` helper for [lower_case()]: takes a primitive argument instead of a [`Value`](crate::lib::Value).
-/// Additional cases:
-///
-/// ```rust
-/// # use serde_json_lodash::x_lower_case;
-/// # use serde_json::json;
-/// assert_eq!(x_lower_case("--Foo-Bar--"), json!("foo bar"));
-/// ```
-pub fn x_lower_case(s: &str) -> Value {
-    json!(x_lower_case_x(s))
-}
+
 /// `_x` helper for [lower_case()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
 /// Additional cases:
 ///
@@ -35,9 +18,11 @@ pub fn x_lower_case(s: &str) -> Value {
 /// # use serde_json::json;
 /// assert_eq!(lower_case_x(json!("--Foo-Bar--")), "foo bar".to_owned());
 /// ```
-pub fn lower_case_x(v: Value) -> String {
+pub fn lower_case_x<A: Into<Value>>(v: A) -> String {
+    let v = v.into();
     x_lower_case_x(&crate::to_string_x(v))
 }
+
 /// See lodash [lowerCase](https://lodash.com/docs/#lowerCase)
 /// Additional cases:
 ///
@@ -46,7 +31,8 @@ pub fn lower_case_x(v: Value) -> String {
 /// # use serde_json::json;
 /// assert_eq!(lower_case(json!("--Foo-Bar--")), json!("foo bar"));
 /// ```
-pub fn lower_case(v: Value) -> Value {
+pub fn lower_case<A: Into<Value>>(v: A) -> Value {
+    let v = v.into();
     json!(lower_case_x(v))
 }
 
@@ -92,46 +78,6 @@ macro_rules! lower_case {
     };
 }
 
-/// Based on [x_lower_case_x()]
-#[macro_export]
-/// Additional cases:
-///
-/// ```rust
-/// # #[macro_use] extern crate serde_json_lodash;
-/// # use serde_json::json;
-/// assert_eq!(x_lower_case_x!("--Foo-Bar--"), "foo bar".to_owned());
-/// ```
-macro_rules! x_lower_case_x {
-    () => {
-        "".to_owned()
-    };
-    ($a:expr $(,)*) => {
-        $crate::x_lower_case_x($a)
-    };
-    ($a:expr, $($rest:tt)*) => {
-        $crate::x_lower_case_x($a)
-    };
-}
-/// Based on [x_lower_case()]
-#[macro_export]
-/// Additional cases:
-///
-/// ```rust
-/// # #[macro_use] extern crate serde_json_lodash;
-/// # use serde_json::json;
-/// assert_eq!(x_lower_case!("--Foo-Bar--"), json!("foo bar"));
-/// ```
-macro_rules! x_lower_case {
-    () => {
-        $crate::lib::json!("")
-    };
-    ($a:expr $(,)*) => {
-        $crate::x_lower_case($a)
-    };
-    ($a:expr, $($rest:tt)*) => {
-        $crate::x_lower_case($a)
-    };
-}
 /// Based on [lower_case_x()]
 #[macro_export]
 /// Additional cases:

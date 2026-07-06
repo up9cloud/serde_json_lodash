@@ -84,3 +84,10 @@ macro_rules! x_words {
         $crate::x_words($a)
     };
 }
+
+/// `_x` helper for [words()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [words()] and read the returned `Value`.
+pub fn words_x() {
+    todo!()
+}

@@ -55,3 +55,10 @@ macro_rules! mean_by {
         $crate::mean_by($a, $b)
     };
 }
+
+/// `_x` helper for [mean_by()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [mean_by()] and read the returned `Value`.
+pub fn mean_by_x() {
+    todo!()
+}

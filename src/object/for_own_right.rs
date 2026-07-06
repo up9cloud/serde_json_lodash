@@ -55,3 +55,10 @@ macro_rules! for_own_right {
         $crate::for_own_right($a, $b)
     };
 }
+
+/// `_x` helper for [for_own_right()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [for_own_right()] and read the returned `Value`.
+pub fn for_own_right_x() {
+    todo!()
+}

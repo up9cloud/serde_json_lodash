@@ -94,3 +94,10 @@ macro_rules! get {
         $crate::get($a, $b, $c)
     };
 }
+
+/// `_x` helper for [get()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [get()] and read the returned `Value`.
+pub fn get_x() {
+    todo!()
+}

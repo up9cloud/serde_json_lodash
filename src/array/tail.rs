@@ -52,3 +52,10 @@ macro_rules! tail {
         $crate::tail($a)
     };
 }
+
+/// `_x` helper for [tail()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [tail()] and read the returned `Value`.
+pub fn tail_x() {
+    todo!()
+}

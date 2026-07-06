@@ -60,3 +60,10 @@ macro_rules! without {
         $crate::without($a, $b)
     };
 }
+
+/// `_x` helper for [without()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [without()] and read the returned `Value`.
+pub fn without_x() {
+    todo!()
+}

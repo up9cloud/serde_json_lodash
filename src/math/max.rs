@@ -68,3 +68,10 @@ macro_rules! max {
         $crate::max($a)
     };
 }
+
+/// `_x` helper for [max()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [max()] and read the returned `Value`.
+pub fn max_x() {
+    todo!()
+}

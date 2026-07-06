@@ -59,3 +59,10 @@ macro_rules! sum {
         $crate::sum($a)
     };
 }
+
+/// `_x` helper for [sum()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [sum()] and read the returned `Value`.
+pub fn sum_x() {
+    todo!()
+}

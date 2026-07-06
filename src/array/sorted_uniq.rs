@@ -46,3 +46,10 @@ macro_rules! sorted_uniq {
         $crate::sorted_uniq($a)
     };
 }
+
+/// `_x` helper for [sorted_uniq()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [sorted_uniq()] and read the returned `Value`.
+pub fn sorted_uniq_x() {
+    todo!()
+}

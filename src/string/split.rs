@@ -99,3 +99,10 @@ macro_rules! x_split {
         $crate::x_split($a, $b, $c)
     };
 }
+
+/// `_x` helper for [split()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [split()] and read the returned `Value`.
+pub fn split_x() {
+    todo!()
+}

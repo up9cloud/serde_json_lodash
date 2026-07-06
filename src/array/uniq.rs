@@ -47,3 +47,10 @@ macro_rules! uniq {
         $crate::uniq($a)
     };
 }
+
+/// `_x` helper for [uniq()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [uniq()] and read the returned `Value`.
+pub fn uniq_x() {
+    todo!()
+}

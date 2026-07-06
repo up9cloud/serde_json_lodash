@@ -86,3 +86,10 @@ macro_rules! chunk {
         $crate::chunk($a, $b)
     };
 }
+
+/// `_x` helper for [chunk()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [chunk()] and read the returned `Value`.
+pub fn chunk_x() {
+    todo!()
+}

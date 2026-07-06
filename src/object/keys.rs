@@ -55,3 +55,10 @@ macro_rules! keys {
         $crate::keys($a)
     };
 }
+
+/// `_x` helper for [keys()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [keys()] and read the returned `Value`.
+pub fn keys_x() {
+    todo!()
+}

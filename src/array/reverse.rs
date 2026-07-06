@@ -49,3 +49,10 @@ macro_rules! reverse {
         $crate::reverse($a)
     };
 }
+
+/// `_x` helper for [reverse()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [reverse()] and read the returned `Value`.
+pub fn reverse_x() {
+    todo!()
+}

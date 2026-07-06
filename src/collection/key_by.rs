@@ -64,3 +64,10 @@ macro_rules! key_by {
         $crate::key_by($a, $b)
     };
 }
+
+/// `_x` helper for [key_by()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [key_by()] and read the returned `Value`.
+pub fn key_by_x() {
+    todo!()
+}

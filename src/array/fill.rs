@@ -91,3 +91,10 @@ macro_rules! fill {
         $crate::fill($a, $b, $c, $d)
     };
 }
+
+/// `_x` helper for [fill()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [fill()] and read the returned `Value`.
+pub fn fill_x() {
+    todo!()
+}

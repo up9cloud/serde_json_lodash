@@ -41,3 +41,10 @@ macro_rules! noop {
         $crate::noop()
     };
 }
+
+/// `_x` helper for [noop()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [noop()] and read the returned `Value`.
+pub fn noop_x() {
+    todo!()
+}

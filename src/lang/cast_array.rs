@@ -48,3 +48,10 @@ macro_rules! cast_array {
         $crate::cast_array($a)
     };
 }
+
+/// `_x` helper for [cast_array()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [cast_array()] and read the returned `Value`.
+pub fn cast_array_x() {
+    todo!()
+}

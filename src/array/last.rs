@@ -71,3 +71,10 @@ macro_rules! last {
         $crate::last($a)
     };
 }
+
+/// `_x` helper for [last()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [last()] and read the returned `Value`.
+pub fn last_x() {
+    todo!()
+}

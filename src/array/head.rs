@@ -72,3 +72,10 @@ macro_rules! head {
         $crate::head($a)
     };
 }
+
+/// `_x` helper for [head()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [head()] and read the returned `Value`.
+pub fn head_x() {
+    todo!()
+}

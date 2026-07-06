@@ -86,3 +86,10 @@ macro_rules! pull_all {
         $crate::pull_all($a, $b)
     };
 }
+
+/// `_x` helper for [pull_all()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [pull_all()] and read the returned `Value`.
+pub fn pull_all_x() {
+    todo!()
+}

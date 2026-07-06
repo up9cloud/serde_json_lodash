@@ -79,3 +79,10 @@ macro_rules! concat {
         $crate::concat!($crate::concat($a, $b), $($rest)*)
     };
 }
+
+/// `_x` helper for [concat()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [concat()] and read the returned `Value`.
+pub fn concat_x() {
+    todo!()
+}

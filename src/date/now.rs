@@ -47,3 +47,10 @@ macro_rules! now {
         $crate::now()
     };
 }
+
+/// `_x` helper for [now()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [now()] and read the returned `Value`.
+pub fn now_x() {
+    todo!()
+}

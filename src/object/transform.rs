@@ -89,3 +89,10 @@ macro_rules! transform {
         $crate::transform($a, $b, $c)
     };
 }
+
+/// `_x` helper for [transform()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [transform()] and read the returned `Value`.
+pub fn transform_x() {
+    todo!()
+}

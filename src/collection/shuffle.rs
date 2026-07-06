@@ -56,3 +56,10 @@ macro_rules! shuffle {
         $crate::shuffle($a)
     };
 }
+
+/// `_x` helper for [shuffle()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [shuffle()] and read the returned `Value`.
+pub fn shuffle_x() {
+    todo!()
+}

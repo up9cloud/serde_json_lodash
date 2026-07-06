@@ -59,3 +59,10 @@ macro_rules! pick_by {
         $crate::pick_by($a, $b)
     };
 }
+
+/// `_x` helper for [pick_by()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [pick_by()] and read the returned `Value`.
+pub fn pick_by_x() {
+    todo!()
+}

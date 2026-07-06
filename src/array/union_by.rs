@@ -61,3 +61,10 @@ macro_rules! union_by {
         $crate::union_by($a, $b, $c)
     };
 }
+
+/// `_x` helper for [union_by()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [union_by()] and read the returned `Value`.
+pub fn union_by_x() {
+    todo!()
+}

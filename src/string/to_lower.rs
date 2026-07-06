@@ -1,28 +1,11 @@
-use crate::lib::{json, Value};
+use crate::lib::Value;
 use crate::internal::{type_name};
 
-/// `x_`/`_x` helper for [to_lower()]: takes a primitive argument and returns a primitive value.
-/// Additional cases:
-///
-/// ```rust
-/// # use serde_json_lodash::x_to_lower_x;
-/// # use serde_json::json;
-/// assert_eq!(x_to_lower_x("--Foo-Bar--"), "--foo-bar--".to_owned());
-/// ```
-pub fn x_to_lower_x(s: &str) -> String {
+// internal `&str`/primitive worker for [to_lower()] / [to_lower_x()]
+fn x_to_lower_x(s: &str) -> String {
     s.to_lowercase()
 }
-/// `x_` helper for [to_lower()]: takes a primitive argument instead of a [`Value`](crate::lib::Value).
-/// Additional cases:
-///
-/// ```rust
-/// # use serde_json_lodash::x_to_lower;
-/// # use serde_json::json;
-/// assert_eq!(x_to_lower("--Foo-Bar--"), json!("--foo-bar--"));
-/// ```
-pub fn x_to_lower(s: &str) -> Value {
-    json!(x_to_lower_x(s))
-}
+
 /// `_x` helper for [to_lower()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
 /// Additional cases:
 ///
@@ -31,7 +14,8 @@ pub fn x_to_lower(s: &str) -> Value {
 /// # use serde_json::json;
 /// assert_eq!(to_lower_x(json!("--Foo-Bar--")), "--foo-bar--".to_owned());
 /// ```
-pub fn to_lower_x(v: Value) -> String {
+pub fn to_lower_x<A: Into<Value>>(v: A) -> String {
+    let v = v.into();
     match v {
         Value::Null => "".into(),
         Value::Bool(b) => {
@@ -57,6 +41,7 @@ pub fn to_lower_x(v: Value) -> String {
         Value::Object(o) => x_to_lower_x(type_name(&o)),
     }
 }
+
 /// See lodash [toLower](https://lodash.com/docs/#toLower)
 /// Additional cases:
 ///
@@ -65,70 +50,11 @@ pub fn to_lower_x(v: Value) -> String {
 /// # use serde_json::json;
 /// assert_eq!(to_lower(json!("--Foo-Bar--")), json!("--foo-bar--"));
 /// ```
-pub fn to_lower(v: Value) -> Value {
+pub fn to_lower<A: Into<Value>>(v: A) -> Value {
+    let v = v.into();
     Value::String(to_lower_x(v))
 }
 
-/// Based on [x_to_lower_x()]
-///
-/// Examples:
-///
-/// ```rust
-/// #[macro_use] extern crate serde_json_lodash;
-/// use serde_json::json;
-/// assert_eq!(
-///   x_to_lower_x!("--Foo-Bar--"),
-///   "--foo-bar--".to_owned()
-/// );
-/// assert_eq!(
-///   x_to_lower_x!("fooBar"),
-///   "foobar".to_owned()
-/// );
-/// assert_eq!(
-///   x_to_lower_x!("__FOO_BAR__"),
-///   "__foo_bar__".to_owned()
-/// );
-/// ```
-///
-/// Additional cases:
-///
-/// ```rust
-/// # #[macro_use] extern crate serde_json_lodash;
-/// # use serde_json::json;
-/// assert_eq!(x_to_lower_x!(), "".to_owned());
-/// ```
-#[macro_export]
-macro_rules! x_to_lower_x {
-    () => {
-        "".to_owned()
-    };
-    ($a:expr $(,)*) => {
-        $crate::x_to_lower_x($a)
-    };
-    ($a:expr, $($rest:tt)*) => {
-        $crate::x_to_lower_x($a)
-    };
-}
-/// Based on [x_to_lower()]
-#[macro_export]
-/// Additional cases:
-///
-/// ```rust
-/// # #[macro_use] extern crate serde_json_lodash;
-/// # use serde_json::json;
-/// assert_eq!(x_to_lower!("--Foo-Bar--"), json!("--foo-bar--"));
-/// ```
-macro_rules! x_to_lower {
-    () => {
-        $crate::lib::json!("")
-    };
-    ($a:expr $(,)*) => {
-        $crate::x_to_lower($a)
-    };
-    ($a:expr, $($rest:tt)*) => {
-        $crate::x_to_lower($a)
-    };
-}
 /// Based on [to_lower_x()]
 #[macro_export]
 /// Additional cases:
@@ -149,6 +75,7 @@ macro_rules! to_lower_x {
         $crate::to_lower_x($a)
     };
 }
+
 /// Based on [to_lower()]
 ///
 /// Examples:

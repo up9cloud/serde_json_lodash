@@ -49,3 +49,10 @@ macro_rules! values {
         $crate::values($a)
     };
 }
+
+/// `_x` helper for [values()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [values()] and read the returned `Value`.
+pub fn values_x() {
+    todo!()
+}

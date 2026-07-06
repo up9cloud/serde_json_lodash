@@ -55,3 +55,10 @@ macro_rules! clone_with {
         $crate::clone_with($a, $b)
     };
 }
+
+/// `_x` helper for [clone_with()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [clone_with()] and read the returned `Value`.
+pub fn clone_with_x() {
+    todo!()
+}

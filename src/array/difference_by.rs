@@ -66,3 +66,10 @@ macro_rules! difference_by {
         $crate::difference_by($a, $b, $c)
     };
 }
+
+/// `_x` helper for [difference_by()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [difference_by()] and read the returned `Value`.
+pub fn difference_by_x() {
+    todo!()
+}

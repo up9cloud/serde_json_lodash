@@ -61,3 +61,10 @@ macro_rules! invert {
         $crate::invert($a)
     };
 }
+
+/// `_x` helper for [invert()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [invert()] and read the returned `Value`.
+pub fn invert_x() {
+    todo!()
+}

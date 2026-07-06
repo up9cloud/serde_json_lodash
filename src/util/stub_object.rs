@@ -28,3 +28,10 @@ macro_rules! stub_object {
         $crate::stub_object()
     };
 }
+
+/// `_x` helper for [stub_object()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [stub_object()] and read the returned `Value`.
+pub fn stub_object_x() {
+    todo!()
+}

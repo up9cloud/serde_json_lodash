@@ -61,3 +61,10 @@ macro_rules! reduce_right {
         $crate::reduce_right($a, $b, $c)
     };
 }
+
+/// `_x` helper for [reduce_right()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [reduce_right()] and read the returned `Value`.
+pub fn reduce_right_x() {
+    todo!()
+}

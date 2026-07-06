@@ -61,3 +61,10 @@ macro_rules! group_by {
         $crate::group_by($a, $b)
     };
 }
+
+/// `_x` helper for [group_by()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [group_by()] and read the returned `Value`.
+pub fn group_by_x() {
+    todo!()
+}

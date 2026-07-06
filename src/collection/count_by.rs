@@ -58,3 +58,10 @@ macro_rules! count_by {
         $crate::count_by($a, $b)
     };
 }
+
+/// `_x` helper for [count_by()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [count_by()] and read the returned `Value`.
+pub fn count_by_x() {
+    todo!()
+}

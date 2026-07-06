@@ -42,3 +42,10 @@ macro_rules! identity {
         $crate::identity($a)
     };
 }
+
+/// `_x` helper for [identity()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [identity()] and read the returned `Value`.
+pub fn identity_x() {
+    todo!()
+}

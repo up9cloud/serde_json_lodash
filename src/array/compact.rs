@@ -76,3 +76,10 @@ macro_rules! compact {
         $crate::compact($a)
     };
 }
+
+/// `_x` helper for [compact()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [compact()] and read the returned `Value`.
+pub fn compact_x() {
+    todo!()
+}

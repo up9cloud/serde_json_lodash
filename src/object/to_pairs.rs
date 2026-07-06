@@ -61,3 +61,10 @@ macro_rules! to_pairs {
         $crate::to_pairs($a)
     };
 }
+
+/// `_x` helper for [to_pairs()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [to_pairs()] and read the returned `Value`.
+pub fn to_pairs_x() {
+    todo!()
+}

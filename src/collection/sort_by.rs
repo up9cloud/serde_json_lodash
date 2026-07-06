@@ -63,3 +63,10 @@ macro_rules! sort_by {
         $crate::sort_by($a, $b)
     };
 }
+
+/// `_x` helper for [sort_by()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [sort_by()] and read the returned `Value`.
+pub fn sort_by_x() {
+    todo!()
+}

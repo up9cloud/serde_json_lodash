@@ -60,3 +60,10 @@ macro_rules! omit_by {
         $crate::omit_by($a, $b)
     };
 }
+
+/// `_x` helper for [omit_by()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [omit_by()] and read the returned `Value`.
+pub fn omit_by_x() {
+    todo!()
+}

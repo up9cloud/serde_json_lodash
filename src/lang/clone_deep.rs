@@ -44,3 +44,10 @@ macro_rules! clone_deep {
         $crate::clone_deep($a)
     };
 }
+
+/// `_x` helper for [clone_deep()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [clone_deep()] and read the returned `Value`.
+pub fn clone_deep_x() {
+    todo!()
+}

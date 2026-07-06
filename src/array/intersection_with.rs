@@ -71,3 +71,10 @@ macro_rules! intersection_with {
         $crate::intersection_with($a, $b, $c)
     };
 }
+
+/// `_x` helper for [intersection_with()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [intersection_with()] and read the returned `Value`.
+pub fn intersection_with_x() {
+    todo!()
+}

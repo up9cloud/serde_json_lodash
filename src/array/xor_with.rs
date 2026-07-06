@@ -72,3 +72,10 @@ macro_rules! xor_with {
         $crate::xor_with($a, $b, $c)
     };
 }
+
+/// `_x` helper for [xor_with()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [xor_with()] and read the returned `Value`.
+pub fn xor_with_x() {
+    todo!()
+}

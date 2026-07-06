@@ -1,32 +1,15 @@
 use crate::lib::{json, Value};
 use crate::internal;
 
-/// `x_`/`_x` helper for [kebab_case()]: takes a primitive argument and returns a primitive value.
-/// Additional cases:
-///
-/// ```rust
-/// # use serde_json_lodash::x_kebab_case_x;
-/// # use serde_json::json;
-/// assert_eq!(x_kebab_case_x("Foo Bar"), "foo-bar".to_owned());
-/// ```
-pub fn x_kebab_case_x(s: &str) -> String {
+// internal `&str`/primitive worker for [kebab_case()] / [kebab_case_x()]
+fn x_kebab_case_x(s: &str) -> String {
     internal::compound_words(s)
         .iter()
         .map(|w| w.to_lowercase())
         .collect::<Vec<_>>()
         .join("-")
 }
-/// `x_` helper for [kebab_case()]: takes a primitive argument instead of a [`Value`](crate::lib::Value).
-/// Additional cases:
-///
-/// ```rust
-/// # use serde_json_lodash::x_kebab_case;
-/// # use serde_json::json;
-/// assert_eq!(x_kebab_case("Foo Bar"), json!("foo-bar"));
-/// ```
-pub fn x_kebab_case(s: &str) -> Value {
-    json!(x_kebab_case_x(s))
-}
+
 /// `_x` helper for [kebab_case()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
 /// Additional cases:
 ///
@@ -35,9 +18,11 @@ pub fn x_kebab_case(s: &str) -> Value {
 /// # use serde_json::json;
 /// assert_eq!(kebab_case_x(json!("Foo Bar")), "foo-bar".to_owned());
 /// ```
-pub fn kebab_case_x(v: Value) -> String {
+pub fn kebab_case_x<A: Into<Value>>(v: A) -> String {
+    let v = v.into();
     x_kebab_case_x(&crate::to_string_x(v))
 }
+
 /// See lodash [kebabCase](https://lodash.com/docs/#kebabCase)
 /// Additional cases:
 ///
@@ -46,7 +31,8 @@ pub fn kebab_case_x(v: Value) -> String {
 /// # use serde_json::json;
 /// assert_eq!(kebab_case(json!("Foo Bar")), json!("foo-bar"));
 /// ```
-pub fn kebab_case(v: Value) -> Value {
+pub fn kebab_case<A: Into<Value>>(v: A) -> Value {
+    let v = v.into();
     json!(kebab_case_x(v))
 }
 
@@ -78,7 +64,6 @@ pub fn kebab_case(v: Value) -> Value {
 /// # use serde_json::json;
 /// assert_eq!(kebab_case!(), json!(""));
 /// assert_eq!(kebab_case!(json!(null)), json!(""));
-/// assert_eq!(serde_json_lodash::x_kebab_case_x("HTMLParser"), "html-parser".to_owned());
 /// ```
 #[macro_export]
 macro_rules! kebab_case {
@@ -93,46 +78,6 @@ macro_rules! kebab_case {
     };
 }
 
-/// Based on [x_kebab_case_x()]
-#[macro_export]
-/// Additional cases:
-///
-/// ```rust
-/// # #[macro_use] extern crate serde_json_lodash;
-/// # use serde_json::json;
-/// assert_eq!(x_kebab_case_x!("Foo Bar"), "foo-bar".to_owned());
-/// ```
-macro_rules! x_kebab_case_x {
-    () => {
-        "".to_owned()
-    };
-    ($a:expr $(,)*) => {
-        $crate::x_kebab_case_x($a)
-    };
-    ($a:expr, $($rest:tt)*) => {
-        $crate::x_kebab_case_x($a)
-    };
-}
-/// Based on [x_kebab_case()]
-#[macro_export]
-/// Additional cases:
-///
-/// ```rust
-/// # #[macro_use] extern crate serde_json_lodash;
-/// # use serde_json::json;
-/// assert_eq!(x_kebab_case!("Foo Bar"), json!("foo-bar"));
-/// ```
-macro_rules! x_kebab_case {
-    () => {
-        $crate::lib::json!("")
-    };
-    ($a:expr $(,)*) => {
-        $crate::x_kebab_case($a)
-    };
-    ($a:expr, $($rest:tt)*) => {
-        $crate::x_kebab_case($a)
-    };
-}
 /// Based on [kebab_case_x()]
 #[macro_export]
 /// Additional cases:

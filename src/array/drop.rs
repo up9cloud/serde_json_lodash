@@ -79,3 +79,10 @@ macro_rules! drop {
         $crate::drop($a, $b)
     };
 }
+
+/// `_x` helper for [drop()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [drop()] and read the returned `Value`.
+pub fn drop_x() {
+    todo!()
+}

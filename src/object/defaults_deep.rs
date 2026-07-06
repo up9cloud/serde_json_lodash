@@ -71,3 +71,10 @@ macro_rules! defaults_deep {
         acc
     }};
 }
+
+/// `_x` helper for [defaults_deep()]: not provided — the result is a composite
+/// or runtime-dynamic `Value` with no single primitive to downgrade to;
+/// use [defaults_deep()] and read the returned `Value`.
+pub fn defaults_deep_x() {
+    todo!()
+}
