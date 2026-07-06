@@ -10,9 +10,9 @@
 
 ```toml
 [dependencies]
-serde_json_lodash = "0.2"
+serde_json_lodash = "0.3"
 # for camelCase aliases (isEmpty, hasIn, …):
-# serde_json_lodash = { version = "0.2", features = ["camel"] }
+# serde_json_lodash = { version = "0.3", features = ["camel"] }
 ```
 
 ## Usage
@@ -102,15 +102,9 @@ specifics).
 ### Releasing a new version
 
 - Commit all your changes first (a clean working tree keeps the tag accurate).
-- Bump the version and create the git tag with [`cargo-bump`](https://crates.io/crates/cargo-bump):
-
-   ```bash
-   cargo bump patch --git-tag   # 0.1.16 -> 0.1.17 (bug fixes)
-   cargo bump minor --git-tag   # 0.1.16 -> 0.2.0  (new features)
-   cargo bump major --git-tag   # 0.1.16 -> 1.0.0  (breaking changes)
-   ```
-
+- Update version in Cargo.toml
 - Update the install version in this README's [Install](#install) section if the new version needs a different `serde_json_lodash = "..."` requirement.
+- Add git tag (without v prefix), e.g. `0.0.1`, NOT v0.0.1
 - Push the commit and the tag — pushing the tag triggers CI to publish to crates.io:
 
    ```bash
