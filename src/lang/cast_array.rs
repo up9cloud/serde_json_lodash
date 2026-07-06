@@ -55,3 +55,10 @@ macro_rules! cast_array {
 pub fn cast_array_x() {
     todo!()
 }
+/// Based on [cast_array_x()]
+#[macro_export]
+macro_rules! cast_array_x {
+    ($($t:tt)*) => {
+        $crate::cast_array_x()
+    };
+}

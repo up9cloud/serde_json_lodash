@@ -35,3 +35,10 @@ macro_rules! stub_true {
 pub fn stub_true_x() {
     todo!()
 }
+/// Based on [stub_true_x()]
+#[macro_export]
+macro_rules! stub_true_x {
+    ($($t:tt)*) => {
+        $crate::stub_true_x()
+    };
+}

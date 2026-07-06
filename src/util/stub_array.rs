@@ -35,3 +35,10 @@ macro_rules! stub_array {
 pub fn stub_array_x() {
     todo!()
 }
+/// Based on [stub_array_x()]
+#[macro_export]
+macro_rules! stub_array_x {
+    ($($t:tt)*) => {
+        $crate::stub_array_x()
+    };
+}

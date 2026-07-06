@@ -61,3 +61,10 @@ macro_rules! partition {
 pub fn partition_x() {
     todo!()
 }
+/// Based on [partition_x()]
+#[macro_export]
+macro_rules! partition_x {
+    ($($t:tt)*) => {
+        $crate::partition_x()
+    };
+}

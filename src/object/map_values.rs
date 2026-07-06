@@ -66,3 +66,10 @@ macro_rules! map_values {
 pub fn map_values_x() {
     todo!()
 }
+/// Based on [map_values_x()]
+#[macro_export]
+macro_rules! map_values_x {
+    ($($t:tt)*) => {
+        $crate::map_values_x()
+    };
+}

@@ -104,3 +104,10 @@ macro_rules! difference {
 pub fn difference_x() {
     todo!()
 }
+/// Based on [difference_x()]
+#[macro_export]
+macro_rules! difference_x {
+    ($($t:tt)*) => {
+        $crate::difference_x()
+    };
+}

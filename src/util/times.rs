@@ -77,3 +77,10 @@ macro_rules! times {
 pub fn times_x() {
     todo!()
 }
+/// Based on [times_x()]
+#[macro_export]
+macro_rules! times_x {
+    ($($t:tt)*) => {
+        $crate::times_x()
+    };
+}

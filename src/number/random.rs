@@ -89,3 +89,10 @@ macro_rules! random {
 pub fn random_x() {
     todo!()
 }
+/// Based on [random_x()]
+#[macro_export]
+macro_rules! random_x {
+    ($($t:tt)*) => {
+        $crate::random_x()
+    };
+}

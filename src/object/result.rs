@@ -66,3 +66,10 @@ macro_rules! result {
 pub fn result_x() {
     todo!()
 }
+/// Based on [result_x()]
+#[macro_export]
+macro_rules! result_x {
+    ($($t:tt)*) => {
+        $crate::result_x()
+    };
+}

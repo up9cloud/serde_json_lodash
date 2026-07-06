@@ -77,3 +77,10 @@ macro_rules! remove {
 pub fn remove_x() {
     todo!()
 }
+/// Based on [remove_x()]
+#[macro_export]
+macro_rules! remove_x {
+    ($($t:tt)*) => {
+        $crate::remove_x()
+    };
+}

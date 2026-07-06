@@ -133,3 +133,10 @@ macro_rules! from_pairs {
 pub fn from_pairs_x() {
     todo!()
 }
+/// Based on [from_pairs_x()]
+#[macro_export]
+macro_rules! from_pairs_x {
+    ($($t:tt)*) => {
+        $crate::from_pairs_x()
+    };
+}

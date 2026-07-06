@@ -74,3 +74,10 @@ macro_rules! min {
 pub fn min_x() {
     todo!()
 }
+/// Based on [min_x()]
+#[macro_export]
+macro_rules! min_x {
+    ($($t:tt)*) => {
+        $crate::min_x()
+    };
+}

@@ -53,3 +53,10 @@ macro_rules! sorted_uniq {
 pub fn sorted_uniq_x() {
     todo!()
 }
+/// Based on [sorted_uniq_x()]
+#[macro_export]
+macro_rules! sorted_uniq_x {
+    ($($t:tt)*) => {
+        $crate::sorted_uniq_x()
+    };
+}

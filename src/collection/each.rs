@@ -62,3 +62,10 @@ macro_rules! each {
 pub fn each_x() {
     todo!()
 }
+/// Based on [each_x()]
+#[macro_export]
+macro_rules! each_x {
+    ($($t:tt)*) => {
+        $crate::each_x()
+    };
+}

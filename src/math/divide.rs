@@ -67,3 +67,10 @@ macro_rules! divide {
 pub fn divide_x() {
     todo!()
 }
+/// Based on [divide_x()]
+#[macro_export]
+macro_rules! divide_x {
+    ($($t:tt)*) => {
+        $crate::divide_x()
+    };
+}

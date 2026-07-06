@@ -61,3 +61,10 @@ macro_rules! take_while {
 pub fn take_while_x() {
     todo!()
 }
+/// Based on [take_while_x()]
+#[macro_export]
+macro_rules! take_while_x {
+    ($($t:tt)*) => {
+        $crate::take_while_x()
+    };
+}

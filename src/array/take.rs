@@ -61,3 +61,10 @@ macro_rules! take {
 pub fn take_x() {
     todo!()
 }
+/// Based on [take_x()]
+#[macro_export]
+macro_rules! take_x {
+    ($($t:tt)*) => {
+        $crate::take_x()
+    };
+}

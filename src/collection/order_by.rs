@@ -77,3 +77,10 @@ macro_rules! order_by {
 pub fn order_by_x() {
     todo!()
 }
+/// Based on [order_by_x()]
+#[macro_export]
+macro_rules! order_by_x {
+    ($($t:tt)*) => {
+        $crate::order_by_x()
+    };
+}

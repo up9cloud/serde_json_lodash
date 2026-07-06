@@ -98,3 +98,10 @@ macro_rules! fill {
 pub fn fill_x() {
     todo!()
 }
+/// Based on [fill_x()]
+#[macro_export]
+macro_rules! fill_x {
+    ($($t:tt)*) => {
+        $crate::fill_x()
+    };
+}

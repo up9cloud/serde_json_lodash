@@ -160,3 +160,10 @@ macro_rules! set {
 pub fn set_x() {
     todo!()
 }
+/// Based on [set_x()]
+#[macro_export]
+macro_rules! set_x {
+    ($($t:tt)*) => {
+        $crate::set_x()
+    };
+}

@@ -34,27 +34,35 @@ macro_rules! with_dollar_sign {
 // as a `Re-exports: pub use head as first;` entry in rustdoc; only the
 // canonical name is documented, exactly like the camelCase aliases.
 
-/// Alias `$from` to `$to`, re-exporting the fn only (target has no macro).
-macro_rules! build_link_fn {
-    ($from:ident, $to:ident) => {
-        #[doc(hidden)]
-        pub use $crate::$to as $from;
-    };
-}
-
-/// Alias `$from` to `$to`, re-exporting both the fn and the macro.
+/// Alias `$from` to `$to`, re-exporting the whole family: the `fn`s `$from` /
+/// `$from_x` and the macros `$from!` / `$from_x!`, each forwarding to the `$to`
+/// equivalent. Every function now has all four forms, so a single `build_link!`
+/// covers an alias completely.
 macro_rules! build_link {
     ($from:ident, $to:ident) => {
-        #[doc(hidden)]
-        pub use $crate::$to as $from;
+        $crate::paste::paste! {
+            #[doc(hidden)]
+            pub use $crate::$to as $from;
+            #[doc(hidden)]
+            pub use $crate::[<$to _x>] as [<$from _x>];
+        }
 
         with_dollar_sign! {
             ($d:tt) => {
-                #[doc(hidden)]
-                #[macro_export]
-                macro_rules! $from {
-                    ($d($d rest:tt)*) => {
-                        $crate::$to!($d($d rest)*)
+                $crate::paste::paste! {
+                    #[doc(hidden)]
+                    #[macro_export]
+                    macro_rules! $from {
+                        ($d($d rest:tt)*) => {
+                            $crate::$to!($d($d rest)*)
+                        }
+                    }
+                    #[doc(hidden)]
+                    #[macro_export]
+                    macro_rules! [<$from _x>] {
+                        ($d($d rest:tt)*) => {
+                            $crate::[<$to _x>]!($d($d rest)*)
+                        }
                     }
                 }
             }

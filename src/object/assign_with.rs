@@ -82,3 +82,10 @@ macro_rules! assign_with {
 pub fn assign_with_x() {
     todo!()
 }
+/// Based on [assign_with_x()]
+#[macro_export]
+macro_rules! assign_with_x {
+    ($($t:tt)*) => {
+        $crate::assign_with_x()
+    };
+}

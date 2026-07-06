@@ -51,6 +51,13 @@ fn x_ceil_x(n: Number, precision: isize) -> Number {
 pub fn ceil_x() {
     todo!()
 }
+/// Based on [ceil_x()]
+#[macro_export]
+macro_rules! ceil_x {
+    ($($t:tt)*) => {
+        $crate::ceil_x()
+    };
+}
 
 /// See lodash [ceil](https://lodash.com/docs/#ceil)
 ///

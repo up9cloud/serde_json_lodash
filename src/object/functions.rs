@@ -52,3 +52,10 @@ macro_rules! functions {
 pub fn functions_x() {
     todo!()
 }
+/// Based on [functions_x()]
+#[macro_export]
+macro_rules! functions_x {
+    ($($t:tt)*) => {
+        $crate::functions_x()
+    };
+}

@@ -61,3 +61,10 @@ macro_rules! find {
 pub fn find_x() {
     todo!()
 }
+/// Based on [find_x()]
+#[macro_export]
+macro_rules! find_x {
+    ($($t:tt)*) => {
+        $crate::find_x()
+    };
+}

@@ -65,3 +65,10 @@ macro_rules! count_by {
 pub fn count_by_x() {
     todo!()
 }
+/// Based on [count_by_x()]
+#[macro_export]
+macro_rules! count_by_x {
+    ($($t:tt)*) => {
+        $crate::count_by_x()
+    };
+}

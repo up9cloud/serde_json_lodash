@@ -69,3 +69,10 @@ macro_rules! find_last_key {
 pub fn find_last_key_x() {
     todo!()
 }
+/// Based on [find_last_key_x()]
+#[macro_export]
+macro_rules! find_last_key_x {
+    ($($t:tt)*) => {
+        $crate::find_last_key_x()
+    };
+}

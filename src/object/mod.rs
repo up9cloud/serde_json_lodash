@@ -17,6 +17,24 @@ pub use at::*;
 pub fn create() {
     todo!()
 }
+/// Based on [create()]
+#[macro_export]
+macro_rules! create {
+    ($($t:tt)*) => {
+        $crate::create()
+    };
+}
+/// **Not ported.** Creates an object with a given prototype; JSON has no prototype chain.
+pub fn create_x() {
+    todo!()
+}
+/// Based on [create_x()]
+#[macro_export]
+macro_rules! create_x {
+    ($($t:tt)*) => {
+        $crate::create_x()
+    };
+}
 mod defaults;
 pub use defaults::*;
 mod defaults_deep;
@@ -53,6 +71,24 @@ pub use invert_by::*;
 pub fn invoke() {
     todo!()
 }
+/// Based on [invoke()]
+#[macro_export]
+macro_rules! invoke {
+    ($($t:tt)*) => {
+        $crate::invoke()
+    };
+}
+/// **Not ported.** Invokes the method at `path`; JSON values have no methods.
+pub fn invoke_x() {
+    todo!()
+}
+/// Based on [invoke_x()]
+#[macro_export]
+macro_rules! invoke_x {
+    ($($t:tt)*) => {
+        $crate::invoke_x()
+    };
+}
 mod keys;
 pub use keys::*;
 build_link!(keys_in, keys);
@@ -83,7 +119,25 @@ pub use set::*;
 pub fn set_with() {
     todo!()
 }
-build_link_fn!(setWith, set_with);
+/// Based on [set_with()]
+#[macro_export]
+macro_rules! set_with {
+    ($($t:tt)*) => {
+        $crate::set_with()
+    };
+}
+/// **Not ported.** Like `set` but with a customizer for creating intermediate objects; niche, not ported.
+pub fn set_with_x() {
+    todo!()
+}
+/// Based on [set_with_x()]
+#[macro_export]
+macro_rules! set_with_x {
+    ($($t:tt)*) => {
+        $crate::set_with_x()
+    };
+}
+build_link!(setWith, set_with);
 mod to_pairs;
 pub use to_pairs::*;
 build_link!(entries, to_pairs);
@@ -101,7 +155,25 @@ pub use update::*;
 pub fn update_with() {
     todo!()
 }
-build_link_fn!(updateWith, update_with);
+/// Based on [update_with()]
+#[macro_export]
+macro_rules! update_with {
+    ($($t:tt)*) => {
+        $crate::update_with()
+    };
+}
+/// **Not ported.** Like `update` but with a customizer for creating intermediate objects; niche, not ported.
+pub fn update_with_x() {
+    todo!()
+}
+/// Based on [update_with_x()]
+#[macro_export]
+macro_rules! update_with_x {
+    ($($t:tt)*) => {
+        $crate::update_with_x()
+    };
+}
+build_link!(updateWith, update_with);
 mod values;
 pub use values::*;
 build_link!(values_in, values);

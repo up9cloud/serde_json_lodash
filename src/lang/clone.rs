@@ -55,3 +55,10 @@ macro_rules! clone {
 pub fn clone_x() {
     todo!()
 }
+/// Based on [clone_x()]
+#[macro_export]
+macro_rules! clone_x {
+    ($($t:tt)*) => {
+        $crate::clone_x()
+    };
+}

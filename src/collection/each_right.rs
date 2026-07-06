@@ -61,3 +61,10 @@ macro_rules! each_right {
 pub fn each_right_x() {
     todo!()
 }
+/// Based on [each_right_x()]
+#[macro_export]
+macro_rules! each_right_x {
+    ($($t:tt)*) => {
+        $crate::each_right_x()
+    };
+}

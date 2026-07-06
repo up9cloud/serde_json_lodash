@@ -17,6 +17,13 @@ fn x_round_x(n: Number, precision: isize) -> Number {
 pub fn round_x() {
     todo!()
 }
+/// Based on [round_x()]
+#[macro_export]
+macro_rules! round_x {
+    ($($t:tt)*) => {
+        $crate::round_x()
+    };
+}
 
 /// See lodash [round](https://lodash.com/docs/#round)
 /// Additional cases:

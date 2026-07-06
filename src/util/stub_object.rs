@@ -35,3 +35,10 @@ macro_rules! stub_object {
 pub fn stub_object_x() {
     todo!()
 }
+/// Based on [stub_object_x()]
+#[macro_export]
+macro_rules! stub_object_x {
+    ($($t:tt)*) => {
+        $crate::stub_object_x()
+    };
+}

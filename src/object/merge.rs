@@ -162,3 +162,10 @@ macro_rules! merge {
 pub fn merge_x() {
     todo!()
 }
+/// Based on [merge_x()]
+#[macro_export]
+macro_rules! merge_x {
+    ($($t:tt)*) => {
+        $crate::merge_x()
+    };
+}

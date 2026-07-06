@@ -79,3 +79,10 @@ macro_rules! head {
 pub fn head_x() {
     todo!()
 }
+/// Based on [head_x()]
+#[macro_export]
+macro_rules! head_x {
+    ($($t:tt)*) => {
+        $crate::head_x()
+    };
+}

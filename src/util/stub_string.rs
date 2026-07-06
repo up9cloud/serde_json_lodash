@@ -35,3 +35,10 @@ macro_rules! stub_string {
 pub fn stub_string_x() {
     todo!()
 }
+/// Based on [stub_string_x()]
+#[macro_export]
+macro_rules! stub_string_x {
+    ($($t:tt)*) => {
+        $crate::stub_string_x()
+    };
+}

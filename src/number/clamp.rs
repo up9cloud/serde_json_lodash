@@ -67,3 +67,10 @@ macro_rules! clamp {
 pub fn clamp_x() {
     todo!()
 }
+/// Based on [clamp_x()]
+#[macro_export]
+macro_rules! clamp_x {
+    ($($t:tt)*) => {
+        $crate::clamp_x()
+    };
+}

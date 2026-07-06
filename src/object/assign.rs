@@ -69,3 +69,10 @@ macro_rules! assign {
 pub fn assign_x() {
     todo!()
 }
+/// Based on [assign_x()]
+#[macro_export]
+macro_rules! assign_x {
+    ($($t:tt)*) => {
+        $crate::assign_x()
+    };
+}

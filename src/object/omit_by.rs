@@ -67,3 +67,10 @@ macro_rules! omit_by {
 pub fn omit_by_x() {
     todo!()
 }
+/// Based on [omit_by_x()]
+#[macro_export]
+macro_rules! omit_by_x {
+    ($($t:tt)*) => {
+        $crate::omit_by_x()
+    };
+}

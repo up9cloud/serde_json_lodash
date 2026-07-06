@@ -62,3 +62,10 @@ macro_rules! keys {
 pub fn keys_x() {
     todo!()
 }
+/// Based on [keys_x()]
+#[macro_export]
+macro_rules! keys_x {
+    ($($t:tt)*) => {
+        $crate::keys_x()
+    };
+}

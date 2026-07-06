@@ -68,3 +68,10 @@ macro_rules! group_by {
 pub fn group_by_x() {
     todo!()
 }
+/// Based on [group_by_x()]
+#[macro_export]
+macro_rules! group_by_x {
+    ($($t:tt)*) => {
+        $crate::group_by_x()
+    };
+}

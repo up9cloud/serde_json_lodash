@@ -67,3 +67,10 @@ macro_rules! at {
 pub fn at_x() {
     todo!()
 }
+/// Based on [at_x()]
+#[macro_export]
+macro_rules! at_x {
+    ($($t:tt)*) => {
+        $crate::at_x()
+    };
+}

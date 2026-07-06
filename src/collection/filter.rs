@@ -62,3 +62,10 @@ macro_rules! filter {
 pub fn filter_x() {
     todo!()
 }
+/// Based on [filter_x()]
+#[macro_export]
+macro_rules! filter_x {
+    ($($t:tt)*) => {
+        $crate::filter_x()
+    };
+}

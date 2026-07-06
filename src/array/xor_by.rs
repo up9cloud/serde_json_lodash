@@ -84,3 +84,10 @@ macro_rules! xor_by {
 pub fn xor_by_x() {
     todo!()
 }
+/// Based on [xor_by_x()]
+#[macro_export]
+macro_rules! xor_by_x {
+    ($($t:tt)*) => {
+        $crate::xor_by_x()
+    };
+}

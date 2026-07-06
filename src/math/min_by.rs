@@ -74,3 +74,10 @@ macro_rules! min_by {
 pub fn min_by_x() {
     todo!()
 }
+/// Based on [min_by_x()]
+#[macro_export]
+macro_rules! min_by_x {
+    ($($t:tt)*) => {
+        $crate::min_by_x()
+    };
+}

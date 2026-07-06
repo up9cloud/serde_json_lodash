@@ -58,3 +58,10 @@ macro_rules! unzip {
 pub fn unzip_x() {
     todo!()
 }
+/// Based on [unzip_x()]
+#[macro_export]
+macro_rules! unzip_x {
+    ($($t:tt)*) => {
+        $crate::unzip_x()
+    };
+}

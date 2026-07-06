@@ -56,3 +56,10 @@ macro_rules! reverse {
 pub fn reverse_x() {
     todo!()
 }
+/// Based on [reverse_x()]
+#[macro_export]
+macro_rules! reverse_x {
+    ($($t:tt)*) => {
+        $crate::reverse_x()
+    };
+}

@@ -80,3 +80,10 @@ macro_rules! slice {
 pub fn slice_x() {
     todo!()
 }
+/// Based on [slice_x()]
+#[macro_export]
+macro_rules! slice_x {
+    ($($t:tt)*) => {
+        $crate::slice_x()
+    };
+}

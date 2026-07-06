@@ -78,3 +78,10 @@ macro_rules! flat_map_depth {
 pub fn flat_map_depth_x() {
     todo!()
 }
+/// Based on [flat_map_depth_x()]
+#[macro_export]
+macro_rules! flat_map_depth_x {
+    ($($t:tt)*) => {
+        $crate::flat_map_depth_x()
+    };
+}

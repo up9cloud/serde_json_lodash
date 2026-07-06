@@ -62,3 +62,10 @@ macro_rules! for_own_right {
 pub fn for_own_right_x() {
     todo!()
 }
+/// Based on [for_own_right_x()]
+#[macro_export]
+macro_rules! for_own_right_x {
+    ($($t:tt)*) => {
+        $crate::for_own_right_x()
+    };
+}

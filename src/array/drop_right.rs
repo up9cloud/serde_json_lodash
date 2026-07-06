@@ -87,3 +87,10 @@ macro_rules! drop_right {
 pub fn drop_right_x() {
     todo!()
 }
+/// Based on [drop_right_x()]
+#[macro_export]
+macro_rules! drop_right_x {
+    ($($t:tt)*) => {
+        $crate::drop_right_x()
+    };
+}

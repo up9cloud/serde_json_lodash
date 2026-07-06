@@ -76,3 +76,10 @@ macro_rules! defaults {
 pub fn defaults_x() {
     todo!()
 }
+/// Based on [defaults_x()]
+#[macro_export]
+macro_rules! defaults_x {
+    ($($t:tt)*) => {
+        $crate::defaults_x()
+    };
+}

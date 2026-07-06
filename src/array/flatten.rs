@@ -102,3 +102,10 @@ macro_rules! flatten {
 pub fn flatten_x() {
     todo!()
 }
+/// Based on [flatten_x()]
+#[macro_export]
+macro_rules! flatten_x {
+    ($($t:tt)*) => {
+        $crate::flatten_x()
+    };
+}

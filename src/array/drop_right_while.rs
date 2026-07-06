@@ -70,3 +70,10 @@ macro_rules! drop_right_while {
 pub fn drop_right_while_x() {
     todo!()
 }
+/// Based on [drop_right_while_x()]
+#[macro_export]
+macro_rules! drop_right_while_x {
+    ($($t:tt)*) => {
+        $crate::drop_right_while_x()
+    };
+}

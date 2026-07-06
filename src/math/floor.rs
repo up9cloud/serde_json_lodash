@@ -17,6 +17,13 @@ fn x_floor_x(n: Number, precision: isize) -> Number {
 pub fn floor_x() {
     todo!()
 }
+/// Based on [floor_x()]
+#[macro_export]
+macro_rules! floor_x {
+    ($($t:tt)*) => {
+        $crate::floor_x()
+    };
+}
 
 /// See lodash [floor](https://lodash.com/docs/#floor)
 /// Additional cases:

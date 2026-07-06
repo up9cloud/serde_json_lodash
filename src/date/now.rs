@@ -54,3 +54,10 @@ macro_rules! now {
 pub fn now_x() {
     todo!()
 }
+/// Based on [now_x()]
+#[macro_export]
+macro_rules! now_x {
+    ($($t:tt)*) => {
+        $crate::now_x()
+    };
+}

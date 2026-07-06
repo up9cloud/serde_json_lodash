@@ -61,3 +61,10 @@ macro_rules! uniq_by {
 pub fn uniq_by_x() {
     todo!()
 }
+/// Based on [uniq_by_x()]
+#[macro_export]
+macro_rules! uniq_by_x {
+    ($($t:tt)*) => {
+        $crate::uniq_by_x()
+    };
+}

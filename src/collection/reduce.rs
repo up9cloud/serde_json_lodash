@@ -68,3 +68,10 @@ macro_rules! reduce {
 pub fn reduce_x() {
     todo!()
 }
+/// Based on [reduce_x()]
+#[macro_export]
+macro_rules! reduce_x {
+    ($($t:tt)*) => {
+        $crate::reduce_x()
+    };
+}

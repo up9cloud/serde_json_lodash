@@ -93,3 +93,10 @@ macro_rules! pull_all {
 pub fn pull_all_x() {
     todo!()
 }
+/// Based on [pull_all_x()]
+#[macro_export]
+macro_rules! pull_all_x {
+    ($($t:tt)*) => {
+        $crate::pull_all_x()
+    };
+}

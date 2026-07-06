@@ -68,3 +68,10 @@ macro_rules! uniq_with {
 pub fn uniq_with_x() {
     todo!()
 }
+/// Based on [uniq_with_x()]
+#[macro_export]
+macro_rules! uniq_with_x {
+    ($($t:tt)*) => {
+        $crate::uniq_with_x()
+    };
+}

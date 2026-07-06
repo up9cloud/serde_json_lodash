@@ -49,3 +49,10 @@ macro_rules! identity {
 pub fn identity_x() {
     todo!()
 }
+/// Based on [identity_x()]
+#[macro_export]
+macro_rules! identity_x {
+    ($($t:tt)*) => {
+        $crate::identity_x()
+    };
+}

@@ -75,3 +75,10 @@ macro_rules! max {
 pub fn max_x() {
     todo!()
 }
+/// Based on [max_x()]
+#[macro_export]
+macro_rules! max_x {
+    ($($t:tt)*) => {
+        $crate::max_x()
+    };
+}

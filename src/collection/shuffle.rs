@@ -63,3 +63,10 @@ macro_rules! shuffle {
 pub fn shuffle_x() {
     todo!()
 }
+/// Based on [shuffle_x()]
+#[macro_export]
+macro_rules! shuffle_x {
+    ($($t:tt)*) => {
+        $crate::shuffle_x()
+    };
+}

@@ -100,3 +100,10 @@ macro_rules! parse_int {
 pub fn parse_int_x() {
     todo!()
 }
+/// Based on [parse_int_x()]
+#[macro_export]
+macro_rules! parse_int_x {
+    ($($t:tt)*) => {
+        $crate::parse_int_x()
+    };
+}

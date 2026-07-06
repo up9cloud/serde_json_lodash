@@ -60,3 +60,10 @@ macro_rules! sample {
 pub fn sample_x() {
     todo!()
 }
+/// Based on [sample_x()]
+#[macro_export]
+macro_rules! sample_x {
+    ($($t:tt)*) => {
+        $crate::sample_x()
+    };
+}

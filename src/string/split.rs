@@ -74,3 +74,10 @@ macro_rules! split {
 pub fn split_x() {
     todo!()
 }
+/// Based on [split_x()]
+#[macro_export]
+macro_rules! split_x {
+    ($($t:tt)*) => {
+        $crate::split_x()
+    };
+}

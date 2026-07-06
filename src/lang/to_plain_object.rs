@@ -71,3 +71,10 @@ macro_rules! to_plain_object {
 pub fn to_plain_object_x() {
     todo!()
 }
+/// Based on [to_plain_object_x()]
+#[macro_export]
+macro_rules! to_plain_object_x {
+    ($($t:tt)*) => {
+        $crate::to_plain_object_x()
+    };
+}

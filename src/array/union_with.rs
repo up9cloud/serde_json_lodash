@@ -73,3 +73,10 @@ macro_rules! union_with {
 pub fn union_with_x() {
     todo!()
 }
+/// Based on [union_with_x()]
+#[macro_export]
+macro_rules! union_with_x {
+    ($($t:tt)*) => {
+        $crate::union_with_x()
+    };
+}

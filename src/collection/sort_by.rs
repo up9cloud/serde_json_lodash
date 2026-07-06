@@ -70,3 +70,10 @@ macro_rules! sort_by {
 pub fn sort_by_x() {
     todo!()
 }
+/// Based on [sort_by_x()]
+#[macro_export]
+macro_rules! sort_by_x {
+    ($($t:tt)*) => {
+        $crate::sort_by_x()
+    };
+}

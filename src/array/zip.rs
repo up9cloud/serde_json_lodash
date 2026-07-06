@@ -75,3 +75,10 @@ macro_rules! zip {
 pub fn zip_x() {
     todo!()
 }
+/// Based on [zip_x()]
+#[macro_export]
+macro_rules! zip_x {
+    ($($t:tt)*) => {
+        $crate::zip_x()
+    };
+}

@@ -247,3 +247,10 @@ macro_rules! add {
 pub fn add_x() {
     todo!()
 }
+/// Based on [add_x()]
+#[macro_export]
+macro_rules! add_x {
+    ($($t:tt)*) => {
+        $crate::add_x()
+    };
+}

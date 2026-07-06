@@ -69,3 +69,10 @@ macro_rules! pick {
 pub fn pick_x() {
     todo!()
 }
+/// Based on [pick_x()]
+#[macro_export]
+macro_rules! pick_x {
+    ($($t:tt)*) => {
+        $crate::pick_x()
+    };
+}

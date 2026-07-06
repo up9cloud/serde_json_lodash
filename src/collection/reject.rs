@@ -63,3 +63,10 @@ macro_rules! reject {
 pub fn reject_x() {
     todo!()
 }
+/// Based on [reject_x()]
+#[macro_export]
+macro_rules! reject_x {
+    ($($t:tt)*) => {
+        $crate::reject_x()
+    };
+}

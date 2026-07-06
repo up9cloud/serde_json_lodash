@@ -48,3 +48,10 @@ macro_rules! noop {
 pub fn noop_x() {
     todo!()
 }
+/// Based on [noop_x()]
+#[macro_export]
+macro_rules! noop_x {
+    ($($t:tt)*) => {
+        $crate::noop_x()
+    };
+}

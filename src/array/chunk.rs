@@ -93,3 +93,10 @@ macro_rules! chunk {
 pub fn chunk_x() {
     todo!()
 }
+/// Based on [chunk_x()]
+#[macro_export]
+macro_rules! chunk_x {
+    ($($t:tt)*) => {
+        $crate::chunk_x()
+    };
+}

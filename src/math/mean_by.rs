@@ -62,3 +62,10 @@ macro_rules! mean_by {
 pub fn mean_by_x() {
     todo!()
 }
+/// Based on [mean_by_x()]
+#[macro_export]
+macro_rules! mean_by_x {
+    ($($t:tt)*) => {
+        $crate::mean_by_x()
+    };
+}

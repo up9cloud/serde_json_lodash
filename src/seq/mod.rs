@@ -13,13 +13,70 @@
 pub fn chain() {
     todo!()
 }
+/// Based on [chain()]
+#[macro_export]
+macro_rules! chain {
+    ($($t:tt)*) => {
+        $crate::chain()
+    };
+}
+/// **Not ported.** Wraps a value to enable explicit method chaining; this
+/// crate has no chaining wrapper (call the functions directly instead).
+pub fn chain_x() {
+    todo!()
+}
+/// Based on [chain_x()]
+#[macro_export]
+macro_rules! chain_x {
+    ($($t:tt)*) => {
+        $crate::chain_x()
+    };
+}
 /// **Not ported.** Invokes an interceptor with the value then returns it; part
 /// of the unsupported chaining wrapper.
 pub fn tap() {
     todo!()
 }
+/// Based on [tap()]
+#[macro_export]
+macro_rules! tap {
+    ($($t:tt)*) => {
+        $crate::tap()
+    };
+}
+/// **Not ported.** Invokes an interceptor with the value then returns it; part
+/// of the unsupported chaining wrapper.
+pub fn tap_x() {
+    todo!()
+}
+/// Based on [tap_x()]
+#[macro_export]
+macro_rules! tap_x {
+    ($($t:tt)*) => {
+        $crate::tap_x()
+    };
+}
 /// **Not ported.** Passes the value through an interceptor and returns its
 /// result; part of the unsupported chaining wrapper.
 pub fn thru() {
     todo!()
+}
+/// Based on [thru()]
+#[macro_export]
+macro_rules! thru {
+    ($($t:tt)*) => {
+        $crate::thru()
+    };
+}
+/// **Not ported.** Passes the value through an interceptor and returns its
+/// result; part of the unsupported chaining wrapper.
+pub fn thru_x() {
+    todo!()
+}
+/// Based on [thru_x()]
+#[macro_export]
+macro_rules! thru_x {
+    ($($t:tt)*) => {
+        $crate::thru_x()
+    };
 }

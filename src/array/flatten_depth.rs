@@ -115,3 +115,10 @@ macro_rules! flatten_depth {
 pub fn flatten_depth_x() {
     todo!()
 }
+/// Based on [flatten_depth_x()]
+#[macro_export]
+macro_rules! flatten_depth_x {
+    ($($t:tt)*) => {
+        $crate::flatten_depth_x()
+    };
+}

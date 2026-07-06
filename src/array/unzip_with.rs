@@ -76,3 +76,10 @@ macro_rules! unzip_with {
 pub fn unzip_with_x() {
     todo!()
 }
+/// Based on [unzip_with_x()]
+#[macro_export]
+macro_rules! unzip_with_x {
+    ($($t:tt)*) => {
+        $crate::unzip_with_x()
+    };
+}

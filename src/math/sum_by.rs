@@ -62,3 +62,10 @@ macro_rules! sum_by {
 pub fn sum_by_x() {
     todo!()
 }
+/// Based on [sum_by_x()]
+#[macro_export]
+macro_rules! sum_by_x {
+    ($($t:tt)*) => {
+        $crate::sum_by_x()
+    };
+}

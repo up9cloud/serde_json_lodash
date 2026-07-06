@@ -65,3 +65,10 @@ macro_rules! words {
 pub fn words_x() {
     todo!()
 }
+/// Based on [words_x()]
+#[macro_export]
+macro_rules! words_x {
+    ($($t:tt)*) => {
+        $crate::words_x()
+    };
+}

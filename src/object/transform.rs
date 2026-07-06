@@ -96,3 +96,10 @@ macro_rules! transform {
 pub fn transform_x() {
     todo!()
 }
+/// Based on [transform_x()]
+#[macro_export]
+macro_rules! transform_x {
+    ($($t:tt)*) => {
+        $crate::transform_x()
+    };
+}

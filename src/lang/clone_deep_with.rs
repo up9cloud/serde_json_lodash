@@ -77,3 +77,10 @@ macro_rules! clone_deep_with {
 pub fn clone_deep_with_x() {
     todo!()
 }
+/// Based on [clone_deep_with_x()]
+#[macro_export]
+macro_rules! clone_deep_with_x {
+    ($($t:tt)*) => {
+        $crate::clone_deep_with_x()
+    };
+}

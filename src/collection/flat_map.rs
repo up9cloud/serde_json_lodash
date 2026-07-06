@@ -65,3 +65,10 @@ macro_rules! flat_map {
 pub fn flat_map_x() {
     todo!()
 }
+/// Based on [flat_map_x()]
+#[macro_export]
+macro_rules! flat_map_x {
+    ($($t:tt)*) => {
+        $crate::flat_map_x()
+    };
+}

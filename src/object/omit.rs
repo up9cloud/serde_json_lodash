@@ -70,3 +70,10 @@ macro_rules! omit {
 pub fn omit_x() {
     todo!()
 }
+/// Based on [omit_x()]
+#[macro_export]
+macro_rules! omit_x {
+    ($($t:tt)*) => {
+        $crate::omit_x()
+    };
+}

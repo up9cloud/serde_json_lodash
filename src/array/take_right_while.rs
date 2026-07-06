@@ -71,3 +71,10 @@ macro_rules! take_right_while {
 pub fn take_right_while_x() {
     todo!()
 }
+/// Based on [take_right_while_x()]
+#[macro_export]
+macro_rules! take_right_while_x {
+    ($($t:tt)*) => {
+        $crate::take_right_while_x()
+    };
+}

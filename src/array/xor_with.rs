@@ -79,3 +79,10 @@ macro_rules! xor_with {
 pub fn xor_with_x() {
     todo!()
 }
+/// Based on [xor_with_x()]
+#[macro_export]
+macro_rules! xor_with_x {
+    ($($t:tt)*) => {
+        $crate::xor_with_x()
+    };
+}

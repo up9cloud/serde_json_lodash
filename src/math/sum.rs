@@ -66,3 +66,10 @@ macro_rules! sum {
 pub fn sum_x() {
     todo!()
 }
+/// Based on [sum_x()]
+#[macro_export]
+macro_rules! sum_x {
+    ($($t:tt)*) => {
+        $crate::sum_x()
+    };
+}

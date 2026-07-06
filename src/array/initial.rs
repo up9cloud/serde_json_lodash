@@ -79,3 +79,10 @@ macro_rules! initial {
 pub fn initial_x() {
     todo!()
 }
+/// Based on [initial_x()]
+#[macro_export]
+macro_rules! initial_x {
+    ($($t:tt)*) => {
+        $crate::initial_x()
+    };
+}

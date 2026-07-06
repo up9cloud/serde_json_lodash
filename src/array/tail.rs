@@ -59,3 +59,10 @@ macro_rules! tail {
 pub fn tail_x() {
     todo!()
 }
+/// Based on [tail_x()]
+#[macro_export]
+macro_rules! tail_x {
+    ($($t:tt)*) => {
+        $crate::tail_x()
+    };
+}

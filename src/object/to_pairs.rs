@@ -68,3 +68,10 @@ macro_rules! to_pairs {
 pub fn to_pairs_x() {
     todo!()
 }
+/// Based on [to_pairs_x()]
+#[macro_export]
+macro_rules! to_pairs_x {
+    ($($t:tt)*) => {
+        $crate::to_pairs_x()
+    };
+}

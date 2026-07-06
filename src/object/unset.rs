@@ -92,3 +92,10 @@ macro_rules! unset {
 pub fn unset_x() {
     todo!()
 }
+/// Based on [unset_x()]
+#[macro_export]
+macro_rules! unset_x {
+    ($($t:tt)*) => {
+        $crate::unset_x()
+    };
+}

@@ -86,3 +86,10 @@ macro_rules! concat {
 pub fn concat_x() {
     todo!()
 }
+/// Based on [concat_x()]
+#[macro_export]
+macro_rules! concat_x {
+    ($($t:tt)*) => {
+        $crate::concat_x()
+    };
+}

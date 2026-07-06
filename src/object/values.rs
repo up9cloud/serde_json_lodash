@@ -56,3 +56,10 @@ macro_rules! values {
 pub fn values_x() {
     todo!()
 }
+/// Based on [values_x()]
+#[macro_export]
+macro_rules! values_x {
+    ($($t:tt)*) => {
+        $crate::values_x()
+    };
+}

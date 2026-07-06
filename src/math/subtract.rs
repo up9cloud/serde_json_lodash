@@ -67,3 +67,10 @@ macro_rules! subtract {
 pub fn subtract_x() {
     todo!()
 }
+/// Based on [subtract_x()]
+#[macro_export]
+macro_rules! subtract_x {
+    ($($t:tt)*) => {
+        $crate::subtract_x()
+    };
+}

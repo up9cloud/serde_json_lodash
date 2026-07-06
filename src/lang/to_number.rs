@@ -60,3 +60,10 @@ macro_rules! to_number {
 pub fn to_number_x() {
     todo!()
 }
+/// Based on [to_number_x()]
+#[macro_export]
+macro_rules! to_number_x {
+    ($($t:tt)*) => {
+        $crate::to_number_x()
+    };
+}

@@ -80,3 +80,10 @@ macro_rules! xor {
 pub fn xor_x() {
     todo!()
 }
+/// Based on [xor_x()]
+#[macro_export]
+macro_rules! xor_x {
+    ($($t:tt)*) => {
+        $crate::xor_x()
+    };
+}

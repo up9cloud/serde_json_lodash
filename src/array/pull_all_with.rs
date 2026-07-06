@@ -99,3 +99,10 @@ macro_rules! pull_all_with {
 pub fn pull_all_with_x() {
     todo!()
 }
+/// Based on [pull_all_with_x()]
+#[macro_export]
+macro_rules! pull_all_with_x {
+    ($($t:tt)*) => {
+        $crate::pull_all_with_x()
+    };
+}

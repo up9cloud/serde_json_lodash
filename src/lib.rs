@@ -68,6 +68,9 @@ pub mod lib {
 }
 
 #[doc(hidden)]
+pub use paste;
+
+#[doc(hidden)]
 pub mod internal;
 
 mod array;

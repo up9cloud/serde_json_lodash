@@ -117,3 +117,10 @@ macro_rules! nth {
 pub fn nth_x() {
     todo!()
 }
+/// Based on [nth_x()]
+#[macro_export]
+macro_rules! nth_x {
+    ($($t:tt)*) => {
+        $crate::nth_x()
+    };
+}

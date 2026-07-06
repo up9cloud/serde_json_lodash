@@ -57,3 +57,10 @@ macro_rules! to_array {
 pub fn to_array_x() {
     todo!()
 }
+/// Based on [to_array_x()]
+#[macro_export]
+macro_rules! to_array_x {
+    ($($t:tt)*) => {
+        $crate::to_array_x()
+    };
+}

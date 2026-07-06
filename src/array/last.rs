@@ -78,3 +78,10 @@ macro_rules! last {
 pub fn last_x() {
     todo!()
 }
+/// Based on [last_x()]
+#[macro_export]
+macro_rules! last_x {
+    ($($t:tt)*) => {
+        $crate::last_x()
+    };
+}

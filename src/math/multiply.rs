@@ -67,3 +67,10 @@ macro_rules! multiply {
 pub fn multiply_x() {
     todo!()
 }
+/// Based on [multiply_x()]
+#[macro_export]
+macro_rules! multiply_x {
+    ($($t:tt)*) => {
+        $crate::multiply_x()
+    };
+}

@@ -67,3 +67,10 @@ macro_rules! without {
 pub fn without_x() {
     todo!()
 }
+/// Based on [without_x()]
+#[macro_export]
+macro_rules! without_x {
+    ($($t:tt)*) => {
+        $crate::without_x()
+    };
+}

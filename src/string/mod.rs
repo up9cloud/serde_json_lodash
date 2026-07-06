@@ -40,6 +40,24 @@ pub use starts_with::*;
 pub fn template() {
     todo!()
 }
+/// Based on [template()]
+#[macro_export]
+macro_rules! template {
+    ($($t:tt)*) => {
+        $crate::template()
+    };
+}
+/// **Not ported.** Compiles a string into a render function; requires a template engine, out of scope.
+pub fn template_x() {
+    todo!()
+}
+/// Based on [template_x()]
+#[macro_export]
+macro_rules! template_x {
+    ($($t:tt)*) => {
+        $crate::template_x()
+    };
+}
 mod to_lower;
 pub use to_lower::*;
 mod to_upper;

@@ -83,3 +83,10 @@ macro_rules! compact {
 pub fn compact_x() {
     todo!()
 }
+/// Based on [compact_x()]
+#[macro_export]
+macro_rules! compact_x {
+    ($($t:tt)*) => {
+        $crate::compact_x()
+    };
+}

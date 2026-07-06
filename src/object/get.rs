@@ -101,3 +101,10 @@ macro_rules! get {
 pub fn get_x() {
     todo!()
 }
+/// Based on [get_x()]
+#[macro_export]
+macro_rules! get_x {
+    ($($t:tt)*) => {
+        $crate::get_x()
+    };
+}

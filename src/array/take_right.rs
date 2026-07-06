@@ -61,3 +61,10 @@ macro_rules! take_right {
 pub fn take_right_x() {
     todo!()
 }
+/// Based on [take_right_x()]
+#[macro_export]
+macro_rules! take_right_x {
+    ($($t:tt)*) => {
+        $crate::take_right_x()
+    };
+}

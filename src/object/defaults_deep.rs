@@ -78,3 +78,10 @@ macro_rules! defaults_deep {
 pub fn defaults_deep_x() {
     todo!()
 }
+/// Based on [defaults_deep_x()]
+#[macro_export]
+macro_rules! defaults_deep_x {
+    ($($t:tt)*) => {
+        $crate::defaults_deep_x()
+    };
+}

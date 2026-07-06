@@ -77,3 +77,10 @@ macro_rules! invert_by {
 pub fn invert_by_x() {
     todo!()
 }
+/// Based on [invert_by_x()]
+#[macro_export]
+macro_rules! invert_by_x {
+    ($($t:tt)*) => {
+        $crate::invert_by_x()
+    };
+}

@@ -29,7 +29,25 @@ pub use includes::*;
 pub fn invoke_map() {
     todo!()
 }
-build_link_fn!(invokeMap, invoke_map);
+/// Based on [invoke_map()]
+#[macro_export]
+macro_rules! invoke_map {
+    ($($t:tt)*) => {
+        $crate::invoke_map()
+    };
+}
+/// **Not ported.** Invokes a named method on each element; JSON values have no methods.
+pub fn invoke_map_x() {
+    todo!()
+}
+/// Based on [invoke_map_x()]
+#[macro_export]
+macro_rules! invoke_map_x {
+    ($($t:tt)*) => {
+        $crate::invoke_map_x()
+    };
+}
+build_link!(invokeMap, invoke_map);
 mod key_by;
 pub use key_by::*;
 mod map;

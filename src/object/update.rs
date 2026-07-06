@@ -67,3 +67,10 @@ macro_rules! update {
 pub fn update_x() {
     todo!()
 }
+/// Based on [update_x()]
+#[macro_export]
+macro_rules! update_x {
+    ($($t:tt)*) => {
+        $crate::update_x()
+    };
+}

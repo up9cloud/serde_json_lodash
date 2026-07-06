@@ -65,3 +65,10 @@ macro_rules! for_own {
 pub fn for_own_x() {
     todo!()
 }
+/// Based on [for_own_x()]
+#[macro_export]
+macro_rules! for_own_x {
+    ($($t:tt)*) => {
+        $crate::for_own_x()
+    };
+}

@@ -86,3 +86,10 @@ macro_rules! drop {
 pub fn drop_x() {
     todo!()
 }
+/// Based on [drop_x()]
+#[macro_export]
+macro_rules! drop_x {
+    ($($t:tt)*) => {
+        $crate::drop_x()
+    };
+}

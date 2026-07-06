@@ -78,3 +78,10 @@ macro_rules! intersection_with {
 pub fn intersection_with_x() {
     todo!()
 }
+/// Based on [intersection_with_x()]
+#[macro_export]
+macro_rules! intersection_with_x {
+    ($($t:tt)*) => {
+        $crate::intersection_with_x()
+    };
+}

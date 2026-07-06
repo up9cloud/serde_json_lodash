@@ -70,3 +70,10 @@ macro_rules! zip_object_deep {
 pub fn zip_object_deep_x() {
     todo!()
 }
+/// Based on [zip_object_deep_x()]
+#[macro_export]
+macro_rules! zip_object_deep_x {
+    ($($t:tt)*) => {
+        $crate::zip_object_deep_x()
+    };
+}
