@@ -1,15 +1,16 @@
 use crate::lib::{json, Value};
 
 /// See lodash [stubObject](https://lodash.com/docs/#stubObject)
+///
 /// Additional cases:
 ///
 /// ```rust
 /// # use serde_json_lodash::stub_object;
 /// # use serde_json::json;
-/// assert_eq!(stub_object()(), json!({}));
+/// assert_eq!(stub_object(), json!({}));
 /// ```
-pub fn stub_object() -> Box<dyn Fn() -> Value> {
-    Box::new(|| json!({}))
+pub fn stub_object() -> Value {
+    json!({})
 }
 
 /// Based on [stub_object()]
@@ -19,24 +20,7 @@ pub fn stub_object() -> Box<dyn Fn() -> Value> {
 /// ```rust
 /// #[macro_use] extern crate serde_json_lodash;
 /// use serde_json::json;
-/// // dynamic parameters, not implemented
-/// //let objects = times!(2, stub_object!());
-/// //assert_eq!(
-/// //  objects,
-/// //  json!([{}, {}])
-/// //);
-/// //assert_ne!(
-/// //  println("{:p}", objects[0]),
-/// //  println("{:p}", objects[1])
-/// //);
-/// ```
-///
-/// Additional cases:
-///
-/// ```rust
-/// # #[macro_use] extern crate serde_json_lodash;
-/// # use serde_json::json;
-/// assert_eq!(stub_object!()(), json!({}));
+/// assert_eq!(stub_object!(), json!({}));
 /// ```
 #[macro_export]
 macro_rules! stub_object {

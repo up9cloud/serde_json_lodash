@@ -1,15 +1,16 @@
-use crate::lib::{Value};
+use crate::lib::{json, Value};
 
 /// See lodash [stubString](https://lodash.com/docs/#stubString)
+///
 /// Additional cases:
 ///
 /// ```rust
 /// # use serde_json_lodash::stub_string;
 /// # use serde_json::json;
-/// assert_eq!(stub_string()(), json!(""));
+/// assert_eq!(stub_string(), json!(""));
 /// ```
-pub fn stub_string() -> Box<dyn Fn() -> Value> {
-    Box::new(|| Value::String("".to_owned()))
+pub fn stub_string() -> Value {
+    json!("")
 }
 
 /// Based on [stub_string()]
@@ -19,19 +20,7 @@ pub fn stub_string() -> Box<dyn Fn() -> Value> {
 /// ```rust
 /// #[macro_use] extern crate serde_json_lodash;
 /// use serde_json::json;
-/// // dynamic parameters, not implemented
-/// //assert_eq!(
-/// //  times!(2, stub_string!()),
-/// //  json!(["", ""])
-/// //);
-/// ```
-///
-/// Additional cases:
-///
-/// ```rust
-/// # #[macro_use] extern crate serde_json_lodash;
-/// # use serde_json::json;
-/// assert_eq!(stub_string!()(), json!(""));
+/// assert_eq!(stub_string!(), json!(""));
 /// ```
 #[macro_export]
 macro_rules! stub_string {

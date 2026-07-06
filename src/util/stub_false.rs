@@ -1,15 +1,16 @@
 use crate::lib::{json, Value};
 
 /// See lodash [stubFalse](https://lodash.com/docs/#stubFalse)
+///
 /// Additional cases:
 ///
 /// ```rust
 /// # use serde_json_lodash::stub_false;
 /// # use serde_json::json;
-/// assert_eq!(stub_false()(), json!(false));
+/// assert_eq!(stub_false(), json!(false));
 /// ```
-pub fn stub_false() -> Box<dyn Fn() -> Value> {
-    Box::new(|| json!(false))
+pub fn stub_false() -> Value {
+    json!(false)
 }
 
 /// Based on [stub_false()]
@@ -19,19 +20,7 @@ pub fn stub_false() -> Box<dyn Fn() -> Value> {
 /// ```rust
 /// #[macro_use] extern crate serde_json_lodash;
 /// use serde_json::json;
-/// // dynamic parameters, not implemented
-/// //assert_eq!(
-/// //  times!(2, stub_false!()),
-/// //  json!([false, false])
-/// //);
-/// ```
-///
-/// Additional cases:
-///
-/// ```rust
-/// # #[macro_use] extern crate serde_json_lodash;
-/// # use serde_json::json;
-/// assert_eq!(stub_false!()(), json!(false));
+/// assert_eq!(stub_false!(), json!(false));
 /// ```
 #[macro_export]
 macro_rules! stub_false {

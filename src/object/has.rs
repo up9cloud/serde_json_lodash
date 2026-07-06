@@ -1,15 +1,16 @@
-use crate::lib::Value;
+use crate::lib::{json, Value};
 use crate::to_path_x;
 
-/// See lodash [has](https://lodash.com/docs/#has)
+/// `_x` helper for [has()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
 /// Additional cases:
 ///
 /// ```rust
-/// # use serde_json_lodash::has;
+/// # use serde_json_lodash::has_x;
 /// # use serde_json::json;
-/// assert_eq!(has(&json!({"a": [{"b": 3}]}), json!("a[0].b")), true);
+/// assert_eq!(has_x(&json!({"a": {"b": 2}}), json!("a.b")), true);
 /// ```
-pub fn has(object: &Value, path: Value) -> bool {
+pub fn has_x(object: &Value, path: Value) -> bool {
     let p_vec = to_path_x(path);
     if p_vec.is_empty() {
         return false;
@@ -30,7 +31,42 @@ pub fn has(object: &Value, path: Value) -> bool {
     }
     true
 }
+/// See lodash [has](https://lodash.com/docs/#has)
+///
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::has;
+/// # use serde_json::json;
+/// assert_eq!(has(&json!({"a": {"b": 2}}), json!("a.b")), json!(true));
+/// ```
+pub fn has(object: &Value, path: Value) -> Value {
+    json!(has_x(object, path))
+}
 
+/// Based on [has_x()]
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(has_x!(&json!({"a": {"b": 2}}), json!("a.b")), true);
+/// ```
+#[macro_export]
+macro_rules! has_x {
+    () => {
+        false
+    };
+    ($a:expr $(,)*) => {
+        false
+    };
+    ($a:expr, $b:expr $(,)*) => {
+        $crate::has_x($a, $b)
+    };
+    ($a:expr, $b:expr, $($rest:tt)*) => {
+        $crate::has_x($a, $b)
+    };
+}
 /// Based on [has()]
 ///
 /// Examples:
@@ -38,28 +74,17 @@ pub fn has(object: &Value, path: Value) -> bool {
 /// ```rust
 /// #[macro_use] extern crate serde_json_lodash;
 /// use serde_json::json;
-/// let object = json!({ "a": { "b": 2 } });
-/// assert_eq!(has!(&object, json!("a.b")), true);
-/// assert_eq!(has!(&object, json!(["a", "b"])), true);
-/// assert_eq!(has!(&object, json!("a.c")), false);
-/// ```
-///
-/// Additional cases:
-///
-/// ```rust
-/// # #[macro_use] extern crate serde_json_lodash;
-/// # use serde_json::json;
-/// assert_eq!(has!(), false);
-/// assert_eq!(has!(&json!({"a": 1})), false);
-/// assert_eq!(has!(&json!({"a": [{"b": 3}]}), json!("a[0].b")), true);
+/// assert_eq!(has!(), json!(false));
+/// assert_eq!(has!(&json!({"a": 1})), json!(false));
+/// assert_eq!(has!(&json!({"a": [{"b": 3}]}), json!("a[0].b")), json!(true));
 /// ```
 #[macro_export]
 macro_rules! has {
     () => {
-        false
+        $crate::lib::json!(false)
     };
     ($a:expr $(,)*) => {
-        false
+        $crate::lib::json!(false)
     };
     ($a:expr, $b:expr $(,)*) => {
         $crate::has($a, $b)

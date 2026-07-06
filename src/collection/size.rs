@@ -1,14 +1,15 @@
-use crate::lib::Value;
+use crate::lib::{json, Value};
 
-/// See lodash [size](https://lodash.com/docs/#size)
+/// `_x` helper for [size()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
 /// Additional cases:
 ///
 /// ```rust
-/// # use serde_json_lodash::size;
+/// # use serde_json_lodash::size_x;
 /// # use serde_json::json;
-/// assert_eq!(size(json!([1, 2, 3])), 3);
+/// assert_eq!(size_x(json!([1, 2, 3])), 3);
 /// ```
-pub fn size(collection: Value) -> usize {
+pub fn size_x(collection: Value) -> usize {
     match collection {
         Value::Array(vec) => vec.len(),
         Value::Object(o) => o.len(),
@@ -16,7 +17,39 @@ pub fn size(collection: Value) -> usize {
         _ => 0,
     }
 }
+/// See lodash [size](https://lodash.com/docs/#size)
+///
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::size;
+/// # use serde_json::json;
+/// assert_eq!(size(json!([1, 2, 3])), json!(3));
+/// ```
+pub fn size(collection: Value) -> Value {
+    json!(size_x(collection))
+}
 
+/// Based on [size_x()]
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(size_x!(json!([1, 2, 3])), 3);
+/// ```
+#[macro_export]
+macro_rules! size_x {
+    () => {
+        0
+    };
+    ($a:expr $(,)*) => {
+        $crate::size_x($a)
+    };
+    ($a:expr, $($rest:tt)*) => {
+        $crate::size_x($a)
+    };
+}
 /// Based on [size()]
 ///
 /// Examples:
@@ -24,24 +57,17 @@ pub fn size(collection: Value) -> usize {
 /// ```rust
 /// #[macro_use] extern crate serde_json_lodash;
 /// use serde_json::json;
-/// assert_eq!(size!(json!([1, 2, 3])), 3);
-/// assert_eq!(size!(json!({ "a": 1, "b": 2 })), 2);
-/// assert_eq!(size!(json!("pebbles")), 7);
-/// ```
-///
-/// Additional cases:
-///
-/// ```rust
-/// # #[macro_use] extern crate serde_json_lodash;
-/// # use serde_json::json;
-/// assert_eq!(size!(), 0);
-/// assert_eq!(size!(json!(null)), 0);
-/// assert_eq!(size!(json!(123)), 0);
+/// assert_eq!(size!(json!([1, 2, 3])), json!(3));
+/// assert_eq!(size!(json!({ "a": 1, "b": 2 })), json!(2));
+/// assert_eq!(size!(json!("pebbles")), json!(7));
+/// assert_eq!(size!(), json!(0));
+/// assert_eq!(size!(json!(null)), json!(0));
+/// assert_eq!(size!(json!(123)), json!(0));
 /// ```
 #[macro_export]
 macro_rules! size {
     () => {
-        0
+        $crate::lib::json!(0)
     };
     ($a:expr $(,)*) => {
         $crate::size($a)

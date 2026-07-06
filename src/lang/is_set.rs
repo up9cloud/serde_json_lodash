@@ -1,19 +1,50 @@
-use crate::lib::Value;
+use crate::lib::{json, Value};
 
+/// `_x` helper for [is_set()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::is_set_x;
+/// # use serde_json::json;
+/// assert_eq!(is_set_x(&json!({})), false);
+/// ```
+pub fn is_set_x(_v: &Value) -> bool {
+    false
+}
 /// See lodash [isSet](https://lodash.com/docs/#isSet)
 ///
-/// There is no such type in JSON, so it always returns `false`
 /// Additional cases:
 ///
 /// ```rust
 /// # use serde_json_lodash::is_set;
 /// # use serde_json::json;
-/// assert_eq!(is_set(&json!({})), false);
+/// assert_eq!(is_set(&json!({})), json!(false));
 /// ```
-pub fn is_set(_v: &Value) -> bool {
-    false
+pub fn is_set(_v: &Value) -> Value {
+    json!(is_set_x(_v))
 }
 
+/// Based on [is_set_x()]
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(is_set_x!(&json!({})), false);
+/// ```
+#[macro_export]
+macro_rules! is_set_x {
+    () => {
+        false
+    };
+    ($a:expr $(,)*) => {
+        $crate::is_set_x($a)
+    };
+    ($a:expr, $($rest:tt)*) => {
+        $crate::is_set_x($a)
+    };
+}
 /// Based on [is_set()]
 ///
 /// Examples:
@@ -21,23 +52,15 @@ pub fn is_set(_v: &Value) -> bool {
 /// ```rust
 /// #[macro_use] extern crate serde_json_lodash;
 /// use serde_json::json;
-/// // js version could be true for real `isSet` values, but those are not portable to JSON
-/// assert_eq!(is_set!(&json!({})), false);
-/// assert_eq!(is_set!(&json!("a")), false);
-/// ```
-///
-/// Additional cases:
-///
-/// ```rust
-/// # #[macro_use] extern crate serde_json_lodash;
-/// # use serde_json::json;
-/// assert_eq!(is_set!(), false);
-/// assert_eq!(is_set!(&json!(null)), false);
+/// assert_eq!(is_set!(&json!({})), json!(false));
+/// assert_eq!(is_set!(&json!("a")), json!(false));
+/// assert_eq!(is_set!(), json!(false));
+/// assert_eq!(is_set!(&json!(null)), json!(false));
 /// ```
 #[macro_export]
 macro_rules! is_set {
     () => {
-        false
+        $crate::lib::json!(false)
     };
     ($a:expr $(,)*) => {
         $crate::is_set($a)

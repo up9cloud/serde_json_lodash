@@ -1,19 +1,50 @@
-use crate::lib::Value;
+use crate::lib::{json, Value};
 
+/// `_x` helper for [is_buffer()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::is_buffer_x;
+/// # use serde_json::json;
+/// assert_eq!(is_buffer_x(&json!({})), false);
+/// ```
+pub fn is_buffer_x(_v: &Value) -> bool {
+    false
+}
 /// See lodash [isBuffer](https://lodash.com/docs/#isBuffer)
 ///
-/// There is no such type in JSON, so it always returns `false`
 /// Additional cases:
 ///
 /// ```rust
 /// # use serde_json_lodash::is_buffer;
 /// # use serde_json::json;
-/// assert_eq!(is_buffer(&json!({})), false);
+/// assert_eq!(is_buffer(&json!({})), json!(false));
 /// ```
-pub fn is_buffer(_v: &Value) -> bool {
-    false
+pub fn is_buffer(_v: &Value) -> Value {
+    json!(is_buffer_x(_v))
 }
 
+/// Based on [is_buffer_x()]
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(is_buffer_x!(&json!({})), false);
+/// ```
+#[macro_export]
+macro_rules! is_buffer_x {
+    () => {
+        false
+    };
+    ($a:expr $(,)*) => {
+        $crate::is_buffer_x($a)
+    };
+    ($a:expr, $($rest:tt)*) => {
+        $crate::is_buffer_x($a)
+    };
+}
 /// Based on [is_buffer()]
 ///
 /// Examples:
@@ -21,23 +52,15 @@ pub fn is_buffer(_v: &Value) -> bool {
 /// ```rust
 /// #[macro_use] extern crate serde_json_lodash;
 /// use serde_json::json;
-/// // js version could be true for real `isBuffer` values, but those are not portable to JSON
-/// assert_eq!(is_buffer!(&json!({})), false);
-/// assert_eq!(is_buffer!(&json!("a")), false);
-/// ```
-///
-/// Additional cases:
-///
-/// ```rust
-/// # #[macro_use] extern crate serde_json_lodash;
-/// # use serde_json::json;
-/// assert_eq!(is_buffer!(), false);
-/// assert_eq!(is_buffer!(&json!(null)), false);
+/// assert_eq!(is_buffer!(&json!({})), json!(false));
+/// assert_eq!(is_buffer!(&json!("a")), json!(false));
+/// assert_eq!(is_buffer!(), json!(false));
+/// assert_eq!(is_buffer!(&json!(null)), json!(false));
 /// ```
 #[macro_export]
 macro_rules! is_buffer {
     () => {
-        false
+        $crate::lib::json!(false)
     };
     ($a:expr $(,)*) => {
         $crate::is_buffer($a)

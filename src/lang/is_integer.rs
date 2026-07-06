@@ -1,14 +1,15 @@
-use crate::lib::Value;
+use crate::lib::{json, Value};
 
-/// See lodash [isInteger](https://lodash.com/docs/#isInteger)
+/// `_x` helper for [is_integer()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
 /// Additional cases:
 ///
 /// ```rust
-/// # use serde_json_lodash::is_integer;
+/// # use serde_json_lodash::is_integer_x;
 /// # use serde_json::json;
-/// assert_eq!(is_integer(&json!(3)), true);
+/// assert_eq!(is_integer_x(&json!(3)), true);
 /// ```
-pub fn is_integer(v: &Value) -> bool {
+pub fn is_integer_x(v: &Value) -> bool {
     match v {
         Value::Number(n) => {
             n.is_i64() || n.is_u64() || n.as_f64().is_some_and(|f| f.fract() == 0.0)
@@ -16,7 +17,39 @@ pub fn is_integer(v: &Value) -> bool {
         _ => false,
     }
 }
+/// See lodash [isInteger](https://lodash.com/docs/#isInteger)
+///
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::is_integer;
+/// # use serde_json::json;
+/// assert_eq!(is_integer(&json!(3)), json!(true));
+/// ```
+pub fn is_integer(v: &Value) -> Value {
+    json!(is_integer_x(v))
+}
 
+/// Based on [is_integer_x()]
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(is_integer_x!(&json!(3)), true);
+/// ```
+#[macro_export]
+macro_rules! is_integer_x {
+    () => {
+        false
+    };
+    ($a:expr $(,)*) => {
+        $crate::is_integer_x($a)
+    };
+    ($a:expr, $($rest:tt)*) => {
+        $crate::is_integer_x($a)
+    };
+}
 /// Based on [is_integer()]
 ///
 /// Examples:
@@ -24,25 +57,18 @@ pub fn is_integer(v: &Value) -> bool {
 /// ```rust
 /// #[macro_use] extern crate serde_json_lodash;
 /// use serde_json::json;
-/// assert_eq!(is_integer!(&json!(3)), true);
-/// assert_eq!(is_integer!(&json!(5e-324)), false); // Number.MIN_VALUE
-/// assert_eq!(is_integer!(&json!("3")), false);
-/// ```
-///
-/// Additional cases:
-///
-/// ```rust
-/// # #[macro_use] extern crate serde_json_lodash;
-/// # use serde_json::json;
-/// assert_eq!(is_integer!(), false);
-/// assert_eq!(is_integer!(&json!(3.0)), true);
-/// assert_eq!(is_integer!(&json!(3.2)), false);
-/// assert_eq!(is_integer!(&json!(-3)), true);
+/// assert_eq!(is_integer!(&json!(3)), json!(true));
+/// assert_eq!(is_integer!(&json!(5e-324)), json!(false));
+/// assert_eq!(is_integer!(&json!("3")), json!(false));
+/// assert_eq!(is_integer!(), json!(false));
+/// assert_eq!(is_integer!(&json!(3.0)), json!(true));
+/// assert_eq!(is_integer!(&json!(3.2)), json!(false));
+/// assert_eq!(is_integer!(&json!(-3)), json!(true));
 /// ```
 #[macro_export]
 macro_rules! is_integer {
     () => {
-        false
+        $crate::lib::json!(false)
     };
     ($a:expr $(,)*) => {
         $crate::is_integer($a)
