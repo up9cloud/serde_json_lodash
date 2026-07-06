@@ -7,26 +7,22 @@
 //! ```rust
 //! #[macro_use] extern crate serde_json_lodash;
 //! use serde_json::json;
+//!
 //! fn main() {
-//!   // macro style, optional parameters
-//!   assert_eq!(
-//!     merge!(json!({'a':1}), json!({'b':2}), json!({'c':3})),
-//!     json!({'a': 1, 'b': 2, 'c': 3})
-//!   );
+//!     // Macro form: variadic / optional arguments, like the JS original
+//!     assert_eq!(
+//!         merge!(json!({"a": 1}), json!({"b": 2}), json!({"c": 3})),
+//!         json!({"a": 1, "b": 2, "c": 3})
+//!     );
 //!
-//!   // fn style, fixed parameters
-//!   use serde_json_lodash::merge;
-//!   assert_eq!(
-//!     merge(json!({'a':1}), json!({'b':2})),
-//!     json!({'a': 1, 'b': 2})
-//!   );
+//!     // Function form: fixed arguments
+//!     use serde_json_lodash::capitalize;
+//!     assert_eq!(capitalize(json!("FRED")), json!("Fred"));
 //!
-//!   // primitive in / primitive out: the base fn & macro accept a `&str`/`String`
-//!   // primitive as well as a `json!` value; the `_x` form returns a primitive.
-//!   assert_eq!(capitalize!(json!("FRED")), json!("Fred"));
-//!   assert_eq!(capitalize!("FRED"), json!("Fred"));
-//!   assert_eq!(capitalize_x!(json!("FRED")), "Fred".to_owned());
-//!   assert_eq!(capitalize_x!("FRED"), "Fred".to_owned());
+//!     // A data argument can be a primitive instead of a `json!` value; the
+//!     // `_x` form returns a primitive instead of a `Value`.
+//!     assert_eq!(capitalize!("FRED"), json!("Fred"));
+//!     assert_eq!(capitalize_x!("FRED"), "Fred".to_owned());
 //! }
 //! ```
 //!

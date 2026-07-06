@@ -10,11 +10,7 @@ edition = "2024"
 [features]
 default = ["camel"]
 all = ["camel", "lazy_static"]
-# `alias` enables the `paste`-based aliasing machinery (`build_link!` /
-# `build_camel_link!`) and the snake_case lodash aliases (`first`, `entries`,
-# `has_in`, …). Without it those names are unavailable (use the canonical name).
 alias = ["dep:paste"]
-# camelCase aliases (`isEmpty`, `hasIn`, …) require the aliasing machinery.
 camel = ["alias"]
 
 [dependencies]

@@ -29,35 +29,35 @@ fn main() {
     // Function form: fixed arguments
     use serde_json_lodash::capitalize;
     assert_eq!(capitalize(json!("FRED")), json!("Fred"));
+
+    // A data argument can be a primitive instead of a `json!` value; the
+    // `_x` form returns a primitive instead of a `Value`.
+    assert_eq!(capitalize!("FRED"), json!("Fred"));
+    assert_eq!(capitalize_x!("FRED"), "Fred".to_owned());
 }
 ```
 
-Every function comes in a `fn` and a `macro` flavor. Use the macro when you
-want lodash's optional/variadic arguments; use the function for a fixed
-signature.
+Every function comes in a `fn` and a `macro` flavor. Use the macro for lodash's
+optional/variadic arguments; use the function for a fixed signature.
 
-### Naming: `Value` in, `Value` out — plus `_x` primitive-output helpers
+### Naming: `_x` primitive-output helpers
 
-Inputs and outputs are `serde_json::Value` by default. For an argument that may
-reasonably be a primitive, the base fn/macro are generic over `Into<Value>`, so
-you can pass a `&str`/number/… **or** a `json!` value — no wrapping needed. Each
-function also has a `_x` form that returns a primitive instead of a `Value`:
+Everything is `serde_json::Value` in and out. A data argument may also be a
+primitive (the base fn/macro are generic over `Into<Value>`), and every function
+has a `_x` variant that returns a primitive instead of a `Value`:
 
-| Form           | Input              | Output   | Example                                       |
-| -------------- | ------------------ | -------- | --------------------------------------------- |
-| `capitalize`   | `impl Into<Value>` | `Value`  | `capitalize("FRED")        // json!("Fred")`  |
-| `capitalize`   | `impl Into<Value>` | `Value`  | `capitalize(json!("FRED")) // json!("Fred")`  |
-| `capitalize_x` | `impl Into<Value>` | `String` | `capitalize_x("FRED")      // "Fred"`         |
+| Form           | Output   | Example (either arg form works)         |
+| -------------- | -------- | --------------------------------------- |
+| `capitalize`   | `Value`  | `capitalize("FRED")   // json!("Fred")` |
+| `capitalize_x` | `String` | `capitalize_x("FRED") // "Fred"`        |
 
-`_x` = primitive output. Options that are not data (sizes, indexes, pad chars)
-stay primitive (`usize`, `isize`, `&str`); predicates use `Fn(&Value) -> bool`.
-Where a result has no single primitive form (a collection, or a value whose type
-is only known at runtime like `get`/`nth`), the `_x` helper is an unimplemented
-`todo!()` marker. Since JSON has no `undefined`, functions that would return it
-return `Value::Null`.
+Options that aren't data (sizes, indexes, pad chars) stay primitive (`usize`,
+`isize`, `&str`); predicates use `Fn(&Value) -> bool`. Where a result has no
+single primitive form (a collection, or a runtime-typed value like `get`/`nth`),
+`_x` is an unimplemented `todo!()` marker. JSON has no `undefined`, so functions
+that would return it return `Value::Null`.
 
-Every name exists as a `fn` **and** a macro, for both the base and the `_x`
-form (`capitalize`, `capitalize_x`, `capitalize!`, `capitalize_x!`).
+Every name exists as a `fn` and a macro, for both the base and `_x` form.
 
 ## Features
 

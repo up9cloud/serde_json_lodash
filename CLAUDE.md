@@ -6,6 +6,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 A Rust port of lodash.js that operates on `serde_json::Value`. Every function mirrors the lodash spec as closely as possible, and all tests are Rust doc tests embedded in the source.
 
+README.md and the crate-level rustdoc (`//!` in `src/lib.rs`) serve the same purpose, so keep them in sync — in particular the `## Usage` example must be identical in both. Feature/behavior descriptions belong in README.md and Cargo.toml stays comment-free (don't duplicate the feature docs as `#` comments in `Cargo.toml`).
+
 ## Commands
 
 ```bash
