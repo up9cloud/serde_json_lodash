@@ -24,7 +24,9 @@ mod find_index;
 pub use find_index::*;
 mod find_last_index;
 pub use find_last_index::*;
+#[cfg(feature = "alias")]
 mod first;
+#[cfg(feature = "alias")]
 pub use first::*;
 mod flatten;
 pub use flatten::*;

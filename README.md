@@ -36,28 +36,44 @@ Every function comes in a `fn` and a `macro` flavor. Use the macro when you
 want lodash's optional/variadic arguments; use the function for a fixed
 signature.
 
-### Naming: `Value` in, `Value` out — plus `x_` / `_x` helpers
+### Naming: `Value` in, `Value` out — plus `_x` primitive-output helpers
 
-Inputs and outputs are `serde_json::Value` by default. For convenience each
-function may also provide primitive-typed helpers:
+Inputs and outputs are `serde_json::Value` by default. For an argument that may
+reasonably be a primitive, the base fn/macro are generic over `Into<Value>`, so
+you can pass a `&str`/number/… **or** a `json!` value — no wrapping needed. Each
+function also has a `_x` form that returns a primitive instead of a `Value`:
 
-| Form            | Input      | Output     | Example                                    |
-| --------------- | ---------- | ---------- | ------------------------------------------ |
-| `capitalize`    | `Value`    | `Value`    | `capitalize(json!("FRED")) // json!("Fred")` |
-| `x_capitalize`  | `&str`     | `Value`    | `x_capitalize("FRED")     // json!("Fred")` |
-| `capitalize_x`  | `Value`    | `String`   | `capitalize_x(json!("FRED")) // "Fred"`    |
-| `x_capitalize_x`| `&str`     | `String`   | `x_capitalize_x("FRED")   // "Fred"`       |
+| Form           | Input              | Output   | Example                                       |
+| -------------- | ------------------ | -------- | --------------------------------------------- |
+| `capitalize`   | `impl Into<Value>` | `Value`  | `capitalize("FRED")        // json!("Fred")`  |
+| `capitalize`   | `impl Into<Value>` | `Value`  | `capitalize(json!("FRED")) // json!("Fred")`  |
+| `capitalize_x` | `impl Into<Value>` | `String` | `capitalize_x("FRED")      // "Fred"`         |
 
-`x_` = primitive input, `_x` = primitive output. Options that are not data
-(sizes, indexes) use primitive types (`usize`, `isize`); predicates use
-`Fn(&Value) -> bool`. Since JSON has no `undefined`, functions that would
-return it return `Value::Null`.
+`_x` = primitive output. Options that are not data (sizes, indexes, pad chars)
+stay primitive (`usize`, `isize`, `&str`); predicates use `Fn(&Value) -> bool`.
+Where a result has no single primitive form (a collection, or a value whose type
+is only known at runtime like `get`/`nth`), the `_x` helper is an unimplemented
+`todo!()` marker. Since JSON has no `undefined`, functions that would return it
+return `Value::Null`.
+
+Every name exists as a `fn` **and** a macro, for both the base and the `_x`
+form (`capitalize`, `capitalize_x`, `capitalize!`, `capitalize_x!`).
 
 ## Features
 
-- `camel` *(default)* — also exposes camelCase aliases (`camelCase!`, `isEmpty!`, …) next to the snake_case names.
+- `alias` — enables the aliasing machinery and the snake_case lodash aliases
+  (`first`, `entries`, `has_in`, …). Without it those names don't exist — use
+  the canonical name (`head` instead of `first`). Pulls in the small
+  [`paste`](https://crates.io/crates/paste) crate (an `optional` dependency).
+- `camel` *(default)* — camelCase aliases (`isEmpty`, `hasIn`, `camelCase!`, …)
+  and their `X`-suffixed `_x` forms (`isEmptyX`, `isEmptyX!`). **Requires (and
+  enables) `alias`.**
 - `lazy_static` — enables `unique_id` / `uniqueId`.
-- `all` — everything above.
+- `all` — `camel` + `lazy_static`.
+
+Each alias re-exports the whole family (`fn`, macro, and their `_x` variants);
+snake aliases keep the `_x` suffix (`has_in_x`) while camelCase aliases use `X`
+(`hasInX`).
 
 ## What isn't ported
 

@@ -67,6 +67,7 @@ pub mod lib {
     pub use serde_json::{json, Value, Map, Number};
 }
 
+#[cfg(feature = "alias")]
 #[doc(hidden)]
 pub use paste;
 

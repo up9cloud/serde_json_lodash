@@ -3,9 +3,11 @@ mod count_by;
 pub use count_by::*;
 mod each;
 pub use each::*;
+#[cfg(feature = "alias")]
 build_link!(for_each, each);
 mod each_right;
 pub use each_right::*;
+#[cfg(feature = "alias")]
 build_link!(for_each_right, each_right);
 mod every;
 pub use every::*;
@@ -47,6 +49,7 @@ macro_rules! invoke_map_x {
         $crate::invoke_map_x()
     };
 }
+#[cfg(feature = "camel")]
 build_camel_link!(invokeMap, invoke_map);
 mod key_by;
 pub use key_by::*;

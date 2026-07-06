@@ -42,6 +42,7 @@ macro_rules! bind_all_x {
         $crate::bind_all_x()
     };
 }
+#[cfg(feature = "camel")]
 build_camel_link!(bindAll, bind_all);
 /// **Not ported.** Returns a function chosen from predicate/function pairs; not a Value.
 pub fn cond() {
@@ -155,6 +156,7 @@ macro_rules! flow_right_x {
         $crate::flow_right_x()
     };
 }
+#[cfg(feature = "camel")]
 build_camel_link!(flowRight, flow_right);
 mod identity;
 pub use identity::*;
@@ -224,6 +226,7 @@ macro_rules! matches_property_x {
         $crate::matches_property_x()
     };
 }
+#[cfg(feature = "camel")]
 build_camel_link!(matchesProperty, matches_property);
 /// **Not ported.** Returns a function that invokes a method at a path; not a Value.
 pub fn method() {
@@ -269,6 +272,7 @@ macro_rules! method_of_x {
         $crate::method_of_x()
     };
 }
+#[cfg(feature = "camel")]
 build_camel_link!(methodOf, method_of);
 /// **Not ported.** Adds functions to an object/lodash; JSON objects hold no functions.
 pub fn mixin() {
@@ -314,6 +318,7 @@ macro_rules! no_conflict_x {
         $crate::no_conflict_x()
     };
 }
+#[cfg(feature = "camel")]
 build_camel_link!(noConflict, no_conflict);
 mod noop;
 pub use noop::*;
@@ -339,6 +344,7 @@ macro_rules! nth_arg_x {
         $crate::nth_arg_x()
     };
 }
+#[cfg(feature = "camel")]
 build_camel_link!(nthArg, nth_arg);
 /// **Not ported.** Returns a function invoking several iteratees; not a Value.
 pub fn over() {
@@ -384,6 +390,7 @@ macro_rules! over_every_x {
         $crate::over_every_x()
     };
 }
+#[cfg(feature = "camel")]
 build_camel_link!(overEvery, over_every);
 /// **Not ported.** Returns a function OR-ing several predicates; not a Value.
 pub fn over_some() {
@@ -407,6 +414,7 @@ macro_rules! over_some_x {
         $crate::over_some_x()
     };
 }
+#[cfg(feature = "camel")]
 build_camel_link!(overSome, over_some);
 /// **Not ported.** Returns a getter function for a path; not a Value.
 pub fn property() {
@@ -452,6 +460,7 @@ macro_rules! property_of_x {
         $crate::property_of_x()
     };
 }
+#[cfg(feature = "camel")]
 build_camel_link!(propertyOf, property_of);
 mod range;
 pub use range::*;
@@ -479,6 +488,7 @@ macro_rules! run_in_context_x {
         $crate::run_in_context_x()
     };
 }
+#[cfg(feature = "camel")]
 build_camel_link!(runInContext, run_in_context);
 mod stub_array;
 pub use stub_array::*;

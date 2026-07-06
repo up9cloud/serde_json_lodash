@@ -1,6 +1,7 @@
 #![macro_use]
 
 // https://github.com/rust-lang/rust/issues/35853#issuecomment-415993963
+#[cfg(feature = "alias")]
 macro_rules! with_dollar_sign {
     ($($body:tt)*) => {
         macro_rules! __with_dollar_sign { $($body)* }
@@ -38,6 +39,7 @@ macro_rules! with_dollar_sign {
 /// `$from_x` and the macros `$from!` / `$from_x!`, each forwarding to the `$to`
 /// equivalent. Every function now has all four forms, so a single `build_link!`
 /// covers an alias completely.
+#[cfg(feature = "alias")]
 macro_rules! build_link {
     ($from:ident, $to:ident) => {
         $crate::paste::paste! {
@@ -76,6 +78,7 @@ macro_rules! build_link {
 /// camelCase name is spelled with an `X` suffix (e.g. `isEmptyX` aliases
 /// `is_empty_x`). Used both by `build_camel_links!` and by the camelCase
 /// aliases declared in the category `mod.rs` files.
+#[cfg(feature = "camel")]
 macro_rules! build_camel_link {
     ($from:ident, $to:ident) => {
         $crate::paste::paste! {

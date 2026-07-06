@@ -2,14 +2,21 @@ mod assign;
 pub use assign::*;
 // In JSON there is no prototype chain, so the `*In` variants behave like the
 // own-property variants
+#[cfg(feature = "alias")]
 build_link!(assign_in, assign);
+#[cfg(feature = "camel")]
 build_camel_link!(assignIn, assign);
+#[cfg(feature = "alias")]
 build_link!(extend, assign);
 mod assign_with;
 pub use assign_with::*;
+#[cfg(feature = "alias")]
 build_link!(assign_in_with, assign_with);
+#[cfg(feature = "camel")]
 build_camel_link!(assignInWith, assign_with);
+#[cfg(feature = "alias")]
 build_link!(extend_with, assign_with);
+#[cfg(feature = "camel")]
 build_camel_link!(extendWith, assign_with);
 mod at;
 pub use at::*;
@@ -45,15 +52,21 @@ mod find_last_key;
 pub use find_last_key::*;
 mod for_own;
 pub use for_own::*;
+#[cfg(feature = "alias")]
 build_link!(for_in, for_own);
+#[cfg(feature = "camel")]
 build_camel_link!(forIn, for_own);
 mod for_own_right;
 pub use for_own_right::*;
+#[cfg(feature = "alias")]
 build_link!(for_in_right, for_own_right);
+#[cfg(feature = "camel")]
 build_camel_link!(forInRight, for_own_right);
 mod functions;
 pub use functions::*;
+#[cfg(feature = "alias")]
 build_link!(functions_in, functions);
+#[cfg(feature = "camel")]
 build_camel_link!(functionsIn, functions);
 
 mod get;
@@ -61,7 +74,9 @@ pub use get::*;
 
 mod has;
 pub use has::*;
+#[cfg(feature = "alias")]
 build_link!(has_in, has);
+#[cfg(feature = "camel")]
 build_camel_link!(hasIn, has);
 mod invert;
 pub use invert::*;
@@ -91,7 +106,9 @@ macro_rules! invoke_x {
 }
 mod keys;
 pub use keys::*;
+#[cfg(feature = "alias")]
 build_link!(keys_in, keys);
+#[cfg(feature = "camel")]
 build_camel_link!(keysIn, keys);
 mod map_keys;
 pub use map_keys::*;
@@ -137,13 +154,19 @@ macro_rules! set_with_x {
         $crate::set_with_x()
     };
 }
+#[cfg(feature = "camel")]
 build_camel_link!(setWith, set_with);
 mod to_pairs;
 pub use to_pairs::*;
+#[cfg(feature = "alias")]
 build_link!(entries, to_pairs);
+#[cfg(feature = "alias")]
 build_link!(to_pairs_in, to_pairs);
+#[cfg(feature = "camel")]
 build_camel_link!(toPairsIn, to_pairs);
+#[cfg(feature = "alias")]
 build_link!(entries_in, to_pairs);
+#[cfg(feature = "camel")]
 build_camel_link!(entriesIn, to_pairs);
 mod transform;
 pub use transform::*;
@@ -173,8 +196,11 @@ macro_rules! update_with_x {
         $crate::update_with_x()
     };
 }
+#[cfg(feature = "camel")]
 build_camel_link!(updateWith, update_with);
 mod values;
 pub use values::*;
+#[cfg(feature = "alias")]
 build_link!(values_in, values);
+#[cfg(feature = "camel")]
 build_camel_link!(valuesIn, values);

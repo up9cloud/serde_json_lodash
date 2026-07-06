@@ -41,28 +41,26 @@ git push && git push --tags
 
 Update the `serde_json_lodash = "..."` version in README.md's Install section when a release changes the required version.
 
-Edition is 2024. Features: `camel` (camelCase aliases — the default feature), `lazy_static`, `all` (both). The crate has `#![deny(missing_docs)]` and `#![deny(warnings)]`, so any public item without a doc comment (even an empty `///`) fails the build. `src/seq`, `src/properties`, and `src/methods` are not re-exported from `src/lib_snake.rs` (they hold only commented-out chaining/template-settings stubs); do not add empty glob re-exports of them or the build fails under `#![deny(warnings)]`.
+Edition is 2024. Features: `alias` (the `paste`-based aliasing machinery plus snake_case lodash aliases like `first`/`entries`/`has_in`; pulls in the optional `paste` crate — without `alias` those names don't exist, use the canonical name), `camel` (camelCase aliases — the **default** feature — requires and enables `alias`), `lazy_static`, `all` (`camel` + `lazy_static`). Because `camel` depends on `alias`, the default build has both. The crate has `#![deny(missing_docs)]` and `#![deny(warnings)]`, so any public item without a doc comment (even an empty `///`) fails the build. `src/seq`, `src/properties`, and `src/methods` are not re-exported from `src/lib_snake.rs` (they hold only commented-out chaining/template-settings stubs); do not add empty glob re-exports of them or the build fails under `#![deny(warnings)]`.
 
 Functions that return or invoke JS functions cannot be represented as `serde_json::Value` and remain `todo!()` stubs by design: the entire `function/` category (debounce, curry, memoize, …), most of `util/` (flow, iteratee, property, matches, over, …), plus `invoke`, `invoke_map`, `create`, `set_with`, `update_with`, and `string` `template`.
 
 ## Architecture
 
 - `src/{array,collection,date,function,lang,math,number,object,seq,string,util,properties,methods}/` — one directory per lodash docs category. Each category's `mod.rs` contains `#[doc(hidden)] todo!()` stubs for every not-yet-implemented lodash function; implementing a function means replacing its stub with `mod <name>; pub use <name>::*;` and creating `<name>.rs`.
-- `src/lib_snake.rs` re-exports the implemented category modules (snake_case API). `src/lib_camel.rs` (behind the `camel` feature) generates camelCase fn and macro aliases via the `build_camel_case!`/`build_multi!` macros, which take explicit `camelName => snake_name` pairs — every multi-word function's macro must be registered there to get a camelCase alias. (Single-word camelCase fn aliases for still-stubbed functions live as `pub use snake as camelName` lines in each category `mod.rs`.)
+- `src/lib_snake.rs` re-exports the implemented category modules (snake_case API). `src/lib_camel.rs` (behind the `camel` feature) generates camelCase aliases via `build_camel_links![ camelName => snake_name … ]`, which expands each pair through `build_camel_link!`. Every multi-word function must be registered there to get a camelCase alias. Category `mod.rs` files also declare aliases next to their targets: `build_link!` for snake aliases (`first => head`, gated on `alias`) and `build_camel_link!` for camelCase ones (`hasIn => has`, gated on `camel`).
 - `src/internal.rs` also holds shared helpers used across categories: `words_vec`/`compound_words`/`capitalize_word` (string casing), `compare_values` (JS-style ordering), `value_to_option_number`/`f64_to_number` (numeric coercion), `uniq_by_key` (array dedup), `base_is_match` (partial deep match), and `rand_f64` (std-only RNG for `random`/`sample`/`shuffle`).
-- `src/macros.rs` — `with_dollar_sign!` and `build_link!` helpers for defining macro aliases (workaround for nested `macro_rules!` `$` escaping).
+- `src/macros.rs` — `with_dollar_sign!` (nested `macro_rules!` `$`-escaping workaround) plus the alias generators `build_link!` (gated on `alias`) and `build_camel_link!` (gated on `camel`), both using `paste` to derive `_x` idents. Each aliases a name's whole family — `$from`/`$from_x` fns and `$from!`/`$from_x!` macros — forwarding to the `$to` equivalents; `build_camel_link!` spells the camelCase `_x` form with an `X` suffix (`hasInX`). This is why every function needs all four forms (see below).
 - `src/internal.rs` — JS-compat constants (`MAX_SAFE_INTEGER`, etc.) and helpers like `value_undefined()` (JS `undefined` maps to `Value::Null`).
 
 ## Per-function file convention
 
-Each `<name>.rs` implements up to four fn variants plus a matching `macro_rules!` for each (macros provide lodash-style optional arguments):
+Each `<name>.rs` implements the base fn and a `_x` output helper, each with a matching `macro_rules!` (macros provide lodash-style optional arguments), so every name has all four forms `name` / `name_x` / `name!` / `name_x!`:
 
-- `name(Value, ...) -> Value` — the canonical form
-- `x_name(...)` — input downgraded to a primitive type (e.g. `&str` instead of `Value`)
-- `name_x(...)` — output downgraded to a primitive type
-- `x_name_x(...)` — both
+- `name(impl Into<Value>, ...) -> Value` — the canonical form. Data params are generic over `Into<Value>`, so a primitive (`&str`, a number, …) **or** a `json!` value can be passed directly.
+- `name_x(...) -> <primitive>` — same input, output downgraded to a primitive (`String`, `bool`, `f64`, `Vec<Value>`, …). Where a result has no single primitive form (a collection, or a value whose type is only known at runtime like `get`/`nth`), `name_x` is an unimplemented `todo!()` void marker that documents why. (Not-ported `todo!()` stubs likewise carry all four forms so aliases can point at them.)
 
-Option-like parameters (sizes, indexes) take primitive types (`usize`, `isize`), not `Value`; predicates take `Fn(&Value) -> bool`. Lodash functions with unlimited optional args keep exactly one in the fn form; the macro accepts more (e.g. `merge!(a, b, c)`).
+There is no longer any `x_name` / `x_name_x` primitive-**input** helper — the generic `Into<Value>` base subsumes them. Option-like parameters (sizes, indexes, pad chars) take primitive types (`usize`, `isize`, `&str`), not `Value`; predicates take `Fn(&Value) -> bool`. Lodash functions with unlimited optional args keep exactly one in the fn form; the macro accepts more (e.g. `merge!(a, b, c)`).
 
 ## Test convention
 
