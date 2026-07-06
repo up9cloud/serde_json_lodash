@@ -4,15 +4,8 @@ pub(crate) fn make_padding(n: usize, chars: &str) -> String {
     chars.chars().cycle().take(n).collect()
 }
 
-/// `x_`/`_x` helper for [pad()]: takes a primitive argument and returns a primitive value.
-/// Additional cases:
-///
-/// ```rust
-/// # use serde_json_lodash::x_pad_x;
-/// # use serde_json::json;
-/// assert_eq!(x_pad_x("abc", 8, "_-"), "_-abc_-_".to_owned());
-/// ```
-pub fn x_pad_x(s: &str, length: usize, chars: &str) -> String {
+// internal `&str`/primitive worker for [pad()] / [pad_x()]
+fn x_pad_x(s: &str, length: usize, chars: &str) -> String {
     let len = s.chars().count();
     if length <= len || chars.is_empty() {
         return s.into();
@@ -24,6 +17,7 @@ pub fn x_pad_x(s: &str, length: usize, chars: &str) -> String {
     out.push_str(&make_padding(total - start, chars));
     out
 }
+
 /// See lodash [pad](https://lodash.com/docs/#pad)
 /// Additional cases:
 ///
@@ -32,7 +26,8 @@ pub fn x_pad_x(s: &str, length: usize, chars: &str) -> String {
 /// # use serde_json::json;
 /// assert_eq!(pad(json!("abc"), 8, "_-"), json!("_-abc_-_"));
 /// ```
-pub fn pad(v: Value, length: usize, chars: &str) -> Value {
+pub fn pad<A: Into<Value>>(v: A, length: usize, chars: &str) -> Value {
+    let v = v.into();
     json!(x_pad_x(&crate::to_string_x(v), length, chars))
 }
 
@@ -86,17 +81,6 @@ macro_rules! pad {
     };
 }
 
-/// `x_` helper for [pad()]: takes a primitive argument instead of a [`Value`](crate::lib::Value).
-/// Additional cases:
-///
-/// ```rust
-/// # use serde_json_lodash::x_pad;
-/// # use serde_json::json;
-/// assert_eq!(x_pad("abc", 8, "_-"), json!("_-abc_-_"));
-/// ```
-pub fn x_pad(s: &str, length: usize, chars: &str) -> Value {
-    json!(x_pad_x(s, length, chars))
-}
 /// `_x` helper for [pad()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
 /// Additional cases:
 ///
@@ -105,62 +89,11 @@ pub fn x_pad(s: &str, length: usize, chars: &str) -> Value {
 /// # use serde_json::json;
 /// assert_eq!(pad_x(json!("abc"), 8, "_-"), "_-abc_-_".to_owned());
 /// ```
-pub fn pad_x(v: Value, length: usize, chars: &str) -> String {
+pub fn pad_x<A: Into<Value>>(v: A, length: usize, chars: &str) -> String {
+    let v = v.into();
     x_pad_x(&crate::to_string_x(v), length, chars)
 }
 
-/// Based on [x_pad_x()]
-#[macro_export]
-/// Additional cases:
-///
-/// ```rust
-/// # #[macro_use] extern crate serde_json_lodash;
-/// # use serde_json::json;
-/// assert_eq!(x_pad_x!("abc", 8, "_-"), "_-abc_-_".to_owned());
-/// ```
-macro_rules! x_pad_x {
-    () => {
-        "".to_owned()
-    };
-    ($a:expr $(,)*) => {
-        $crate::x_pad_x($a, 0, " ")
-    };
-    ($a:expr, $b:expr $(,)*) => {
-        $crate::x_pad_x($a, $b, " ")
-    };
-    ($a:expr, $b:expr, $c:expr $(,)*) => {
-        $crate::x_pad_x($a, $b, $c)
-    };
-    ($a:expr, $b:expr, $c:expr, $($rest:tt)*) => {
-        $crate::x_pad_x($a, $b, $c)
-    };
-}
-/// Based on [x_pad()]
-#[macro_export]
-/// Additional cases:
-///
-/// ```rust
-/// # #[macro_use] extern crate serde_json_lodash;
-/// # use serde_json::json;
-/// assert_eq!(x_pad!("abc", 8, "_-"), json!("_-abc_-_"));
-/// ```
-macro_rules! x_pad {
-    () => {
-        $crate::lib::json!("")
-    };
-    ($a:expr $(,)*) => {
-        $crate::x_pad($a, 0, " ")
-    };
-    ($a:expr, $b:expr $(,)*) => {
-        $crate::x_pad($a, $b, " ")
-    };
-    ($a:expr, $b:expr, $c:expr $(,)*) => {
-        $crate::x_pad($a, $b, $c)
-    };
-    ($a:expr, $b:expr, $c:expr, $($rest:tt)*) => {
-        $crate::x_pad($a, $b, $c)
-    };
-}
 /// Based on [pad_x()]
 #[macro_export]
 /// Additional cases:

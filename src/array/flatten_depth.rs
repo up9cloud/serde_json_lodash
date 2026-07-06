@@ -1,14 +1,7 @@
 use crate::lib::{json, Value};
 
-/// `x_`/`_x` helper for [flatten_depth()]: takes a primitive argument and returns a primitive value.
-/// Additional cases:
-///
-/// ```rust
-/// # use serde_json_lodash::x_flatten_depth_x;
-/// # use serde_json::json;
-/// assert_eq!(x_flatten_depth_x(vec![json!(1), json!([2, [3]])], 1), vec![json!(1), json!(2), json!([3])]);
-/// ```
-pub fn x_flatten_depth_x(vec: Vec<Value>, depth: usize) -> Vec<Value> {
+// internal worker for [flatten_depth()].
+fn x_flatten_depth_x(vec: Vec<Value>, depth: usize) -> Vec<Value> {
     if depth == 0 {
         return vec;
     }
@@ -34,6 +27,7 @@ pub fn x_flatten_depth_x(vec: Vec<Value>, depth: usize) -> Vec<Value> {
     }
     result
 }
+
 /// See lodash [flattenDepth](https://lodash.com/docs/#flattenDepth)
 /// Additional cases:
 ///
@@ -42,7 +36,8 @@ pub fn x_flatten_depth_x(vec: Vec<Value>, depth: usize) -> Vec<Value> {
 /// # use serde_json::json;
 /// assert_eq!(flatten_depth(json!([null,false,0,"",[null,[false]],{"a":1}]), 100), json!([null,false,0,"",null,false,{"a":1}]));
 /// ```
-pub fn flatten_depth(v: Value, depth: usize) -> Value {
+pub fn flatten_depth<A: Into<Value>>(v: A, depth: usize) -> Value {
+    let v = v.into();
     match v {
         Value::Null => json!([]),
         Value::Bool(_) => json!([]),
@@ -111,30 +106,6 @@ macro_rules! flatten_depth {
     };
     ($a:expr, $b:expr, $($rest:tt)*) => {
         $crate::flatten_depth($a, $b)
-    };
-}
-
-/// Based on [x_flatten_depth_x()]
-/// Additional cases:
-///
-/// ```rust
-/// # #[macro_use] extern crate serde_json_lodash;
-/// # use serde_json::json;
-/// assert_eq!(x_flatten_depth_x!(vec![json!(1), json!([2, [3]])], 1), vec![json!(1), json!(2), json!([3])]);
-/// ```
-#[macro_export]
-macro_rules! x_flatten_depth_x {
-    () => {
-        $crate::x_flatten_depth_x(vec![], 1)
-    };
-    ($a:expr $(,)*) => {
-        $crate::x_flatten_depth_x($a, 1)
-    };
-    ($a:expr, $b:expr $(,)*) => {
-        $crate::x_flatten_depth_x($a, $b)
-    };
-    ($a:expr, $b:expr, $($rest:tt)*) => {
-        $crate::x_flatten_depth_x($a, $b)
     };
 }
 

@@ -19,16 +19,14 @@ macro_rules! with_dollar_sign {
 //   `todo!()` stub, which has no macro to forward to) -> the alias gets only a
 //   `fn`.
 //
-// A target that also has the `x_` / `_x` primitive helpers (e.g. `capitalize`
-// has `x_capitalize`, `capitalize_x`, `x_capitalize_x`) is aliased by calling
-// `build_link!` once per variant, for example:
+// A target that also has a `_x` primitive-output helper (e.g. `capitalize`
+// has `capitalize_x`) is aliased by calling `build_link!` once per variant,
+// for example:
 //
 // ```ignore
 // build_links![
 //     abc      => capitalize
-//     x_abc    => x_capitalize
 //     abc_x    => capitalize_x
-//     x_abc_x  => x_capitalize_x
 // ];
 // ```
 //

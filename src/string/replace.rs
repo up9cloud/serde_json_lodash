@@ -1,16 +1,10 @@
 use crate::lib::{json, Value};
 
-/// `x_`/`_x` helper for [replace()]: takes a primitive argument and returns a primitive value.
-/// Additional cases:
-///
-/// ```rust
-/// # use serde_json_lodash::x_replace_x;
-/// # use serde_json::json;
-/// assert_eq!(x_replace_x("Hi Fred", "Fred", "Barney"), "Hi Barney".to_owned());
-/// ```
-pub fn x_replace_x(s: &str, pattern: &str, replacement: &str) -> String {
+// internal `&str`/primitive worker for [replace()] / [replace_x()]
+fn x_replace_x(s: &str, pattern: &str, replacement: &str) -> String {
     s.replacen(pattern, replacement, 1)
 }
+
 /// See lodash [replace](https://lodash.com/docs/#replace)
 ///
 /// *Note:* `pattern` is matched as a plain string (like the JS string
@@ -22,7 +16,8 @@ pub fn x_replace_x(s: &str, pattern: &str, replacement: &str) -> String {
 /// # use serde_json::json;
 /// assert_eq!(replace(json!("Hi Fred"), json!("Fred"), json!("Barney")), json!("Hi Barney"));
 /// ```
-pub fn replace(v: Value, pattern: Value, replacement: Value) -> Value {
+pub fn replace<A: Into<Value>>(v: A, pattern: Value, replacement: Value) -> Value {
+    let v = v.into();
     json!(x_replace_x(
         &crate::to_string_x(v),
         &crate::to_string_x(pattern),
@@ -72,17 +67,6 @@ macro_rules! replace {
     };
 }
 
-/// `x_` helper for [replace()]: takes a primitive argument instead of a [`Value`](crate::lib::Value).
-/// Additional cases:
-///
-/// ```rust
-/// # use serde_json_lodash::x_replace;
-/// # use serde_json::json;
-/// assert_eq!(x_replace("Hi Fred", "Fred", "Barney"), json!("Hi Barney"));
-/// ```
-pub fn x_replace(s: &str, pattern: &str, replacement: &str) -> Value {
-    json!(x_replace_x(s, pattern, replacement))
-}
 /// `_x` helper for [replace()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
 /// Additional cases:
 ///
@@ -91,7 +75,8 @@ pub fn x_replace(s: &str, pattern: &str, replacement: &str) -> Value {
 /// # use serde_json::json;
 /// assert_eq!(replace_x(json!("Hi Fred"), json!("Fred"), json!("Barney")), "Hi Barney".to_owned());
 /// ```
-pub fn replace_x(v: Value, pattern: Value, replacement: Value) -> String {
+pub fn replace_x<A: Into<Value>>(v: A, pattern: Value, replacement: Value) -> String {
+    let v = v.into();
     x_replace_x(
         &crate::to_string_x(v),
         &crate::to_string_x(pattern),
@@ -99,58 +84,6 @@ pub fn replace_x(v: Value, pattern: Value, replacement: Value) -> String {
     )
 }
 
-/// Based on [x_replace_x()]
-#[macro_export]
-/// Additional cases:
-///
-/// ```rust
-/// # #[macro_use] extern crate serde_json_lodash;
-/// # use serde_json::json;
-/// assert_eq!(x_replace_x!("Hi Fred", "Fred", "Barney"), "Hi Barney".to_owned());
-/// ```
-macro_rules! x_replace_x {
-    () => {
-        "".to_owned()
-    };
-    ($a:expr $(,)*) => {
-        $a.to_owned()
-    };
-    ($a:expr, $b:expr $(,)*) => {
-        $a.to_owned()
-    };
-    ($a:expr, $b:expr, $c:expr $(,)*) => {
-        $crate::x_replace_x($a, $b, $c)
-    };
-    ($a:expr, $b:expr, $c:expr, $($rest:tt)*) => {
-        $crate::x_replace_x($a, $b, $c)
-    };
-}
-/// Based on [x_replace()]
-#[macro_export]
-/// Additional cases:
-///
-/// ```rust
-/// # #[macro_use] extern crate serde_json_lodash;
-/// # use serde_json::json;
-/// assert_eq!(x_replace!("Hi Fred", "Fred", "Barney"), json!("Hi Barney"));
-/// ```
-macro_rules! x_replace {
-    () => {
-        $crate::lib::json!("")
-    };
-    ($a:expr $(,)*) => {
-        $crate::lib::json!($a)
-    };
-    ($a:expr, $b:expr $(,)*) => {
-        $crate::lib::json!($a)
-    };
-    ($a:expr, $b:expr, $c:expr $(,)*) => {
-        $crate::x_replace($a, $b, $c)
-    };
-    ($a:expr, $b:expr, $c:expr, $($rest:tt)*) => {
-        $crate::x_replace($a, $b, $c)
-    };
-}
 /// Based on [replace_x()]
 #[macro_export]
 /// Additional cases:

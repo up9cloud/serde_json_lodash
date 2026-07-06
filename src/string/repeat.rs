@@ -1,16 +1,10 @@
 use crate::lib::{json, Value};
 
-/// `x_`/`_x` helper for [repeat()]: takes a primitive argument and returns a primitive value.
-/// Additional cases:
-///
-/// ```rust
-/// # use serde_json_lodash::x_repeat_x;
-/// # use serde_json::json;
-/// assert_eq!(x_repeat_x("*", 3), "***".to_owned());
-/// ```
-pub fn x_repeat_x(s: &str, n: usize) -> String {
+// internal `&str`/primitive worker for [repeat()] / [repeat_x()]
+fn x_repeat_x(s: &str, n: usize) -> String {
     s.repeat(n)
 }
+
 /// See lodash [repeat](https://lodash.com/docs/#repeat)
 /// Additional cases:
 ///
@@ -19,7 +13,8 @@ pub fn x_repeat_x(s: &str, n: usize) -> String {
 /// # use serde_json::json;
 /// assert_eq!(repeat(json!("*"), 3), json!("***"));
 /// ```
-pub fn repeat(v: Value, n: usize) -> Value {
+pub fn repeat<A: Into<Value>>(v: A, n: usize) -> Value {
+    let v = v.into();
     json!(x_repeat_x(&crate::to_string_x(v), n))
 }
 
@@ -69,17 +64,6 @@ macro_rules! repeat {
     };
 }
 
-/// `x_` helper for [repeat()]: takes a primitive argument instead of a [`Value`](crate::lib::Value).
-/// Additional cases:
-///
-/// ```rust
-/// # use serde_json_lodash::x_repeat;
-/// # use serde_json::json;
-/// assert_eq!(x_repeat("*", 3), json!("***"));
-/// ```
-pub fn x_repeat(s: &str, n: usize) -> Value {
-    json!(x_repeat_x(s, n))
-}
 /// `_x` helper for [repeat()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
 /// Additional cases:
 ///
@@ -88,56 +72,11 @@ pub fn x_repeat(s: &str, n: usize) -> Value {
 /// # use serde_json::json;
 /// assert_eq!(repeat_x(json!("*"), 3), "***".to_owned());
 /// ```
-pub fn repeat_x(v: Value, n: usize) -> String {
+pub fn repeat_x<A: Into<Value>>(v: A, n: usize) -> String {
+    let v = v.into();
     x_repeat_x(&crate::to_string_x(v), n)
 }
 
-/// Based on [x_repeat_x()]
-#[macro_export]
-/// Additional cases:
-///
-/// ```rust
-/// # #[macro_use] extern crate serde_json_lodash;
-/// # use serde_json::json;
-/// assert_eq!(x_repeat_x!("*", 3), "***".to_owned());
-/// ```
-macro_rules! x_repeat_x {
-    () => {
-        "".to_owned()
-    };
-    ($a:expr $(,)*) => {
-        $crate::x_repeat_x($a, 1)
-    };
-    ($a:expr, $b:expr $(,)*) => {
-        $crate::x_repeat_x($a, $b)
-    };
-    ($a:expr, $b:expr, $($rest:tt)*) => {
-        $crate::x_repeat_x($a, $b)
-    };
-}
-/// Based on [x_repeat()]
-#[macro_export]
-/// Additional cases:
-///
-/// ```rust
-/// # #[macro_use] extern crate serde_json_lodash;
-/// # use serde_json::json;
-/// assert_eq!(x_repeat!("*", 3), json!("***"));
-/// ```
-macro_rules! x_repeat {
-    () => {
-        $crate::lib::json!("")
-    };
-    ($a:expr $(,)*) => {
-        $crate::x_repeat($a, 1)
-    };
-    ($a:expr, $b:expr $(,)*) => {
-        $crate::x_repeat($a, $b)
-    };
-    ($a:expr, $b:expr, $($rest:tt)*) => {
-        $crate::x_repeat($a, $b)
-    };
-}
 /// Based on [repeat_x()]
 #[macro_export]
 /// Additional cases:

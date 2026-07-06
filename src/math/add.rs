@@ -2,16 +2,8 @@ use crate::lib::{json, Value, Number};
 use crate::internal::{value_nan, value_to_option_number, vec_value_to_option_number};
 use crate::{to_string_x, json_array_to_string_x};
 
-/// `x_`/`_x` helper for [add()]: takes a primitive argument and returns a primitive value.
-/// Additional cases:
-///
-/// ```rust
-/// # use serde_json_lodash::x_add_x;
-/// # use serde_json::json;
-/// # use serde_json::Number;
-/// assert_eq!(x_add_x(Number::from(6), Number::from(4)), Number::from(10));
-/// ```
-pub fn x_add_x(n: Number, n2: Number) -> Number {
+// internal worker for [add()].
+fn x_add_x(n: Number, n2: Number) -> Number {
     if n.is_u64() {
         let inner_n = n.as_u64().unwrap();
         if n2.is_u64() {
@@ -42,6 +34,7 @@ pub fn x_add_x(n: Number, n2: Number) -> Number {
     }
 }
 
+// internal worker for [add()].
 fn x_add_bool_x(n: Number, b: bool) -> Number {
     if n.is_u64() {
         let v: u64 = if b { 1 } else { 0 };
@@ -54,12 +47,14 @@ fn x_add_bool_x(n: Number, b: bool) -> Number {
         Number::from_f64(n.as_f64().unwrap() + v).unwrap()
     }
 }
+
 fn array_to_value_number(vec: Vec<Value>) -> Value {
     match vec_value_to_option_number(vec) {
         Some(n) => Value::Number(n),
         None => value_nan(),
     }
 }
+
 fn value_to_value_number(value: Value) -> Value {
     match value_to_option_number(value) {
         Some(n) => Value::Number(n),
@@ -75,7 +70,8 @@ fn value_to_value_number(value: Value) -> Value {
 /// # use serde_json::json;
 /// assert_eq!(add(json!(6), json!(4)), json!(10));
 /// ```
-pub fn add(augend: Value, addend: Value) -> Value {
+pub fn add<A: Into<Value>>(augend: A, addend: Value) -> Value {
+    let augend = augend.into();
     match augend {
         Value::Null => match addend {
             Value::Null => json!(0),
@@ -181,40 +177,6 @@ pub fn add(augend: Value, addend: Value) -> Value {
     }
 }
 
-/// Based on [x_add_x()]
-///
-/// Examples:
-///
-/// ```rust
-/// #[macro_use] extern crate serde_json_lodash;
-/// use serde_json::Number;
-/// assert_eq!(
-///   x_add_x!(Number::from(6), Number::from(4)),
-///   Number::from(10)
-/// );
-/// ```
-///
-/// Additional cases:
-///
-/// ```rust
-/// # #[macro_use] extern crate serde_json_lodash;
-/// # use serde_json::json;
-/// ```
-#[macro_export]
-macro_rules! x_add_x {
-    () => {
-        $crate::lib::Number::from(0)
-    };
-    ($a:expr $(,)*) => {
-        $a
-    };
-    ($a:expr, $b:expr $(,)*) => {
-        $crate::x_add_x($a, $b)
-    };
-    ($a:expr, $b:expr, $($rest:tt)*) => {
-        $crate::x_add_x($a, $b)
-    };
-}
 /// Based on [add()]
 ///
 /// Examples:

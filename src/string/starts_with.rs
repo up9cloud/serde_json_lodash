@@ -1,42 +1,9 @@
 use crate::lib::{json, Value};
 
-/// `x_`/`_x` helper for [starts_with()]: takes a primitive argument and returns a primitive value.
-///
-/// Additional cases:
-///
-/// ```rust
-/// # use serde_json_lodash::x_starts_with_x;
-/// assert_eq!(x_starts_with_x("abc", "a", 0), true);
-/// ```
-pub fn x_starts_with_x(s: &str, target: &str, position: usize) -> bool {
+// internal worker for [starts_with()].
+fn x_starts_with_x(s: &str, target: &str, position: usize) -> bool {
     let tail: String = s.chars().skip(position).collect();
     tail.starts_with(target)
-}
-/// Based on [x_starts_with_x()]
-///
-/// Additional cases:
-///
-/// ```rust
-/// # #[macro_use] extern crate serde_json_lodash;
-/// assert_eq!(x_starts_with_x!("abc", "a"), true);
-/// ```
-#[macro_export]
-macro_rules! x_starts_with_x {
-    () => {
-        false
-    };
-    ($a:expr $(,)*) => {
-        false
-    };
-    ($a:expr, $b:expr $(,)*) => {
-        $crate::x_starts_with_x($a, $b, 0)
-    };
-    ($a:expr, $b:expr, $c:expr $(,)*) => {
-        $crate::x_starts_with_x($a, $b, $c)
-    };
-    ($a:expr, $b:expr, $c:expr, $($rest:tt)*) => {
-        $crate::x_starts_with_x($a, $b, $c)
-    };
 }
 
 /// `_x` helper for [starts_with()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
@@ -48,13 +15,15 @@ macro_rules! x_starts_with_x {
 /// # use serde_json::json;
 /// assert_eq!(starts_with_x(json!("abc"), json!("a"), 0), true);
 /// ```
-pub fn starts_with_x(v: Value, target: Value, position: usize) -> bool {
+pub fn starts_with_x<A: Into<Value>>(v: A, target: Value, position: usize) -> bool {
+    let v = v.into();
     x_starts_with_x(
         &crate::to_string_x(v),
         &crate::to_string_x(target),
         position,
     )
 }
+
 /// See lodash [startsWith](https://lodash.com/docs/#startsWith)
 ///
 /// Additional cases:
@@ -64,7 +33,8 @@ pub fn starts_with_x(v: Value, target: Value, position: usize) -> bool {
 /// # use serde_json::json;
 /// assert_eq!(starts_with(json!("abc"), json!("a"), 0), json!(true));
 /// ```
-pub fn starts_with(v: Value, target: Value, position: usize) -> Value {
+pub fn starts_with<A: Into<Value>>(v: A, target: Value, position: usize) -> Value {
+    let v = v.into();
     json!(starts_with_x(v, target, position))
 }
 
@@ -94,6 +64,7 @@ macro_rules! starts_with_x {
         $crate::starts_with_x($a, $b, $c)
     };
 }
+
 /// Based on [starts_with()]
 ///
 /// Examples:

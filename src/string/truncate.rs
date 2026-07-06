@@ -1,14 +1,7 @@
 use crate::lib::{json, Value};
 
-/// `x_`/`_x` helper for [truncate()]: takes a primitive argument and returns a primitive value.
-/// Additional cases:
-///
-/// ```rust
-/// # use serde_json_lodash::x_truncate_x;
-/// # use serde_json::json;
-/// assert_eq!(x_truncate_x("hi-diddly-ho there, neighborino", &json!({"length": 24, "separator": " "})), "hi-diddly-ho there,...".to_owned());
-/// ```
-pub fn x_truncate_x(s: &str, options: &Value) -> String {
+// internal `&str`/primitive worker for [truncate()] / [truncate_x()]
+fn x_truncate_x(s: &str, options: &Value) -> String {
     let length = options["length"].as_u64().unwrap_or(30) as usize;
     let omission = options["omission"].as_str().unwrap_or("...");
     let chars: Vec<char> = s.chars().collect();
@@ -25,6 +18,7 @@ pub fn x_truncate_x(s: &str, options: &Value) -> String {
     result.push_str(omission);
     result
 }
+
 /// See lodash [truncate](https://lodash.com/docs/#truncate)
 ///
 /// `options` is an object like `json!({"length": 24, "omission": "...",
@@ -36,7 +30,8 @@ pub fn x_truncate_x(s: &str, options: &Value) -> String {
 /// # use serde_json::json;
 /// assert_eq!(truncate(json!("hi-diddly-ho there, neighborino"), json!({"length": 24, "separator": " "})), json!("hi-diddly-ho there,..."));
 /// ```
-pub fn truncate(v: Value, options: Value) -> Value {
+pub fn truncate<A: Into<Value>>(v: A, options: Value) -> Value {
+    let v = v.into();
     json!(x_truncate_x(&crate::to_string_x(v), &options))
 }
 
@@ -86,17 +81,6 @@ macro_rules! truncate {
     };
 }
 
-/// `x_` helper for [truncate()]: takes a primitive argument instead of a [`Value`](crate::lib::Value).
-/// Additional cases:
-///
-/// ```rust
-/// # use serde_json_lodash::x_truncate;
-/// # use serde_json::json;
-/// assert_eq!(x_truncate("hi-diddly-ho there, neighborino", &json!({"length": 24, "separator": " "})), json!("hi-diddly-ho there,..."));
-/// ```
-pub fn x_truncate(s: &str, options: &Value) -> Value {
-    json!(x_truncate_x(s, options))
-}
 /// `_x` helper for [truncate()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
 /// Additional cases:
 ///
@@ -105,56 +89,11 @@ pub fn x_truncate(s: &str, options: &Value) -> Value {
 /// # use serde_json::json;
 /// assert_eq!(truncate_x(json!("hi-diddly-ho there, neighborino"), json!({"length": 24, "separator": " "})), "hi-diddly-ho there,...".to_owned());
 /// ```
-pub fn truncate_x(v: Value, options: Value) -> String {
+pub fn truncate_x<A: Into<Value>>(v: A, options: Value) -> String {
+    let v = v.into();
     x_truncate_x(&crate::to_string_x(v), &options)
 }
 
-/// Based on [x_truncate_x()]
-#[macro_export]
-/// Additional cases:
-///
-/// ```rust
-/// # #[macro_use] extern crate serde_json_lodash;
-/// # use serde_json::json;
-/// assert_eq!(x_truncate_x!("hi-diddly-ho there, neighborino", &json!({"length": 24, "separator": " "})), "hi-diddly-ho there,...".to_owned());
-/// ```
-macro_rules! x_truncate_x {
-    () => {
-        "".to_owned()
-    };
-    ($a:expr $(,)*) => {
-        $crate::x_truncate_x($a, &$crate::lib::json!({}))
-    };
-    ($a:expr, $b:expr $(,)*) => {
-        $crate::x_truncate_x($a, $b)
-    };
-    ($a:expr, $b:expr, $($rest:tt)*) => {
-        $crate::x_truncate_x($a, $b)
-    };
-}
-/// Based on [x_truncate()]
-#[macro_export]
-/// Additional cases:
-///
-/// ```rust
-/// # #[macro_use] extern crate serde_json_lodash;
-/// # use serde_json::json;
-/// assert_eq!(x_truncate!("hi-diddly-ho there, neighborino", &json!({"length": 24, "separator": " "})), json!("hi-diddly-ho there,..."));
-/// ```
-macro_rules! x_truncate {
-    () => {
-        $crate::lib::json!("")
-    };
-    ($a:expr $(,)*) => {
-        $crate::x_truncate($a, &$crate::lib::json!({}))
-    };
-    ($a:expr, $b:expr $(,)*) => {
-        $crate::x_truncate($a, $b)
-    };
-    ($a:expr, $b:expr, $($rest:tt)*) => {
-        $crate::x_truncate($a, $b)
-    };
-}
 /// Based on [truncate_x()]
 #[macro_export]
 /// Additional cases:

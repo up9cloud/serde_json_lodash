@@ -1,14 +1,7 @@
 use crate::lib::{json, Value};
 
-/// `x_` helper for [split()]: takes a primitive argument instead of a [`Value`](crate::lib::Value).
-/// Additional cases:
-///
-/// ```rust
-/// # use serde_json_lodash::x_split;
-/// # use serde_json::json;
-/// assert_eq!(x_split("a-b-c", "-", 2), json!(["a", "b"]));
-/// ```
-pub fn x_split(s: &str, separator: &str, limit: usize) -> Value {
+// internal worker for [split()].
+fn x_split(s: &str, separator: &str, limit: usize) -> Value {
     let parts: Vec<String> = if separator.is_empty() {
         s.chars().take(limit).map(|c| c.to_string()).collect()
     } else {
@@ -19,6 +12,7 @@ pub fn x_split(s: &str, separator: &str, limit: usize) -> Value {
     };
     json!(parts)
 }
+
 /// See lodash [split](https://lodash.com/docs/#split)
 /// Additional cases:
 ///
@@ -27,7 +21,8 @@ pub fn x_split(s: &str, separator: &str, limit: usize) -> Value {
 /// # use serde_json::json;
 /// assert_eq!(split(json!("a-b-c"), "-", 2), json!(["a", "b"]));
 /// ```
-pub fn split(v: Value, separator: &str, limit: usize) -> Value {
+pub fn split<A: Into<Value>>(v: A, separator: &str, limit: usize) -> Value {
+    let v = v.into();
     x_split(&crate::to_string_x(v), separator, limit)
 }
 
@@ -70,33 +65,6 @@ macro_rules! split {
     };
     ($a:expr, $b:expr, $c:expr, $($rest:tt)*) => {
         $crate::split($a, $b, $c)
-    };
-}
-
-/// Based on [x_split()]
-#[macro_export]
-/// Additional cases:
-///
-/// ```rust
-/// # #[macro_use] extern crate serde_json_lodash;
-/// # use serde_json::json;
-/// assert_eq!(x_split!("a-b-c", "-", 2), json!(["a", "b"]));
-/// ```
-macro_rules! x_split {
-    () => {
-        $crate::lib::json!([])
-    };
-    ($a:expr $(,)*) => {
-        $crate::lib::json!([$a])
-    };
-    ($a:expr, $b:expr $(,)*) => {
-        $crate::x_split($a, $b, usize::MAX)
-    };
-    ($a:expr, $b:expr, $c:expr $(,)*) => {
-        $crate::x_split($a, $b, $c)
-    };
-    ($a:expr, $b:expr, $c:expr, $($rest:tt)*) => {
-        $crate::x_split($a, $b, $c)
     };
 }
 
