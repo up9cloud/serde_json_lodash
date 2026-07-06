@@ -2,6 +2,13 @@ use crate::lib::{json, Value};
 use crate::internal::{type_name};
 
 /// `x_` helper for [to_string()]: takes a primitive argument instead of a [`Value`](crate::lib::Value).
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::x_to_string;
+/// # use serde_json::json;
+/// assert_eq!(x_to_string(""), json!(""));
+/// ```
 pub fn x_to_string(v: &str) -> Value {
     json!(v)
 }
@@ -30,6 +37,13 @@ pub(crate) fn json_array_to_string_x(vec: Vec<Value>) -> String {
     }
 }
 /// `_x` helper for [to_string()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::to_string_x;
+/// # use serde_json::json;
+/// assert_eq!(to_string_x(json!(null)), "".to_owned());
+/// ```
 pub fn to_string_x(v: Value) -> String {
     match v {
         Value::Null => "".into(),
@@ -47,15 +61,29 @@ pub fn to_string_x(v: Value) -> String {
     }
 }
 /// See lodash [toString](https://lodash.com/docs/#toString)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::to_string;
+/// # use serde_json::json;
+/// assert_eq!(to_string(json!(null)), json!(""));
+/// ```
 pub fn to_string(v: Value) -> Value {
     Value::String(to_string_x(v))
 }
 
 /// Based on [x_to_string()]
 #[macro_export]
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(x_to_string!(""), json!(""));
+/// ```
 macro_rules! x_to_string {
     () => {
-        json!("")
+        $crate::lib::json!("")
     };
     ($a:expr $(,)*) => {
         $crate::x_to_string($a)
@@ -85,7 +113,7 @@ macro_rules! x_to_string {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -126,7 +154,7 @@ macro_rules! to_string_x {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -143,7 +171,7 @@ macro_rules! to_string_x {
 #[macro_export]
 macro_rules! to_string {
     () => {
-        json!("")
+        $crate::lib::json!("")
     };
     ($a:expr $(,)*) => {
         $crate::to_string($a)

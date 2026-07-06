@@ -26,6 +26,13 @@ pub fn zip_arrays(arrays: Vec<Value>) -> Value {
 }
 
 /// See lodash [zip](https://lodash.com/docs/#zip)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::zip;
+/// # use serde_json::json;
+/// assert_eq!(zip(json!(["a", "b"]), json!([1, 2])), json!([["a", 1], ["b", 2]]));
+/// ```
 pub fn zip(array: Value, other: Value) -> Value {
     zip_arrays(vec![array, other])
 }
@@ -43,7 +50,7 @@ pub fn zip(array: Value, other: Value) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -55,7 +62,7 @@ pub fn zip(array: Value, other: Value) -> Value {
 #[macro_export]
 macro_rules! zip {
     () => {
-        json!([])
+        $crate::lib::json!([])
     };
     ($($a:expr),+ $(,)*) => {
         $crate::zip_arrays(vec![$($a),+])

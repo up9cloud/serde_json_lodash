@@ -1,6 +1,13 @@
 use crate::lib::{json, Value};
 
 /// See lodash [toPairs](https://lodash.com/docs/#toPairs)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::to_pairs;
+/// # use serde_json::json;
+/// assert_eq!(to_pairs(json!({"a": 1, "b": 2})), json!([["a", 1], ["b", 2]]));
+/// ```
 pub fn to_pairs(v: Value) -> Value {
     match v {
         Value::Object(o) => Value::Array(o.into_iter().map(|(k, v)| json!([k, v])).collect()),
@@ -33,7 +40,7 @@ pub fn to_pairs(v: Value) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -45,7 +52,7 @@ pub fn to_pairs(v: Value) -> Value {
 #[macro_export]
 macro_rules! to_pairs {
     () => {
-        json!([])
+        $crate::lib::json!([])
     };
     ($a:expr $(,)*) => {
         $crate::to_pairs($a)

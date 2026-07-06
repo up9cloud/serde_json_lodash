@@ -19,6 +19,13 @@ fn deep(v: &Value, customizer: fn(&Value) -> Option<Value>) -> Value {
 ///
 /// `customizer` is invoked recursively for every value; returning `None`
 /// falls back to the default deep clone behavior
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::clone_deep_with;
+/// # use serde_json::json;
+/// assert_eq!(clone_deep_with(&json!([1]), |_| None), json!([1]));
+/// ```
 pub fn clone_deep_with(v: &Value, customizer: fn(&Value) -> Option<Value>) -> Value {
     deep(v, customizer)
 }
@@ -40,7 +47,7 @@ pub fn clone_deep_with(v: &Value, customizer: fn(&Value) -> Option<Value>) -> Va
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -51,7 +58,7 @@ pub fn clone_deep_with(v: &Value, customizer: fn(&Value) -> Option<Value>) -> Va
 #[macro_export]
 macro_rules! clone_deep_with {
     () => {
-        json!(null)
+        $crate::lib::json!(null)
     };
     ($a:expr $(,)*) => {
         $crate::clone_deep($a)

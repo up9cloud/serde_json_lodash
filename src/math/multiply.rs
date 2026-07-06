@@ -2,6 +2,13 @@ use crate::lib::Value;
 use crate::internal::{f64_to_number, value_nan, value_to_option_number};
 
 /// See lodash [multiply](https://lodash.com/docs/#multiply)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::multiply;
+/// # use serde_json::json;
+/// assert_eq!(multiply(json!(6), json!(4)), json!(24));
+/// ```
 pub fn multiply(multiplier: Value, multiplicand: Value) -> Value {
     match (
         value_to_option_number(multiplier).and_then(|n| n.as_f64()),
@@ -28,7 +35,7 @@ pub fn multiply(multiplier: Value, multiplicand: Value) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -41,7 +48,7 @@ pub fn multiply(multiplier: Value, multiplicand: Value) -> Value {
 #[macro_export]
 macro_rules! multiply {
     () => {
-        json!(1)
+        $crate::lib::json!(1)
     };
     ($a:expr $(,)*) => {
         $crate::to_number($a)

@@ -3,6 +3,13 @@ use crate::internal::value_undefined;
 use crate::to_path_x;
 
 /// See lodash [set](https://lodash.com/docs/#set)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::set;
+/// # use serde_json::json;
+/// assert_eq!(set(json!({}), json!("1[1].a"), json!(5)), json!({"1":[null,{"a":5}]}));
+/// ```
 pub fn set(mut object: Value, path: Value, value: Value) -> Value {
     let mut p_vec = to_path_x(path);
     if p_vec.is_empty() {
@@ -119,7 +126,7 @@ pub fn set(mut object: Value, path: Value, value: Value) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -140,7 +147,7 @@ macro_rules! set {
         $a
     };
     ($a:expr, $b:expr $(,)*) => {
-        $crate::set($a, $b, json!({}))
+        $crate::set($a, $b, $crate::lib::json!({}))
     };
     ($a:expr, $b:expr, $c:expr $(,)*) => {
         $crate::set($a, $b, $c)

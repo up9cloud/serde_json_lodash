@@ -28,6 +28,27 @@
 //!   assert_eq!(x_capitalize_x!("FRED"), "Fred".to_owned());
 //! }
 //! ```
+//!
+//! ## Primary macro vs. auxiliary forms
+//!
+//! For each lodash function the **primary macro** (e.g. [`capitalize!`]) is the
+//! main, fully-documented entry point. Its doc has two sections:
+//!
+//! - `Examples:` — mirrors the lodash documentation for that function.
+//! - `Additional cases:` — the interesting behavior: edge cases, empty/optional
+//!   arguments, type coercion and JSON-specific quirks.
+//!
+//! Every other form is **auxiliary**: the plain function
+//! ([`capitalize()`](fn@capitalize)) and the `x_` / `_x` primitive-typed helpers
+//! together with their macros ([`x_capitalize()`](fn@x_capitalize),
+//! [`capitalize_x()`](fn@capitalize_x), [`x_capitalize_x()`](fn@x_capitalize_x),
+//! `x_capitalize!`, `capitalize_x!`, …). An auxiliary item's `Additional cases:`
+//! is there only to **show how to call that particular form** — one short
+//! example — not to re-cover the edge cases.
+//!
+//! So: to understand a function's behavior, read its primary macro; to see how
+//! to call a specific form (fn vs macro, `Value` vs primitive), glance at that
+//! item's one-line example.
 
 #![deny(missing_docs)]
 #![deny(warnings)]

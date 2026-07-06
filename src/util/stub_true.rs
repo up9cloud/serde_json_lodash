@@ -1,6 +1,13 @@
 use crate::lib::{Value};
 
 /// See lodash [stubTrue](https://lodash.com/docs/#stubTrue)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::stub_true;
+/// # use serde_json::json;
+/// assert_eq!(stub_true()(), json!(true));
+/// ```
 pub fn stub_true() -> Box<dyn Fn() -> Value> {
     Box::new(|| Value::Bool(true))
 }
@@ -19,7 +26,7 @@ pub fn stub_true() -> Box<dyn Fn() -> Value> {
 /// //);
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;

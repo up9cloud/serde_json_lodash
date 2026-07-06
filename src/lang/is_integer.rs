@@ -1,6 +1,13 @@
 use crate::lib::Value;
 
 /// See lodash [isInteger](https://lodash.com/docs/#isInteger)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::is_integer;
+/// # use serde_json::json;
+/// assert_eq!(is_integer(&json!(3)), true);
+/// ```
 pub fn is_integer(v: &Value) -> bool {
     match v {
         Value::Number(n) => {
@@ -22,7 +29,7 @@ pub fn is_integer(v: &Value) -> bool {
 /// assert_eq!(is_integer!(&json!("3")), false);
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;

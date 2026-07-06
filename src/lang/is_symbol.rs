@@ -3,6 +3,13 @@ use crate::lib::Value;
 /// See lodash [isSymbol](https://lodash.com/docs/#isSymbol)
 ///
 /// There is no such type in JSON, so it always returns `false`
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::is_symbol;
+/// # use serde_json::json;
+/// assert_eq!(is_symbol(&json!({})), false);
+/// ```
 pub fn is_symbol(_v: &Value) -> bool {
     false
 }
@@ -19,7 +26,7 @@ pub fn is_symbol(_v: &Value) -> bool {
 /// assert_eq!(is_symbol!(&json!("a")), false);
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;

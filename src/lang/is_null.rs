@@ -4,6 +4,13 @@ use crate::lib::Value;
 ///
 /// *Note:* `undefined` and `null` are both `Value::Null` in this crate, so
 /// unlike the js version, `is_null` cannot tell them apart
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::is_null;
+/// # use serde_json::json;
+/// assert_eq!(is_null(&json!(null)), true);
+/// ```
 pub fn is_null(v: &Value) -> bool {
     v.is_null()
 }
@@ -19,7 +26,7 @@ pub fn is_null(v: &Value) -> bool {
 /// assert_eq!(is_null!(&json!(1)), false);
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;

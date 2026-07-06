@@ -79,7 +79,9 @@ cargo doc --open      # preview docs
 ```
 
 Tests live in the doc comments: the `Examples:` block mirrors the lodash
-documentation for that function, and `More examples:` covers edge cases.
+documentation for that function, and `Additional cases:` covers everything
+else worth showing (edge cases, empty/optional args, type coercion, JSON
+specifics).
 
 ### Releasing a new version
 

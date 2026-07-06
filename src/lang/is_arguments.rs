@@ -3,6 +3,13 @@ use crate::lib::Value;
 /// See lodash [isArguments](https://lodash.com/docs/#isArguments)
 ///
 /// There is no such type in JSON, so it always returns `false`
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::is_arguments;
+/// # use serde_json::json;
+/// assert_eq!(is_arguments(&json!({})), false);
+/// ```
 pub fn is_arguments(_v: &Value) -> bool {
     false
 }
@@ -19,7 +26,7 @@ pub fn is_arguments(_v: &Value) -> bool {
 /// assert_eq!(is_arguments!(&json!("a")), false);
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;

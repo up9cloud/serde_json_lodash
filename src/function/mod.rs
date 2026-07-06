@@ -18,8 +18,7 @@ pub fn bind() {
 pub fn bind_key() {
     todo!()
 }
-#[doc(hidden)]
-pub use bind_key as bindKey;
+build_link_fn!(bindKey, bind_key);
 /// **Not ported.** Curries a function; operates on a function, not a Value.
 pub fn curry() {
     todo!()
@@ -28,8 +27,7 @@ pub fn curry() {
 pub fn curry_right() {
     todo!()
 }
-#[doc(hidden)]
-pub use curry_right as curryRight;
+build_link_fn!(curryRight, curry_right);
 /// **Not ported.** Wraps a function with debouncing; time/closures are not Values.
 pub fn debounce() {
     todo!()
@@ -62,8 +60,7 @@ pub fn once() {
 pub fn over_args() {
     todo!()
 }
-#[doc(hidden)]
-pub use over_args as overArgs;
+build_link_fn!(overArgs, over_args);
 /// **Not ported.** Partially applies a function; not a Value.
 pub fn partial() {
     todo!()
@@ -72,8 +69,7 @@ pub fn partial() {
 pub fn partial_right() {
     todo!()
 }
-#[doc(hidden)]
-pub use partial_right as partialRight;
+build_link_fn!(partialRight, partial_right);
 /// **Not ported.** Reorders a function's arguments; not a Value.
 pub fn rearg() {
     todo!()

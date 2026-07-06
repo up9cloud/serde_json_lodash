@@ -1,6 +1,13 @@
 use crate::lib::Value;
 
 /// See lodash [size](https://lodash.com/docs/#size)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::size;
+/// # use serde_json::json;
+/// assert_eq!(size(json!([1, 2, 3])), 3);
+/// ```
 pub fn size(collection: Value) -> usize {
     match collection {
         Value::Array(vec) => vec.len(),
@@ -22,7 +29,7 @@ pub fn size(collection: Value) -> usize {
 /// assert_eq!(size!(json!("pebbles")), 7);
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;

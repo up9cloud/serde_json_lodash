@@ -2,6 +2,13 @@ use crate::lib::Value;
 use crate::internal::value_to_option_number;
 
 /// See lodash [inRange](https://lodash.com/docs/#inRange)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::in_range;
+/// # use serde_json::json;
+/// assert_eq!(in_range(json!(3), json!(2), json!(4)), true);
+/// ```
 pub fn in_range(number: Value, start: Value, end: Value) -> bool {
     let n = value_to_option_number(number).and_then(|n| n.as_f64());
     let s = value_to_option_number(start).and_then(|n| n.as_f64());
@@ -29,7 +36,7 @@ pub fn in_range(number: Value, start: Value, end: Value) -> bool {
 /// assert_eq!(in_range!(json!(-3), json!(-2), json!(-6)), true);
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -47,7 +54,7 @@ macro_rules! in_range {
         false
     };
     ($a:expr, $b:expr $(,)*) => {
-        $crate::in_range($a, serde_json::json!(0), $b)
+        $crate::in_range($a, $crate::lib::json!(0), $b)
     };
     ($a:expr, $b:expr, $c:expr $(,)*) => {
         $crate::in_range($a, $b, $c)

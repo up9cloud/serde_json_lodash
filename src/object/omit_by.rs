@@ -4,6 +4,13 @@ use crate::lib::{Value, Map};
 ///
 /// `predicate` is invoked with each property value; matching properties are
 /// dropped
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::omit_by;
+/// # use serde_json::json;
+/// assert_eq!(omit_by(json!({"a": 1, "b": "2"}), |v| v.is_number()), json!({"b": "2"}));
+/// ```
 pub fn omit_by(object: Value, predicate: fn(&Value) -> bool) -> Value {
     let mut out = Map::new();
     if let Value::Object(o) = object {
@@ -30,7 +37,7 @@ pub fn omit_by(object: Value, predicate: fn(&Value) -> bool) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -41,7 +48,7 @@ pub fn omit_by(object: Value, predicate: fn(&Value) -> bool) -> Value {
 #[macro_export]
 macro_rules! omit_by {
     () => {
-        json!({})
+        $crate::lib::json!({})
     };
     ($a:expr $(,)*) => {
         $crate::omit_by($a, |v| v.is_null())

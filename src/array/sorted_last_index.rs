@@ -5,6 +5,13 @@ use crate::array::sorted_index::sorted_index_impl;
 ///
 /// Returns the highest index at which `value` should be inserted to keep the
 /// array sorted
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::sorted_last_index;
+/// # use serde_json::json;
+/// assert_eq!(sorted_last_index(json!([4, 5, 5, 5, 6]), json!(5)), 4);
+/// ```
 pub fn sorted_last_index(array: Value, value: Value) -> usize {
     sorted_index_impl(&array, &value, true, |v| v.clone())
 }
@@ -19,7 +26,7 @@ pub fn sorted_last_index(array: Value, value: Value) -> usize {
 /// assert_eq!(sorted_last_index!(json!([4, 5, 5, 5, 6]), json!(5)), 4);
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;

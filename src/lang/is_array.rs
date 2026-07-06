@@ -1,6 +1,13 @@
 use crate::lib::Value;
 
 /// See lodash [isArray](https://lodash.com/docs/#isArray)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::is_array;
+/// # use serde_json::json;
+/// assert_eq!(is_array(&json!([1, 2, 3])), true);
+/// ```
 pub fn is_array(v: &Value) -> bool {
     v.is_array()
 }
@@ -16,7 +23,7 @@ pub fn is_array(v: &Value) -> bool {
 /// assert_eq!(is_array!(&json!("abc")), false);
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;

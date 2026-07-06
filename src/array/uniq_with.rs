@@ -3,6 +3,13 @@ use crate::lib::{json, Value};
 /// See lodash [uniqWith](https://lodash.com/docs/#uniqWith)
 ///
 /// `comparator` is invoked to compare elements for uniqueness
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::uniq_with;
+/// # use serde_json::json;
+/// assert_eq!(uniq_with(json!([1, 2, 3, 2]), |a, b| a == b), json!([1, 2, 3]));
+/// ```
 pub fn uniq_with(array: Value, comparator: fn(&Value, &Value) -> bool) -> Value {
     match array {
         Value::Array(vec) => {
@@ -31,7 +38,7 @@ pub fn uniq_with(array: Value, comparator: fn(&Value, &Value) -> bool) -> Value 
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -42,7 +49,7 @@ pub fn uniq_with(array: Value, comparator: fn(&Value, &Value) -> bool) -> Value 
 #[macro_export]
 macro_rules! uniq_with {
     () => {
-        json!([])
+        $crate::lib::json!([])
     };
     ($a:expr $(,)*) => {
         $crate::to_array($a)

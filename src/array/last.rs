@@ -1,6 +1,13 @@
 use crate::lib::{json, Value};
 
 /// See lodash [last](https://lodash.com/docs/#last)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::last;
+/// # use serde_json::json;
+/// assert_eq!(last(json!([1, 2, 3])), json!(3));
+/// ```
 pub fn last(v: Value) -> Value {
     match v {
         Value::Null => json!(null),
@@ -34,7 +41,7 @@ pub fn last(v: Value) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -55,7 +62,7 @@ pub fn last(v: Value) -> Value {
 #[macro_export]
 macro_rules! last {
     () => {
-        json!(null)
+        $crate::lib::json!(null)
     };
     ($a:expr $(,)*) => {
         $crate::last($a)

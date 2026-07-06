@@ -1,6 +1,13 @@
 use crate::lib::{json, Value};
 
 /// See lodash [stubObject](https://lodash.com/docs/#stubObject)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::stub_object;
+/// # use serde_json::json;
+/// assert_eq!(stub_object()(), json!({}));
+/// ```
 pub fn stub_object() -> Box<dyn Fn() -> Value> {
     Box::new(|| json!({}))
 }
@@ -24,7 +31,7 @@ pub fn stub_object() -> Box<dyn Fn() -> Value> {
 /// //);
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;

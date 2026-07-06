@@ -1,6 +1,13 @@
 use crate::lib::{Value};
 
 /// See lodash [indexOf](https://lodash.com/docs/#indexOf)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::index_of;
+/// # use serde_json::json;
+/// assert_eq!(index_of(json!([1, 2, 1, 2]), json!(2), 2), 3);
+/// ```
 pub fn index_of(array: Value, value: Value, from_index: usize) -> isize {
     match value {
         Value::Null | Value::Bool(_) | Value::Number(_) | Value::String(_) => match array {
@@ -39,7 +46,7 @@ pub fn index_of(array: Value, value: Value, from_index: usize) -> isize {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;

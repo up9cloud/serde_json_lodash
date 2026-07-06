@@ -3,6 +3,13 @@ use crate::lib::Value;
 /// See lodash [xorWith](https://lodash.com/docs/#xorWith)
 ///
 /// `comparator` is invoked to compare elements
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::xor_with;
+/// # use serde_json::json;
+/// assert_eq!(xor_with(json!([2, 1]), json!([2, 3]), |a, b| a == b), json!([1, 3]));
+/// ```
 pub fn xor_with(array: Value, other: Value, comparator: fn(&Value, &Value) -> bool) -> Value {
     let a = match array {
         Value::Array(v) => v,
@@ -39,7 +46,7 @@ pub fn xor_with(array: Value, other: Value, comparator: fn(&Value, &Value) -> bo
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -50,7 +57,7 @@ pub fn xor_with(array: Value, other: Value, comparator: fn(&Value, &Value) -> bo
 #[macro_export]
 macro_rules! xor_with {
     () => {
-        json!([])
+        $crate::lib::json!([])
     };
     ($a:expr $(,)*) => {
         $crate::to_array($a)

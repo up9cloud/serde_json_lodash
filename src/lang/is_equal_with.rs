@@ -3,6 +3,13 @@ use crate::lib::Value;
 /// See lodash [isEqualWith](https://lodash.com/docs/#isEqualWith)
 ///
 /// If `customizer` returns `None`, comparison falls back to [is_equal()](fn@crate::is_equal)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::is_equal_with;
+/// # use serde_json::json;
+/// assert_eq!(is_equal_with(&json!(1), &json!(2), |_, _| Some(true)), true);
+/// ```
 pub fn is_equal_with(a: &Value, b: &Value, customizer: fn(&Value, &Value) -> Option<bool>) -> bool {
     match customizer(a, b) {
         Some(result) => result,
@@ -27,7 +34,7 @@ pub fn is_equal_with(a: &Value, b: &Value, customizer: fn(&Value, &Value) -> Opt
 /// assert_eq!(is_equal_with!(&json!("Hello"), &json!("hello"), customizer), true);
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -43,7 +50,7 @@ macro_rules! is_equal_with {
         true
     };
     ($a:expr $(,)*) => {
-        $crate::is_equal($a, &serde_json::json!(null))
+        $crate::is_equal($a, &$crate::lib::json!(null))
     };
     ($a:expr, $b:expr $(,)*) => {
         $crate::is_equal($a, $b)

@@ -4,6 +4,13 @@ use crate::to_string_x;
 /// See lodash [invertBy](https://lodash.com/docs/#invertBy)
 ///
 /// `iteratee` transforms each value before it becomes the grouping key
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::invert_by;
+/// # use serde_json::json;
+/// assert_eq!(invert_by(json!({"a": 1}), |v| v.clone()), json!({"1": ["a"]}));
+/// ```
 pub fn invert_by(v: Value, iteratee: fn(&Value) -> Value) -> Value {
     let mut out: Map<String, Value> = Map::new();
     let pairs: Vec<(String, Value)> = match v {
@@ -40,7 +47,7 @@ pub fn invert_by(v: Value, iteratee: fn(&Value) -> Value) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -51,7 +58,7 @@ pub fn invert_by(v: Value, iteratee: fn(&Value) -> Value) -> Value {
 #[macro_export]
 macro_rules! invert_by {
     () => {
-        json!({})
+        $crate::lib::json!({})
     };
     ($a:expr $(,)*) => {
         $crate::invert_by($a, |v| v.clone())

@@ -23,6 +23,13 @@ fn deep_default(object: Value, source: Value) -> Value {
 }
 
 /// See lodash [defaultsDeep](https://lodash.com/docs/#defaultsDeep)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::defaults_deep;
+/// # use serde_json::json;
+/// assert_eq!(defaults_deep(json!({ "a": { "b": 2 } }), json!({ "a": { "b": 3, "c": 3 } })), json!({ "a": { "b": 2, "c": 3 } }));
+/// ```
 pub fn defaults_deep(object: Value, source: Value) -> Value {
     deep_default(object, source)
 }
@@ -40,7 +47,7 @@ pub fn defaults_deep(object: Value, source: Value) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -51,7 +58,7 @@ pub fn defaults_deep(object: Value, source: Value) -> Value {
 #[macro_export]
 macro_rules! defaults_deep {
     () => {
-        json!({})
+        $crate::lib::json!({})
     };
     ($a:expr $(,)*) => {
         $crate::to_plain_object($a)

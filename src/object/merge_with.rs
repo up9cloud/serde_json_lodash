@@ -6,6 +6,13 @@ use crate::merge;
 /// Like [merge()](fn@crate::merge), but `customizer(obj_value, src_value)` is
 /// consulted for each top level key; returning `None` falls back to the
 /// default recursive merge
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::merge_with;
+/// # use serde_json::json;
+/// assert_eq!(merge_with(json!({"a": 1}), json!({"a": 2}), |_o, _s| Some(json!(99))), json!({"a": 99}));
+/// ```
 pub fn merge_with(
     object: Value,
     source: Value,
@@ -51,7 +58,7 @@ pub fn merge_with(
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -63,7 +70,7 @@ pub fn merge_with(
 #[macro_export]
 macro_rules! merge_with {
     () => {
-        json!(null)
+        $crate::lib::json!(null)
     };
     ($a:expr $(,)*) => {
         $a

@@ -1,6 +1,13 @@
 use crate::lib::Value;
 
 /// See lodash [isLength](https://lodash.com/docs/#isLength)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::is_length;
+/// # use serde_json::json;
+/// assert_eq!(is_length(&json!(3)), true);
+/// ```
 pub fn is_length(v: &Value) -> bool {
     match v {
         Value::Number(n) => match n.as_u64() {
@@ -23,7 +30,7 @@ pub fn is_length(v: &Value) -> bool {
 /// assert_eq!(is_length!(&json!("3")), false);
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;

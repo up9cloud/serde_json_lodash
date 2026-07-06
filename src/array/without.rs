@@ -3,6 +3,13 @@ use crate::lib::{json, Value};
 /// See lodash [without](https://lodash.com/docs/#without)
 ///
 /// `values` is an array of elements to exclude
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::without;
+/// # use serde_json::json;
+/// assert_eq!(without(json!([2, 1, 2, 3]), json!([1, 2])), json!([3]));
+/// ```
 pub fn without(array: Value, values: Value) -> Value {
     match array {
         Value::Array(vec) => {
@@ -29,7 +36,7 @@ pub fn without(array: Value, values: Value) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -41,7 +48,7 @@ pub fn without(array: Value, values: Value) -> Value {
 #[macro_export]
 macro_rules! without {
     () => {
-        json!([])
+        $crate::lib::json!([])
     };
     ($a:expr $(,)*) => {
         $crate::to_array($a)

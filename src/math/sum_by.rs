@@ -4,6 +4,13 @@ use crate::math::sum::sum_values;
 /// See lodash [sumBy](https://lodash.com/docs/#sumBy)
 ///
 /// `iteratee` maps each element to the value to be summed
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::sum_by;
+/// # use serde_json::json;
+/// assert_eq!(sum_by(json!([1, 2, 3]), |v| v.clone()), json!(6));
+/// ```
 pub fn sum_by(array: Value, iteratee: fn(&Value) -> Value) -> Value {
     match array {
         Value::Array(vec) => sum_values(vec.iter().map(iteratee).collect()),
@@ -25,7 +32,7 @@ pub fn sum_by(array: Value, iteratee: fn(&Value) -> Value) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -36,7 +43,7 @@ pub fn sum_by(array: Value, iteratee: fn(&Value) -> Value) -> Value {
 #[macro_export]
 macro_rules! sum_by {
     () => {
-        json!(0)
+        $crate::lib::json!(0)
     };
     ($a:expr $(,)*) => {
         $crate::sum($a)

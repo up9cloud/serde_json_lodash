@@ -2,6 +2,13 @@ use crate::lib::Value;
 use crate::internal::compare_values;
 
 /// See lodash [gte](https://lodash.com/docs/#gte)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::gte;
+/// # use serde_json::json;
+/// assert_eq!(gte(&json!(3), &json!(1)), true);
+/// ```
 pub fn gte(a: &Value, b: &Value) -> bool {
     matches!(
         compare_values(a, b),
@@ -21,7 +28,7 @@ pub fn gte(a: &Value, b: &Value) -> bool {
 /// assert_eq!(gte!(&json!(1), &json!(3)), false);
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;

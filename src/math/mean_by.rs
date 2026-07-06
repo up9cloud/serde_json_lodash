@@ -4,6 +4,13 @@ use crate::math::mean::mean_values;
 /// See lodash [meanBy](https://lodash.com/docs/#meanBy)
 ///
 /// `iteratee` maps each element to the value to be averaged
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::mean_by;
+/// # use serde_json::json;
+/// assert_eq!(mean_by(json!([2, 4]), |v| v.clone()), json!(3));
+/// ```
 pub fn mean_by(array: Value, iteratee: fn(&Value) -> Value) -> Value {
     match array {
         Value::Array(vec) => mean_values(vec.iter().map(iteratee).collect()),
@@ -25,7 +32,7 @@ pub fn mean_by(array: Value, iteratee: fn(&Value) -> Value) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;

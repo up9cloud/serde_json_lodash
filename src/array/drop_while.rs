@@ -3,6 +3,13 @@ use crate::lib::{json, Value};
 /// See lodash [dropWhile](https://lodash.com/docs/#dropWhile)
 ///
 /// Drops elements from the start while `predicate` returns `true`
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::drop_while;
+/// # use serde_json::json;
+/// assert_eq!(drop_while(json!([1, 2, 3, 4]), |n| n.as_i64().unwrap() < 3), json!([3, 4]));
+/// ```
 pub fn drop_while(array: Value, predicate: fn(&Value) -> bool) -> Value {
     match array {
         Value::Array(vec) => Value::Array(vec.into_iter().skip_while(predicate).collect()),
@@ -23,7 +30,7 @@ pub fn drop_while(array: Value, predicate: fn(&Value) -> bool) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -35,7 +42,7 @@ pub fn drop_while(array: Value, predicate: fn(&Value) -> bool) -> Value {
 #[macro_export]
 macro_rules! drop_while {
     () => {
-        json!([])
+        $crate::lib::json!([])
     };
     ($a:expr $(,)*) => {
         $crate::to_array($a)

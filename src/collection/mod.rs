@@ -3,12 +3,10 @@ mod count_by;
 pub use count_by::*;
 mod each;
 pub use each::*;
-#[doc(hidden)]
-pub use each as for_each;
+build_link!(for_each, each);
 mod each_right;
 pub use each_right::*;
-#[doc(hidden)]
-pub use each_right as for_each_right;
+build_link!(for_each_right, each_right);
 mod every;
 pub use every::*;
 mod filter;
@@ -31,8 +29,7 @@ pub use includes::*;
 pub fn invoke_map() {
     todo!()
 }
-#[doc(hidden)]
-pub use invoke_map as invokeMap;
+build_link_fn!(invokeMap, invoke_map);
 mod key_by;
 pub use key_by::*;
 mod map;

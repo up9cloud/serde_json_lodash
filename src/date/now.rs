@@ -3,6 +3,14 @@ use crate::lib::{json, Value};
 /// See lodash [now](https://lodash.com/docs/#now)
 ///
 /// Returns the number of milliseconds that have elapsed since the Unix epoch
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::now;
+/// # use serde_json::json;
+/// let t = now();
+/// assert!(t.as_u64().unwrap() > 0);
+/// ```
 pub fn now() -> Value {
     let ms = std::time::SystemTime::now()
         .duration_since(std::time::UNIX_EPOCH)
@@ -22,7 +30,7 @@ pub fn now() -> Value {
 /// assert!(t.as_u64().unwrap() > 0);
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;

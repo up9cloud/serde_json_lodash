@@ -3,6 +3,13 @@ use crate::lib::{json, Value};
 /// See lodash [takeWhile](https://lodash.com/docs/#takeWhile)
 ///
 /// Takes elements from the start while `predicate` returns `true`
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::take_while;
+/// # use serde_json::json;
+/// assert_eq!(take_while(json!([1, 2, 3, 4]), |n| n.as_i64().unwrap() < 3), json!([1, 2]));
+/// ```
 pub fn take_while(array: Value, predicate: fn(&Value) -> bool) -> Value {
     match array {
         Value::Array(vec) => Value::Array(vec.into_iter().take_while(predicate).collect()),
@@ -23,7 +30,7 @@ pub fn take_while(array: Value, predicate: fn(&Value) -> bool) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -35,10 +42,10 @@ pub fn take_while(array: Value, predicate: fn(&Value) -> bool) -> Value {
 #[macro_export]
 macro_rules! take_while {
     () => {
-        json!([])
+        $crate::lib::json!([])
     };
     ($a:expr $(,)*) => {
-        json!([])
+        $crate::lib::json!([])
     };
     ($a:expr, $b:expr $(,)*) => {
         $crate::take_while($a, $b)

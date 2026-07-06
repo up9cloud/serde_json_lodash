@@ -4,6 +4,13 @@ use crate::internal::value_to_option_number;
 /// See lodash [minBy](https://lodash.com/docs/#minBy)
 ///
 /// `iteratee` maps each element to the value used for comparison
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::min_by;
+/// # use serde_json::json;
+/// assert_eq!(min_by(json!([3, 1, 2]), |v| v.clone()), json!(1));
+/// ```
 pub fn min_by(array: Value, iteratee: fn(&Value) -> Value) -> Value {
     match array {
         Value::Array(vec) => {
@@ -36,7 +43,7 @@ pub fn min_by(array: Value, iteratee: fn(&Value) -> Value) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -48,7 +55,7 @@ pub fn min_by(array: Value, iteratee: fn(&Value) -> Value) -> Value {
 #[macro_export]
 macro_rules! min_by {
     () => {
-        json!(null)
+        $crate::lib::json!(null)
     };
     ($a:expr $(,)*) => {
         $crate::min($a)

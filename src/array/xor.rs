@@ -8,6 +8,13 @@ fn count_eq(all: &[Value], v: &Value) -> usize {
 ///
 /// Returns the symmetric difference: values present in exactly one of the
 /// two arrays
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::xor;
+/// # use serde_json::json;
+/// assert_eq!(xor(json!([2, 1]), json!([2, 3])), json!([1, 3]));
+/// ```
 pub fn xor(array: Value, other: Value) -> Value {
     let a = match array {
         Value::Array(v) => v,
@@ -41,7 +48,7 @@ pub fn xor(array: Value, other: Value) -> Value {
 /// assert_eq!(xor!(json!([2, 1]), json!([2, 3])), json!([1, 3]));
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -53,7 +60,7 @@ pub fn xor(array: Value, other: Value) -> Value {
 #[macro_export]
 macro_rules! xor {
     () => {
-        json!([])
+        $crate::lib::json!([])
     };
     ($a:expr $(,)*) => {
         $crate::uniq($a)

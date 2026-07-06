@@ -3,6 +3,13 @@ use crate::lib::{json, Value};
 /// See lodash [keys](https://lodash.com/docs/#keys)
 ///
 /// For arrays (and strings) the indexes are returned as string keys
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::keys;
+/// # use serde_json::json;
+/// assert_eq!(keys(json!({"a": 1, "b": 2})), json!(["a", "b"]));
+/// ```
 pub fn keys(v: Value) -> Value {
     match v {
         Value::Object(o) => Value::Array(o.keys().map(|k| json!(k)).collect()),
@@ -27,7 +34,7 @@ pub fn keys(v: Value) -> Value {
 /// assert_eq!(keys!(json!("hi")), json!(["0", "1"]));
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -39,7 +46,7 @@ pub fn keys(v: Value) -> Value {
 #[macro_export]
 macro_rules! keys {
     () => {
-        json!([])
+        $crate::lib::json!([])
     };
     ($a:expr $(,)*) => {
         $crate::keys($a)

@@ -1,6 +1,13 @@
 use crate::lib::Value;
 
 /// See lodash [isPlainObject](https://lodash.com/docs/#isPlainObject)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::is_plain_object;
+/// # use serde_json::json;
+/// assert_eq!(is_plain_object(&json!([1, 2, 3])), false);
+/// ```
 pub fn is_plain_object(v: &Value) -> bool {
     v.is_object()
 }
@@ -16,7 +23,7 @@ pub fn is_plain_object(v: &Value) -> bool {
 /// assert_eq!(is_plain_object!(&json!({ "x": 0, "y": 0 })), true);
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;

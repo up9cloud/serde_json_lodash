@@ -3,6 +3,13 @@ use crate::lib::{json, Value};
 /// See lodash [differenceWith](https://lodash.com/docs/#differenceWith)
 ///
 /// `comparator` is invoked to compare elements
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::difference_with;
+/// # use serde_json::json;
+/// assert_eq!(difference_with(json!([1, 2, 3]), json!([2, 3]), |a, b| a == b), json!([1]));
+/// ```
 pub fn difference_with(
     array: Value,
     other: Value,
@@ -36,7 +43,7 @@ pub fn difference_with(
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -47,7 +54,7 @@ pub fn difference_with(
 #[macro_export]
 macro_rules! difference_with {
     () => {
-        json!([])
+        $crate::lib::json!([])
     };
     ($a:expr $(,)*) => {
         $crate::to_array($a)

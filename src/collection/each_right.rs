@@ -4,6 +4,13 @@ use crate::collection::collect::collection_values;
 /// See lodash [forEachRight](https://lodash.com/docs/#forEachRight)
 ///
 /// Like [each()](fn@crate::each) but iterates from the end
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::each_right;
+/// # use serde_json::json;
+/// assert_eq!(each_right(json!([1, 2, 3]), |_| true), json!([1, 2, 3]));
+/// ```
 pub fn each_right(collection: Value, iteratee: fn(&Value) -> bool) -> Value {
     for v in collection_values(&collection).iter().rev() {
         if !iteratee(v) {
@@ -24,7 +31,7 @@ pub fn each_right(collection: Value, iteratee: fn(&Value) -> bool) -> Value {
 /// assert_eq!(each_right!(array.clone(), |n| { println!("{}", n); true }), array);
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -35,7 +42,7 @@ pub fn each_right(collection: Value, iteratee: fn(&Value) -> bool) -> Value {
 #[macro_export]
 macro_rules! each_right {
     () => {
-        serde_json::json!(null)
+        $crate::lib::json!(null)
     };
     ($a:expr $(,)*) => {
         $a

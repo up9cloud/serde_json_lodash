@@ -3,6 +3,13 @@ use crate::lib::Value;
 /// See lodash [xorBy](https://lodash.com/docs/#xorBy)
 ///
 /// `iteratee` maps each element to the value used for comparison
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::xor_by;
+/// # use serde_json::json;
+/// assert_eq!(xor_by(json!([2.1, 1.2]), json!([2.3, 3.4]), |n| json!(n.as_f64().unwrap().floor())), json!([1.2, 3.4]));
+/// ```
 pub fn xor_by(array: Value, other: Value, iteratee: fn(&Value) -> Value) -> Value {
     let a = match array {
         Value::Array(v) => v,
@@ -44,7 +51,7 @@ pub fn xor_by(array: Value, other: Value, iteratee: fn(&Value) -> Value) -> Valu
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -55,7 +62,7 @@ pub fn xor_by(array: Value, other: Value, iteratee: fn(&Value) -> Value) -> Valu
 #[macro_export]
 macro_rules! xor_by {
     () => {
-        json!([])
+        $crate::lib::json!([])
     };
     ($a:expr $(,)*) => {
         $crate::uniq($a)

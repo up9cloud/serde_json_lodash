@@ -3,6 +3,14 @@ use crate::internal::{value_nan, value_to_option_number, vec_value_to_option_num
 use crate::{to_string_x, json_array_to_string_x};
 
 /// `x_`/`_x` helper for [add()]: takes a primitive argument and returns a primitive value.
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::x_add_x;
+/// # use serde_json::json;
+/// # use serde_json::Number;
+/// assert_eq!(x_add_x(Number::from(6), Number::from(4)), Number::from(10));
+/// ```
 pub fn x_add_x(n: Number, n2: Number) -> Number {
     if n.is_u64() {
         let inner_n = n.as_u64().unwrap();
@@ -60,6 +68,13 @@ fn value_to_value_number(value: Value) -> Value {
 }
 
 /// See lodash [add](https://lodash.com/docs/#add)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::add;
+/// # use serde_json::json;
+/// assert_eq!(add(json!(6), json!(4)), json!(10));
+/// ```
 pub fn add(augend: Value, addend: Value) -> Value {
     match augend {
         Value::Null => match addend {
@@ -179,7 +194,7 @@ pub fn add(augend: Value, addend: Value) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -188,7 +203,7 @@ pub fn add(augend: Value, addend: Value) -> Value {
 #[macro_export]
 macro_rules! x_add_x {
     () => {
-        Number::from(0)
+        $crate::lib::Number::from(0)
     };
     ($a:expr $(,)*) => {
         $a
@@ -213,7 +228,7 @@ macro_rules! x_add_x {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -251,7 +266,7 @@ macro_rules! x_add_x {
 #[macro_export]
 macro_rules! add {
     () => {
-        json!(0)
+        $crate::lib::json!(0)
     };
     ($a:expr $(,)*) => {
         $a

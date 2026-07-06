@@ -3,6 +3,13 @@ use crate::lib::Value;
 /// See lodash [forOwnRight](https://lodash.com/docs/#forOwnRight)
 ///
 /// Like [for_own()](fn@crate::for_own) but iterates in reverse key order
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::for_own_right;
+/// # use serde_json::json;
+/// assert_eq!(for_own_right(json!({"a": 1, "b": 2}), |_v, _k| true), json!({"a": 1, "b": 2}));
+/// ```
 pub fn for_own_right(object: Value, iteratee: fn(&Value, &str) -> bool) -> Value {
     if let Value::Object(o) = &object {
         for (k, v) in o.iter().rev() {
@@ -24,7 +31,7 @@ pub fn for_own_right(object: Value, iteratee: fn(&Value, &str) -> bool) -> Value
 /// for_own_right!(json!({ "a": 1, "b": 2 }), |_v, k| { println!("{}", k); true });
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -36,7 +43,7 @@ pub fn for_own_right(object: Value, iteratee: fn(&Value, &str) -> bool) -> Value
 #[macro_export]
 macro_rules! for_own_right {
     () => {
-        serde_json::json!(null)
+        $crate::lib::json!(null)
     };
     ($a:expr $(,)*) => {
         $a

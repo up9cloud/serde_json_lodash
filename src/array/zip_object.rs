@@ -4,6 +4,13 @@ use crate::to_string_x;
 /// See lodash [zipObject](https://lodash.com/docs/#zipObject)
 ///
 /// Builds an object from `keys` and `values` arrays
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::zip_object;
+/// # use serde_json::json;
+/// assert_eq!(zip_object(json!(["a", "b"]), json!([1, 2])), json!({ "a": 1, "b": 2 }));
+/// ```
 pub fn zip_object(keys: Value, values: Value) -> Value {
     let ks = match keys {
         Value::Array(v) => v,
@@ -33,7 +40,7 @@ pub fn zip_object(keys: Value, values: Value) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -44,10 +51,10 @@ pub fn zip_object(keys: Value, values: Value) -> Value {
 #[macro_export]
 macro_rules! zip_object {
     () => {
-        json!({})
+        $crate::lib::json!({})
     };
     ($a:expr $(,)*) => {
-        $crate::zip_object($a, serde_json::json!([]))
+        $crate::zip_object($a, $crate::lib::json!([]))
     };
     ($a:expr, $b:expr $(,)*) => {
         $crate::zip_object($a, $b)

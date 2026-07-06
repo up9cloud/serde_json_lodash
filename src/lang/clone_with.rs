@@ -3,6 +3,13 @@ use crate::lib::Value;
 /// See lodash [cloneWith](https://lodash.com/docs/#cloneWith)
 ///
 /// If `customizer` returns `None` the value is cloned as [clone()](fn@crate::clone) would
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::clone_with;
+/// # use serde_json::json;
+/// assert_eq!(clone_with(&json!([1]), |_| None), json!([1]));
+/// ```
 pub fn clone_with(v: &Value, customizer: fn(&Value) -> Option<Value>) -> Value {
     match customizer(v) {
         Some(result) => result,
@@ -25,7 +32,7 @@ pub fn clone_with(v: &Value, customizer: fn(&Value) -> Option<Value>) -> Value {
 /// assert_eq!(clone_with!(&json!(1), customizer), json!(1));
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -36,7 +43,7 @@ pub fn clone_with(v: &Value, customizer: fn(&Value) -> Option<Value>) -> Value {
 #[macro_export]
 macro_rules! clone_with {
     () => {
-        json!(null)
+        $crate::lib::json!(null)
     };
     ($a:expr $(,)*) => {
         $crate::clone($a)

@@ -4,6 +4,13 @@ use crate::{get, set};
 /// See lodash [update](https://lodash.com/docs/#update)
 ///
 /// Updates the value at `path` using the result of `updater(current_value)`
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::update;
+/// # use serde_json::json;
+/// assert_eq!(update(json!({}), json!("a.b"), |_| json!(1)), json!({"a": {"b": 1}}));
+/// ```
 pub fn update(object: Value, path: Value, updater: fn(Value) -> Value) -> Value {
     let current = get(object.clone(), path.clone(), Value::Null);
     set(object, path, updater(current))
@@ -23,7 +30,7 @@ pub fn update(object: Value, path: Value, updater: fn(Value) -> Value) -> Value 
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -38,7 +45,7 @@ pub fn update(object: Value, path: Value, updater: fn(Value) -> Value) -> Value 
 #[macro_export]
 macro_rules! update {
     () => {
-        serde_json::json!(null)
+        $crate::lib::json!(null)
     };
     ($a:expr $(,)*) => {
         $a

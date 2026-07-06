@@ -2,6 +2,13 @@ use crate::lib::{json, Value};
 use crate::internal;
 
 /// `x_` helper for [words()]: takes a primitive argument instead of a [`Value`](crate::lib::Value).
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::x_words;
+/// # use serde_json::json;
+/// assert_eq!(x_words("fred, barney, & pebbles"), json!(["fred", "barney", "pebbles"]));
+/// ```
 pub fn x_words(s: &str) -> Value {
     json!(internal::words_vec(s))
 }
@@ -9,6 +16,13 @@ pub fn x_words(s: &str) -> Value {
 ///
 /// *Note:* the `[pattern]` parameter is not supported, only the default
 /// lodash word splitting logic is implemented
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::words;
+/// # use serde_json::json;
+/// assert_eq!(words(json!("fred, barney, & pebbles")), json!(["fred", "barney", "pebbles"]));
+/// ```
 pub fn words(v: Value) -> Value {
     x_words(&crate::to_string_x(v))
 }
@@ -26,7 +40,7 @@ pub fn words(v: Value) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -41,7 +55,7 @@ pub fn words(v: Value) -> Value {
 #[macro_export]
 macro_rules! words {
     () => {
-        json!([])
+        $crate::lib::json!([])
     };
     ($a:expr $(,)*) => {
         $crate::words($a)
@@ -52,9 +66,16 @@ macro_rules! words {
 }
 /// Based on [x_words()]
 #[macro_export]
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(x_words!("fred, barney, & pebbles"), json!(["fred", "barney", "pebbles"]));
+/// ```
 macro_rules! x_words {
     () => {
-        json!([])
+        $crate::lib::json!([])
     };
     ($a:expr $(,)*) => {
         $crate::x_words($a)

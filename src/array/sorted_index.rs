@@ -35,6 +35,13 @@ pub(crate) fn sorted_index_impl(
 ///
 /// Returns the lowest index at which `value` should be inserted to keep the
 /// array sorted
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::sorted_index;
+/// # use serde_json::json;
+/// assert_eq!(sorted_index(json!([30, 50]), json!(40)), 1);
+/// ```
 pub fn sorted_index(array: Value, value: Value) -> usize {
     sorted_index_impl(&array, &value, false, |v| v.clone())
 }
@@ -49,7 +56,7 @@ pub fn sorted_index(array: Value, value: Value) -> usize {
 /// assert_eq!(sorted_index!(json!([30, 50]), json!(40)), 1);
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;

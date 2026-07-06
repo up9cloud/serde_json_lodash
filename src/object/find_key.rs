@@ -3,6 +3,13 @@ use crate::lib::{json, Value};
 /// See lodash [findKey](https://lodash.com/docs/#findKey)
 ///
 /// Returns the key of the first value matching `predicate`, else `Null`
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::find_key;
+/// # use serde_json::json;
+/// assert_eq!(find_key(&json!({"a": 1, "b": 2}), |v| v == &json!(2)), json!("b"));
+/// ```
 pub fn find_key(object: &Value, predicate: fn(&Value) -> bool) -> Value {
     if let Value::Object(o) = object {
         for (k, v) in o {
@@ -31,7 +38,7 @@ pub fn find_key(object: &Value, predicate: fn(&Value) -> bool) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -43,10 +50,10 @@ pub fn find_key(object: &Value, predicate: fn(&Value) -> bool) -> Value {
 #[macro_export]
 macro_rules! find_key {
     () => {
-        json!(null)
+        $crate::lib::json!(null)
     };
     ($a:expr $(,)*) => {
-        json!(null)
+        $crate::lib::json!(null)
     };
     ($a:expr, $b:expr $(,)*) => {
         $crate::find_key($a, $b)

@@ -2,6 +2,13 @@ use crate::lib::{json, Value};
 use crate::to_path_x;
 
 /// See lodash [get](https://lodash.com/docs/#get)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::get;
+/// # use serde_json::json;
+/// assert_eq!(get(json!({"a": {"b": 2}}), json!("a.b"), json!(null)), json!(2));
+/// ```
 pub fn get(object: Value, path: Value, default: Value) -> Value {
     let p_vec = to_path_x(path);
     if p_vec.is_empty() {
@@ -58,7 +65,7 @@ pub fn get(object: Value, path: Value, default: Value) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;

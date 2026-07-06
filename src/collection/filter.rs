@@ -2,6 +2,13 @@ use crate::lib::Value;
 use crate::collection::collect::collection_values;
 
 /// See lodash [filter](https://lodash.com/docs/#filter)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::filter;
+/// # use serde_json::json;
+/// assert_eq!(filter(json!([1, 2, 3, 4]), |n| n.as_i64().unwrap() % 2 == 1), json!([1, 3]));
+/// ```
 pub fn filter(collection: Value, predicate: fn(&Value) -> bool) -> Value {
     Value::Array(
         collection_values(&collection)
@@ -24,7 +31,7 @@ pub fn filter(collection: Value, predicate: fn(&Value) -> bool) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -36,7 +43,7 @@ pub fn filter(collection: Value, predicate: fn(&Value) -> bool) -> Value {
 #[macro_export]
 macro_rules! filter {
     () => {
-        json!([])
+        $crate::lib::json!([])
     };
     ($a:expr $(,)*) => {
         $crate::map($a, |v| v.clone())

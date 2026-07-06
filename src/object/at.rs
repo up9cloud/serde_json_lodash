@@ -4,6 +4,13 @@ use crate::get;
 /// See lodash [at](https://lodash.com/docs/#at)
 ///
 /// `paths` is an array of path strings; returns the value at each path
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::at;
+/// # use serde_json::json;
+/// assert_eq!(at(json!({"a": 1}), json!(["x"])), json!([null]));
+/// ```
 pub fn at(object: Value, paths: Value) -> Value {
     match paths {
         Value::Array(keys) => Value::Array(
@@ -29,7 +36,7 @@ pub fn at(object: Value, paths: Value) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -41,10 +48,10 @@ pub fn at(object: Value, paths: Value) -> Value {
 #[macro_export]
 macro_rules! at {
     () => {
-        json!([])
+        $crate::lib::json!([])
     };
     ($a:expr $(,)*) => {
-        json!([])
+        $crate::lib::json!([])
     };
     ($a:expr, $b:expr $(,)*) => {
         $crate::at($a, $b)

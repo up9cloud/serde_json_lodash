@@ -4,6 +4,13 @@ use crate::collection::collect::collection_values;
 /// See lodash [reject](https://lodash.com/docs/#reject)
 ///
 /// The opposite of [filter()](fn@crate::filter)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::reject;
+/// # use serde_json::json;
+/// assert_eq!(reject(json!([1, 2, 3, 4]), |n| n.as_i64().unwrap() % 2 == 1), json!([2, 4]));
+/// ```
 pub fn reject(collection: Value, predicate: fn(&Value) -> bool) -> Value {
     Value::Array(
         collection_values(&collection)
@@ -26,7 +33,7 @@ pub fn reject(collection: Value, predicate: fn(&Value) -> bool) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -37,10 +44,10 @@ pub fn reject(collection: Value, predicate: fn(&Value) -> bool) -> Value {
 #[macro_export]
 macro_rules! reject {
     () => {
-        json!([])
+        $crate::lib::json!([])
     };
     ($a:expr $(,)*) => {
-        json!([])
+        $crate::lib::json!([])
     };
     ($a:expr, $b:expr $(,)*) => {
         $crate::reject($a, $b)

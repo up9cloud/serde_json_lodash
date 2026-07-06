@@ -2,6 +2,13 @@ use crate::lib::Value;
 use crate::collection::collect::collection_values;
 
 /// See lodash [every](https://lodash.com/docs/#every)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::every;
+/// # use serde_json::json;
+/// assert_eq!(every(json!([1, 2, 3]), |n| n.as_i64().unwrap() > 0), true);
+/// ```
 pub fn every(collection: Value, predicate: fn(&Value) -> bool) -> bool {
     collection_values(&collection).iter().all(predicate)
 }
@@ -23,7 +30,7 @@ pub fn every(collection: Value, predicate: fn(&Value) -> bool) -> bool {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;

@@ -4,6 +4,13 @@ use crate::lib::{json, Value};
 ///
 /// `customizer(obj_value, src_value)` produces the assigned value; returning
 /// `None` falls back to the source value
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::assign_with;
+/// # use serde_json::json;
+/// assert_eq!(assign_with(json!({"a": 1}), json!({"b": 2}), |_o, _s| None), json!({"a": 1, "b": 2}));
+/// ```
 pub fn assign_with(
     object: Value,
     source: Value,
@@ -41,7 +48,7 @@ pub fn assign_with(
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -53,7 +60,7 @@ pub fn assign_with(
 #[macro_export]
 macro_rules! assign_with {
     () => {
-        json!({})
+        $crate::lib::json!({})
     };
     ($a:expr $(,)*) => {
         $crate::to_plain_object($a)

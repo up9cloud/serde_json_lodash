@@ -4,6 +4,13 @@ use crate::internal::value_to_option_number;
 /// See lodash [min](https://lodash.com/docs/#min)
 ///
 /// Returns `Value::Null` for an empty array (js `undefined`)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::min;
+/// # use serde_json::json;
+/// assert_eq!(min(json!([4, 2, 8, 6])), json!(2));
+/// ```
 pub fn min(array: Value) -> Value {
     match array {
         Value::Array(vec) => vec
@@ -40,7 +47,7 @@ pub fn min(array: Value) -> Value {
 /// assert_eq!(min!(json!([])), json!(null));
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -51,7 +58,7 @@ pub fn min(array: Value) -> Value {
 #[macro_export]
 macro_rules! min {
     () => {
-        json!(null)
+        $crate::lib::json!(null)
     };
     ($a:expr $(,)*) => {
         $crate::min($a)

@@ -2,6 +2,14 @@ use crate::lib::{Value, Number};
 use crate::internal::{number_nan, value_nan, value_to_option_number};
 
 /// `x_`/`_x` helper for [ceil()]: takes a primitive argument and returns a primitive value.
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::x_ceil_x;
+/// # use serde_json::json;
+/// # use serde_json::Number;
+/// assert_eq!(x_ceil_x(Number::from_f64(6.004).unwrap(), 2), Number::from_f64(6.01).unwrap());
+/// ```
 pub fn x_ceil_x(n: Number, precision: isize) -> Number {
     if n.is_u64() {
         if precision < 0 {
@@ -45,10 +53,25 @@ pub fn x_ceil_x(n: Number, precision: isize) -> Number {
     Number::from_f64(result).unwrap_or_else(number_nan)
 }
 /// `x_` helper for [ceil()]: takes a primitive argument instead of a [`Value`](crate::lib::Value).
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::x_ceil;
+/// # use serde_json::json;
+/// # use serde_json::Number;
+/// assert_eq!(x_ceil(Number::from_f64(4.006).unwrap(), 0), json!(5));
+/// ```
 pub fn x_ceil(number: Number, precision: isize) -> Value {
     Value::Number(x_ceil_x(number, precision))
 }
 /// See lodash [ceil](https://lodash.com/docs/#ceil)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::ceil;
+/// # use serde_json::json;
+/// assert_eq!(ceil(json!(6.004), 2), json!(6.01));
+/// ```
 pub fn ceil(number: Value, precision: isize) -> Value {
     match value_to_option_number(number) {
         Some(n) => x_ceil(n, precision),
@@ -77,7 +100,7 @@ pub fn ceil(number: Value, precision: isize) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -123,7 +146,7 @@ macro_rules! x_ceil_x {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -156,5 +179,30 @@ macro_rules! ceil {
     };
     ($a:expr, $b:expr, $($rest:tt)*) => {
         $crate::ceil($a, $b)
+    };
+}
+
+/// Based on [x_ceil()]
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// # use serde_json::Number;
+/// assert_eq!(x_ceil!(Number::from_f64(4.006).unwrap()), json!(5));
+/// ```
+#[macro_export]
+macro_rules! x_ceil {
+    () => {
+        $crate::internal::value_nan()
+    };
+    ($a:expr $(,)*) => {
+        $crate::x_ceil($a, 0)
+    };
+    ($a:expr, $b:expr $(,)*) => {
+        $crate::x_ceil($a, $b)
+    };
+    ($a:expr, $b:expr, $($rest:tt)*) => {
+        $crate::x_ceil($a, $b)
     };
 }

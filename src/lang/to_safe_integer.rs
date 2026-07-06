@@ -1,6 +1,13 @@
 use crate::lib::{json, Value};
 
 /// `_x` helper for [to_safe_integer()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::to_safe_integer_x;
+/// # use serde_json::json;
+/// assert_eq!(to_safe_integer_x(json!(3.2)), 3);
+/// ```
 pub fn to_safe_integer_x(v: Value) -> isize {
     match v {
         Value::Null => 0,
@@ -37,6 +44,13 @@ pub fn to_safe_integer_x(v: Value) -> isize {
     }
 }
 /// See lodash [toSafeInteger](https://lodash.com/docs/#toSafeInteger)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::to_safe_integer;
+/// # use serde_json::json;
+/// assert_eq!(to_safe_integer(json!(3.2)), json!(3));
+/// ```
 pub fn to_safe_integer(v: Value) -> Value {
     json!(to_safe_integer_x(v))
 }
@@ -67,7 +81,7 @@ pub fn to_safe_integer(v: Value) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -112,7 +126,7 @@ macro_rules! to_safe_integer_x {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -122,7 +136,7 @@ macro_rules! to_safe_integer_x {
 #[macro_export]
 macro_rules! to_safe_integer {
     () => {
-        json!(0)
+        $crate::lib::json!(0)
     };
     ($a:expr $(,)*) => {
         $crate::to_safe_integer($a)

@@ -2,6 +2,13 @@ use crate::lib::{json, Value};
 use crate::internal::{type_name};
 
 /// `x_`/`_x` helper for [capitalize()]: takes a primitive argument and returns a primitive value.
+///
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::x_capitalize_x;
+/// assert_eq!(x_capitalize_x("FRED"), "Fred".to_owned());
+/// ```
 pub fn x_capitalize_x(s: &str) -> String {
     if s.is_empty() {
         s.into()
@@ -14,10 +21,26 @@ pub fn x_capitalize_x(s: &str) -> String {
     }
 }
 /// `x_` helper for [capitalize()]: takes a primitive argument instead of a [`Value`](crate::lib::Value).
+///
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::x_capitalize;
+/// # use serde_json::json;
+/// assert_eq!(x_capitalize("FRED"), json!("Fred"));
+/// ```
 pub fn x_capitalize(s: &str) -> Value {
     json!(x_capitalize_x(s))
 }
 /// `_x` helper for [capitalize()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::capitalize_x;
+/// # use serde_json::json;
+/// assert_eq!(capitalize_x(json!("FRED")), "Fred".to_owned());
+/// ```
 pub fn capitalize_x(v: Value) -> String {
     match v {
         Value::Null => "".into(),
@@ -54,6 +77,14 @@ pub fn capitalize_x(v: Value) -> String {
     }
 }
 /// See lodash [capitalize](https://lodash.com/docs/#capitalize)
+///
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::capitalize;
+/// # use serde_json::json;
+/// assert_eq!(capitalize(json!("FRED")), json!("Fred"));
+/// ```
 pub fn capitalize(v: Value) -> Value {
     Value::String(capitalize_x(v))
 }
@@ -71,7 +102,7 @@ pub fn capitalize(v: Value) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -91,10 +122,18 @@ macro_rules! x_capitalize_x {
     };
 }
 /// Based on [x_capitalize()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(x_capitalize!("FRED"), json!("Fred"));
+/// ```
 #[macro_export]
 macro_rules! x_capitalize {
     () => {
-        json!("")
+        $crate::lib::json!("")
     };
     ($a:expr $(,)*) => {
         $crate::x_capitalize($a)
@@ -104,6 +143,14 @@ macro_rules! x_capitalize {
     };
 }
 /// Based on [capitalize_x()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(capitalize_x!(json!("FRED")), "Fred".to_owned());
+/// ```
 #[macro_export]
 macro_rules! capitalize_x {
     () => {
@@ -129,7 +176,7 @@ macro_rules! capitalize_x {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -146,7 +193,7 @@ macro_rules! capitalize_x {
 #[macro_export]
 macro_rules! capitalize {
     () => {
-        json!("")
+        $crate::lib::json!("")
     };
     ($a:expr $(,)*) => {
         $crate::capitalize($a)

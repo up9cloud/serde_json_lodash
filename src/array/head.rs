@@ -1,6 +1,13 @@
 use crate::lib::{json, Value};
 
 /// See lodash [head](https://lodash.com/docs/#head)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::head;
+/// # use serde_json::json;
+/// assert_eq!(head(json!([1, 2, 3])), json!(1));
+/// ```
 pub fn head(v: Value) -> Value {
     match v {
         Value::Null => json!(null),
@@ -38,7 +45,7 @@ pub fn head(v: Value) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -56,7 +63,7 @@ pub fn head(v: Value) -> Value {
 #[macro_export]
 macro_rules! head {
     () => {
-        json!(null)
+        $crate::lib::json!(null)
     };
     ($a:expr $(,)*) => {
         $crate::head($a)

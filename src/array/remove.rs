@@ -4,6 +4,14 @@ use crate::lib::{json, Value};
 ///
 /// Removes the elements matching `predicate` from `array` (mutating it) and
 /// returns the removed elements
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::remove;
+/// # use serde_json::json;
+/// let mut a = json!([1, 2, 3, 4]);
+/// assert_eq!(remove(&mut a, |n| n.as_i64().unwrap() % 2 == 0), json!([2, 4]));
+/// ```
 pub fn remove(array: &mut Value, predicate: fn(&Value) -> bool) -> Value {
     match array {
         Value::Array(vec) => {
@@ -36,7 +44,7 @@ pub fn remove(array: &mut Value, predicate: fn(&Value) -> bool) -> Value {
 /// assert_eq!(removed, json!([2, 4]));
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -50,10 +58,10 @@ pub fn remove(array: &mut Value, predicate: fn(&Value) -> bool) -> Value {
 #[macro_export]
 macro_rules! remove {
     () => {
-        json!([])
+        $crate::lib::json!([])
     };
     ($a:expr $(,)*) => {
-        json!([])
+        $crate::lib::json!([])
     };
     ($a:expr, $b:expr $(,)*) => {
         $crate::remove($a, $b)

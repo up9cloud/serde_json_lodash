@@ -1,6 +1,13 @@
 use crate::lib::{json, Value};
 
 /// See lodash [compact](https://lodash.com/docs/#compact)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::compact;
+/// # use serde_json::json;
+/// assert_eq!(compact(json!([0, 1, false, 2, "", 3])), json!([1, 2, 3]));
+/// ```
 pub fn compact(v: Value) -> Value {
     match v {
         Value::Null => json!([]),
@@ -44,7 +51,7 @@ pub fn compact(v: Value) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -60,7 +67,7 @@ pub fn compact(v: Value) -> Value {
 #[macro_export]
 macro_rules! compact {
     () => {
-        json!([])
+        $crate::lib::json!([])
     };
     ($a:expr $(,)*) => {
         $crate::compact($a)

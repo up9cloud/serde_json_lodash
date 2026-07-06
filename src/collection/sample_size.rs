@@ -5,6 +5,13 @@ use crate::collection::shuffle::shuffle_vec;
 /// See lodash [sampleSize](https://lodash.com/docs/#sampleSize)
 ///
 /// Returns up to `n` random elements
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::sample_size;
+/// # use serde_json::json;
+/// assert_eq!(sample_size(json!([1, 2, 3]), 0), json!([]));
+/// ```
 pub fn sample_size(collection: Value, n: usize) -> Value {
     let mut vec = shuffle_vec(collection_values(&collection));
     vec.truncate(n);
@@ -22,7 +29,7 @@ pub fn sample_size(collection: Value, n: usize) -> Value {
 /// assert_eq!(s.as_array().unwrap().len(), 2);
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -34,7 +41,7 @@ pub fn sample_size(collection: Value, n: usize) -> Value {
 #[macro_export]
 macro_rules! sample_size {
     () => {
-        json!([])
+        $crate::lib::json!([])
     };
     ($a:expr $(,)*) => {
         $crate::sample_size($a, 1)

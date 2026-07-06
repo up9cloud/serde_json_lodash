@@ -1,6 +1,13 @@
 use crate::lib::{json, Value};
 use crate::{to_safe_integer_x};
 /// `x_`/`_x` helper for [range()]: takes a primitive argument and returns a primitive value.
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::x_range_x;
+/// # use serde_json::json;
+/// assert_eq!(x_range_x(0, 20, 5), vec![0_isize, 5, 10, 15]);
+/// ```
 pub fn x_range_x(start: isize, end: isize, step: isize) -> Vec<isize> {
     let mut result = vec![];
     // handle infinity cases
@@ -44,6 +51,13 @@ pub fn x_range_x(start: isize, end: isize, step: isize) -> Vec<isize> {
     result
 }
 /// `x_` helper for [range()]: takes a primitive argument instead of a [`Value`](crate::lib::Value).
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::x_range;
+/// # use serde_json::json;
+/// assert_eq!(x_range(0, 20, 5), json!([0, 5, 10, 15]));
+/// ```
 pub fn x_range(start: isize, end: isize, step: isize) -> Value {
     Value::Array(
         x_range_x(start, end, step)
@@ -53,10 +67,24 @@ pub fn x_range(start: isize, end: isize, step: isize) -> Value {
     )
 }
 /// `_x` helper for [range()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::range_x;
+/// # use serde_json::json;
+/// assert_eq!(range_x(json!(0), json!(4), 1), vec![0_isize, 1, 2, 3]);
+/// ```
 pub fn range_x(start: Value, end: Value, step: isize) -> Vec<isize> {
     x_range_x(to_safe_integer_x(start), to_safe_integer_x(end), step)
 }
 /// See lodash [range](https://lodash.com/docs/#range)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::range;
+/// # use serde_json::json;
+/// assert_eq!(range(json!(0), json!(20), 5), json!([0, 5, 10, 15]));
+/// ```
 pub fn range(start: Value, end: Value, step: isize) -> Value {
     x_range(to_safe_integer_x(start), to_safe_integer_x(end), step)
 }
@@ -99,7 +127,7 @@ pub fn range(start: Value, end: Value, step: isize) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -132,9 +160,16 @@ macro_rules! x_range_x {
 }
 /// Based on [x_range()]
 #[macro_export]
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(x_range!(0, 20, 5), json!([0, 5, 10, 15]));
+/// ```
 macro_rules! x_range {
     () => {
-        json!([])
+        $crate::lib::json!([])
     };
     ($a:expr $(,)*) => {{
         if $a >= 0 {
@@ -154,6 +189,13 @@ macro_rules! x_range {
     };
 }
 /// Based on [range_x()]
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(range_x!(json!(0), json!(4)), vec![0_isize, 1, 2, 3]);
+/// ```
 #[macro_export]
 macro_rules! range_x {
     () => {{
@@ -215,7 +257,7 @@ macro_rules! range_x {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -225,7 +267,7 @@ macro_rules! range_x {
 #[macro_export]
 macro_rules! range {
     () => {
-        json!([])
+        $crate::lib::json!([])
     };
     ($a:expr $(,)*) => {{
         let end = $crate::to_safe_integer_x($a);

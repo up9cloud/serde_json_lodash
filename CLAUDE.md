@@ -69,7 +69,7 @@ Option-like parameters (sizes, indexes) take primitive types (`usize`, `isize`),
 Tests are doc tests on the macros/fns, in two sections:
 
 - `/// Examples:` — must exactly reproduce the examples from the lodash documentation for that function
-- `/// More examples:` — additional edge cases (empty args, null, wrong types, etc.)
+- `/// Additional cases:` — everything else worth showing (edge cases, empty/optional args, null, type coercion, JSON specifics)
 
 ## Style
 

@@ -5,6 +5,13 @@ use crate::array::sorted_index::sorted_index_impl;
 ///
 /// Like `last_index_of`, but optimized for sorted arrays. Returns `-1` if not
 /// found
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::sorted_last_index_of;
+/// # use serde_json::json;
+/// assert_eq!(sorted_last_index_of(json!([4, 5, 5, 5, 6]), json!(5)), 3);
+/// ```
 pub fn sorted_last_index_of(array: Value, value: Value) -> isize {
     let i = sorted_index_impl(&array, &value, true, |v| v.clone());
     if let Value::Array(vec) = &array
@@ -26,7 +33,7 @@ pub fn sorted_last_index_of(array: Value, value: Value) -> isize {
 /// assert_eq!(sorted_last_index_of!(json!([4, 5, 5, 5, 6]), json!(5)), 3);
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;

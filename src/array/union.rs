@@ -2,6 +2,13 @@ use crate::lib::Value;
 use crate::internal::uniq_by_key;
 
 /// See lodash [union](https://lodash.com/docs/#union)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::union;
+/// # use serde_json::json;
+/// assert_eq!(union(json!([2]), json!([1, 2])), json!([2, 1]));
+/// ```
 pub fn union(array: Value, other: Value) -> Value {
     let mut all = vec![];
     if let Value::Array(vec) = array {
@@ -23,7 +30,7 @@ pub fn union(array: Value, other: Value) -> Value {
 /// assert_eq!(union!(json!([2]), json!([1, 2])), json!([2, 1]));
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -35,7 +42,7 @@ pub fn union(array: Value, other: Value) -> Value {
 #[macro_export]
 macro_rules! union {
     () => {
-        json!([])
+        $crate::lib::json!([])
     };
     ($a:expr $(,)*) => {
         $crate::uniq($a)

@@ -4,6 +4,13 @@ use crate::collection::collect::collection_values;
 /// See lodash [flatMap](https://lodash.com/docs/#flatMap)
 ///
 /// Maps each element with `iteratee`, then flattens the result one level
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::flat_map;
+/// # use serde_json::json;
+/// assert_eq!(flat_map(json!([1, 2]), |n| json!([n.clone(), n.clone()])), json!([1, 1, 2, 2]));
+/// ```
 pub fn flat_map(collection: Value, iteratee: fn(&Value) -> Value) -> Value {
     let mut out = vec![];
     for v in collection_values(&collection) {
@@ -28,7 +35,7 @@ pub fn flat_map(collection: Value, iteratee: fn(&Value) -> Value) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -39,7 +46,7 @@ pub fn flat_map(collection: Value, iteratee: fn(&Value) -> Value) -> Value {
 #[macro_export]
 macro_rules! flat_map {
     () => {
-        json!([])
+        $crate::lib::json!([])
     };
     ($a:expr $(,)*) => {
         $crate::flat_map($a, |v| v.clone())

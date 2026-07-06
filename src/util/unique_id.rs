@@ -4,20 +4,48 @@ lazy_static::lazy_static! {
     static ref COUNT: Mutex<usize> = Mutex::new(0);
 }
 /// `x_`/`_x` helper for [unique_id()]: takes a primitive argument and returns a primitive value.
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::x_unique_id_x;
+/// # use serde_json::json;
+/// assert_eq!(x_unique_id_x("contact_"), "contact_1".to_owned());
+/// ```
 pub fn x_unique_id_x(prefix: &str) -> String {
     let mut c = COUNT.lock().unwrap();
     *c += 1;
     format!("{}{}", prefix, c)
 }
 /// `x_` helper for [unique_id()]: takes a primitive argument instead of a [`Value`](crate::lib::Value).
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::x_unique_id;
+/// # use serde_json::json;
+/// assert_eq!(x_unique_id("contact_"), json!("contact_1"));
+/// ```
 pub fn x_unique_id(prefix: &str) -> Value {
     json!(x_unique_id_x(prefix))
 }
 /// `_x` helper for [unique_id()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::unique_id_x;
+/// # use serde_json::json;
+/// assert_eq!(unique_id_x("contact_"), "contact_1".to_owned());
+/// ```
 pub fn unique_id_x(prefix: &str) -> String {
     x_unique_id_x(prefix)
 }
 /// See lodash [uniqueId](https://lodash.com/docs/#uniqueId)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::unique_id;
+/// # use serde_json::json;
+/// assert_eq!(unique_id("contact_"), json!("contact_1"));
+/// ```
 pub fn unique_id(prefix: &str) -> Value {
     x_unique_id(prefix)
 }
@@ -39,7 +67,7 @@ pub fn unique_id(prefix: &str) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -59,6 +87,13 @@ macro_rules! x_unique_id_x {
 }
 /// Based on [x_unique_id()]
 #[macro_export]
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(x_unique_id!("contact_"), json!("contact_1"));
+/// ```
 macro_rules! x_unique_id {
     () => {
         $crate::x_unique_id("")
@@ -72,6 +107,13 @@ macro_rules! x_unique_id {
 }
 /// Based on [unique_id_x()]
 #[macro_export]
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(unique_id_x!("contact_"), "contact_1".to_owned());
+/// ```
 macro_rules! unique_id_x {
     () => {
         $crate::unique_id_x("")
@@ -100,7 +142,7 @@ macro_rules! unique_id_x {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;

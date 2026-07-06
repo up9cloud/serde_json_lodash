@@ -4,6 +4,13 @@ use crate::internal::value_to_option_number;
 /// See lodash [maxBy](https://lodash.com/docs/#maxBy)
 ///
 /// `iteratee` maps each element to the value used for comparison
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::max_by;
+/// # use serde_json::json;
+/// assert_eq!(max_by(json!([1, 2, 3]), |v| v.clone()), json!(3));
+/// ```
 pub fn max_by(array: Value, iteratee: fn(&Value) -> Value) -> Value {
     match array {
         Value::Array(vec) => {
@@ -36,7 +43,7 @@ pub fn max_by(array: Value, iteratee: fn(&Value) -> Value) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -48,7 +55,7 @@ pub fn max_by(array: Value, iteratee: fn(&Value) -> Value) -> Value {
 #[macro_export]
 macro_rules! max_by {
     () => {
-        json!(null)
+        $crate::lib::json!(null)
     };
     ($a:expr $(,)*) => {
         $crate::max($a)

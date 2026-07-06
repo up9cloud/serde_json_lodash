@@ -1,6 +1,13 @@
 use crate::lib::{Value};
 
 /// `_x` helper for [join()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::join_x;
+/// # use serde_json::json;
+/// assert_eq!(join_x(json!(['a', 'b', 'c']), "~"), "a~b~c".to_owned());
+/// ```
 pub fn join_x(v: Value, sep: &str) -> String {
     match v {
         Value::Null => "".into(),
@@ -27,6 +34,13 @@ pub fn join_x(v: Value, sep: &str) -> String {
 }
 
 /// See lodash [join](https://lodash.com/docs/#join)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::join;
+/// # use serde_json::json;
+/// assert_eq!(join(json!(['a', 'b', 'c']), "~"), json!("a~b~c"));
+/// ```
 pub fn join(v: Value, sep: &str) -> Value {
     Value::String(join_x(v, sep))
 }
@@ -44,7 +58,7 @@ pub fn join(v: Value, sep: &str) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -79,7 +93,7 @@ macro_rules! join_x {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -98,7 +112,7 @@ macro_rules! join_x {
 #[macro_export]
 macro_rules! join {
     () => {
-        json!("")
+        $crate::lib::json!("")
     };
     ($a:expr $(,)*) => {
         $crate::join($a, ",")

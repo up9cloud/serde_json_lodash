@@ -1,6 +1,13 @@
 use crate::lib::{json, Value};
 
 /// See lodash [tail](https://lodash.com/docs/#tail)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::tail;
+/// # use serde_json::json;
+/// assert_eq!(tail(json!([1, 2, 3])), json!([2, 3]));
+/// ```
 pub fn tail(array: Value) -> Value {
     match array {
         Value::Array(mut vec) => {
@@ -23,7 +30,7 @@ pub fn tail(array: Value) -> Value {
 /// assert_eq!(tail!(json!([1, 2, 3])), json!([2, 3]));
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -36,7 +43,7 @@ pub fn tail(array: Value) -> Value {
 #[macro_export]
 macro_rules! tail {
     () => {
-        json!([])
+        $crate::lib::json!([])
     };
     ($a:expr $(,)*) => {
         $crate::tail($a)

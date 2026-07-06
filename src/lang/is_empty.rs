@@ -1,6 +1,13 @@
 use crate::lib::Value;
 
 /// See lodash [isEmpty](https://lodash.com/docs/#isEmpty)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::is_empty;
+/// # use serde_json::json;
+/// assert_eq!(is_empty(&json!(null)), true);
+/// ```
 pub fn is_empty(v: &Value) -> bool {
     match v {
         Value::Null | Value::Bool(_) | Value::Number(_) => true,
@@ -24,7 +31,7 @@ pub fn is_empty(v: &Value) -> bool {
 /// assert_eq!(is_empty!(&json!({"a": 1})), false);
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;

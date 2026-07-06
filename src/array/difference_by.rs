@@ -3,6 +3,13 @@ use crate::lib::{json, Value};
 /// See lodash [differenceBy](https://lodash.com/docs/#differenceBy)
 ///
 /// `iteratee` maps each element to the value used for comparison
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::difference_by;
+/// # use serde_json::json;
+/// assert_eq!(difference_by(json!([2.1, 1.2]), json!([2.3, 3.4]), |n| json!(n.as_f64().unwrap().floor())), json!([1.2]));
+/// ```
 pub fn difference_by(array: Value, other: Value, iteratee: fn(&Value) -> Value) -> Value {
     let a = match array {
         Value::Array(v) => v,
@@ -33,7 +40,7 @@ pub fn difference_by(array: Value, other: Value, iteratee: fn(&Value) -> Value) 
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -44,7 +51,7 @@ pub fn difference_by(array: Value, other: Value, iteratee: fn(&Value) -> Value) 
 #[macro_export]
 macro_rules! difference_by {
     () => {
-        json!([])
+        $crate::lib::json!([])
     };
     ($a:expr $(,)*) => {
         $crate::to_array($a)

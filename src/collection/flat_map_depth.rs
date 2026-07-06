@@ -16,6 +16,13 @@ fn flatten_depth(v: Value, depth: isize, out: &mut Vec<Value>) {
 ///
 /// Maps each element with `iteratee`, then flattens the result up to `depth`
 /// levels
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::flat_map_depth;
+/// # use serde_json::json;
+/// assert_eq!(flat_map_depth(json!([1, 2]), |n| json!([[n.clone(), n.clone()]]), 2), json!([1, 1, 2, 2]));
+/// ```
 pub fn flat_map_depth(collection: Value, iteratee: fn(&Value) -> Value, depth: isize) -> Value {
     let mut out = vec![];
     for v in collection_values(&collection) {
@@ -38,7 +45,7 @@ pub fn flat_map_depth(collection: Value, iteratee: fn(&Value) -> Value, depth: i
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -49,7 +56,7 @@ pub fn flat_map_depth(collection: Value, iteratee: fn(&Value) -> Value, depth: i
 #[macro_export]
 macro_rules! flat_map_depth {
     () => {
-        json!([])
+        $crate::lib::json!([])
     };
     ($a:expr $(,)*) => {
         $crate::flat_map_depth($a, |v| v.clone(), 1)

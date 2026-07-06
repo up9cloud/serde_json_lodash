@@ -1,6 +1,13 @@
 use crate::lib::{json, Value, Map};
 
 /// See lodash [toPlainObject](https://lodash.com/docs/#toPlainObject)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::to_plain_object;
+/// # use serde_json::json;
+/// assert_eq!(to_plain_object(json!({"b": 2, "c": 3})), json!({"b": 2, "c": 3}));
+/// ```
 pub fn to_plain_object(v: Value) -> Value {
     match v {
         Value::Object(_) => v,
@@ -35,7 +42,7 @@ pub fn to_plain_object(v: Value) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -48,7 +55,7 @@ pub fn to_plain_object(v: Value) -> Value {
 #[macro_export]
 macro_rules! to_plain_object {
     () => {
-        json!({})
+        $crate::lib::json!({})
     };
     ($a:expr $(,)*) => {
         $crate::to_plain_object($a)

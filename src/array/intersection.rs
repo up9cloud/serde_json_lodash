@@ -5,6 +5,13 @@ pub fn _empty_array() -> Vec<Value> {
     vec![]
 }
 /// `_x` helper for [intersection()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::intersection_x;
+/// # use serde_json::json;
+/// assert_eq!(intersection_x(json!([2, 1]), json!([2, 3])), vec![json!(2)]);
+/// ```
 pub fn intersection_x(v1: Value, v2: Value) -> Vec<Value> {
     let mut result = vec![];
     let vec1 = match v1 {
@@ -48,6 +55,13 @@ pub fn intersection_x(v1: Value, v2: Value) -> Vec<Value> {
     result
 }
 /// See lodash [intersection](https://lodash.com/docs/#intersection)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::intersection;
+/// # use serde_json::json;
+/// assert_eq!(intersection(json!([2, 1]), json!([2, 3])), json!([2]));
+/// ```
 pub fn intersection(v1: Value, v2: Value) -> Value {
     Value::Array(intersection_x(v1, v2))
 }
@@ -65,7 +79,7 @@ pub fn intersection(v1: Value, v2: Value) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -106,7 +120,7 @@ macro_rules! intersection_x {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -127,13 +141,13 @@ macro_rules! intersection_x {
 #[macro_export]
 macro_rules! intersection {
     () => (
-        json!([])
+        $crate::lib::json!([])
     );
     ($a:expr $(,)*) => {{
         if $a.is_array() {
             $a
         } else {
-            json!([])
+            $crate::lib::json!([])
         }
     }};
     ($a:expr, $b:expr $(,)*) => {

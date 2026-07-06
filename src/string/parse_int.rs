@@ -2,6 +2,13 @@ use crate::lib::{json, Value};
 use crate::internal::value_nan;
 
 /// `x_` helper for [parse_int()]: takes a primitive argument instead of a [`Value`](crate::lib::Value).
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::x_parse_int;
+/// # use serde_json::json;
+/// assert_eq!(x_parse_int("10", 2), json!(2));
+/// ```
 pub fn x_parse_int(s: &str, radix: u32) -> Value {
     let s = s.trim();
     let (negative, s) = match s.strip_prefix('-') {
@@ -40,6 +47,13 @@ pub fn x_parse_int(s: &str, radix: u32) -> Value {
 /// `radix = 0` means auto detection (`0x` prefixed strings are parsed as
 /// hexadecimal, everything else as decimal), same as the lodash default.
 /// Unparsable input returns `Value::Null` (there is no `NaN` in serde_json)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::parse_int;
+/// # use serde_json::json;
+/// assert_eq!(parse_int(json!("10"), 2), json!(2));
+/// ```
 pub fn parse_int(v: Value, radix: u32) -> Value {
     x_parse_int(&crate::to_string_x(v), radix)
 }
@@ -57,7 +71,7 @@ pub fn parse_int(v: Value, radix: u32) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -72,7 +86,7 @@ pub fn parse_int(v: Value, radix: u32) -> Value {
 #[macro_export]
 macro_rules! parse_int {
     () => {
-        json!(null)
+        $crate::lib::json!(null)
     };
     ($a:expr $(,)*) => {
         $crate::parse_int($a, 0)
@@ -82,5 +96,29 @@ macro_rules! parse_int {
     };
     ($a:expr, $b:expr, $($rest:tt)*) => {
         $crate::parse_int($a, $b)
+    };
+}
+
+/// Based on [x_parse_int()]
+#[macro_export]
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(x_parse_int!("10", 2), json!(2));
+/// ```
+macro_rules! x_parse_int {
+    () => {
+        $crate::lib::json!(null)
+    };
+    ($a:expr $(,)*) => {
+        $crate::x_parse_int($a, 0)
+    };
+    ($a:expr, $b:expr $(,)*) => {
+        $crate::x_parse_int($a, $b)
+    };
+    ($a:expr, $b:expr, $($rest:tt)*) => {
+        $crate::x_parse_int($a, $b)
     };
 }

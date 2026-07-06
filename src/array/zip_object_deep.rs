@@ -4,6 +4,13 @@ use crate::set;
 /// See lodash [zipObjectDeep](https://lodash.com/docs/#zipObjectDeep)
 ///
 /// Like `zip_object` but `keys` may be property paths
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::zip_object_deep;
+/// # use serde_json::json;
+/// assert_eq!(zip_object_deep(json!(["a.b[0].c", "a.b[1].d"]), json!([1, 2])), json!({ "a": { "b": [{ "c": 1 }, { "d": 2 }] } }));
+/// ```
 pub fn zip_object_deep(keys: Value, values: Value) -> Value {
     let ks = match keys {
         Value::Array(v) => v,
@@ -33,7 +40,7 @@ pub fn zip_object_deep(keys: Value, values: Value) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -44,10 +51,10 @@ pub fn zip_object_deep(keys: Value, values: Value) -> Value {
 #[macro_export]
 macro_rules! zip_object_deep {
     () => {
-        json!({})
+        $crate::lib::json!({})
     };
     ($a:expr $(,)*) => {
-        $crate::zip_object_deep($a, serde_json::json!([]))
+        $crate::zip_object_deep($a, $crate::lib::json!([]))
     };
     ($a:expr, $b:expr $(,)*) => {
         $crate::zip_object_deep($a, $b)

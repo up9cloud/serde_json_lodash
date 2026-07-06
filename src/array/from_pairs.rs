@@ -61,6 +61,13 @@ fn arrays_to_object(vec: Vec<Value>) -> Value {
 }
 
 /// See lodash [fromPairs](https://lodash.com/docs/#fromPairs)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::from_pairs;
+/// # use serde_json::json;
+/// assert_eq!(from_pairs(json!([['a', 1], ['b', 2]])), json!({ 'a': 1, 'b': 2 }));
+/// ```
 pub fn from_pairs(v: Value) -> Value {
     match v {
         Value::Null => json!({}),
@@ -85,7 +92,7 @@ pub fn from_pairs(v: Value) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -110,7 +117,7 @@ pub fn from_pairs(v: Value) -> Value {
 #[macro_export]
 macro_rules! from_pairs {
     () => {
-        json!({})
+        $crate::lib::json!({})
     };
     ($a:expr $(,)*) => {
         $crate::from_pairs($a)

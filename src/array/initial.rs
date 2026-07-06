@@ -1,6 +1,13 @@
 use crate::lib::{json, Value};
 
 /// See lodash [initial](https://lodash.com/docs/#initial)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::initial;
+/// # use serde_json::json;
+/// assert_eq!(initial(json!([1, 2, 3])), json!([1, 2]));
+/// ```
 pub fn initial(v: Value) -> Value {
     match v {
         Value::Null => json!([]),
@@ -38,7 +45,7 @@ pub fn initial(v: Value) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -56,7 +63,7 @@ pub fn initial(v: Value) -> Value {
 #[macro_export]
 macro_rules! initial {
     () => {
-        json!([])
+        $crate::lib::json!([])
     };
     ($a:expr $(,)*) => {
         $crate::initial($a)

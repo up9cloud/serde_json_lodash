@@ -2,6 +2,13 @@ use crate::lib::{Value};
 use crate::to_safe_integer_x;
 
 /// `x_` helper for [times()]: takes a primitive argument instead of a [`Value`](crate::lib::Value).
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::x_times;
+/// # use serde_json::json;
+/// assert_eq!(x_times(3, |i| json!(i.to_string())), json!(["0","1","2"]));
+/// ```
 pub fn x_times(n: usize, iteratee: fn(usize) -> Value) -> Value {
     let mut vec = vec![];
     for i in 0..n {
@@ -10,6 +17,13 @@ pub fn x_times(n: usize, iteratee: fn(usize) -> Value) -> Value {
     Value::Array(vec)
 }
 /// See lodash [times](https://lodash.com/docs/#times)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::times;
+/// # use serde_json::json;
+/// assert_eq!(times(json!(3), |i| json!(i.to_string())), json!(["0","1","2"]));
+/// ```
 pub fn times(n: Value, iteratee: fn(usize) -> Value) -> Value {
     x_times(to_safe_integer_x(n) as usize, iteratee)
 }
@@ -31,7 +45,7 @@ pub fn times(n: Value, iteratee: fn(usize) -> Value) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -43,10 +57,10 @@ pub fn times(n: Value, iteratee: fn(usize) -> Value) -> Value {
 #[macro_export]
 macro_rules! x_times {
     () => {
-        json!([])
+        $crate::lib::json!([])
     };
     ($a:expr $(,)*) => {
-        $crate::x_times($a, |i| json!(i))
+        $crate::x_times($a, |i| $crate::lib::json!(i))
     };
     ($a:expr, $b:expr $(,)*) => {
         $crate::x_times($a, $b)
@@ -69,7 +83,7 @@ macro_rules! x_times {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -90,10 +104,10 @@ macro_rules! x_times {
 #[macro_export]
 macro_rules! times {
     () => {
-        json!([])
+        $crate::lib::json!([])
     };
     ($a:expr $(,)*) => {
-        $crate::times($a, |x| json!(x))
+        $crate::times($a, |x| $crate::lib::json!(x))
     };
     ($a:expr, $b:expr $(,)*) => {
         $crate::times($a, $b)

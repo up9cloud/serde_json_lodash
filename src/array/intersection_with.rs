@@ -3,6 +3,13 @@ use crate::lib::{json, Value};
 /// See lodash [intersectionWith](https://lodash.com/docs/#intersectionWith)
 ///
 /// `comparator` is invoked to compare elements
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::intersection_with;
+/// # use serde_json::json;
+/// assert_eq!(intersection_with(json!([2, 1]), json!([2, 3]), |a, b| a == b), json!([2]));
+/// ```
 pub fn intersection_with(
     array: Value,
     other: Value,
@@ -38,7 +45,7 @@ pub fn intersection_with(
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -49,7 +56,7 @@ pub fn intersection_with(
 #[macro_export]
 macro_rules! intersection_with {
     () => {
-        json!([])
+        $crate::lib::json!([])
     };
     ($a:expr $(,)*) => {
         $crate::to_array($a)

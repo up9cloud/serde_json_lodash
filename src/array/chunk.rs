@@ -1,6 +1,13 @@
 use crate::lib::{json, Value};
 
 /// See lodash [chunk](https://lodash.com/docs/#chunk)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::chunk;
+/// # use serde_json::json;
+/// assert_eq!(chunk(json!(['a', 'b', 'c', 'd']), 2), json!([['a', 'b'], ['c', 'd']]));
+/// ```
 pub fn chunk(v: Value, size: usize) -> Value {
     if size == 0 {
         return json!([]);
@@ -49,7 +56,7 @@ pub fn chunk(v: Value, size: usize) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -67,7 +74,7 @@ pub fn chunk(v: Value, size: usize) -> Value {
 #[macro_export]
 macro_rules! chunk {
     () => {
-        json!([])
+        $crate::lib::json!([])
     };
     ($a:expr $(,)*) => {
         $crate::chunk($a, 1)

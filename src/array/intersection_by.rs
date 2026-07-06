@@ -3,6 +3,13 @@ use crate::lib::{json, Value};
 /// See lodash [intersectionBy](https://lodash.com/docs/#intersectionBy)
 ///
 /// `iteratee` maps each element to the value used for comparison
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::intersection_by;
+/// # use serde_json::json;
+/// assert_eq!(intersection_by(json!([2.1, 1.2]), json!([2.3, 3.4]), |n| json!(n.as_f64().unwrap().floor())), json!([2.1]));
+/// ```
 pub fn intersection_by(array: Value, other: Value, iteratee: fn(&Value) -> Value) -> Value {
     let a = match array {
         Value::Array(v) => v,
@@ -38,7 +45,7 @@ pub fn intersection_by(array: Value, other: Value, iteratee: fn(&Value) -> Value
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -49,7 +56,7 @@ pub fn intersection_by(array: Value, other: Value, iteratee: fn(&Value) -> Value
 #[macro_export]
 macro_rules! intersection_by {
     () => {
-        json!([])
+        $crate::lib::json!([])
     };
     ($a:expr $(,)*) => {
         $crate::uniq($a)

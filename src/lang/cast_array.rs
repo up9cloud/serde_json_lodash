@@ -1,6 +1,13 @@
 use crate::lib::Value;
 
 /// See lodash [castArray](https://lodash.com/docs/#castArray)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::cast_array;
+/// # use serde_json::json;
+/// assert_eq!(cast_array(json!(1)), json!([1]));
+/// ```
 pub fn cast_array(v: Value) -> Value {
     match v {
         Value::Array(_) => v,
@@ -22,7 +29,7 @@ pub fn cast_array(v: Value) -> Value {
 /// assert_eq!(cast_array!(), json!([]));
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -32,7 +39,7 @@ pub fn cast_array(v: Value) -> Value {
 #[macro_export]
 macro_rules! cast_array {
     () => {
-        json!([])
+        $crate::lib::json!([])
     };
     ($a:expr $(,)*) => {
         $crate::cast_array($a)

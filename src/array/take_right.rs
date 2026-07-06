@@ -1,6 +1,13 @@
 use crate::lib::{json, Value};
 
 /// See lodash [takeRight](https://lodash.com/docs/#takeRight)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::take_right;
+/// # use serde_json::json;
+/// assert_eq!(take_right(json!([1, 2, 3]), 2), json!([2, 3]));
+/// ```
 pub fn take_right(array: Value, n: usize) -> Value {
     match array {
         Value::Array(vec) => {
@@ -24,7 +31,7 @@ pub fn take_right(array: Value, n: usize) -> Value {
 /// assert_eq!(take_right!(json!([1, 2, 3]), 0), json!([]));
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -35,7 +42,7 @@ pub fn take_right(array: Value, n: usize) -> Value {
 #[macro_export]
 macro_rules! take_right {
     () => {
-        json!([])
+        $crate::lib::json!([])
     };
     ($a:expr $(,)*) => {
         $crate::take_right($a, 1)

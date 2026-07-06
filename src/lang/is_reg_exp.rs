@@ -3,6 +3,13 @@ use crate::lib::Value;
 /// See lodash [isRegExp](https://lodash.com/docs/#isRegExp)
 ///
 /// There is no such type in JSON, so it always returns `false`
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::is_reg_exp;
+/// # use serde_json::json;
+/// assert_eq!(is_reg_exp(&json!({})), false);
+/// ```
 pub fn is_reg_exp(_v: &Value) -> bool {
     false
 }
@@ -19,7 +26,7 @@ pub fn is_reg_exp(_v: &Value) -> bool {
 /// assert_eq!(is_reg_exp!(&json!("a")), false);
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;

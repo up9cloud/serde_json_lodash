@@ -6,6 +6,14 @@ use crate::internal::{f64_to_number, rand_f64, value_to_option_number};
 /// Returns a random number between `lower` and `upper` (inclusive). If
 /// `floating` is `true`, or either bound is not an integer, a floating point
 /// number is returned
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::random;
+/// # use serde_json::json;
+/// let n = random(json!(0), json!(5), false);
+/// assert!(n.as_i64().unwrap() >= 0 && n.as_i64().unwrap() <= 5);
+/// ```
 pub fn random(lower: Value, upper: Value, floating: bool) -> Value {
     let lo = value_to_option_number(lower)
         .and_then(|n| n.as_f64())
@@ -42,7 +50,7 @@ pub fn random(lower: Value, upper: Value, floating: bool) -> Value {
 /// assert!(f.as_f64().unwrap() >= 1.2 && f.as_f64().unwrap() <= 5.2);
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -59,10 +67,10 @@ pub fn random(lower: Value, upper: Value, floating: bool) -> Value {
 #[macro_export]
 macro_rules! random {
     () => {
-        $crate::random(serde_json::json!(0), serde_json::json!(1), false)
+        $crate::random($crate::lib::json!(0), $crate::lib::json!(1), false)
     };
     ($a:expr $(,)*) => {
-        $crate::random(serde_json::json!(0), $a, false)
+        $crate::random($crate::lib::json!(0), $a, false)
     };
     ($a:expr, $b:expr $(,)*) => {
         $crate::random($a, $b, false)

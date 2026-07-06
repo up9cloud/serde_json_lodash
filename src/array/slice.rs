@@ -3,6 +3,13 @@ use crate::lib::{json, Value};
 /// See lodash [slice](https://lodash.com/docs/#slice)
 ///
 /// `start` and `end` may be negative to count from the end
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::slice;
+/// # use serde_json::json;
+/// assert_eq!(slice(json!([1, 2, 3, 4]), 1, 3), json!([2, 3]));
+/// ```
 pub fn slice(array: Value, start: isize, end: isize) -> Value {
     match array {
         Value::Array(vec) => {
@@ -37,7 +44,7 @@ pub fn slice(array: Value, start: isize, end: isize) -> Value {
 /// assert_eq!(slice!(json!([1, 2, 3, 4]), 1, 3), json!([2, 3]));
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -51,7 +58,7 @@ pub fn slice(array: Value, start: isize, end: isize) -> Value {
 #[macro_export]
 macro_rules! slice {
     () => {
-        json!([])
+        $crate::lib::json!([])
     };
     ($a:expr $(,)*) => {
         $crate::to_array($a)

@@ -1,6 +1,13 @@
 use crate::lib::{Value};
 
 /// See lodash [pullAllWith](https://lodash.com/docs/#pullAllWith)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::pull_all_with;
+/// # use serde_json::json;
+/// assert_eq!(pull_all_with(json!([null,0]), json!([null]), |_, _| false), json!([null,0]));
+/// ```
 pub fn pull_all_with(
     mut array: Value,
     values: Value,
@@ -49,7 +56,7 @@ pub fn pull_all_with(
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -70,7 +77,7 @@ pub fn pull_all_with(
 #[macro_export]
 macro_rules! pull_all_with {
     () => {
-        json!(null)
+        $crate::lib::json!(null)
     };
     ($a:expr $(,)*) => {
         $a

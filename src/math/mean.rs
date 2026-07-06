@@ -23,6 +23,13 @@ pub(crate) fn mean_values(vec: Vec<Value>) -> Value {
 /// See lodash [mean](https://lodash.com/docs/#mean)
 ///
 /// Returns `Value::Null` (js `NaN`) for an empty array
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::mean;
+/// # use serde_json::json;
+/// assert_eq!(mean(json!([4, 2, 8, 6])), json!(5));
+/// ```
 pub fn mean(array: Value) -> Value {
     match array {
         Value::Array(vec) => mean_values(vec),
@@ -40,7 +47,7 @@ pub fn mean(array: Value) -> Value {
 /// assert_eq!(mean!(json!([4, 2, 8, 6])), json!(5));
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;

@@ -3,6 +3,13 @@ use crate::lib::{json, Value};
 /// See lodash [findLastKey](https://lodash.com/docs/#findLastKey)
 ///
 /// Returns the key of the last value matching `predicate`, else `Null`
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::find_last_key;
+/// # use serde_json::json;
+/// assert_eq!(find_last_key(&json!({"a": 1, "b": 1}), |v| v == &json!(1)), json!("b"));
+/// ```
 pub fn find_last_key(object: &Value, predicate: fn(&Value) -> bool) -> Value {
     if let Value::Object(o) = object {
         for (k, v) in o.iter().rev() {
@@ -32,7 +39,7 @@ pub fn find_last_key(object: &Value, predicate: fn(&Value) -> bool) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -43,10 +50,10 @@ pub fn find_last_key(object: &Value, predicate: fn(&Value) -> bool) -> Value {
 #[macro_export]
 macro_rules! find_last_key {
     () => {
-        json!(null)
+        $crate::lib::json!(null)
     };
     ($a:expr $(,)*) => {
-        json!(null)
+        $crate::lib::json!(null)
     };
     ($a:expr, $b:expr $(,)*) => {
         $crate::find_last_key($a, $b)

@@ -5,6 +5,13 @@ use crate::internal::base_is_match;
 ///
 /// The customizer is invoked for every property of `source` (top level
 /// only); returning `None` falls back to the [is_match()](fn@crate::is_match) behavior
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::is_match_with;
+/// # use serde_json::json;
+/// assert_eq!(is_match_with(&json!({"a": 1}), &json!({"a": 1}), |_o, _s| None), true);
+/// ```
 pub fn is_match_with(
     object: &Value,
     source: &Value,
@@ -47,7 +54,7 @@ pub fn is_match_with(
 /// assert_eq!(is_match_with!(&object, &source, customizer), true);
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;

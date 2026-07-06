@@ -4,6 +4,13 @@ use crate::internal::value_to_option_number;
 /// See lodash [max](https://lodash.com/docs/#max)
 ///
 /// Returns `Value::Null` for an empty array (js `undefined`)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::max;
+/// # use serde_json::json;
+/// assert_eq!(max(json!([4, 2, 8, 6])), json!(8));
+/// ```
 pub fn max(array: Value) -> Value {
     match array {
         Value::Array(vec) => vec
@@ -40,7 +47,7 @@ pub fn max(array: Value) -> Value {
 /// assert_eq!(max!(json!([])), json!(null));
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -52,7 +59,7 @@ pub fn max(array: Value) -> Value {
 #[macro_export]
 macro_rules! max {
     () => {
-        json!(null)
+        $crate::lib::json!(null)
     };
     ($a:expr $(,)*) => {
         $crate::max($a)

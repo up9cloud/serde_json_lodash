@@ -5,6 +5,13 @@ use crate::collection::collect::collection_values;
 ///
 /// Checks if `value` is in the collection (array elements, object values); for
 /// strings, checks for a substring
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::includes;
+/// # use serde_json::json;
+/// assert_eq!(includes(&json!([1, 2, 3]), &json!(1)), true);
+/// ```
 pub fn includes(collection: &Value, value: &Value) -> bool {
     match collection {
         Value::String(s) => match value {
@@ -27,7 +34,7 @@ pub fn includes(collection: &Value, value: &Value) -> bool {
 /// assert_eq!(includes!(&json!("abcd"), &json!("bc")), true);
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;

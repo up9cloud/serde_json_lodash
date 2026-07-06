@@ -4,6 +4,13 @@ use crate::lib::Value;
 ///
 /// In js world arrays and functions are objects too; for JSON that means
 /// objects and arrays
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::is_object;
+/// # use serde_json::json;
+/// assert_eq!(is_object(&json!({})), true);
+/// ```
 pub fn is_object(v: &Value) -> bool {
     v.is_object() || v.is_array()
 }
@@ -20,7 +27,7 @@ pub fn is_object(v: &Value) -> bool {
 /// assert_eq!(is_object!(&json!(null)), false);
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;

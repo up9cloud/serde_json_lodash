@@ -4,6 +4,13 @@ use crate::lib::Value;
 ///
 /// *Note:* `undefined` maps to `Value::Null` in this crate, so this is the
 /// same as [is_null()](fn@crate::is_null)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::is_undefined;
+/// # use serde_json::json;
+/// assert_eq!(is_undefined(&json!(null)), true);
+/// ```
 pub fn is_undefined(v: &Value) -> bool {
     v.is_null()
 }
@@ -19,7 +26,7 @@ pub fn is_undefined(v: &Value) -> bool {
 /// assert_eq!(is_undefined!(&json!(null)), true); // js version is false, undefined => null in this crate
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;

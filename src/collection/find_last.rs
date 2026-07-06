@@ -4,6 +4,13 @@ use crate::collection::collect::collection_values;
 /// See lodash [findLast](https://lodash.com/docs/#findLast)
 ///
 /// Like [find()](fn@crate::find) but iterates from the end
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::find_last;
+/// # use serde_json::json;
+/// assert_eq!(find_last(json!([1, 2, 3, 4]), |n| n.as_i64().unwrap() % 2 == 1), json!(3));
+/// ```
 pub fn find_last(collection: Value, predicate: fn(&Value) -> bool) -> Value {
     collection_values(&collection)
         .into_iter()
@@ -25,7 +32,7 @@ pub fn find_last(collection: Value, predicate: fn(&Value) -> bool) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -36,10 +43,10 @@ pub fn find_last(collection: Value, predicate: fn(&Value) -> bool) -> Value {
 #[macro_export]
 macro_rules! find_last {
     () => {
-        json!(null)
+        $crate::lib::json!(null)
     };
     ($a:expr $(,)*) => {
-        json!(null)
+        $crate::lib::json!(null)
     };
     ($a:expr, $b:expr $(,)*) => {
         $crate::find_last($a, $b)

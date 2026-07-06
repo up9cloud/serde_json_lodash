@@ -4,6 +4,13 @@ use crate::lib::Value;
 ///
 /// Iterates over own properties invoking `iteratee(value, key)`. Returning
 /// `false` from `iteratee` stops iteration early. Returns `object`
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::for_own;
+/// # use serde_json::json;
+/// assert_eq!(for_own(json!({"a": 1, "b": 2}), |_v, _k| true), json!({"a": 1, "b": 2}));
+/// ```
 pub fn for_own(object: Value, iteratee: fn(&Value, &str) -> bool) -> Value {
     if let Value::Object(o) = &object {
         for (k, v) in o {
@@ -27,7 +34,7 @@ pub fn for_own(object: Value, iteratee: fn(&Value, &str) -> bool) -> Value {
 /// assert_eq!(for_own!(object.clone(), |_v, k| { println!("{}", k); true }), object);
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -39,7 +46,7 @@ pub fn for_own(object: Value, iteratee: fn(&Value, &str) -> bool) -> Value {
 #[macro_export]
 macro_rules! for_own {
     () => {
-        serde_json::json!(null)
+        $crate::lib::json!(null)
     };
     ($a:expr $(,)*) => {
         $a

@@ -4,6 +4,13 @@ use crate::to_path_x;
 /// See lodash [unset](https://lodash.com/docs/#unset)
 ///
 /// Removes the property at `path`, returning the (possibly modified) object
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::unset;
+/// # use serde_json::json;
+/// assert_eq!(unset(json!({"a": 1, "b": 2}), json!("a")), json!({"b": 2}));
+/// ```
 pub fn unset(mut object: Value, path: Value) -> Value {
     let p_vec = to_path_x(path);
     if p_vec.is_empty() {
@@ -54,7 +61,7 @@ pub fn unset(mut object: Value, path: Value) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -66,7 +73,7 @@ pub fn unset(mut object: Value, path: Value) -> Value {
 #[macro_export]
 macro_rules! unset {
     () => {
-        serde_json::json!(null)
+        $crate::lib::json!(null)
     };
     ($a:expr $(,)*) => {
         $a

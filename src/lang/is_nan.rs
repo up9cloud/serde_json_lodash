@@ -4,6 +4,13 @@ use crate::lib::Value;
 ///
 /// serde_json numbers can never be `NaN` (`NaN` becomes `null` in JSON), so
 /// this always returns `false`
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::is_nan;
+/// # use serde_json::json;
+/// assert_eq!(is_nan(&json!(f64::NAN)), false);
+/// ```
 pub fn is_nan(_v: &Value) -> bool {
     false
 }
@@ -19,7 +26,7 @@ pub fn is_nan(_v: &Value) -> bool {
 /// assert_eq!(is_nan!(&json!(null)), false); // js version: _.isNaN(undefined) => false
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;

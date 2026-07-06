@@ -6,8 +6,7 @@ pub fn attempt() {
 pub fn bind_all() {
     todo!()
 }
-#[doc(hidden)]
-pub use bind_all as bindAll;
+build_link_fn!(bindAll, bind_all);
 /// **Not ported.** Returns a function chosen from predicate/function pairs; not a Value.
 pub fn cond() {
     todo!()
@@ -30,8 +29,7 @@ pub fn flow() {
 pub fn flow_right() {
     todo!()
 }
-#[doc(hidden)]
-pub use flow_right as flowRight;
+build_link_fn!(flowRight, flow_right);
 mod identity;
 pub use identity::*;
 /// **Not ported.** Returns a function implementing the lodash iteratee shorthand; not a Value.
@@ -46,8 +44,7 @@ pub fn matches() {
 pub fn matches_property() {
     todo!()
 }
-#[doc(hidden)]
-pub use matches_property as matchesProperty;
+build_link_fn!(matchesProperty, matches_property);
 /// **Not ported.** Returns a function that invokes a method at a path; not a Value.
 pub fn method() {
     todo!()
@@ -56,8 +53,7 @@ pub fn method() {
 pub fn method_of() {
     todo!()
 }
-#[doc(hidden)]
-pub use method_of as methodOf;
+build_link_fn!(methodOf, method_of);
 /// **Not ported.** Adds functions to an object/lodash; JSON objects hold no functions.
 pub fn mixin() {
     todo!()
@@ -66,16 +62,14 @@ pub fn mixin() {
 pub fn no_conflict() {
     todo!()
 }
-#[doc(hidden)]
-pub use no_conflict as noConflict;
+build_link_fn!(noConflict, no_conflict);
 mod noop;
 pub use noop::*;
 /// **Not ported.** Returns a function selecting the nth argument; not a Value.
 pub fn nth_arg() {
     todo!()
 }
-#[doc(hidden)]
-pub use nth_arg as nthArg;
+build_link_fn!(nthArg, nth_arg);
 /// **Not ported.** Returns a function invoking several iteratees; not a Value.
 pub fn over() {
     todo!()
@@ -84,14 +78,12 @@ pub fn over() {
 pub fn over_every() {
     todo!()
 }
-#[doc(hidden)]
-pub use over_every as overEvery;
+build_link_fn!(overEvery, over_every);
 /// **Not ported.** Returns a function OR-ing several predicates; not a Value.
 pub fn over_some() {
     todo!()
 }
-#[doc(hidden)]
-pub use over_some as overSome;
+build_link_fn!(overSome, over_some);
 /// **Not ported.** Returns a getter function for a path; not a Value.
 pub fn property() {
     todo!()
@@ -100,8 +92,7 @@ pub fn property() {
 pub fn property_of() {
     todo!()
 }
-#[doc(hidden)]
-pub use property_of as propertyOf;
+build_link_fn!(propertyOf, property_of);
 mod range;
 pub use range::*;
 mod range_right;
@@ -110,8 +101,7 @@ pub use range_right::*;
 pub fn run_in_context() {
     todo!()
 }
-#[doc(hidden)]
-pub use run_in_context as runInContext;
+build_link_fn!(runInContext, run_in_context);
 mod stub_array;
 pub use stub_array::*;
 mod stub_false;

@@ -1,6 +1,13 @@
 use crate::lib::Value;
 
 /// See lodash [cloneDeep](https://lodash.com/docs/#cloneDeep)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::clone_deep;
+/// # use serde_json::json;
+/// assert_eq!(clone_deep(&json!({"a": {"b": 1}})), json!({"a": {"b": 1}}));
+/// ```
 pub fn clone_deep(v: &Value) -> Value {
     v.clone()
 }
@@ -17,7 +24,7 @@ pub fn clone_deep(v: &Value) -> Value {
 /// assert_eq!(deep[0], objects[0]);
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -28,7 +35,7 @@ pub fn clone_deep(v: &Value) -> Value {
 #[macro_export]
 macro_rules! clone_deep {
     () => {
-        json!(null)
+        $crate::lib::json!(null)
     };
     ($a:expr $(,)*) => {
         $crate::clone_deep($a)

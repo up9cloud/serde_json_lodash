@@ -120,8 +120,7 @@ mod xor_by;
 pub use xor_by::*;
 mod xor_with;
 pub use xor_with::*;
-/// [zip()] and its variadic backing function
-pub mod zip;
+mod zip;
 pub use zip::*;
 mod zip_object;
 pub use zip_object::*;

@@ -1,6 +1,13 @@
 use crate::lib::Value;
 
 /// See lodash [isArrayLikeObject](https://lodash.com/docs/#isArrayLikeObject)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::is_array_like_object;
+/// # use serde_json::json;
+/// assert_eq!(is_array_like_object(&json!([1, 2, 3])), true);
+/// ```
 pub fn is_array_like_object(v: &Value) -> bool {
     v.is_array()
 }
@@ -16,7 +23,7 @@ pub fn is_array_like_object(v: &Value) -> bool {
 /// assert_eq!(is_array_like_object!(&json!("abc")), false);
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;

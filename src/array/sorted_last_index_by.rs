@@ -4,6 +4,13 @@ use crate::array::sorted_index::sorted_index_impl;
 /// See lodash [sortedLastIndexBy](https://lodash.com/docs/#sortedLastIndexBy)
 ///
 /// `iteratee` maps each element (and the value) to the sort key
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::sorted_last_index_by;
+/// # use serde_json::json;
+/// assert_eq!(sorted_last_index_by(json!([4, 5, 5, 6]), json!(5), |v| v.clone()), 3);
+/// ```
 pub fn sorted_last_index_by(array: Value, value: Value, iteratee: fn(&Value) -> Value) -> usize {
     sorted_index_impl(&array, &value, true, iteratee)
 }
@@ -22,7 +29,7 @@ pub fn sorted_last_index_by(array: Value, value: Value, iteratee: fn(&Value) -> 
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;

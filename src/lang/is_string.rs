@@ -1,6 +1,13 @@
 use crate::lib::Value;
 
 /// See lodash [isString](https://lodash.com/docs/#isString)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::is_string;
+/// # use serde_json::json;
+/// assert_eq!(is_string(&json!("abc")), true);
+/// ```
 pub fn is_string(v: &Value) -> bool {
     v.is_string()
 }
@@ -16,7 +23,7 @@ pub fn is_string(v: &Value) -> bool {
 /// assert_eq!(is_string!(&json!(1)), false);
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;

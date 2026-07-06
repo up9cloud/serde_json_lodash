@@ -5,6 +5,13 @@ use crate::lib::Value;
 /// `iteratee` receives `(accumulator, value, key)` and returns
 /// `(next_accumulator, keep_going)`; iteration stops when `keep_going` is
 /// `false`. For arrays the key is the stringified index
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::transform;
+/// # use serde_json::json;
+/// assert_eq!(transform(json!([2, 3, 4]), |mut acc, n, _k| {     acc.as_array_mut().unwrap().push(json!(n.as_i64().unwrap() * n.as_i64().unwrap()));     (acc, true)   }, json!([])), json!([4, 9, 16]));
+/// ```
 pub fn transform(
     collection: Value,
     iteratee: fn(Value, &Value, &str) -> (Value, bool),
@@ -51,7 +58,7 @@ pub fn transform(
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -70,7 +77,7 @@ pub fn transform(
 #[macro_export]
 macro_rules! transform {
     () => {
-        serde_json::json!(null)
+        $crate::lib::json!(null)
     };
     ($a:expr $(,)*) => {
         $a

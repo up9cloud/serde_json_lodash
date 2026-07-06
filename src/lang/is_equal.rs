@@ -1,6 +1,13 @@
 use crate::lib::Value;
 
 /// See lodash [isEqual](https://lodash.com/docs/#isEqual)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::is_equal;
+/// # use serde_json::json;
+/// assert_eq!(is_equal(&json!([1, [2]]), &json!([1, [2]])), true);
+/// ```
 pub fn is_equal(a: &Value, b: &Value) -> bool {
     a == b
 }
@@ -17,7 +24,7 @@ pub fn is_equal(a: &Value, b: &Value) -> bool {
 /// assert_eq!(is_equal!(&object, &other), true);
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -33,7 +40,7 @@ macro_rules! is_equal {
         true
     };
     ($a:expr $(,)*) => {
-        $crate::is_equal($a, &serde_json::json!(null))
+        $crate::is_equal($a, &$crate::lib::json!(null))
     };
     ($a:expr, $b:expr $(,)*) => {
         $crate::is_equal($a, $b)

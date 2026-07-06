@@ -2,6 +2,13 @@ use crate::lib::Value;
 use crate::internal::{f64_to_number, value_nan, value_to_option_number};
 
 /// See lodash [subtract](https://lodash.com/docs/#subtract)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::subtract;
+/// # use serde_json::json;
+/// assert_eq!(subtract(json!(6), json!(4)), json!(2));
+/// ```
 pub fn subtract(minuend: Value, subtrahend: Value) -> Value {
     match (
         value_to_option_number(minuend).and_then(|n| n.as_f64()),
@@ -28,7 +35,7 @@ pub fn subtract(minuend: Value, subtrahend: Value) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -41,7 +48,7 @@ pub fn subtract(minuend: Value, subtrahend: Value) -> Value {
 #[macro_export]
 macro_rules! subtract {
     () => {
-        json!(0)
+        $crate::lib::json!(0)
     };
     ($a:expr $(,)*) => {
         $crate::to_number($a)

@@ -4,6 +4,13 @@ use crate::internal::uniq_by_key;
 /// See lodash [uniqBy](https://lodash.com/docs/#uniqBy)
 ///
 /// `iteratee` maps each element to the value used for uniqueness
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::uniq_by;
+/// # use serde_json::json;
+/// assert_eq!(uniq_by(json!([2.1, 1.2, 2.3]), |n| json!(n.as_f64().unwrap().floor())), json!([2.1, 1.2]));
+/// ```
 pub fn uniq_by(array: Value, iteratee: fn(&Value) -> Value) -> Value {
     match array {
         Value::Array(vec) => Value::Array(uniq_by_key(vec, iteratee)),
@@ -24,7 +31,7 @@ pub fn uniq_by(array: Value, iteratee: fn(&Value) -> Value) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -35,7 +42,7 @@ pub fn uniq_by(array: Value, iteratee: fn(&Value) -> Value) -> Value {
 #[macro_export]
 macro_rules! uniq_by {
     () => {
-        json!([])
+        $crate::lib::json!([])
     };
     ($a:expr $(,)*) => {
         $crate::uniq($a)

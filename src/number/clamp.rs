@@ -2,6 +2,13 @@ use crate::lib::Value;
 use crate::internal::{f64_to_number, value_nan, value_to_option_number};
 
 /// See lodash [clamp](https://lodash.com/docs/#clamp)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::clamp;
+/// # use serde_json::json;
+/// assert_eq!(clamp(json!(-10), json!(-5), json!(5)), json!(-5));
+/// ```
 pub fn clamp(number: Value, lower: Value, upper: Value) -> Value {
     let n = value_to_option_number(number).and_then(|n| n.as_f64());
     let lo = value_to_option_number(lower).and_then(|n| n.as_f64());
@@ -29,7 +36,7 @@ pub fn clamp(number: Value, lower: Value, upper: Value) -> Value {
 /// assert_eq!(clamp!(json!(10), json!(-5), json!(5)), json!(5));
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;

@@ -2,22 +2,15 @@ mod assign;
 pub use assign::*;
 // In JSON there is no prototype chain, so the `*In` variants behave like the
 // own-property variants
-#[doc(hidden)]
-pub use assign as assign_in;
-#[doc(hidden)]
-pub use assign as assignIn;
-#[doc(hidden)]
-pub use assign as extend;
+build_link!(assign_in, assign);
+build_link!(assignIn, assign);
+build_link!(extend, assign);
 mod assign_with;
 pub use assign_with::*;
-#[doc(hidden)]
-pub use assign_with as assign_in_with;
-#[doc(hidden)]
-pub use assign_with as assignInWith;
-#[doc(hidden)]
-pub use assign_with as extend_with;
-#[doc(hidden)]
-pub use assign_with as extendWith;
+build_link!(assign_in_with, assign_with);
+build_link!(assignInWith, assign_with);
+build_link!(extend_with, assign_with);
+build_link!(extendWith, assign_with);
 mod at;
 pub use at::*;
 /// **Not ported.** Creates an object with a given prototype; JSON has no prototype chain.
@@ -34,32 +27,24 @@ mod find_last_key;
 pub use find_last_key::*;
 mod for_own;
 pub use for_own::*;
-#[doc(hidden)]
-pub use for_own as for_in;
-#[doc(hidden)]
-pub use for_own as forIn;
+build_link!(for_in, for_own);
+build_link!(forIn, for_own);
 mod for_own_right;
 pub use for_own_right::*;
-#[doc(hidden)]
-pub use for_own_right as for_in_right;
-#[doc(hidden)]
-pub use for_own_right as forInRight;
+build_link!(for_in_right, for_own_right);
+build_link!(forInRight, for_own_right);
 mod functions;
 pub use functions::*;
-#[doc(hidden)]
-pub use functions as functions_in;
-#[doc(hidden)]
-pub use functions as functionsIn;
+build_link!(functions_in, functions);
+build_link!(functionsIn, functions);
 
 mod get;
 pub use get::*;
 
 mod has;
 pub use has::*;
-#[doc(hidden)]
-pub use has as has_in;
-#[doc(hidden)]
-pub use has as hasIn;
+build_link!(has_in, has);
+build_link!(hasIn, has);
 mod invert;
 pub use invert::*;
 mod invert_by;
@@ -70,10 +55,8 @@ pub fn invoke() {
 }
 mod keys;
 pub use keys::*;
-#[doc(hidden)]
-pub use keys as keys_in;
-#[doc(hidden)]
-pub use keys as keysIn;
+build_link!(keys_in, keys);
+build_link!(keysIn, keys);
 mod map_keys;
 pub use map_keys::*;
 mod map_values;
@@ -100,20 +83,14 @@ pub use set::*;
 pub fn set_with() {
     todo!()
 }
-#[doc(hidden)]
-pub use set_with as setWith;
+build_link_fn!(setWith, set_with);
 mod to_pairs;
 pub use to_pairs::*;
-#[doc(hidden)]
-pub use to_pairs as entries;
-#[doc(hidden)]
-pub use to_pairs as to_pairs_in;
-#[doc(hidden)]
-pub use to_pairs as toPairsIn;
-#[doc(hidden)]
-pub use to_pairs as entries_in;
-#[doc(hidden)]
-pub use to_pairs as entriesIn;
+build_link!(entries, to_pairs);
+build_link!(to_pairs_in, to_pairs);
+build_link!(toPairsIn, to_pairs);
+build_link!(entries_in, to_pairs);
+build_link!(entriesIn, to_pairs);
 mod transform;
 pub use transform::*;
 mod unset;
@@ -124,11 +101,8 @@ pub use update::*;
 pub fn update_with() {
     todo!()
 }
-#[doc(hidden)]
-pub use update_with as updateWith;
+build_link_fn!(updateWith, update_with);
 mod values;
 pub use values::*;
-#[doc(hidden)]
-pub use values as values_in;
-#[doc(hidden)]
-pub use values as valuesIn;
+build_link!(values_in, values);
+build_link!(valuesIn, values);

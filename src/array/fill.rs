@@ -3,6 +3,13 @@ use std::mem;
 use crate::lib::{json, Value};
 
 /// See lodash [fill](https://lodash.com/docs/#fill)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::fill;
+/// # use serde_json::json;
+/// assert_eq!(fill(json!([4, 6, 8, 10]), json!("*"), 1, 3), json!([4, "*", "*", 10]));
+/// ```
 pub fn fill(mut array: Value, value: Value, start: usize, end: usize) -> Value {
     let vec = match array {
         Value::Null | Value::Bool(_) | Value::Number(_) | Value::String(_) | Value::Object(_) => {
@@ -43,7 +50,7 @@ pub fn fill(mut array: Value, value: Value, start: usize, end: usize) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -61,10 +68,15 @@ pub fn fill(mut array: Value, value: Value, start: usize, end: usize) -> Value {
 #[macro_export]
 macro_rules! fill {
     () => {
-        json!([])
+        $crate::lib::json!([])
     };
     ($a:expr $(,)*) => {
-        $crate::fill($a, json!(null), 0, $a.as_array().unwrap_or(&vec![]).len())
+        $crate::fill(
+            $a,
+            $crate::lib::json!(null),
+            0,
+            $a.as_array().unwrap_or(&vec![]).len(),
+        )
     };
     ($a:expr, $b:expr $(,)*) => {
         $crate::fill($a, $b, 0, $a.as_array().unwrap_or(&vec![]).len())

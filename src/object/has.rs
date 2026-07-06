@@ -2,6 +2,13 @@ use crate::lib::Value;
 use crate::to_path_x;
 
 /// See lodash [has](https://lodash.com/docs/#has)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::has;
+/// # use serde_json::json;
+/// assert_eq!(has(&json!({"a": [{"b": 3}]}), json!("a[0].b")), true);
+/// ```
 pub fn has(object: &Value, path: Value) -> bool {
     let p_vec = to_path_x(path);
     if p_vec.is_empty() {
@@ -37,7 +44,7 @@ pub fn has(object: &Value, path: Value) -> bool {
 /// assert_eq!(has!(&object, json!("a.c")), false);
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;

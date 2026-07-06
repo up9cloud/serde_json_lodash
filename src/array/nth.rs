@@ -1,6 +1,13 @@
 use crate::lib::{json, Value};
 
 /// See lodash [nth](https://lodash.com/docs/#nth)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::nth;
+/// # use serde_json::json;
+/// assert_eq!(nth(json!("夏至"), -1), json!("至"));
+/// ```
 pub fn nth(v: Value, n: isize) -> Value {
     match v {
         Value::Null => json!(null),
@@ -69,7 +76,7 @@ pub fn nth(v: Value, n: isize) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -91,7 +98,7 @@ pub fn nth(v: Value, n: isize) -> Value {
 #[macro_export]
 macro_rules! nth {
     () => {
-        json!(null)
+        $crate::lib::json!(null)
     };
     ($a:expr $(,)*) => {
         $crate::nth($a, 0)

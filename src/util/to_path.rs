@@ -2,6 +2,13 @@ use crate::lib::{json, Value};
 use crate::{to_string, to_string_x};
 
 /// `x_`/`_x` helper for [to_path()]: takes a primitive argument and returns a primitive value.
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::x_to_path_x;
+/// # use serde_json::json;
+/// assert_eq!(x_to_path_x("a.b.c"), vec!["a", "b", "c"]);
+/// ```
 pub fn x_to_path_x(s: &str) -> Vec<String> {
     let mut vec = vec![];
     let mut prev = "".to_owned();
@@ -53,6 +60,13 @@ pub fn x_to_path_x(s: &str) -> Vec<String> {
     vec
 }
 /// `x_` helper for [to_path()]: takes a primitive argument instead of a [`Value`](crate::lib::Value).
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::x_to_path;
+/// # use serde_json::json;
+/// assert_eq!(x_to_path("a.b.c"), json!(['a', 'b', 'c']));
+/// ```
 pub fn x_to_path(s: &str) -> Value {
     let mut vec = vec![];
     let mut prev = "".to_owned();
@@ -104,6 +118,13 @@ pub fn x_to_path(s: &str) -> Value {
     Value::Array(vec)
 }
 /// `_x` helper for [to_path()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::to_path_x;
+/// # use serde_json::json;
+/// assert_eq!(to_path_x(json!("a.b.c")), vec!["a".to_owned(), "b".to_owned(), "c".to_owned()]);
+/// ```
 pub fn to_path_x(value: Value) -> Vec<String> {
     match value {
         Value::Null => vec![],
@@ -113,6 +134,13 @@ pub fn to_path_x(value: Value) -> Vec<String> {
     }
 }
 /// See lodash [toPath](https://lodash.com/docs/#toPath)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::to_path;
+/// # use serde_json::json;
+/// assert_eq!(to_path(json!("a.b.c")), json!(['a', 'b', 'c']));
+/// ```
 pub fn to_path(value: Value) -> Value {
     match value {
         Value::Null => json!([]),
@@ -141,7 +169,7 @@ pub fn to_path(value: Value) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -161,9 +189,16 @@ macro_rules! x_to_path_x {
 }
 /// Based on [x_to_path()]
 #[macro_export]
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(x_to_path!("a.b.c"), json!(['a', 'b', 'c']));
+/// ```
 macro_rules! x_to_path {
     () => {
-        json!([])
+        $crate::lib::json!([])
     };
     ($a:expr $(,)*) => {
         $crate::x_to_path($a)
@@ -173,6 +208,13 @@ macro_rules! x_to_path {
     };
 }
 /// Based on [to_path_x()]
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(to_path_x!(json!("a.b.c")), vec!["a".to_owned(), "b".to_owned(), "c".to_owned()]);
+/// ```
 #[macro_export]
 macro_rules! to_path_x {
     () => {
@@ -202,7 +244,7 @@ macro_rules! to_path_x {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -233,7 +275,7 @@ macro_rules! to_path_x {
 #[macro_export]
 macro_rules! to_path {
     () => {
-        json!([])
+        $crate::lib::json!([])
     };
     ($a:expr $(,)*) => {
         $crate::to_path($a)

@@ -5,6 +5,13 @@ use crate::collection::collect::collection_values;
 /// See lodash [groupBy](https://lodash.com/docs/#groupBy)
 ///
 /// `iteratee` maps each element to a grouping key (coerced to a string)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::group_by;
+/// # use serde_json::json;
+/// assert_eq!(group_by(json!([6.1, 4.2, 6.3]), |n| json!(n.as_f64().unwrap().floor())), json!({ "4.0": [4.2], "6.0": [6.1, 6.3] }));
+/// ```
 pub fn group_by(collection: Value, iteratee: fn(&Value) -> Value) -> Value {
     let mut out: Map<String, Value> = Map::new();
     for v in collection_values(&collection) {
@@ -31,7 +38,7 @@ pub fn group_by(collection: Value, iteratee: fn(&Value) -> Value) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -42,7 +49,7 @@ pub fn group_by(collection: Value, iteratee: fn(&Value) -> Value) -> Value {
 #[macro_export]
 macro_rules! group_by {
     () => {
-        json!({})
+        $crate::lib::json!({})
     };
     ($a:expr $(,)*) => {
         $crate::group_by($a, |v| v.clone())

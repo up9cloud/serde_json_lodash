@@ -4,6 +4,13 @@ use crate::to_string_x;
 /// See lodash [pick](https://lodash.com/docs/#pick)
 ///
 /// `paths` is an array of (top level) property names to keep
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::pick;
+/// # use serde_json::json;
+/// assert_eq!(pick(json!({"a": 1, "b": 2}), json!(["x"])), json!({}));
+/// ```
 pub fn pick(object: Value, paths: Value) -> Value {
     let mut out = Map::new();
     if let (Value::Object(o), Value::Array(keys)) = (&object, &paths) {
@@ -31,7 +38,7 @@ pub fn pick(object: Value, paths: Value) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -43,10 +50,10 @@ pub fn pick(object: Value, paths: Value) -> Value {
 #[macro_export]
 macro_rules! pick {
     () => {
-        json!({})
+        $crate::lib::json!({})
     };
     ($a:expr $(,)*) => {
-        json!({})
+        $crate::lib::json!({})
     };
     ($a:expr, $b:expr $(,)*) => {
         $crate::pick($a, $b)

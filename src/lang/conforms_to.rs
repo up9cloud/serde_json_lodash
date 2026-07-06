@@ -7,6 +7,13 @@ pub type Conform<'a> = (&'a str, fn(&Value) -> bool);
 ///
 /// `source` maps property names to predicates, since predicates cannot be
 /// stored inside a `serde_json::Value`
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::conforms_to;
+/// # use serde_json::json;
+/// assert_eq!(conforms_to(&json!({}), vec![("a", |_: &serde_json::Value| true)]), false);
+/// ```
 pub fn conforms_to(object: &Value, source: Vec<Conform>) -> bool {
     for (key, predicate) in source {
         match object.get(key) {
@@ -39,7 +46,7 @@ pub fn conforms_to(object: &Value, source: Vec<Conform>) -> bool {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;

@@ -3,6 +3,13 @@ use crate::lib::Value;
 /// See lodash [isFinite](https://lodash.com/docs/#isFinite)
 ///
 /// serde_json numbers are always finite, so this is a number type check
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::is_finite;
+/// # use serde_json::json;
+/// assert_eq!(is_finite(&json!(3)), true);
+/// ```
 pub fn is_finite(v: &Value) -> bool {
     v.is_number()
 }
@@ -19,7 +26,7 @@ pub fn is_finite(v: &Value) -> bool {
 /// assert_eq!(is_finite!(&json!("3")), false);
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;

@@ -3,6 +3,13 @@ use crate::lib::{json, Value};
 /// See lodash [takeRightWhile](https://lodash.com/docs/#takeRightWhile)
 ///
 /// Takes elements from the end while `predicate` returns `true`
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::take_right_while;
+/// # use serde_json::json;
+/// assert_eq!(take_right_while(json!([1, 2, 3, 4]), |n| n.as_i64().unwrap() > 2), json!([3, 4]));
+/// ```
 pub fn take_right_while(array: Value, predicate: fn(&Value) -> bool) -> Value {
     match array {
         Value::Array(vec) => {
@@ -33,7 +40,7 @@ pub fn take_right_while(array: Value, predicate: fn(&Value) -> bool) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -45,10 +52,10 @@ pub fn take_right_while(array: Value, predicate: fn(&Value) -> bool) -> Value {
 #[macro_export]
 macro_rules! take_right_while {
     () => {
-        json!([])
+        $crate::lib::json!([])
     };
     ($a:expr $(,)*) => {
-        json!([])
+        $crate::lib::json!([])
     };
     ($a:expr, $b:expr $(,)*) => {
         $crate::take_right_while($a, $b)

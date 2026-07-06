@@ -13,6 +13,13 @@ pub(crate) fn shuffle_vec(mut vec: Vec<Value>) -> Vec<Value> {
 }
 
 /// See lodash [shuffle](https://lodash.com/docs/#shuffle)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::shuffle;
+/// # use serde_json::json;
+/// assert_eq!(shuffle(json!([])), json!([]));
+/// ```
 pub fn shuffle(collection: Value) -> Value {
     Value::Array(shuffle_vec(collection_values(&collection)))
 }
@@ -28,7 +35,7 @@ pub fn shuffle(collection: Value) -> Value {
 /// assert_eq!(s.as_array().unwrap().len(), 4);
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -40,7 +47,7 @@ pub fn shuffle(collection: Value) -> Value {
 #[macro_export]
 macro_rules! shuffle {
     () => {
-        json!([])
+        $crate::lib::json!([])
     };
     ($a:expr $(,)*) => {
         $crate::shuffle($a)

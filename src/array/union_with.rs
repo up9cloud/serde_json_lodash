@@ -3,6 +3,13 @@ use crate::lib::Value;
 /// See lodash [unionWith](https://lodash.com/docs/#unionWith)
 ///
 /// `comparator` is invoked to compare elements for uniqueness
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::union_with;
+/// # use serde_json::json;
+/// assert_eq!(union_with(json!([1, 2]), json!([2, 3]), |a, b| a == b), json!([1, 2, 3]));
+/// ```
 pub fn union_with(array: Value, other: Value, comparator: fn(&Value, &Value) -> bool) -> Value {
     let mut all = vec![];
     if let Value::Array(vec) = array {
@@ -33,7 +40,7 @@ pub fn union_with(array: Value, other: Value, comparator: fn(&Value, &Value) -> 
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -44,7 +51,7 @@ pub fn union_with(array: Value, other: Value, comparator: fn(&Value, &Value) -> 
 #[macro_export]
 macro_rules! union_with {
     () => {
-        json!([])
+        $crate::lib::json!([])
     };
     ($a:expr $(,)*) => {
         $crate::to_array($a)

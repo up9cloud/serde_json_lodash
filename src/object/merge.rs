@@ -80,6 +80,13 @@ fn merge_2_object(mut object: Value, source: Value) -> Value {
     object
 }
 /// See lodash [merge](https://lodash.com/docs/#merge)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::merge;
+/// # use serde_json::json;
+/// assert_eq!(merge(json!({"a": 1}), json!({"b": 2})), json!({"a": 1, "b": 2}));
+/// ```
 pub fn merge(object: Value, source: Value) -> Value {
     if object.is_object() && source.is_object() {
         return merge_2_object(object, source);
@@ -114,7 +121,7 @@ pub fn merge(object: Value, source: Value) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -136,10 +143,10 @@ pub fn merge(object: Value, source: Value) -> Value {
 #[macro_export]
 macro_rules! merge {
     () => (
-        json!({})
+        $crate::lib::json!({})
     );
     ($a:expr $(,)*) => {
-        $crate::merge($a, json!)
+        $crate::merge($a, $crate::lib::json!)
     };
     ($a:expr, $b:expr $(,)*) => {
         $crate::merge($a, $b)

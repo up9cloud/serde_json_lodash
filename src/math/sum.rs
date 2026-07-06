@@ -13,6 +13,13 @@ pub(crate) fn sum_values(vec: Vec<Value>) -> Value {
 }
 
 /// See lodash [sum](https://lodash.com/docs/#sum)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::sum;
+/// # use serde_json::json;
+/// assert_eq!(sum(json!([4, 2, 8, 6])), json!(20));
+/// ```
 pub fn sum(array: Value) -> Value {
     match array {
         Value::Array(vec) => sum_values(vec),
@@ -30,7 +37,7 @@ pub fn sum(array: Value) -> Value {
 /// assert_eq!(sum!(json!([4, 2, 8, 6])), json!(20));
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -43,7 +50,7 @@ pub fn sum(array: Value) -> Value {
 #[macro_export]
 macro_rules! sum {
     () => {
-        json!(0)
+        $crate::lib::json!(0)
     };
     ($a:expr $(,)*) => {
         $crate::sum($a)

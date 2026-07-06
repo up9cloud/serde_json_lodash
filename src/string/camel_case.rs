@@ -2,6 +2,13 @@ use crate::lib::{json, Value};
 use crate::internal;
 
 /// `x_`/`_x` helper for [camel_case()]: takes a primitive argument and returns a primitive value.
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::x_camel_case_x;
+/// # use serde_json::json;
+/// assert_eq!(x_camel_case_x("Foo Bar"), "fooBar".to_owned());
+/// ```
 pub fn x_camel_case_x(s: &str) -> String {
     let mut out = String::new();
     for (i, w) in internal::compound_words(s).iter().enumerate() {
@@ -14,14 +21,35 @@ pub fn x_camel_case_x(s: &str) -> String {
     out
 }
 /// `x_` helper for [camel_case()]: takes a primitive argument instead of a [`Value`](crate::lib::Value).
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::x_camel_case;
+/// # use serde_json::json;
+/// assert_eq!(x_camel_case("Foo Bar"), json!("fooBar"));
+/// ```
 pub fn x_camel_case(s: &str) -> Value {
     json!(x_camel_case_x(s))
 }
 /// `_x` helper for [camel_case()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::camel_case_x;
+/// # use serde_json::json;
+/// assert_eq!(camel_case_x(json!("Foo Bar")), "fooBar".to_owned());
+/// ```
 pub fn camel_case_x(v: Value) -> String {
     x_camel_case_x(&crate::to_string_x(v))
 }
 /// See lodash [camelCase](https://lodash.com/docs/#camelCase)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::camel_case;
+/// # use serde_json::json;
+/// assert_eq!(camel_case(json!("Foo Bar")), json!("fooBar"));
+/// ```
 pub fn camel_case(v: Value) -> Value {
     json!(camel_case_x(v))
 }
@@ -47,7 +75,7 @@ pub fn camel_case(v: Value) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -62,7 +90,7 @@ pub fn camel_case(v: Value) -> Value {
 #[macro_export]
 macro_rules! camel_case {
     () => {
-        json!("")
+        $crate::lib::json!("")
     };
     ($a:expr $(,)*) => {
         $crate::camel_case($a)
@@ -73,9 +101,16 @@ macro_rules! camel_case {
 }
 /// Based on [x_camel_case()]
 #[macro_export]
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(x_camel_case!("Foo Bar"), json!("fooBar"));
+/// ```
 macro_rules! x_camel_case {
     () => {
-        json!("")
+        $crate::lib::json!("")
     };
     ($a:expr $(,)*) => {
         $crate::x_camel_case($a)
@@ -86,6 +121,13 @@ macro_rules! x_camel_case {
 }
 /// Based on [camel_case_x()]
 #[macro_export]
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(camel_case_x!(json!("Foo Bar")), "fooBar".to_owned());
+/// ```
 macro_rules! camel_case_x {
     () => {
         "".to_owned()
@@ -99,6 +141,13 @@ macro_rules! camel_case_x {
 }
 /// Based on [x_camel_case_x()]
 #[macro_export]
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(x_camel_case_x!("Foo Bar"), "fooBar".to_owned());
+/// ```
 macro_rules! x_camel_case_x {
     () => {
         "".to_owned()

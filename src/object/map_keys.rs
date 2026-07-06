@@ -5,6 +5,13 @@ use crate::to_string_x;
 ///
 /// `iteratee` is invoked with `(value, key)` and its result (coerced to a
 /// string) becomes the new key
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::map_keys;
+/// # use serde_json::json;
+/// assert_eq!(map_keys(json!({"a": 1}), |v, k| json!(format!("{}{}", k, v))), json!({"a1": 1}));
+/// ```
 pub fn map_keys(object: Value, iteratee: fn(&Value, &str) -> Value) -> Value {
     match object {
         Value::Object(o) => {
@@ -32,7 +39,7 @@ pub fn map_keys(object: Value, iteratee: fn(&Value, &str) -> Value) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -43,7 +50,7 @@ pub fn map_keys(object: Value, iteratee: fn(&Value, &str) -> Value) -> Value {
 #[macro_export]
 macro_rules! map_keys {
     () => {
-        json!({})
+        $crate::lib::json!({})
     };
     ($a:expr $(,)*) => {
         $crate::to_plain_object($a)

@@ -1,6 +1,13 @@
 use crate::lib::Value;
 
 /// See lodash [isNumber](https://lodash.com/docs/#isNumber)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::is_number;
+/// # use serde_json::json;
+/// assert_eq!(is_number(&json!(3)), true);
+/// ```
 pub fn is_number(v: &Value) -> bool {
     v.is_number()
 }
@@ -17,7 +24,7 @@ pub fn is_number(v: &Value) -> bool {
 /// assert_eq!(is_number!(&json!("3")), false);
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;

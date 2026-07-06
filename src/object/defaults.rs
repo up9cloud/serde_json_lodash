@@ -4,6 +4,13 @@ use crate::lib::{json, Value};
 ///
 /// Assigns `source` properties for keys that resolve to `undefined`/missing
 /// in `object`
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::defaults;
+/// # use serde_json::json;
+/// assert_eq!(defaults(json!({"a": null}), json!({"a": 5})), json!({"a": 5}));
+/// ```
 pub fn defaults(object: Value, source: Value) -> Value {
     match (object, source) {
         (Value::Object(mut o), Value::Object(s)) => {
@@ -37,7 +44,7 @@ pub fn defaults(object: Value, source: Value) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -49,7 +56,7 @@ pub fn defaults(object: Value, source: Value) -> Value {
 #[macro_export]
 macro_rules! defaults {
     () => {
-        json!({})
+        $crate::lib::json!({})
     };
     ($a:expr $(,)*) => {
         $crate::to_plain_object($a)

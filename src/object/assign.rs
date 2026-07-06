@@ -3,6 +3,13 @@ use crate::lib::{json, Value};
 /// See lodash [assign](https://lodash.com/docs/#assign)
 ///
 /// Copies the own enumerable properties of `source` onto `object` (shallow)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::assign;
+/// # use serde_json::json;
+/// assert_eq!(assign(json!({"a": 1}), json!({"a": 2})), json!({"a": 2}));
+/// ```
 pub fn assign(object: Value, source: Value) -> Value {
     match (object, source) {
         (Value::Object(mut o), Value::Object(s)) => {
@@ -30,7 +37,7 @@ pub fn assign(object: Value, source: Value) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -42,7 +49,7 @@ pub fn assign(object: Value, source: Value) -> Value {
 #[macro_export]
 macro_rules! assign {
     () => {
-        json!({})
+        $crate::lib::json!({})
     };
     ($a:expr $(,)*) => {
         $crate::to_plain_object($a)

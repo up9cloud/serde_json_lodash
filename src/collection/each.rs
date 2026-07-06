@@ -5,6 +5,13 @@ use crate::collection::collect::collection_values;
 ///
 /// Invokes `iteratee` for each element; returning `false` stops iteration.
 /// Returns `collection`
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::each;
+/// # use serde_json::json;
+/// assert_eq!(each(json!([1, 2, 3]), |_| true), json!([1, 2, 3]));
+/// ```
 pub fn each(collection: Value, iteratee: fn(&Value) -> bool) -> Value {
     for v in collection_values(&collection) {
         if !iteratee(&v) {
@@ -25,7 +32,7 @@ pub fn each(collection: Value, iteratee: fn(&Value) -> bool) -> Value {
 /// assert_eq!(each!(array.clone(), |n| { println!("{}", n); true }), array);
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -36,7 +43,7 @@ pub fn each(collection: Value, iteratee: fn(&Value) -> bool) -> Value {
 #[macro_export]
 macro_rules! each {
     () => {
-        serde_json::json!(null)
+        $crate::lib::json!(null)
     };
     ($a:expr $(,)*) => {
         $a

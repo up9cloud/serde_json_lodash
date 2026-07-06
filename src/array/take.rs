@@ -1,6 +1,13 @@
 use crate::lib::{json, Value};
 
 /// See lodash [take](https://lodash.com/docs/#take)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::take;
+/// # use serde_json::json;
+/// assert_eq!(take(json!([1, 2, 3]), 2), json!([1, 2]));
+/// ```
 pub fn take(array: Value, n: usize) -> Value {
     match array {
         Value::Array(mut vec) => {
@@ -24,7 +31,7 @@ pub fn take(array: Value, n: usize) -> Value {
 /// assert_eq!(take!(json!([1, 2, 3]), 0), json!([]));
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -35,7 +42,7 @@ pub fn take(array: Value, n: usize) -> Value {
 #[macro_export]
 macro_rules! take {
     () => {
-        json!([])
+        $crate::lib::json!([])
     };
     ($a:expr $(,)*) => {
         $crate::take($a, 1)

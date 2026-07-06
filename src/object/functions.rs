@@ -3,6 +3,13 @@ use crate::lib::{json, Value};
 /// See lodash [functions](https://lodash.com/docs/#functions)
 ///
 /// JSON values never hold functions, so this always returns an empty array
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::functions;
+/// # use serde_json::json;
+/// assert_eq!(functions(&json!({ "a": 1, "b": 2 })), json!([]));
+/// ```
 pub fn functions(_object: &Value) -> Value {
     json!([])
 }
@@ -18,7 +25,7 @@ pub fn functions(_object: &Value) -> Value {
 /// assert_eq!(functions!(&json!({ "a": 1, "b": 2 })), json!([]));
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -29,7 +36,7 @@ pub fn functions(_object: &Value) -> Value {
 #[macro_export]
 macro_rules! functions {
     () => {
-        json!([])
+        $crate::lib::json!([])
     };
     ($a:expr $(,)*) => {
         $crate::functions($a)

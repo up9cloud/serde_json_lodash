@@ -3,6 +3,13 @@ use crate::lib::{Value, Map};
 /// See lodash [pickBy](https://lodash.com/docs/#pickBy)
 ///
 /// `predicate` is invoked with each property value
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::pick_by;
+/// # use serde_json::json;
+/// assert_eq!(pick_by(json!({"a": 1, "b": "2"}), |v| v.is_number()), json!({"a": 1}));
+/// ```
 pub fn pick_by(object: Value, predicate: fn(&Value) -> bool) -> Value {
     let mut out = Map::new();
     if let Value::Object(o) = object {
@@ -29,7 +36,7 @@ pub fn pick_by(object: Value, predicate: fn(&Value) -> bool) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -40,7 +47,7 @@ pub fn pick_by(object: Value, predicate: fn(&Value) -> bool) -> Value {
 #[macro_export]
 macro_rules! pick_by {
     () => {
-        json!({})
+        $crate::lib::json!({})
     };
     ($a:expr $(,)*) => {
         $crate::pick_by($a, |v| !v.is_null())

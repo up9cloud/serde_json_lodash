@@ -1,6 +1,13 @@
 use crate::lib::Value;
 
 /// See lodash [isNil](https://lodash.com/docs/#isNil)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::is_nil;
+/// # use serde_json::json;
+/// assert_eq!(is_nil(&json!(null)), true);
+/// ```
 pub fn is_nil(v: &Value) -> bool {
     v.is_null()
 }
@@ -16,7 +23,7 @@ pub fn is_nil(v: &Value) -> bool {
 /// assert_eq!(is_nil!(), true); // void 0 => undefined => null in this crate
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;

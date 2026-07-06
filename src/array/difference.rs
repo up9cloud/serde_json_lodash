@@ -1,6 +1,13 @@
 use crate::lib::{Value};
 
 /// See lodash [difference](https://lodash.com/docs/#difference)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::difference;
+/// # use serde_json::json;
+/// assert_eq!(difference(json!([2,1]), json!([2,3])), json!([1]));
+/// ```
 pub fn difference(v1: Value, v2: Value) -> Value {
     let mut result = vec![];
     let v1 = match v1 {
@@ -61,7 +68,7 @@ pub fn difference(v1: Value, v2: Value) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -78,10 +85,10 @@ pub fn difference(v1: Value, v2: Value) -> Value {
 #[macro_export]
 macro_rules! difference {
     () => {
-        json!([])
+        $crate::lib::json!([])
     };
     ($a:expr $(,)*) => {
-        $crate::difference($a, json!([]))
+        $crate::difference($a, $crate::lib::json!([]))
     };
     ($a:expr, $b:expr $(,)*) => {
         $crate::difference($a, $b)

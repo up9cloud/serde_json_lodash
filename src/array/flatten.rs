@@ -1,6 +1,13 @@
 use crate::lib::{json, Value};
 
 /// `x_`/`_x` helper for [flatten()]: takes a primitive argument and returns a primitive value.
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::x_flatten_x;
+/// # use serde_json::json;
+/// assert_eq!(x_flatten_x(vec![json!(1), json!([2, 3])]), vec![json!(1), json!(2), json!(3)]);
+/// ```
 pub fn x_flatten_x(vec: Vec<Value>) -> Vec<Value> {
     if vec.is_empty() {
         return vec![];
@@ -25,6 +32,13 @@ pub fn x_flatten_x(vec: Vec<Value>) -> Vec<Value> {
     result
 }
 /// See lodash [flatten](https://lodash.com/docs/#flatten)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::flatten;
+/// # use serde_json::json;
+/// assert_eq!(flatten(json!([1, [2, [3, [4]], 5]])), json!([1, 2, [3, [4]], 5]));
+/// ```
 pub fn flatten(v: Value) -> Value {
     match v {
         Value::Null => json!([]),
@@ -57,7 +71,7 @@ pub fn flatten(v: Value) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -76,12 +90,33 @@ pub fn flatten(v: Value) -> Value {
 #[macro_export]
 macro_rules! flatten {
     () => {
-        json!([])
+        $crate::lib::json!([])
     };
     ($a:expr $(,)*) => {
         $crate::flatten($a)
     };
     ($a:expr, $($rest:tt)*) => {
         $crate::flatten($a)
+    };
+}
+
+/// Based on [x_flatten_x()]
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(x_flatten_x!(vec![json!(1), json!([2, 3])]), vec![json!(1), json!(2), json!(3)]);
+/// ```
+#[macro_export]
+macro_rules! x_flatten_x {
+    () => {
+        $crate::x_flatten_x(vec![])
+    };
+    ($a:expr $(,)*) => {
+        $crate::x_flatten_x($a)
+    };
+    ($a:expr, $($rest:tt)*) => {
+        $crate::x_flatten_x($a)
     };
 }

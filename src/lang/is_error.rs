@@ -3,6 +3,13 @@ use crate::lib::Value;
 /// See lodash [isError](https://lodash.com/docs/#isError)
 ///
 /// There is no such type in JSON, so it always returns `false`
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::is_error;
+/// # use serde_json::json;
+/// assert_eq!(is_error(&json!({})), false);
+/// ```
 pub fn is_error(_v: &Value) -> bool {
     false
 }
@@ -19,7 +26,7 @@ pub fn is_error(_v: &Value) -> bool {
 /// assert_eq!(is_error!(&json!("a")), false);
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;

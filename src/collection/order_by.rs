@@ -7,6 +7,13 @@ use std::cmp::Ordering;
 ///
 /// `iteratee` maps each element to a sort key; `ascending` picks the
 /// direction
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::order_by;
+/// # use serde_json::json;
+/// assert_eq!(order_by(json!([1, 3, 2]), |v| v.clone(), false), json!([3, 2, 1]));
+/// ```
 pub fn order_by(collection: Value, iteratee: fn(&Value) -> Value, ascending: bool) -> Value {
     let mut vec = collection_values(&collection);
     vec.sort_by(|a, b| {
@@ -36,7 +43,7 @@ pub fn order_by(collection: Value, iteratee: fn(&Value) -> Value, ascending: boo
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -48,7 +55,7 @@ pub fn order_by(collection: Value, iteratee: fn(&Value) -> Value, ascending: boo
 #[macro_export]
 macro_rules! order_by {
     () => {
-        json!([])
+        $crate::lib::json!([])
     };
     ($a:expr $(,)*) => {
         $crate::sort_by($a, |v| v.clone())

@@ -4,6 +4,13 @@ use crate::lib::Value;
 ///
 /// *Note:* JS shallow-copy semantic (sharing references) cannot be expressed
 /// with owned `serde_json::Value`, so this is effectively a full copy
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::clone;
+/// # use serde_json::json;
+/// assert_eq!(clone(&json!(null)), json!(null));
+/// ```
 pub fn clone(v: &Value) -> Value {
     v.clone()
 }
@@ -20,7 +27,7 @@ pub fn clone(v: &Value) -> Value {
 /// assert_eq!(shallow[0], objects[0]);
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -32,7 +39,7 @@ pub fn clone(v: &Value) -> Value {
 #[macro_export]
 macro_rules! clone {
     () => {
-        json!(null)
+        $crate::lib::json!(null)
     };
     ($a:expr $(,)*) => {
         $crate::clone($a)

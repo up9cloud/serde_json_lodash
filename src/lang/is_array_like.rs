@@ -3,6 +3,13 @@ use crate::lib::Value;
 /// See lodash [isArrayLike](https://lodash.com/docs/#isArrayLike)
 ///
 /// In JSON world only arrays and strings have a length
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::is_array_like;
+/// # use serde_json::json;
+/// assert_eq!(is_array_like(&json!([1, 2, 3])), true);
+/// ```
 pub fn is_array_like(v: &Value) -> bool {
     v.is_array() || v.is_string()
 }
@@ -19,7 +26,7 @@ pub fn is_array_like(v: &Value) -> bool {
 /// assert_eq!(is_array_like!(&json!({})), false);
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;

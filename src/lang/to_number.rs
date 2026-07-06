@@ -5,6 +5,13 @@ use crate::internal::{value_to_option_number, value_nan};
 ///
 /// Unconvertible values return `Value::Null` (there is no `NaN` in
 /// serde_json)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::to_number;
+/// # use serde_json::json;
+/// assert_eq!(to_number(json!(3.2)), json!(3.2));
+/// ```
 pub fn to_number(v: Value) -> Value {
     match value_to_option_number(v) {
         Some(n) => Value::Number(n),
@@ -24,7 +31,7 @@ pub fn to_number(v: Value) -> Value {
 /// assert_eq!(to_number!(json!("3.2")), json!(3.2));
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -37,7 +44,7 @@ pub fn to_number(v: Value) -> Value {
 #[macro_export]
 macro_rules! to_number {
     () => {
-        json!(null)
+        $crate::lib::json!(null)
     };
     ($a:expr $(,)*) => {
         $crate::to_number($a)

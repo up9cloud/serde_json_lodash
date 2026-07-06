@@ -1,6 +1,13 @@
 use crate::lib::{Value};
 
 /// See lodash [concat](https://lodash.com/docs/#concat)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::concat;
+/// # use serde_json::json;
+/// assert_eq!(concat(json!(null), json!(null)), json!([null,null]));
+/// ```
 pub fn concat(v: Value, v2: Value) -> Value {
     let mut result = match v {
         Value::Null => vec![v],
@@ -44,7 +51,7 @@ pub fn concat(v: Value, v2: Value) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -60,10 +67,10 @@ pub fn concat(v: Value, v2: Value) -> Value {
 #[macro_export]
 macro_rules! concat {
     () => (
-        json!([])
+        $crate::lib::json!([])
     );
     ($a:expr $(,)*) => {
-        $crate::concat($a, json!([]))
+        $crate::concat($a, $crate::lib::json!([]))
     };
     ($a:expr, $b:expr $(,)*) => {
         $crate::concat($a, $b)

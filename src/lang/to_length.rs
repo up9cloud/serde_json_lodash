@@ -1,10 +1,24 @@
 use crate::lib::{json, Value};
 
 /// `_x` helper for [to_length()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::to_length_x;
+/// # use serde_json::json;
+/// assert_eq!(to_length_x(json!(3.2)), 3);
+/// ```
 pub fn to_length_x(v: Value) -> u64 {
     crate::to_integer_x(v).clamp(0, 4294967295) as u64
 }
 /// See lodash [toLength](https://lodash.com/docs/#toLength)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::to_length;
+/// # use serde_json::json;
+/// assert_eq!(to_length(json!(3.2)), json!(3));
+/// ```
 pub fn to_length(v: Value) -> Value {
     json!(to_length_x(v))
 }
@@ -21,7 +35,7 @@ pub fn to_length(v: Value) -> Value {
 /// assert_eq!(to_length!(json!("3.2")), json!(3));
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -33,12 +47,33 @@ pub fn to_length(v: Value) -> Value {
 #[macro_export]
 macro_rules! to_length {
     () => {
-        json!(0)
+        $crate::lib::json!(0)
     };
     ($a:expr $(,)*) => {
         $crate::to_length($a)
     };
     ($a:expr, $($rest:tt)*) => {
         $crate::to_length($a)
+    };
+}
+
+/// Based on [to_length_x()]
+#[macro_export]
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(to_length_x!(json!(3.2)), 3);
+/// ```
+macro_rules! to_length_x {
+    () => {
+        0
+    };
+    ($a:expr $(,)*) => {
+        $crate::to_length_x($a)
+    };
+    ($a:expr, $($rest:tt)*) => {
+        $crate::to_length_x($a)
     };
 }

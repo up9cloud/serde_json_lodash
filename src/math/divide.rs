@@ -2,6 +2,13 @@ use crate::lib::Value;
 use crate::internal::{f64_to_number, value_nan, value_to_option_number};
 
 /// See lodash [divide](https://lodash.com/docs/#divide)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::divide;
+/// # use serde_json::json;
+/// assert_eq!(divide(json!(6), json!(4)), json!(1.5));
+/// ```
 pub fn divide(dividend: Value, divisor: Value) -> Value {
     match (
         value_to_option_number(dividend).and_then(|n| n.as_f64()),
@@ -28,7 +35,7 @@ pub fn divide(dividend: Value, divisor: Value) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -41,7 +48,7 @@ pub fn divide(dividend: Value, divisor: Value) -> Value {
 #[macro_export]
 macro_rules! divide {
     () => {
-        json!(1)
+        $crate::lib::json!(1)
     };
     ($a:expr $(,)*) => {
         $crate::to_number($a)

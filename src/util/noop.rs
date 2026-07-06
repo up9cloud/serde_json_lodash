@@ -3,6 +3,13 @@ use crate::lib::{json, Value};
 /// See lodash [noop](https://lodash.com/docs/#noop)
 ///
 /// Always returns `Value::Null` (js `undefined`), ignoring any arguments
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::noop;
+/// # use serde_json::json;
+/// assert_eq!(noop(), json!(null));
+/// ```
 pub fn noop() -> Value {
     json!(null)
 }
@@ -17,7 +24,7 @@ pub fn noop() -> Value {
 /// assert_eq!(noop!(), json!(null));
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -28,7 +35,7 @@ pub fn noop() -> Value {
 #[macro_export]
 macro_rules! noop {
     () => {
-        serde_json::json!(null)
+        $crate::lib::json!(null)
     };
     ($($rest:tt)*) => {
         $crate::noop()

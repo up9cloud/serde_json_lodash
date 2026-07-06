@@ -4,6 +4,13 @@ use crate::collection::collect::collection_values;
 /// See lodash [reduceRight](https://lodash.com/docs/#reduceRight)
 ///
 /// Like [reduce()](fn@crate::reduce) but iterates from the end
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::reduce_right;
+/// # use serde_json::json;
+/// assert_eq!(reduce_right(json!([[0, 1], [2, 3], [4, 5]]), |mut acc, n| {     let a = acc.as_array_mut().unwrap();     for x in n.as_array().unwrap() { a.push(x.clone()); }     acc   }, json!([])), json!([4, 5, 2, 3, 0, 1]));
+/// ```
 pub fn reduce_right(
     collection: Value,
     iteratee: fn(Value, &Value) -> Value,
@@ -32,7 +39,7 @@ pub fn reduce_right(
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -42,7 +49,7 @@ pub fn reduce_right(
 #[macro_export]
 macro_rules! reduce_right {
     () => {
-        serde_json::json!(null)
+        $crate::lib::json!(null)
     };
     ($a:expr $(,)*) => {
         $a

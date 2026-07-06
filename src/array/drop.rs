@@ -1,6 +1,13 @@
 use crate::lib::{json, Value};
 
 /// See lodash [drop](https://lodash.com/docs/#drop)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::drop;
+/// # use serde_json::json;
+/// assert_eq!(drop(json!([1, 2, 3]), 2), json!([3]));
+/// ```
 pub fn drop(v: Value, n: usize) -> Value {
     match v {
         Value::Null => json!([]),
@@ -43,7 +50,7 @@ pub fn drop(v: Value, n: usize) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -60,7 +67,7 @@ pub fn drop(v: Value, n: usize) -> Value {
 #[macro_export]
 macro_rules! drop {
     () => {
-        json!([])
+        $crate::lib::json!([])
     };
     ($a:expr $(,)*) => {
         $crate::drop($a, 1)

@@ -4,6 +4,13 @@ use crate::collection::collect::collection_values;
 /// See lodash [partition](https://lodash.com/docs/#partition)
 ///
 /// Returns `[matched, unmatched]`
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::partition;
+/// # use serde_json::json;
+/// assert_eq!(partition(json!([1, 2, 3, 4]), |n| n.as_i64().unwrap() % 2 == 1), json!([[1, 3], [2, 4]]));
+/// ```
 pub fn partition(collection: Value, predicate: fn(&Value) -> bool) -> Value {
     let (yes, no): (Vec<Value>, Vec<Value>) = collection_values(&collection)
         .into_iter()
@@ -24,7 +31,7 @@ pub fn partition(collection: Value, predicate: fn(&Value) -> bool) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -35,7 +42,7 @@ pub fn partition(collection: Value, predicate: fn(&Value) -> bool) -> Value {
 #[macro_export]
 macro_rules! partition {
     () => {
-        json!([[], []])
+        $crate::lib::json!([[], []])
     };
     ($a:expr $(,)*) => {
         $crate::partition($a, |_| false)

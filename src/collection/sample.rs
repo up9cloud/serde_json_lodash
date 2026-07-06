@@ -5,6 +5,13 @@ use crate::collection::collect::collection_values;
 /// See lodash [sample](https://lodash.com/docs/#sample)
 ///
 /// Returns a random element, or `Null` for an empty collection
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::sample;
+/// # use serde_json::json;
+/// assert_eq!(sample(json!([])), json!(null));
+/// ```
 pub fn sample(collection: Value) -> Value {
     let vec = collection_values(&collection);
     if vec.is_empty() {
@@ -25,7 +32,7 @@ pub fn sample(collection: Value) -> Value {
 /// assert!(json!([1, 2, 3, 4]).as_array().unwrap().contains(&picked));
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -37,7 +44,7 @@ pub fn sample(collection: Value) -> Value {
 #[macro_export]
 macro_rules! sample {
     () => {
-        serde_json::json!(null)
+        $crate::lib::json!(null)
     };
     ($a:expr $(,)*) => {
         $crate::sample($a)

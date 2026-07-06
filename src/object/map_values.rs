@@ -3,6 +3,13 @@ use crate::lib::{json, Value};
 /// See lodash [mapValues](https://lodash.com/docs/#mapValues)
 ///
 /// `iteratee` is invoked with each property value
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::map_values;
+/// # use serde_json::json;
+/// assert_eq!(map_values(json!({"a": 1}), |v| v.clone()), json!({"a": 1}));
+/// ```
 pub fn map_values(object: Value, iteratee: fn(&Value) -> Value) -> Value {
     match object {
         Value::Object(o) => {
@@ -29,7 +36,7 @@ pub fn map_values(object: Value, iteratee: fn(&Value) -> Value) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -40,7 +47,7 @@ pub fn map_values(object: Value, iteratee: fn(&Value) -> Value) -> Value {
 #[macro_export]
 macro_rules! map_values {
     () => {
-        json!({})
+        $crate::lib::json!({})
     };
     ($a:expr $(,)*) => {
         $crate::to_plain_object($a)

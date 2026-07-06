@@ -4,6 +4,13 @@ use crate::lib::Value;
 ///
 /// *Note:* JS reference identity cannot be expressed with owned
 /// `serde_json::Value`, so this is a value (deep) comparison
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::eq;
+/// # use serde_json::json;
+/// assert_eq!(eq(&json!("a"), &json!("a")), true);
+/// ```
 pub fn eq(a: &Value, b: &Value) -> bool {
     a == b
 }
@@ -22,7 +29,7 @@ pub fn eq(a: &Value, b: &Value) -> bool {
 /// assert_eq!(eq!(&json!("a"), &json!("a")), true);
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -37,7 +44,7 @@ macro_rules! eq {
         true
     };
     ($a:expr $(,)*) => {
-        $crate::eq($a, &serde_json::json!(null))
+        $crate::eq($a, &$crate::lib::json!(null))
     };
     ($a:expr, $b:expr $(,)*) => {
         $crate::eq($a, $b)

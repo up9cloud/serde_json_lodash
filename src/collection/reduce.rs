@@ -5,6 +5,13 @@ use crate::collection::collect::collection_values;
 ///
 /// `iteratee` receives `(accumulator, value)` and returns the next
 /// accumulator
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::reduce;
+/// # use serde_json::json;
+/// assert_eq!(reduce(json!([1, 2, 3]), |acc, n| json!(acc.as_i64().unwrap() + n.as_i64().unwrap()), json!(0)), json!(6));
+/// ```
 pub fn reduce(
     collection: Value,
     iteratee: fn(Value, &Value) -> Value,
@@ -28,7 +35,7 @@ pub fn reduce(
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -42,7 +49,7 @@ pub fn reduce(
 #[macro_export]
 macro_rules! reduce {
     () => {
-        serde_json::json!(null)
+        $crate::lib::json!(null)
     };
     ($a:expr $(,)*) => {
         $a

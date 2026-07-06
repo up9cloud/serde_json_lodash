@@ -1,6 +1,13 @@
 use crate::lib::Value;
 
 /// See lodash [isSafeInteger](https://lodash.com/docs/#isSafeInteger)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::is_safe_integer;
+/// # use serde_json::json;
+/// assert_eq!(is_safe_integer(&json!(3)), true);
+/// ```
 pub fn is_safe_integer(v: &Value) -> bool {
     match v {
         Value::Number(n) => match n.as_i64() {
@@ -25,7 +32,7 @@ pub fn is_safe_integer(v: &Value) -> bool {
 /// assert_eq!(is_safe_integer!(&json!("3")), false);
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;

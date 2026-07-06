@@ -4,6 +4,13 @@ use crate::to_string_x;
 /// See lodash [invert](https://lodash.com/docs/#invert)
 ///
 /// Values are coerced to strings to become the new keys
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::invert;
+/// # use serde_json::json;
+/// assert_eq!(invert(json!(null)), json!({}));
+/// ```
 pub fn invert(v: Value) -> Value {
     let mut out = Map::new();
     match v {
@@ -33,7 +40,7 @@ pub fn invert(v: Value) -> Value {
 /// assert_eq!(invert!(object), json!({ "1": "c", "2": "b" }));
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -45,7 +52,7 @@ pub fn invert(v: Value) -> Value {
 #[macro_export]
 macro_rules! invert {
     () => {
-        json!({})
+        $crate::lib::json!({})
     };
     ($a:expr $(,)*) => {
         $crate::invert($a)

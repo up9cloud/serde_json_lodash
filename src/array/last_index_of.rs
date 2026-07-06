@@ -1,6 +1,13 @@
 use crate::lib::{Value};
 
 /// See lodash [lastIndexOf](https://lodash.com/docs/#lastIndexOf)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::last_index_of;
+/// # use serde_json::json;
+/// assert_eq!(last_index_of(json!([1, 2, 1, 2]), json!(2), 2), 1);
+/// ```
 pub fn last_index_of(array: Value, value: Value, from_index: usize) -> isize {
     match value {
         Value::Null | Value::Bool(_) | Value::Number(_) | Value::String(_) => match array {
@@ -39,7 +46,7 @@ pub fn last_index_of(array: Value, value: Value, from_index: usize) -> isize {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;

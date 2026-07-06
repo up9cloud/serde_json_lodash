@@ -5,6 +5,13 @@ use crate::collection::collect::collection_values;
 /// See lodash [keyBy](https://lodash.com/docs/#keyBy)
 ///
 /// `iteratee` maps each element to its key (coerced to a string)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::key_by;
+/// # use serde_json::json;
+/// assert_eq!(key_by(json!(["a", "b"]), |v| v.clone()), json!({"a": "a", "b": "b"}));
+/// ```
 pub fn key_by(collection: Value, iteratee: fn(&Value) -> Value) -> Value {
     let mut out: Map<String, Value> = Map::new();
     for v in collection_values(&collection) {
@@ -34,7 +41,7 @@ pub fn key_by(collection: Value, iteratee: fn(&Value) -> Value) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -45,7 +52,7 @@ pub fn key_by(collection: Value, iteratee: fn(&Value) -> Value) -> Value {
 #[macro_export]
 macro_rules! key_by {
     () => {
-        json!({})
+        $crate::lib::json!({})
     };
     ($a:expr $(,)*) => {
         $crate::key_by($a, |v| v.clone())

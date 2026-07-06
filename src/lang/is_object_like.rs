@@ -1,6 +1,13 @@
 use crate::lib::Value;
 
 /// See lodash [isObjectLike](https://lodash.com/docs/#isObjectLike)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::is_object_like;
+/// # use serde_json::json;
+/// assert_eq!(is_object_like(&json!({})), true);
+/// ```
 pub fn is_object_like(v: &Value) -> bool {
     v.is_object() || v.is_array()
 }
@@ -17,7 +24,7 @@ pub fn is_object_like(v: &Value) -> bool {
 /// assert_eq!(is_object_like!(&json!(null)), false);
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;

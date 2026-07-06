@@ -1,6 +1,13 @@
 use crate::lib::{Value};
 
 /// See lodash [pull](https://lodash.com/docs/#pull)
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::pull;
+/// # use serde_json::json;
+/// assert_eq!(pull(json!([[]]), json!([])), json!([[]]));
+/// ```
 pub fn pull(mut array: Value, value: Value) -> Value {
     let new_vec = match array {
         Value::Null | Value::Bool(_) | Value::Number(_) | Value::String(_) | Value::Object(_) => {
@@ -39,7 +46,7 @@ pub fn pull(mut array: Value, value: Value) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -57,7 +64,7 @@ pub fn pull(mut array: Value, value: Value) -> Value {
 #[macro_export]
 macro_rules! pull {
     () => (
-        json!(null)
+        $crate::lib::json!(null)
     );
     ($a:expr $(,)*) => {
         $a

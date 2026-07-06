@@ -4,6 +4,13 @@ use crate::collection::collect::collection_values;
 /// See lodash [find](https://lodash.com/docs/#find)
 ///
 /// Returns the first matching element, or `Null` if none match
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::find;
+/// # use serde_json::json;
+/// assert_eq!(find(json!([1, 2, 3]), |n| n.as_i64().unwrap() > 1), json!(2));
+/// ```
 pub fn find(collection: Value, predicate: fn(&Value) -> bool) -> Value {
     collection_values(&collection)
         .into_iter()
@@ -24,7 +31,7 @@ pub fn find(collection: Value, predicate: fn(&Value) -> bool) -> Value {
 /// );
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -35,10 +42,10 @@ pub fn find(collection: Value, predicate: fn(&Value) -> bool) -> Value {
 #[macro_export]
 macro_rules! find {
     () => {
-        json!(null)
+        $crate::lib::json!(null)
     };
     ($a:expr $(,)*) => {
-        json!(null)
+        $crate::lib::json!(null)
     };
     ($a:expr, $b:expr $(,)*) => {
         $crate::find($a, $b)

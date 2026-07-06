@@ -4,6 +4,13 @@ use crate::lib::Value;
 ///
 /// Returns `value` unless it is `Value::Null` (js `null`/`undefined`/`NaN`),
 /// in which case `default_value` is returned
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::default_to;
+/// # use serde_json::json;
+/// assert_eq!(default_to(json!(1), json!(10)), json!(1));
+/// ```
 pub fn default_to(value: Value, default_value: Value) -> Value {
     if value.is_null() {
         default_value
@@ -23,7 +30,7 @@ pub fn default_to(value: Value, default_value: Value) -> Value {
 /// assert_eq!(default_to!(json!(null), json!(10)), json!(10));
 /// ```
 ///
-/// More examples:
+/// Additional cases:
 ///
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
@@ -35,7 +42,7 @@ pub fn default_to(value: Value, default_value: Value) -> Value {
 #[macro_export]
 macro_rules! default_to {
     () => {
-        serde_json::json!(null)
+        $crate::lib::json!(null)
     };
     ($a:expr $(,)*) => {
         $a
