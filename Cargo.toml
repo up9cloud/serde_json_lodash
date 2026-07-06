@@ -6,6 +6,10 @@ description = "lodash.js ported version, work with serde_json::Value"
 keywords = ["serde", "serde_json", "json", "lodash"]
 license = "MIT"
 edition = "2024"
+readme = "README.md"
+repository = "https://github.com/up9cloud/serde_json_lodash"
+homepage = "https://github.com/up9cloud/serde_json_lodash"
+documentation = "https://docs.rs/serde_json_lodash"
 
 [features]
 default = []
