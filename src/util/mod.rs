@@ -42,7 +42,7 @@ macro_rules! bind_all_x {
         $crate::bind_all_x()
     };
 }
-build_link!(bindAll, bind_all);
+build_camel_link!(bindAll, bind_all);
 /// **Not ported.** Returns a function chosen from predicate/function pairs; not a Value.
 pub fn cond() {
     todo!()
@@ -155,7 +155,7 @@ macro_rules! flow_right_x {
         $crate::flow_right_x()
     };
 }
-build_link!(flowRight, flow_right);
+build_camel_link!(flowRight, flow_right);
 mod identity;
 pub use identity::*;
 /// **Not ported.** Returns a function implementing the lodash iteratee shorthand; not a Value.
@@ -224,7 +224,7 @@ macro_rules! matches_property_x {
         $crate::matches_property_x()
     };
 }
-build_link!(matchesProperty, matches_property);
+build_camel_link!(matchesProperty, matches_property);
 /// **Not ported.** Returns a function that invokes a method at a path; not a Value.
 pub fn method() {
     todo!()
@@ -269,7 +269,7 @@ macro_rules! method_of_x {
         $crate::method_of_x()
     };
 }
-build_link!(methodOf, method_of);
+build_camel_link!(methodOf, method_of);
 /// **Not ported.** Adds functions to an object/lodash; JSON objects hold no functions.
 pub fn mixin() {
     todo!()
@@ -314,7 +314,7 @@ macro_rules! no_conflict_x {
         $crate::no_conflict_x()
     };
 }
-build_link!(noConflict, no_conflict);
+build_camel_link!(noConflict, no_conflict);
 mod noop;
 pub use noop::*;
 /// **Not ported.** Returns a function selecting the nth argument; not a Value.
@@ -339,7 +339,7 @@ macro_rules! nth_arg_x {
         $crate::nth_arg_x()
     };
 }
-build_link!(nthArg, nth_arg);
+build_camel_link!(nthArg, nth_arg);
 /// **Not ported.** Returns a function invoking several iteratees; not a Value.
 pub fn over() {
     todo!()
@@ -384,7 +384,7 @@ macro_rules! over_every_x {
         $crate::over_every_x()
     };
 }
-build_link!(overEvery, over_every);
+build_camel_link!(overEvery, over_every);
 /// **Not ported.** Returns a function OR-ing several predicates; not a Value.
 pub fn over_some() {
     todo!()
@@ -407,7 +407,7 @@ macro_rules! over_some_x {
         $crate::over_some_x()
     };
 }
-build_link!(overSome, over_some);
+build_camel_link!(overSome, over_some);
 /// **Not ported.** Returns a getter function for a path; not a Value.
 pub fn property() {
     todo!()
@@ -452,7 +452,7 @@ macro_rules! property_of_x {
         $crate::property_of_x()
     };
 }
-build_link!(propertyOf, property_of);
+build_camel_link!(propertyOf, property_of);
 mod range;
 pub use range::*;
 mod range_right;
@@ -479,7 +479,7 @@ macro_rules! run_in_context_x {
         $crate::run_in_context_x()
     };
 }
-build_link!(runInContext, run_in_context);
+build_camel_link!(runInContext, run_in_context);
 mod stub_array;
 pub use stub_array::*;
 mod stub_false;

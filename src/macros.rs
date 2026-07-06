@@ -69,3 +69,41 @@ macro_rules! build_link {
         }
     };
 }
+
+/// Alias a camelCase spelling `$from` to snake_case `$to`, covering the whole
+/// family: `$from`/`$fromX` fns and `$from!`/`$fromX!` macros, forwarding to
+/// `$to`/`$to_x` respectively. Like [build_link!] but the `_x` form of the
+/// camelCase name is spelled with an `X` suffix (e.g. `isEmptyX` aliases
+/// `is_empty_x`). Used both by `build_camel_links!` and by the camelCase
+/// aliases declared in the category `mod.rs` files.
+macro_rules! build_camel_link {
+    ($from:ident, $to:ident) => {
+        $crate::paste::paste! {
+            #[doc(hidden)]
+            pub use $crate::$to as $from;
+            #[doc(hidden)]
+            pub use $crate::[<$to _x>] as [<$from X>];
+        }
+
+        with_dollar_sign! {
+            ($d:tt) => {
+                $crate::paste::paste! {
+                    #[doc(hidden)]
+                    #[macro_export]
+                    macro_rules! $from {
+                        ($d($d rest:tt)*) => {
+                            $crate::$to!($d($d rest)*)
+                        }
+                    }
+                    #[doc(hidden)]
+                    #[macro_export]
+                    macro_rules! [<$from X>] {
+                        ($d($d rest:tt)*) => {
+                            $crate::[<$to _x>]!($d($d rest)*)
+                        }
+                    }
+                }
+            }
+        }
+    };
+}

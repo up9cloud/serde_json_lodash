@@ -108,7 +108,7 @@ macro_rules! bind_key_x {
         $crate::bind_key_x()
     };
 }
-build_link!(bindKey, bind_key);
+build_camel_link!(bindKey, bind_key);
 /// **Not ported.** Curries a function; operates on a function, not a Value.
 pub fn curry() {
     todo!()
@@ -153,7 +153,7 @@ macro_rules! curry_right_x {
         $crate::curry_right_x()
     };
 }
-build_link!(curryRight, curry_right);
+build_camel_link!(curryRight, curry_right);
 /// **Not ported.** Wraps a function with debouncing; time/closures are not Values.
 pub fn debounce() {
     todo!()
@@ -330,7 +330,7 @@ macro_rules! over_args_x {
         $crate::over_args_x()
     };
 }
-build_link!(overArgs, over_args);
+build_camel_link!(overArgs, over_args);
 /// **Not ported.** Partially applies a function; not a Value.
 pub fn partial() {
     todo!()
@@ -375,7 +375,7 @@ macro_rules! partial_right_x {
         $crate::partial_right_x()
     };
 }
-build_link!(partialRight, partial_right);
+build_camel_link!(partialRight, partial_right);
 /// **Not ported.** Reorders a function's arguments; not a Value.
 pub fn rearg() {
     todo!()

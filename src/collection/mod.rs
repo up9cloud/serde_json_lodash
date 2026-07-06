@@ -47,7 +47,7 @@ macro_rules! invoke_map_x {
         $crate::invoke_map_x()
     };
 }
-build_link!(invokeMap, invoke_map);
+build_camel_link!(invokeMap, invoke_map);
 mod key_by;
 pub use key_by::*;
 mod map;

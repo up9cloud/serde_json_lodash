@@ -3,14 +3,14 @@ pub use assign::*;
 // In JSON there is no prototype chain, so the `*In` variants behave like the
 // own-property variants
 build_link!(assign_in, assign);
-build_link!(assignIn, assign);
+build_camel_link!(assignIn, assign);
 build_link!(extend, assign);
 mod assign_with;
 pub use assign_with::*;
 build_link!(assign_in_with, assign_with);
-build_link!(assignInWith, assign_with);
+build_camel_link!(assignInWith, assign_with);
 build_link!(extend_with, assign_with);
-build_link!(extendWith, assign_with);
+build_camel_link!(extendWith, assign_with);
 mod at;
 pub use at::*;
 /// **Not ported.** Creates an object with a given prototype; JSON has no prototype chain.
@@ -46,15 +46,15 @@ pub use find_last_key::*;
 mod for_own;
 pub use for_own::*;
 build_link!(for_in, for_own);
-build_link!(forIn, for_own);
+build_camel_link!(forIn, for_own);
 mod for_own_right;
 pub use for_own_right::*;
 build_link!(for_in_right, for_own_right);
-build_link!(forInRight, for_own_right);
+build_camel_link!(forInRight, for_own_right);
 mod functions;
 pub use functions::*;
 build_link!(functions_in, functions);
-build_link!(functionsIn, functions);
+build_camel_link!(functionsIn, functions);
 
 mod get;
 pub use get::*;
@@ -62,7 +62,7 @@ pub use get::*;
 mod has;
 pub use has::*;
 build_link!(has_in, has);
-build_link!(hasIn, has);
+build_camel_link!(hasIn, has);
 mod invert;
 pub use invert::*;
 mod invert_by;
@@ -92,7 +92,7 @@ macro_rules! invoke_x {
 mod keys;
 pub use keys::*;
 build_link!(keys_in, keys);
-build_link!(keysIn, keys);
+build_camel_link!(keysIn, keys);
 mod map_keys;
 pub use map_keys::*;
 mod map_values;
@@ -137,14 +137,14 @@ macro_rules! set_with_x {
         $crate::set_with_x()
     };
 }
-build_link!(setWith, set_with);
+build_camel_link!(setWith, set_with);
 mod to_pairs;
 pub use to_pairs::*;
 build_link!(entries, to_pairs);
 build_link!(to_pairs_in, to_pairs);
-build_link!(toPairsIn, to_pairs);
+build_camel_link!(toPairsIn, to_pairs);
 build_link!(entries_in, to_pairs);
-build_link!(entriesIn, to_pairs);
+build_camel_link!(entriesIn, to_pairs);
 mod transform;
 pub use transform::*;
 mod unset;
@@ -173,8 +173,8 @@ macro_rules! update_with_x {
         $crate::update_with_x()
     };
 }
-build_link!(updateWith, update_with);
+build_camel_link!(updateWith, update_with);
 mod values;
 pub use values::*;
 build_link!(values_in, values);
-build_link!(valuesIn, values);
+build_camel_link!(valuesIn, values);
