@@ -61,19 +61,15 @@ Every name exists as a `fn` and a macro, for both the base and `_x` form.
 
 ## Features
 
-- `alias` — enables the aliasing machinery and the snake_case lodash aliases
-  (`first`, `entries`, `has_in`, …). Without it those names don't exist — use
-  the canonical name (`head` instead of `first`). Pulls in the small
-  [`paste`](https://crates.io/crates/paste) crate (an `optional` dependency).
-- `camel` *(default)* — camelCase aliases (`isEmpty`, `hasIn`, `camelCase!`, …)
-  and their `X`-suffixed `_x` forms (`isEmptyX`, `isEmptyX!`). **Requires (and
-  enables) `alias`.**
-- `lazy_static` — enables `unique_id` / `uniqueId`.
-- `all` — `camel` + `lazy_static`.
+| Feature       | Default | Description                                                                                                                                                       |
+| ------------- | :-----: | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `alias`       |         | Aliasing machinery + snake_case lodash aliases (`first`, `entries`, `has_in`, …). Without it, use the canonical name (`head`, not `first`). Pulls in the optional [`paste`](https://crates.io/crates/paste) crate. |
+| `camel`       |    ✓    | camelCase aliases (`isEmpty`, `hasIn`, …) and their `X`-suffixed `_x` forms (`isEmptyX`). Requires (and enables) `alias`.                                          |
+| `lazy_static` |         | Enables `unique_id` / `uniqueId`.                                                                                                                                 |
+| `all`         |         | `camel` + `lazy_static`.                                                                                                                                          |
 
-Each alias re-exports the whole family (`fn`, macro, and their `_x` variants);
-snake aliases keep the `_x` suffix (`has_in_x`) while camelCase aliases use `X`
-(`hasInX`).
+Each alias re-exports the whole family (`fn`, macro, and both `_x` variants);
+snake aliases keep the `_x` suffix (`has_in_x`), camelCase aliases use `X` (`hasInX`).
 
 ## What isn't ported
 
