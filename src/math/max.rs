@@ -1,6 +1,6 @@
 use crate::lib::Value;
 
-use crate::internal::value_to_option_number;
+use crate::internal::value_to_option_number_ref;
 
 /// Fn form of [max!](crate::max!); see it for the full docs
 ///
@@ -15,24 +15,25 @@ use crate::internal::value_to_option_number;
 /// ```
 pub fn max(array: Value) -> Value {
     match array {
+        // coerce each element once, carrying the numeric key with the value
         Value::Array(vec) => vec
             .into_iter()
-            .filter(|v| {
-                value_to_option_number(v.clone())
+            .filter_map(|v| {
+                value_to_option_number_ref(&v)
                     .and_then(|n| n.as_f64())
-                    .is_some()
+                    .map(|f| (f, v))
             })
-            .fold(None, |acc: Option<Value>, v| match acc {
-                None => Some(v),
-                Some(cur) => {
-                    let a = value_to_option_number(cur.clone())
-                        .unwrap()
-                        .as_f64()
-                        .unwrap();
-                    let b = value_to_option_number(v.clone()).unwrap().as_f64().unwrap();
-                    if b > a { Some(v) } else { Some(cur) }
+            .fold(None, |acc: Option<(f64, Value)>, (f, v)| match acc {
+                None => Some((f, v)),
+                Some((fa, va)) => {
+                    if f > fa {
+                        Some((f, v))
+                    } else {
+                        Some((fa, va))
+                    }
                 }
             })
+            .map(|(_, v)| v)
             .unwrap_or(Value::Null),
         _ => Value::Null,
     }

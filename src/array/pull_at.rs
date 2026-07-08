@@ -22,16 +22,18 @@ pub fn pull_at(array: &mut Value, indexes: Vec<usize>) -> Value {
             let mut new_vec = vec![];
             let mut uniq_vec = vec![false; vec.len()];
             for i in indexes.into_iter() {
-                if i > (vec.len() - 1) {
+                if i >= vec.len() {
                     pulled_vec.push(Value::Null);
                 } else {
+                    // clone: duplicate indexes must each yield the value
                     pulled_vec.push(vec[i].clone());
                     uniq_vec[i] = true
                 }
             }
             for (i, pulled) in uniq_vec.into_iter().enumerate() {
                 if !pulled {
-                    new_vec.push(vec[i].clone());
+                    // the kept elements are read only once, so move them out
+                    new_vec.push(std::mem::take(&mut vec[i]));
                 }
             }
             (new_vec, pulled_vec)
@@ -74,6 +76,13 @@ pub fn pull_at(array: &mut Value, indexes: Vec<usize>) -> Value {
 /// assert_eq!(pull_at!(json!("")), json!([]));
 /// assert_eq!(pull_at!(json!([])), json!([]));
 /// assert_eq!(pull_at!(json!({})), json!([]));
+/// // out-of-range indexes yield null, even on an empty array
+/// let mut empty = json!([]);
+/// assert_eq!(pull_at!(&mut empty, vec![0]), json!([null]));
+/// // duplicate indexes each yield the value
+/// let mut abc = json!(["a", "b", "c"]);
+/// assert_eq!(pull_at!(&mut abc, vec![1, 1]), json!(["b", "b"]));
+/// assert_eq!(abc, json!(["a", "c"]));
 /// ```
 #[macro_export]
 macro_rules! pull_at {
