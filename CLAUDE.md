@@ -44,8 +44,10 @@ cargo doc --open
 npm i && node
 > const l = require('lodash')
 
-# Release: commit first, then bump + tag (pushing the tag makes CI publish to crates.io)
-cargo bump patch --git-tag   # or minor / major
+# Release: commit first; then bump version in Cargo.toml manually, refresh
+# Cargo.lock (cargo check), commit as "<version>", tag WITHOUT v prefix
+# (pushing the tag makes CI publish to crates.io)
+git tag 0.0.0   # the new version, e.g. `0.4.0`, NOT v0.4.0
 git push && git push --tags
 ```
 
