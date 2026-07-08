@@ -17,7 +17,7 @@ use std::cmp::Ordering;
 /// # use serde_json::json;
 /// assert_eq!(order_by(json!([1, 3, 2]), |v| v.clone(), false), json!([3, 2, 1]));
 /// ```
-pub fn order_by(collection: Value, iteratee: fn(&Value) -> Value, ascending: bool) -> Value {
+pub fn order_by(collection: Value, iteratee: impl Fn(&Value) -> Value, ascending: bool) -> Value {
     // Schwartzian transform, like [sort_by()]
     let mut keyed: Vec<(Value, Value)> = collection_values(collection)
         .into_iter()

@@ -13,7 +13,7 @@ use crate::internal::uniq_by_key;
 /// # use serde_json::json;
 /// assert_eq!(uniq_by(json!([2.1, 1.2, 2.3]), |n| json!(n.as_f64().unwrap().floor())), json!([2.1, 1.2]));
 /// ```
-pub fn uniq_by(array: Value, iteratee: fn(&Value) -> Value) -> Value {
+pub fn uniq_by(array: Value, iteratee: impl Fn(&Value) -> Value) -> Value {
     match array {
         Value::Array(vec) => Value::Array(uniq_by_key(vec, iteratee)),
         _ => json!([]),

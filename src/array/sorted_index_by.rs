@@ -13,7 +13,7 @@ use crate::array::sorted_index::sorted_index_impl;
 /// # use serde_json::json;
 /// assert_eq!(sorted_index_by(json!([30, 50]), json!(40), |v| v.clone()), json!(1));
 /// ```
-pub fn sorted_index_by(array: Value, value: Value, iteratee: fn(&Value) -> Value) -> Value {
+pub fn sorted_index_by(array: Value, value: Value, iteratee: impl Fn(&Value) -> Value) -> Value {
     json!(sorted_index_by_x(array, value, iteratee))
 }
 
@@ -74,7 +74,7 @@ macro_rules! sorted_index_by {
 /// # use serde_json::json;
 /// assert_eq!(sorted_index_by_x(json!([30, 50]), json!(40), |v| v.clone()), 1);
 /// ```
-pub fn sorted_index_by_x(array: Value, value: Value, iteratee: fn(&Value) -> Value) -> usize {
+pub fn sorted_index_by_x(array: Value, value: Value, iteratee: impl Fn(&Value) -> Value) -> usize {
     sorted_index_impl(&array, &value, false, iteratee)
 }
 

@@ -24,7 +24,11 @@ fn flatten_depth(v: Value, depth: isize, out: &mut Vec<Value>) {
 /// # use serde_json::json;
 /// assert_eq!(flat_map_depth(json!([1, 2]), |n| json!([[n.clone(), n.clone()]]), 2), json!([1, 1, 2, 2]));
 /// ```
-pub fn flat_map_depth(collection: Value, iteratee: fn(&Value) -> Value, depth: isize) -> Value {
+pub fn flat_map_depth(
+    collection: Value,
+    iteratee: impl Fn(&Value) -> Value,
+    depth: isize,
+) -> Value {
     let mut out = vec![];
     for v in collection_values(collection) {
         // the iteratee result is flattened `depth` levels, mirroring lodash

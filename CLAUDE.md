@@ -6,6 +6,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 A Rust port of lodash.js that operates on `serde_json::Value`. Every function mirrors the lodash spec as closely as possible, and all tests are Rust doc tests embedded in the source.
 
+## Design priorities
+
+When goals conflict, they rank in this order — never trade a higher one for a lower one:
+
+1. **lodash API fidelity** — names, signatures, argument order, and behavior follow the lodash docs as closely as Rust allows.
+2. **Ergonomics** — easy to call: `Into<Value>` inputs (primitives or `json!` values), macros for lodash-style optional/variadic args, `impl Fn` callbacks that accept capturing closures.
+3. **Performance** — optimize only within the bounds of 1 and 2 (e.g. the owned `Into<Value>` API stays even though by-ref variants would be faster).
+
 README.md and the crate-level rustdoc (`//!` in `src/lib.rs`) serve the same purpose, so keep them in sync — in particular the `## Usage` example must be identical in both. Feature/behavior descriptions belong in README.md and Cargo.toml stays comment-free (don't duplicate the feature docs as `#` comments in `Cargo.toml`).
 
 ## Commands
@@ -62,7 +70,7 @@ Each `<name>.rs` implements the base fn and a `_x` output helper, each with a ma
 - `name(impl Into<Value>, ...) -> Value` — the canonical form. Data params are generic over `Into<Value>`, so a primitive (`&str`, a number, …) **or** a `json!` value can be passed directly.
 - `name_x(...) -> <primitive>` — same input, output downgraded to a primitive (`String`, `bool`, `f64`, `Vec<Value>`, …). Where a result has no single primitive form (a collection, or a value whose type is only known at runtime like `get`/`nth`), `name_x` is an unimplemented `todo!()` void marker that documents why. (Not-ported `todo!()` stubs likewise carry all four forms so aliases can point at them.)
 
-There is no longer any `x_name` / `x_name_x` primitive-**input** helper — the generic `Into<Value>` base subsumes them. Option-like parameters (sizes, indexes, pad chars) take primitive types (`usize`, `isize`, `&str`), not `Value`; predicates take `Fn(&Value) -> bool`. Lodash functions with unlimited optional args keep exactly one in the fn form; the macro accepts more (e.g. `merge!(a, b, c)`).
+There is no longer any `x_name` / `x_name_x` primitive-**input** helper — the generic `Into<Value>` base subsumes them. Option-like parameters (sizes, indexes, pad chars) take primitive types (`usize`, `isize`, `&str`), not `Value`; predicates/iteratees take `impl Fn(...)` generics (closures may capture their environment; pass `&f` when a helper needs the callback more than once). Exception: `conforms_to`'s `Conform` pairs use `&dyn Fn` — a `Vec` can hold only one generic closure type, and different keys need different predicates, so callers borrow each closure (`vec![("a", &|v: &Value| …)]`). Lodash functions with unlimited optional args keep exactly one in the fn form; the macro accepts more (e.g. `merge!(a, b, c)`).
 
 Item order within a file is fixed: internal helpers first, then `fn name`, `name!`, `fn name_x`, `name_x!`. `name!` is the recommended entry point (closest to the lodash experience), so it carries the primary docs: its first doc line is `See lodash [camelName](https://lodash.com/docs/#camelName)` plus any behavior notes, followed by a `Fn form: [name()] | `_x` forms: …` link line. The other three forms start with a pointer back to the macro (`Fn form of [name!](crate::name!)…` / `` `_x` helper for [name!](crate::name!)… ``) and cross-link their sibling forms so readers can switch quickly; macro links must use the qualified `[name!](crate::name!)` form (unqualified `[concat!]` etc. can collide with std macros). Void `_x` markers start their docs with `**Not provided.**` + the reason; not-ported stub macros in `mod.rs` repeat the fn's `**Not ported.**` line (never a bare `Based on […]`). Doc lines always come before attributes like `#[macro_export]`, and section headers (`Examples:`/`Additional cases:`) must be preceded by a blank `///` line so the rustdoc summary stays a single line.
 

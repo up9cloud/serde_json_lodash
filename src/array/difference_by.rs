@@ -13,7 +13,7 @@ use std::collections::HashSet;
 /// # use serde_json::json;
 /// assert_eq!(difference_by(json!([2.1, 1.2]), json!([2.3, 3.4]), |n| json!(n.as_f64().unwrap().floor())), json!([1.2]));
 /// ```
-pub fn difference_by(array: Value, other: Value, iteratee: fn(&Value) -> Value) -> Value {
+pub fn difference_by(array: Value, other: Value, iteratee: impl Fn(&Value) -> Value) -> Value {
     let a = match array {
         Value::Array(v) => v,
         _ => return json!([]),
@@ -22,7 +22,7 @@ pub fn difference_by(array: Value, other: Value, iteratee: fn(&Value) -> Value) 
         Value::Array(v) => v,
         _ => return Value::Array(a),
     };
-    let b_keys: HashSet<Value> = b.iter().map(iteratee).collect();
+    let b_keys: HashSet<Value> = b.iter().map(&iteratee).collect();
     Value::Array(
         a.into_iter()
             .filter(|v| !b_keys.contains(&iteratee(v)))

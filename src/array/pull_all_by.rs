@@ -13,7 +13,7 @@ use std::collections::HashSet;
 /// # use serde_json::json;
 /// assert_eq!(pull_all_by(json!([null,0]), json!([null]), |x| &x), json!([0]));
 /// ```
-pub fn pull_all_by(mut array: Value, values: Value, iteratee: fn(&Value) -> &Value) -> Value {
+pub fn pull_all_by(mut array: Value, values: Value, iteratee: impl Fn(&Value) -> &Value) -> Value {
     let new_vec = match array {
         Value::Null | Value::Bool(_) | Value::Number(_) | Value::String(_) | Value::Object(_) => {
             return array;
@@ -27,7 +27,7 @@ pub fn pull_all_by(mut array: Value, values: Value, iteratee: fn(&Value) -> &Val
                 | Value::Object(_) => return array,
                 Value::Array(vec) => vec,
             };
-            let excluded_keys: HashSet<&Value> = values_vec.iter().map(iteratee).collect();
+            let excluded_keys: HashSet<&Value> = values_vec.iter().map(&iteratee).collect();
             let mut new_vec = vec![];
             for item in vec.iter() {
                 if !excluded_keys.contains(iteratee(item)) {

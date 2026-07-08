@@ -14,7 +14,7 @@ use crate::lib::Value;
 pub fn pull_all_with(
     mut array: Value,
     values: Value,
-    comparator: fn(&Value, &Value) -> bool,
+    comparator: impl Fn(&Value, &Value) -> bool,
 ) -> Value {
     let new_vec = match array {
         Value::Null | Value::Bool(_) | Value::Number(_) | Value::String(_) | Value::Object(_) => {

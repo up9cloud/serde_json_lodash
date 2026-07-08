@@ -13,7 +13,7 @@ use crate::lib::Value;
 /// ```
 pub fn transform(
     collection: Value,
-    iteratee: fn(Value, &Value, &str) -> (Value, bool),
+    iteratee: impl Fn(Value, &Value, &str) -> (Value, bool),
     accumulator: Value,
 ) -> Value {
     let mut acc = accumulator;

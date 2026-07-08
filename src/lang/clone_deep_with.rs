@@ -1,6 +1,6 @@
 use crate::lib::Value;
 
-fn deep(v: &Value, customizer: fn(&Value) -> Option<Value>) -> Value {
+fn deep(v: &Value, customizer: &impl Fn(&Value) -> Option<Value>) -> Value {
     if let Some(result) = customizer(v) {
         return result;
     }
@@ -26,8 +26,8 @@ fn deep(v: &Value, customizer: fn(&Value) -> Option<Value>) -> Value {
 /// # use serde_json::json;
 /// assert_eq!(clone_deep_with(&json!([1]), |_| None), json!([1]));
 /// ```
-pub fn clone_deep_with(v: &Value, customizer: fn(&Value) -> Option<Value>) -> Value {
-    deep(v, customizer)
+pub fn clone_deep_with(v: &Value, customizer: impl Fn(&Value) -> Option<Value>) -> Value {
+    deep(v, &customizer)
 }
 
 /// See lodash [cloneDeepWith](https://lodash.com/docs/#cloneDeepWith)

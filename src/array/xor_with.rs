@@ -11,7 +11,7 @@ use crate::lib::Value;
 /// # use serde_json::json;
 /// assert_eq!(xor_with(json!([2, 1]), json!([2, 3]), |a, b| a == b), json!([1, 3]));
 /// ```
-pub fn xor_with(array: Value, other: Value, comparator: fn(&Value, &Value) -> bool) -> Value {
+pub fn xor_with(array: Value, other: Value, comparator: impl Fn(&Value, &Value) -> bool) -> Value {
     let a = match array {
         Value::Array(v) => v,
         _ => vec![],

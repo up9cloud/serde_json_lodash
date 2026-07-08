@@ -13,7 +13,7 @@ use crate::collection::collect::collection_values;
 /// # use serde_json::json;
 /// assert_eq!(reject(json!([1, 2, 3, 4]), |n| n.as_i64().unwrap() % 2 == 1), json!([2, 4]));
 /// ```
-pub fn reject(collection: Value, predicate: fn(&Value) -> bool) -> Value {
+pub fn reject(collection: Value, predicate: impl Fn(&Value) -> bool) -> Value {
     Value::Array(
         collection_values(collection)
             .into_iter()

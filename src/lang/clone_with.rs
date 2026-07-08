@@ -11,7 +11,7 @@ use crate::lib::Value;
 /// # use serde_json::json;
 /// assert_eq!(clone_with(&json!([1]), |_| None), json!([1]));
 /// ```
-pub fn clone_with(v: &Value, customizer: fn(&Value) -> Option<Value>) -> Value {
+pub fn clone_with(v: &Value, customizer: impl Fn(&Value) -> Option<Value>) -> Value {
     match customizer(v) {
         Some(result) => result,
         None => v.clone(),

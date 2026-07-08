@@ -13,7 +13,7 @@ use crate::to_string_x;
 /// # use serde_json::json;
 /// assert_eq!(invert_by(json!({"a": 1}), |v| v.clone()), json!({"1": ["a"]}));
 /// ```
-pub fn invert_by(v: Value, iteratee: fn(&Value) -> Value) -> Value {
+pub fn invert_by(v: Value, iteratee: impl Fn(&Value) -> Value) -> Value {
     let mut out: Map<String, Value> = Map::new();
     let pairs: Vec<(String, Value)> = match v {
         Value::Object(o) => o.into_iter().collect(),

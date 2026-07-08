@@ -13,7 +13,7 @@ use crate::math::mean::mean_values;
 /// # use serde_json::json;
 /// assert_eq!(mean_by(json!([2, 4]), |v| v.clone()), json!(3));
 /// ```
-pub fn mean_by(array: Value, iteratee: fn(&Value) -> Value) -> Value {
+pub fn mean_by(array: Value, iteratee: impl Fn(&Value) -> Value) -> Value {
     match array {
         Value::Array(vec) => mean_values(vec.iter().map(iteratee).collect()),
         _ => crate::internal::value_nan(),

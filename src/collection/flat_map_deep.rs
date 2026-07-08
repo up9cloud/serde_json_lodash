@@ -24,7 +24,7 @@ fn flatten_all(v: Value, out: &mut Vec<Value>) {
 /// # use serde_json::json;
 /// assert_eq!(flat_map_deep(json!([1, 2]), |n| json!([[n.clone(), n.clone()]])), json!([1, 1, 2, 2]));
 /// ```
-pub fn flat_map_deep(collection: Value, iteratee: fn(&Value) -> Value) -> Value {
+pub fn flat_map_deep(collection: Value, iteratee: impl Fn(&Value) -> Value) -> Value {
     let mut out = vec![];
     for v in collection_values(collection) {
         flatten_all(iteratee(&v), &mut out);

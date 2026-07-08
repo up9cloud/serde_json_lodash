@@ -13,7 +13,7 @@ use crate::internal::value_to_option_number;
 /// # use serde_json::json;
 /// assert_eq!(min_by(json!([3, 1, 2]), |v| v.clone()), json!(1));
 /// ```
-pub fn min_by(array: Value, iteratee: fn(&Value) -> Value) -> Value {
+pub fn min_by(array: Value, iteratee: impl Fn(&Value) -> Value) -> Value {
     match array {
         Value::Array(vec) => {
             let mut best: Option<(Value, f64)> = None;

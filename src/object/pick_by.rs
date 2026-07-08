@@ -11,7 +11,7 @@ use crate::lib::{Map, Value};
 /// # use serde_json::json;
 /// assert_eq!(pick_by(json!({"a": 1, "b": "2"}), |v| v.is_number()), json!({"a": 1}));
 /// ```
-pub fn pick_by(object: Value, predicate: fn(&Value) -> bool) -> Value {
+pub fn pick_by(object: Value, predicate: impl Fn(&Value) -> bool) -> Value {
     let mut out = Map::new();
     if let Value::Object(o) = object {
         for (k, v) in o {

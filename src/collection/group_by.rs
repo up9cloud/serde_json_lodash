@@ -15,7 +15,7 @@ use crate::collection::collect::collection_values;
 /// # use serde_json::json;
 /// assert_eq!(group_by(json!([6.1, 4.2, 6.3]), |n| json!(n.as_f64().unwrap().floor())), json!({ "4.0": [4.2], "6.0": [6.1, 6.3] }));
 /// ```
-pub fn group_by(collection: Value, iteratee: fn(&Value) -> Value) -> Value {
+pub fn group_by(collection: Value, iteratee: impl Fn(&Value) -> Value) -> Value {
     let mut out: Map<String, Value> = Map::new();
     for v in collection_values(collection) {
         let key = to_string_x(iteratee(&v));

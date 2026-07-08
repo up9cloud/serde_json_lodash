@@ -14,7 +14,7 @@ use crate::lib::{Value, json};
 pub fn intersection_with(
     array: Value,
     other: Value,
-    comparator: fn(&Value, &Value) -> bool,
+    comparator: impl Fn(&Value, &Value) -> bool,
 ) -> Value {
     let a = match array {
         Value::Array(v) => v,

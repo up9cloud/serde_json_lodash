@@ -15,7 +15,7 @@ use crate::collection::collect::collection_values;
 /// # use serde_json::json;
 /// assert_eq!(key_by(json!(["a", "b"]), |v| v.clone()), json!({"a": "a", "b": "b"}));
 /// ```
-pub fn key_by(collection: Value, iteratee: fn(&Value) -> Value) -> Value {
+pub fn key_by(collection: Value, iteratee: impl Fn(&Value) -> Value) -> Value {
     let mut out: Map<String, Value> = Map::new();
     for v in collection_values(collection) {
         let key = to_string_x(iteratee(&v));

@@ -11,7 +11,7 @@ use crate::lib::{Value, json};
 /// # use serde_json::json;
 /// assert_eq!(find_index(json!([1, 2, 3]), |n| n.as_i64().unwrap() > 1, 0), json!(1));
 /// ```
-pub fn find_index(array: Value, predicate: fn(&Value) -> bool, from_index: usize) -> Value {
+pub fn find_index(array: Value, predicate: impl Fn(&Value) -> bool, from_index: usize) -> Value {
     json!(find_index_x(array, predicate, from_index))
 }
 
@@ -66,7 +66,7 @@ macro_rules! find_index {
 /// # use serde_json::json;
 /// assert_eq!(find_index_x(json!([1, 2, 3]), |n| n.as_i64().unwrap() > 1, 0), 1);
 /// ```
-pub fn find_index_x(array: Value, predicate: fn(&Value) -> bool, from_index: usize) -> isize {
+pub fn find_index_x(array: Value, predicate: impl Fn(&Value) -> bool, from_index: usize) -> isize {
     match array {
         Value::Null | Value::Bool(_) | Value::Number(_) | Value::String(_) | Value::Object(_) => {
             return -1;

@@ -13,7 +13,7 @@ use crate::to_string_x;
 /// # use serde_json::json;
 /// assert_eq!(map_keys(json!({"a": 1}), |v, k| json!(format!("{}{}", k, v))), json!({"a1": 1}));
 /// ```
-pub fn map_keys(object: Value, iteratee: fn(&Value, &str) -> Value) -> Value {
+pub fn map_keys(object: Value, iteratee: impl Fn(&Value, &str) -> Value) -> Value {
     match object {
         Value::Object(o) => {
             let mut out = Map::new();

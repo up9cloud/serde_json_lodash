@@ -11,7 +11,7 @@ use crate::lib::Value;
 /// # use serde_json::json;
 /// assert_eq!(each_right(json!([1, 2, 3]), |_| true), json!([1, 2, 3]));
 /// ```
-pub fn each_right(collection: Value, iteratee: fn(&Value) -> bool) -> Value {
+pub fn each_right(collection: Value, iteratee: impl Fn(&Value) -> bool) -> Value {
     // borrow-iterate in reverse; see [each()] for why nothing is cloned
     match &collection {
         Value::Array(vec) => {

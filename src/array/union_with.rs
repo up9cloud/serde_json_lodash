@@ -11,7 +11,11 @@ use crate::lib::Value;
 /// # use serde_json::json;
 /// assert_eq!(union_with(json!([1, 2]), json!([2, 3]), |a, b| a == b), json!([1, 2, 3]));
 /// ```
-pub fn union_with(array: Value, other: Value, comparator: fn(&Value, &Value) -> bool) -> Value {
+pub fn union_with(
+    array: Value,
+    other: Value,
+    comparator: impl Fn(&Value, &Value) -> bool,
+) -> Value {
     let mut all = vec![];
     if let Value::Array(vec) = array {
         all.extend(vec);

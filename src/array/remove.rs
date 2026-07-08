@@ -12,7 +12,7 @@ use crate::lib::{Value, json};
 /// let mut a = json!([1, 2, 3, 4]);
 /// assert_eq!(remove(&mut a, |n| n.as_i64().unwrap() % 2 == 0), json!([2, 4]));
 /// ```
-pub fn remove(array: &mut Value, predicate: fn(&Value) -> bool) -> Value {
+pub fn remove(array: &mut Value, predicate: impl Fn(&Value) -> bool) -> Value {
     match array {
         Value::Array(vec) => {
             let mut kept = vec![];

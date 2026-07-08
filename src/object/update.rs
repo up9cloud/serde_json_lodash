@@ -14,7 +14,7 @@ use crate::{set, to_path_x};
 /// # use serde_json::json;
 /// assert_eq!(update(json!({}), json!("a.b"), |_| json!(1)), json!({"a": {"b": 1}}));
 /// ```
-pub fn update(object: Value, path: Value, updater: fn(Value) -> Value) -> Value {
+pub fn update(object: Value, path: Value, updater: impl Fn(Value) -> Value) -> Value {
     let p_vec = to_path_x(path.clone());
     let current = if p_vec.is_empty() {
         Value::Null

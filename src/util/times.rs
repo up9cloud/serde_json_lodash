@@ -3,7 +3,7 @@ use crate::lib::Value;
 use crate::to_safe_integer_x;
 
 // internal worker for [times()].
-fn x_times(n: usize, iteratee: fn(usize) -> Value) -> Value {
+fn x_times(n: usize, iteratee: impl Fn(usize) -> Value) -> Value {
     let mut vec = vec![];
     for i in 0..n {
         vec.push(iteratee(i));
@@ -22,7 +22,7 @@ fn x_times(n: usize, iteratee: fn(usize) -> Value) -> Value {
 /// # use serde_json::json;
 /// assert_eq!(times(json!(3), |i| json!(i.to_string())), json!(["0","1","2"]));
 /// ```
-pub fn times<A: Into<Value>>(n: A, iteratee: fn(usize) -> Value) -> Value {
+pub fn times<A: Into<Value>>(n: A, iteratee: impl Fn(usize) -> Value) -> Value {
     let n = n.into();
     x_times(to_safe_integer_x(n) as usize, iteratee)
 }

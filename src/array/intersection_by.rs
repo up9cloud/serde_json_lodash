@@ -13,7 +13,7 @@ use std::collections::HashSet;
 /// # use serde_json::json;
 /// assert_eq!(intersection_by(json!([2.1, 1.2]), json!([2.3, 3.4]), |n| json!(n.as_f64().unwrap().floor())), json!([2.1]));
 /// ```
-pub fn intersection_by(array: Value, other: Value, iteratee: fn(&Value) -> Value) -> Value {
+pub fn intersection_by(array: Value, other: Value, iteratee: impl Fn(&Value) -> Value) -> Value {
     let a = match array {
         Value::Array(v) => v,
         _ => return json!([]),
@@ -22,7 +22,7 @@ pub fn intersection_by(array: Value, other: Value, iteratee: fn(&Value) -> Value
         Value::Array(v) => v,
         _ => return json!([]),
     };
-    let b_keys: HashSet<Value> = b.iter().map(iteratee).collect();
+    let b_keys: HashSet<Value> = b.iter().map(&iteratee).collect();
     let mut out = vec![];
     let mut out_keys: HashSet<Value> = HashSet::new();
     for v in a {

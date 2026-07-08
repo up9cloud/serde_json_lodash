@@ -11,7 +11,7 @@ use crate::lib::{Value, json};
 /// # use serde_json::json;
 /// assert_eq!(uniq_with(json!([1, 2, 3, 2]), |a, b| a == b), json!([1, 2, 3]));
 /// ```
-pub fn uniq_with(array: Value, comparator: fn(&Value, &Value) -> bool) -> Value {
+pub fn uniq_with(array: Value, comparator: impl Fn(&Value, &Value) -> bool) -> Value {
     match array {
         Value::Array(vec) => {
             let mut out: Vec<Value> = vec![];

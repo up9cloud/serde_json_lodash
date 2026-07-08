@@ -11,7 +11,7 @@ use crate::lib::Value;
 /// # use serde_json::json;
 /// assert_eq!(zip_with(json!([1, 2]), json!([10, 20]), |g| json!(g[0].as_i64().unwrap() + g[1].as_i64().unwrap())), json!([11, 22]));
 /// ```
-pub fn zip_with(array: Value, other: Value, iteratee: fn(&Value) -> Value) -> Value {
+pub fn zip_with(array: Value, other: Value, iteratee: impl Fn(&Value) -> Value) -> Value {
     let groups: Vec<Vec<Value>> = [array, other]
         .into_iter()
         .filter_map(|a| match a {

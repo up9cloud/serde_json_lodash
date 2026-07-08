@@ -1,7 +1,11 @@
 use crate::lib::{Value, json};
 
 /// A `(key, predicate)` pair for [conforms_to()].
-pub type Conform<'a> = (&'a str, fn(&Value) -> bool);
+///
+/// The predicate is a `&dyn Fn` (not a generic `impl Fn`) so one `Vec` can mix
+/// different closures — including capturing ones — for different keys; just
+/// borrow each closure: `vec![("a", &|v: &Value| …), ("b", &other_closure)]`.
+pub type Conform<'a> = (&'a str, &'a dyn Fn(&Value) -> bool);
 
 /// Fn form of [conforms_to!](crate::conforms_to!); see it for the full docs
 ///
@@ -12,7 +16,7 @@ pub type Conform<'a> = (&'a str, fn(&Value) -> bool);
 /// ```rust
 /// # use serde_json_lodash::conforms_to;
 /// # use serde_json::json;
-/// assert_eq!(conforms_to(&json!({}), vec![("a", |_: &serde_json::Value| true)]), json!(false));
+/// assert_eq!(conforms_to(&json!({}), vec![("a", &|_: &serde_json::Value| true)]), json!(false));
 /// ```
 pub fn conforms_to(object: &Value, source: Vec<Conform>) -> Value {
     json!(conforms_to_x(object, source))
@@ -29,8 +33,8 @@ pub fn conforms_to(object: &Value, source: Vec<Conform>) -> Value {
 /// use serde_json::json;
 /// use serde_json::Value;
 /// let object = json!({ "a": 1, "b": 2 });
-/// assert_eq!(conforms_to!(&object, vec![("b", |n: &Value| n.as_i64().unwrap() > 1)]), json!(true));
-/// assert_eq!(conforms_to!(&object, vec![("b", |n: &Value| n.as_i64().unwrap() > 2)]), json!(false));
+/// assert_eq!(conforms_to!(&object, vec![("b", &|n: &Value| n.as_i64().unwrap() > 1)]), json!(true));
+/// assert_eq!(conforms_to!(&object, vec![("b", &|n: &Value| n.as_i64().unwrap() > 2)]), json!(false));
 /// ```
 ///
 /// Additional cases:
@@ -42,7 +46,19 @@ pub fn conforms_to(object: &Value, source: Vec<Conform>) -> Value {
 /// assert_eq!(conforms_to!(&json!(null)), json!(true));
 /// assert_eq!(conforms_to!(&json!({})), json!(true));
 /// assert_eq!(conforms_to!(&json!({"a": 1})), json!(true));
-/// assert_eq!(conforms_to!(&json!({}), vec![("a", |_: &serde_json::Value| true)]), json!(false));
+/// assert_eq!(conforms_to!(&json!({}), vec![("a", &|_: &serde_json::Value| true)]), json!(false));
+/// // capturing closures work, and different keys may use different closures
+/// let limit = 1;
+/// assert_eq!(
+///   conforms_to!(
+///     &json!({"a": 1, "b": 2}),
+///     vec![
+///       ("a", &|v: &serde_json::Value| v.as_i64().unwrap() >= limit),
+///       ("b", &|v: &serde_json::Value| v.is_number()),
+///     ]
+///   ),
+///   json!(true)
+/// );
 /// ```
 #[macro_export]
 macro_rules! conforms_to {
@@ -69,7 +85,7 @@ macro_rules! conforms_to {
 /// ```rust
 /// # use serde_json_lodash::conforms_to_x;
 /// # use serde_json::json;
-/// assert_eq!(conforms_to_x(&json!({}), vec![("a", |_: &serde_json::Value| true)]), false);
+/// assert_eq!(conforms_to_x(&json!({}), vec![("a", &|_: &serde_json::Value| true)]), false);
 /// ```
 pub fn conforms_to_x(object: &Value, source: Vec<Conform>) -> bool {
     for (key, predicate) in source {
@@ -94,7 +110,7 @@ pub fn conforms_to_x(object: &Value, source: Vec<Conform>) -> bool {
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
-/// assert_eq!(conforms_to_x!(&json!({}), vec![("a", |_: &serde_json::Value| true)]), false);
+/// assert_eq!(conforms_to_x!(&json!({}), vec![("a", &|_: &serde_json::Value| true)]), false);
 /// ```
 #[macro_export]
 macro_rules! conforms_to_x {

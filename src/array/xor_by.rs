@@ -13,7 +13,7 @@ use std::collections::HashSet;
 /// # use serde_json::json;
 /// assert_eq!(xor_by(json!([2.1, 1.2]), json!([2.3, 3.4]), |n| json!(n.as_f64().unwrap().floor())), json!([1.2, 3.4]));
 /// ```
-pub fn xor_by(array: Value, other: Value, iteratee: fn(&Value) -> Value) -> Value {
+pub fn xor_by(array: Value, other: Value, iteratee: impl Fn(&Value) -> Value) -> Value {
     let a = match array {
         Value::Array(v) => v,
         _ => vec![],
@@ -22,8 +22,8 @@ pub fn xor_by(array: Value, other: Value, iteratee: fn(&Value) -> Value) -> Valu
         Value::Array(v) => v,
         _ => vec![],
     };
-    let a_keys: Vec<Value> = a.iter().map(iteratee).collect();
-    let b_keys: Vec<Value> = b.iter().map(iteratee).collect();
+    let a_keys: Vec<Value> = a.iter().map(&iteratee).collect();
+    let b_keys: Vec<Value> = b.iter().map(&iteratee).collect();
     let a_key_set: HashSet<&Value> = a_keys.iter().collect();
     let b_key_set: HashSet<&Value> = b_keys.iter().collect();
     let mut seen: HashSet<&Value> = HashSet::new();

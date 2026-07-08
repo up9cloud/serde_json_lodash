@@ -16,7 +16,7 @@ use crate::internal::base_is_match;
 pub fn is_match_with(
     object: &Value,
     source: &Value,
-    customizer: fn(&Value, &Value) -> Option<bool>,
+    customizer: impl Fn(&Value, &Value) -> Option<bool>,
 ) -> Value {
     json!(is_match_with_x(object, source, customizer))
 }
@@ -91,7 +91,7 @@ macro_rules! is_match_with {
 pub fn is_match_with_x(
     object: &Value,
     source: &Value,
-    customizer: fn(&Value, &Value) -> Option<bool>,
+    customizer: impl Fn(&Value, &Value) -> Option<bool>,
 ) -> bool {
     match source {
         Value::Object(so) => match object {

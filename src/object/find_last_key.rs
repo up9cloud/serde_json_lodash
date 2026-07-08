@@ -11,7 +11,7 @@ use crate::lib::{Value, json};
 /// # use serde_json::json;
 /// assert_eq!(find_last_key(&json!({"a": 1, "b": 1}), |v| v == &json!(1)), json!("b"));
 /// ```
-pub fn find_last_key(object: &Value, predicate: fn(&Value) -> bool) -> Value {
+pub fn find_last_key(object: &Value, predicate: impl Fn(&Value) -> bool) -> Value {
     if let Value::Object(o) = object {
         for (k, v) in o.iter().rev() {
             if predicate(v) {

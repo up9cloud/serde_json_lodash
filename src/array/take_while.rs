@@ -11,7 +11,7 @@ use crate::lib::{Value, json};
 /// # use serde_json::json;
 /// assert_eq!(take_while(json!([1, 2, 3, 4]), |n| n.as_i64().unwrap() < 3), json!([1, 2]));
 /// ```
-pub fn take_while(array: Value, predicate: fn(&Value) -> bool) -> Value {
+pub fn take_while(array: Value, predicate: impl Fn(&Value) -> bool) -> Value {
     match array {
         Value::Array(vec) => Value::Array(vec.into_iter().take_while(predicate).collect()),
         _ => json!([]),

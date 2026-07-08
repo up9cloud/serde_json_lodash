@@ -13,7 +13,7 @@ use crate::internal::uniq_by_key;
 /// # use serde_json::json;
 /// assert_eq!(union_by(json!([2.1]), json!([1.2, 2.3]), |n| json!(n.as_f64().unwrap().floor())), json!([2.1, 1.2]));
 /// ```
-pub fn union_by(array: Value, other: Value, iteratee: fn(&Value) -> Value) -> Value {
+pub fn union_by(array: Value, other: Value, iteratee: impl Fn(&Value) -> Value) -> Value {
     let mut all = vec![];
     if let Value::Array(vec) = array {
         all.extend(vec);

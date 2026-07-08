@@ -13,7 +13,7 @@ use crate::collection::collect::collection_values;
 /// # use serde_json::json;
 /// assert_eq!(filter(json!([1, 2, 3, 4]), |n| n.as_i64().unwrap() % 2 == 1), json!([1, 3]));
 /// ```
-pub fn filter(collection: Value, predicate: fn(&Value) -> bool) -> Value {
+pub fn filter(collection: Value, predicate: impl Fn(&Value) -> bool) -> Value {
     Value::Array(
         collection_values(collection)
             .into_iter()
@@ -45,6 +45,9 @@ pub fn filter(collection: Value, predicate: fn(&Value) -> bool) -> Value {
 /// assert_eq!(filter!(), json!([]));
 /// assert_eq!(filter!(json!([1, 2, 3])), json!([1, 2, 3]));
 /// assert_eq!(filter!(json!({"a": 1, "b": 2}), |v| v.as_i64().unwrap() > 1), json!([2]));
+/// // predicates are `impl Fn`, so closures may capture their environment
+/// let threshold = 2;
+/// assert_eq!(filter!(json!([1, 2, 3, 4]), |v| v.as_i64().unwrap() >= threshold), json!([2, 3, 4]));
 /// ```
 #[macro_export]
 macro_rules! filter {

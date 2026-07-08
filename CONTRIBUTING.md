@@ -1,5 +1,13 @@
 # Contributing
 
+## Design priorities
+
+When goals conflict, they rank in this order — never trade a higher one for a lower one:
+
+1. **lodash API fidelity** — names, signatures, argument order, and behavior follow the lodash docs as closely as Rust allows.
+2. **Ergonomics** — easy to call: `Into<Value>` inputs (primitives or `json!` values), macros for lodash-style optional/variadic args, `impl Fn` callbacks that accept capturing closures.
+3. **Performance** — optimize only within the bounds of 1 and 2.
+
 ## Dev memo
 
 Dev commands are cargo aliases defined in [`.cargo/config.toml`](.cargo/config.toml):

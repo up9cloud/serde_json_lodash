@@ -17,7 +17,7 @@ use std::cmp::Ordering;
 /// # use serde_json::json;
 /// assert_eq!(sort_by(json!([3, 1, 2]), |v| v.clone()), json!([1, 2, 3]));
 /// ```
-pub fn sort_by(collection: Value, iteratee: fn(&Value) -> Value) -> Value {
+pub fn sort_by(collection: Value, iteratee: impl Fn(&Value) -> Value) -> Value {
     // Schwartzian transform: compute each key once (n iteratee calls instead
     // of ~2·n·log n from inside the comparator)
     let mut keyed: Vec<(Value, Value)> = collection_values(collection)

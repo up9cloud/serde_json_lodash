@@ -13,7 +13,7 @@ use crate::collection::collect::collection_values;
 /// # use serde_json::json;
 /// assert_eq!(every(json!([1, 2, 3]), |n| n.as_i64().unwrap() > 0), json!(true));
 /// ```
-pub fn every(collection: Value, predicate: fn(&Value) -> bool) -> Value {
+pub fn every(collection: Value, predicate: impl Fn(&Value) -> bool) -> Value {
     json!(every_x(collection, predicate))
 }
 
@@ -67,7 +67,7 @@ macro_rules! every {
 /// # use serde_json::json;
 /// assert_eq!(every_x(json!([1, 2, 3]), |n| n.as_i64().unwrap() > 0), true);
 /// ```
-pub fn every_x(collection: Value, predicate: fn(&Value) -> bool) -> bool {
+pub fn every_x(collection: Value, predicate: impl Fn(&Value) -> bool) -> bool {
     collection_values(collection).iter().all(predicate)
 }
 

@@ -15,7 +15,7 @@ use crate::collection::collect::collection_values;
 /// ```
 pub fn reduce(
     collection: Value,
-    iteratee: fn(Value, &Value) -> Value,
+    iteratee: impl Fn(Value, &Value) -> Value,
     accumulator: Value,
 ) -> Value {
     collection_values(collection)

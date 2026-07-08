@@ -11,7 +11,7 @@ use crate::lib::{Value, json};
 /// # use serde_json::json;
 /// assert_eq!(map_values(json!({"a": 1}), |v| v.clone()), json!({"a": 1}));
 /// ```
-pub fn map_values(object: Value, iteratee: fn(&Value) -> Value) -> Value {
+pub fn map_values(object: Value, iteratee: impl Fn(&Value) -> Value) -> Value {
     match object {
         Value::Object(o) => Value::Object(
             o.into_iter()

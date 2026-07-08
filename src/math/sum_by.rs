@@ -13,7 +13,7 @@ use crate::math::sum::sum_values;
 /// # use serde_json::json;
 /// assert_eq!(sum_by(json!([1, 2, 3]), |v| v.clone()), json!(6));
 /// ```
-pub fn sum_by(array: Value, iteratee: fn(&Value) -> Value) -> Value {
+pub fn sum_by(array: Value, iteratee: impl Fn(&Value) -> Value) -> Value {
     match array {
         Value::Array(vec) => sum_values(vec.iter().map(iteratee).collect()),
         _ => json!(0),

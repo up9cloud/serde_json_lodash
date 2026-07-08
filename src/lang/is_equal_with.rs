@@ -14,7 +14,7 @@ use crate::lib::{Value, json};
 pub fn is_equal_with(
     a: &Value,
     b: &Value,
-    customizer: fn(&Value, &Value) -> Option<bool>,
+    customizer: impl Fn(&Value, &Value) -> Option<bool>,
 ) -> Value {
     json!(is_equal_with_x(a, b, customizer))
 }
@@ -92,7 +92,7 @@ macro_rules! is_equal_with {
 pub fn is_equal_with_x(
     a: &Value,
     b: &Value,
-    customizer: fn(&Value, &Value) -> Option<bool>,
+    customizer: impl Fn(&Value, &Value) -> Option<bool>,
 ) -> bool {
     match customizer(a, b) {
         Some(result) => result,

@@ -13,7 +13,7 @@ use crate::collection::collect::collection_values;
 /// # use serde_json::json;
 /// assert_eq!(map(json!([1, 2]), |n| json!(n.as_i64().unwrap() * 2)), json!([2, 4]));
 /// ```
-pub fn map(collection: Value, iteratee: fn(&Value) -> Value) -> Value {
+pub fn map(collection: Value, iteratee: impl Fn(&Value) -> Value) -> Value {
     Value::Array(collection_values(collection).iter().map(iteratee).collect())
 }
 

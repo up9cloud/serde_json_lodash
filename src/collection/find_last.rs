@@ -13,7 +13,7 @@ use crate::collection::collect::collection_values;
 /// # use serde_json::json;
 /// assert_eq!(find_last(json!([1, 2, 3, 4]), |n| n.as_i64().unwrap() % 2 == 1), json!(3));
 /// ```
-pub fn find_last(collection: Value, predicate: fn(&Value) -> bool) -> Value {
+pub fn find_last(collection: Value, predicate: impl Fn(&Value) -> bool) -> Value {
     collection_values(collection)
         .into_iter()
         .rev()

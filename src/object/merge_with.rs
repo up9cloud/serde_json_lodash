@@ -16,7 +16,7 @@ use crate::merge;
 pub fn merge_with(
     object: Value,
     source: Value,
-    customizer: fn(&Value, &Value) -> Option<Value>,
+    customizer: impl Fn(&Value, &Value) -> Option<Value>,
 ) -> Value {
     match (object, source) {
         (Value::Object(mut o), Value::Object(s)) => {

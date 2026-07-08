@@ -11,7 +11,7 @@ use crate::lib::Value;
 /// # use serde_json::json;
 /// assert_eq!(for_own(json!({"a": 1, "b": 2}), |_v, _k| true), json!({"a": 1, "b": 2}));
 /// ```
-pub fn for_own(object: Value, iteratee: fn(&Value, &str) -> bool) -> Value {
+pub fn for_own(object: Value, iteratee: impl Fn(&Value, &str) -> bool) -> Value {
     if let Value::Object(o) = &object {
         for (k, v) in o {
             if !iteratee(v, k) {

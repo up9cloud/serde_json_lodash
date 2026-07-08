@@ -11,7 +11,7 @@ use crate::lib::{Value, json};
 /// # use serde_json::json;
 /// assert_eq!(drop_right_while(json!([1, 2, 3, 4]), |n| n.as_i64().unwrap() > 2), json!([1, 2]));
 /// ```
-pub fn drop_right_while(array: Value, predicate: fn(&Value) -> bool) -> Value {
+pub fn drop_right_while(array: Value, predicate: impl Fn(&Value) -> bool) -> Value {
     match array {
         Value::Array(mut vec) => {
             while let Some(last) = vec.last() {
