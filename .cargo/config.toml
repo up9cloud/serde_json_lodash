@@ -1,0 +1,6 @@
+# Dev command aliases (Cargo.toml cannot hold these; this is cargo's official
+# mechanism). See CONTRIBUTING.md "Dev memo" for usage.
+[alias]
+t = "test --features lazy_static"              # run tests; append filters, e.g. `cargo t --doc set`
+lint = "clippy --all-features -- -D warnings"  # the clippy gate CI enforces
+dev = "watch -w Cargo.toml -w src -x t"        # watch + run all tests (needs cargo-watch)
