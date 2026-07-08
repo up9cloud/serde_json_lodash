@@ -1,5 +1,7 @@
 use crate::lib::Value;
 
+use std::collections::HashSet;
+
 #[doc(hidden)]
 pub fn _empty_array() -> Vec<Value> {
     vec![]
@@ -52,6 +54,8 @@ pub fn intersection(v1: Value, v2: Value) -> Value {
 /// assert_eq!(intersection!(json!([null,false,0,"","ab",[],{}]), json!([])), json!([]));
 /// assert_eq!(intersection!(json!([null,false,0,"","ab",[],{}]), json!([null,false,0,"","ab",[],{}])), json!([null,false,0,"","ab"]));
 /// assert_eq!(intersection!(json!([null, false, 1]), json!([null,false,0]), json!([false, 2, null])), json!([null,false]));
+/// // duplicates in the inputs still yield unique values, like lodash
+/// assert_eq!(intersection!(json!([2, 1, 2]), json!([2, 3, 2])), json!([2]));
 /// ```
 #[macro_export]
 macro_rules! intersection {
@@ -85,43 +89,28 @@ macro_rules! intersection {
 /// assert_eq!(intersection_x(json!([2, 1]), json!([2, 3])), vec![json!(2)]);
 /// ```
 pub fn intersection_x(v1: Value, v2: Value) -> Vec<Value> {
-    let mut result = vec![];
-    let vec1 = match v1 {
-        Value::Null | Value::Bool(_) | Value::Number(_) | Value::String(_) | Value::Object(_) => {
-            return result;
-        }
-        Value::Array(vec) => {
-            if vec.is_empty() {
-                return result;
-            }
-            vec
-        }
+    let (vec1, vec2) = match (v1, v2) {
+        (Value::Array(a), Value::Array(b)) if !a.is_empty() && !b.is_empty() => (a, b),
+        _ => return vec![],
     };
-    match v2 {
-        Value::Null | Value::Bool(_) | Value::Number(_) | Value::String(_) | Value::Object(_) => {
-            return result;
+    // Objects/arrays are skipped entirely: SameValueZero
+    // (https://262.ecma-international.org/7.0/#sec-samevaluenonnumber) matches
+    // them by reference identity, and two owned `Value`s are never the same
+    // object. Scalars intersect by value through a hash set (`Value: Hash`
+    // is consistent with its `Eq`), unique and in first-array order, in
+    // O(len1 + len2).
+    let set2: HashSet<&Value> = vec2
+        .iter()
+        .filter(|v| !v.is_object() && !v.is_array())
+        .collect();
+    let mut emitted: HashSet<&Value> = HashSet::with_capacity(set2.len());
+    let mut result = vec![];
+    for v in vec1.iter() {
+        if v.is_object() || v.is_array() {
+            continue;
         }
-        Value::Array(vec2) => {
-            if vec2.is_empty() {
-                return result;
-            }
-            for v1 in vec1.iter() {
-                // Based on the RFC https://262.ecma-international.org/7.0/#sec-samevaluenonnumber
-                // -- if they are same Object value return true
-                // For here we compare two Value, not &Value. It means v1 and v2 are absolutely not same object in memory.
-                // So we could just simply ignore them
-                if v1.is_object() || v1.is_array() {
-                    continue;
-                }
-                for v2 in vec2.iter() {
-                    if v2.is_object() || v2.is_array() {
-                        continue;
-                    }
-                    if v1 == v2 {
-                        result.push(v1.clone())
-                    }
-                }
-            }
+        if set2.contains(v) && emitted.insert(v) {
+            result.push(v.clone());
         }
     }
     result

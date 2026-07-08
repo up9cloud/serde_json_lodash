@@ -1,8 +1,6 @@
 use crate::lib::Value;
 
-fn count_eq(all: &[Value], v: &Value) -> usize {
-    all.iter().filter(|x| *x == v).count()
-}
+use std::collections::HashSet;
 
 /// Fn form of [xor!](crate::xor!); see it for the full docs
 ///
@@ -24,14 +22,17 @@ pub fn xor(array: Value, other: Value) -> Value {
         Value::Array(v) => v,
         _ => vec![],
     };
+    let a_set: HashSet<&Value> = a.iter().collect();
+    let b_set: HashSet<&Value> = b.iter().collect();
+    let mut seen: HashSet<&Value> = HashSet::new();
     let mut out = vec![];
     for v in a.iter() {
-        if count_eq(&b, v) == 0 && !out.contains(v) {
+        if !b_set.contains(v) && seen.insert(v) {
             out.push(v.clone());
         }
     }
     for v in b.iter() {
-        if count_eq(&a, v) == 0 && !out.contains(v) {
+        if !a_set.contains(v) && seen.insert(v) {
             out.push(v.clone());
         }
     }

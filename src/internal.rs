@@ -43,14 +43,13 @@ pub(crate) fn bool_to_number(b: bool) -> Number {
 }
 // Deduplicate values by an iteratee-derived key, using value (deep) equality.
 // lodash uses SameValueZero (reference identity for objects); for owned JSON
-// values deep equality is the sensible equivalent
+// values deep equality is the sensible equivalent. `Value: Hash` is
+// consistent with its `Eq`, so a hash set keeps this O(n).
 pub(crate) fn uniq_by_key(vec: Vec<Value>, key: impl Fn(&Value) -> Value) -> Vec<Value> {
-    let mut seen: Vec<Value> = vec![];
+    let mut seen: std::collections::HashSet<Value> = std::collections::HashSet::new();
     let mut out = vec![];
     for v in vec {
-        let k = key(&v);
-        if !seen.contains(&k) {
-            seen.push(k);
+        if seen.insert(key(&v)) {
             out.push(v);
         }
     }

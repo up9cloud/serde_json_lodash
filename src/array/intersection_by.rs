@@ -1,5 +1,7 @@
 use crate::lib::{Value, json};
 
+use std::collections::HashSet;
+
 /// Fn form of [intersection_by!](crate::intersection_by!); see it for the full docs
 ///
 /// `_x` form: **not provided** — see [intersection_by_x()]
@@ -20,13 +22,12 @@ pub fn intersection_by(array: Value, other: Value, iteratee: fn(&Value) -> Value
         Value::Array(v) => v,
         _ => return json!([]),
     };
-    let b_keys: Vec<Value> = b.iter().map(iteratee).collect();
+    let b_keys: HashSet<Value> = b.iter().map(iteratee).collect();
     let mut out = vec![];
-    let mut out_keys: Vec<Value> = vec![];
+    let mut out_keys: HashSet<Value> = HashSet::new();
     for v in a {
         let k = iteratee(&v);
-        if b_keys.contains(&k) && !out_keys.contains(&k) {
-            out_keys.push(k);
+        if b_keys.contains(&k) && out_keys.insert(k) {
             out.push(v);
         }
     }

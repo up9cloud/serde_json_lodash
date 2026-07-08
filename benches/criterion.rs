@@ -1,7 +1,7 @@
 //! Curated benches — not blanket coverage. A function earns a bench here when
 //! there is a real implementation choice to guard or quantify: the array set
-//! ops are O(n²) scans (JSON numbers aren't hashable), sorted_index is a
-//! binary search, merge/defaults_deep/clone_deep recurse over nested values,
+//! ops are hash-set based (`Value: Hash`) and must stay ~O(n), sorted_index is
+//! a binary search, merge/defaults_deep/clone_deep recurse over nested values,
 //! get/set re-parse their path on every call, sort_by/order_by pay a
 //! comparator per element, and camel_case exercises the shared words_vec
 //! casing core. When optimizing a function, add its bench first as a baseline.
@@ -89,7 +89,7 @@ pub fn criterion_extract_value_number(c: &mut Criterion) {
     group.finish();
 }
 
-// O(n²) candidates: element-by-element scans because Value has no cheap hash.
+// Hash-set based (`Value: Hash`): 10× the input should cost ~10×, not ~100×.
 pub fn criterion_array_set_ops(c: &mut Criterion) {
     let mut group = c.benchmark_group("array_set_ops");
     for n in [100usize, 1000] {
@@ -109,6 +109,20 @@ pub fn criterion_array_set_ops(c: &mut Criterion) {
             b.iter_batched(
                 || (a.clone(), b2.clone()),
                 |(x, y)| l::union(x, y),
+                BatchSize::SmallInput,
+            )
+        });
+        group.bench_with_input(BenchmarkId::new("difference", n), &n, |b, _| {
+            b.iter_batched(
+                || (a.clone(), b2.clone()),
+                |(x, y)| l::difference(x, y),
+                BatchSize::SmallInput,
+            )
+        });
+        group.bench_with_input(BenchmarkId::new("xor", n), &n, |b, _| {
+            b.iter_batched(
+                || (a.clone(), b2.clone()),
+                |(x, y)| l::xor(x, y),
                 BatchSize::SmallInput,
             )
         });

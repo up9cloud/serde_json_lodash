@@ -1,5 +1,7 @@
 use crate::lib::Value;
 
+use std::collections::HashSet;
+
 /// Fn form of [xor_by!](crate::xor_by!); see it for the full docs
 ///
 /// `_x` form: **not provided** — see [xor_by_x()]
@@ -22,18 +24,18 @@ pub fn xor_by(array: Value, other: Value, iteratee: fn(&Value) -> Value) -> Valu
     };
     let a_keys: Vec<Value> = a.iter().map(iteratee).collect();
     let b_keys: Vec<Value> = b.iter().map(iteratee).collect();
+    let a_key_set: HashSet<&Value> = a_keys.iter().collect();
+    let b_key_set: HashSet<&Value> = b_keys.iter().collect();
+    let mut seen: HashSet<&Value> = HashSet::new();
     let mut out = vec![];
-    let mut out_keys: Vec<Value> = vec![];
     for (v, k) in a.iter().zip(a_keys.iter()) {
-        if !b_keys.contains(k) && !out_keys.contains(k) {
+        if !b_key_set.contains(k) && seen.insert(k) {
             out.push(v.clone());
-            out_keys.push(k.clone());
         }
     }
     for (v, k) in b.iter().zip(b_keys.iter()) {
-        if !a_keys.contains(k) && !out_keys.contains(k) {
+        if !a_key_set.contains(k) && seen.insert(k) {
             out.push(v.clone());
-            out_keys.push(k.clone());
         }
     }
     Value::Array(out)

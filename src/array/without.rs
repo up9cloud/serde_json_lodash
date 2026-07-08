@@ -1,5 +1,7 @@
 use crate::lib::{Value, json};
 
+use std::collections::HashSet;
+
 /// Fn form of [without!](crate::without!); see it for the full docs
 ///
 /// `_x` form: **not provided** — see [without_x()]
@@ -14,9 +16,9 @@ use crate::lib::{Value, json};
 pub fn without(array: Value, values: Value) -> Value {
     match array {
         Value::Array(vec) => {
-            let excluded = match values {
-                Value::Array(v) => v,
-                _ => vec![],
+            let excluded: HashSet<Value> = match values {
+                Value::Array(v) => v.into_iter().collect(),
+                _ => HashSet::new(),
             };
             Value::Array(vec.into_iter().filter(|v| !excluded.contains(v)).collect())
         }

@@ -1,5 +1,7 @@
 use crate::lib::Value;
 
+use std::collections::HashSet;
+
 /// Fn form of [pull_all_by!](crate::pull_all_by!); see it for the full docs
 ///
 /// `_x` form: **not provided** — see [pull_all_by_x()]
@@ -25,16 +27,12 @@ pub fn pull_all_by(mut array: Value, values: Value, iteratee: fn(&Value) -> &Val
                 | Value::Object(_) => return array,
                 Value::Array(vec) => vec,
             };
+            let excluded_keys: HashSet<&Value> = values_vec.iter().map(iteratee).collect();
             let mut new_vec = vec![];
-            'a: for item in vec.iter() {
-                let id_item = iteratee(item);
-                for value in values_vec.iter() {
-                    let id_value = iteratee(value);
-                    if id_item == id_value {
-                        continue 'a;
-                    }
+            for item in vec.iter() {
+                if !excluded_keys.contains(iteratee(item)) {
+                    new_vec.push(item.clone())
                 }
-                new_vec.push(item.clone())
             }
             new_vec
         }

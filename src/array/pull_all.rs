@@ -1,5 +1,7 @@
 use crate::lib::Value;
 
+use std::collections::HashSet;
+
 /// Fn form of [pull_all!](crate::pull_all!); see it for the full docs
 ///
 /// `_x` form: **not provided** — see [pull_all_x()]
@@ -25,14 +27,12 @@ pub fn pull_all(mut array: Value, values: Value) -> Value {
                 | Value::Object(_) => return array,
                 Value::Array(vec) => vec,
             };
+            let excluded: HashSet<&Value> = values_vec.iter().collect();
             let mut new_vec = vec![];
-            'a: for item in vec.iter() {
-                for value in values_vec.iter() {
-                    if item == value {
-                        continue 'a;
-                    }
+            for item in vec.iter() {
+                if !excluded.contains(item) {
+                    new_vec.push(item.clone())
                 }
-                new_vec.push(item.clone())
             }
             new_vec
         }

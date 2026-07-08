@@ -1,5 +1,7 @@
 use crate::lib::{Value, json};
 
+use std::collections::HashSet;
+
 /// Fn form of [difference_by!](crate::difference_by!); see it for the full docs
 ///
 /// `_x` form: **not provided** — see [difference_by_x()]
@@ -20,7 +22,7 @@ pub fn difference_by(array: Value, other: Value, iteratee: fn(&Value) -> Value) 
         Value::Array(v) => v,
         _ => return Value::Array(a),
     };
-    let b_keys: Vec<Value> = b.iter().map(iteratee).collect();
+    let b_keys: HashSet<Value> = b.iter().map(iteratee).collect();
     Value::Array(
         a.into_iter()
             .filter(|v| !b_keys.contains(&iteratee(v)))

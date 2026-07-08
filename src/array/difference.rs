@@ -1,5 +1,7 @@
 use crate::lib::Value;
 
+use std::collections::HashSet;
+
 /// Fn form of [difference!](crate::difference!); see it for the full docs
 ///
 /// `_x` form: **not provided** — see [difference_x()]
@@ -27,28 +29,20 @@ pub fn difference(v1: Value, v2: Value) -> Value {
         Value::Number(_) => return Value::Array(v1),
         Value::String(_) => return Value::Array(v1),
         Value::Array(vec) => {
-            'outer: for v in v1.iter() {
+            // Only scalars can match (SameValueZero: two owned composites are
+            // never the same reference), so hash vec2's scalars once — O(n+m).
+            let set2: HashSet<&Value> = vec
+                .iter()
+                .filter(|v| !v.is_object() && !v.is_array())
+                .collect();
+            for v in v1.iter() {
                 match v {
                     Value::Null | Value::Bool(_) | Value::Number(_) | Value::String(_) => {
-                        for vv in vec.iter() {
-                            match vv {
-                                Value::Null => {
-                                    if v.is_null() {
-                                        continue 'outer;
-                                    }
-                                }
-                                Value::Bool(_) | Value::Number(_) | Value::String(_) => {
-                                    if v == vv {
-                                        continue 'outer;
-                                    }
-                                }
-                                Value::Array(_) => continue,
-                                Value::Object(_) => continue,
-                            }
+                        if set2.contains(v) {
+                            continue;
                         }
                     }
-                    Value::Array(_) => (),
-                    Value::Object(_) => (),
+                    Value::Array(_) | Value::Object(_) => (),
                 }
                 result.push(v.clone())
             }
