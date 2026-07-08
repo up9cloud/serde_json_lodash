@@ -49,6 +49,10 @@ pub fn omit_by(object: Value, predicate: impl Fn(&Value) -> bool) -> Value {
 /// # use serde_json::json;
 /// assert_eq!(omit_by!(), json!({}));
 /// assert_eq!(omit_by!(json!({"a": 1})), json!({"a": 1}));
+/// // iteratee shorthands: a json! object is `_.matches`, a [path, value] pair is
+/// // `_.matchesProperty`, a literal is `_.property`
+/// assert_eq!(omit_by!(json!({"x": {"a": 0, "b": 1}, "y": {"a": 2, "b": 1}}), json!({"b": 1})), json!({}));
+/// assert_eq!(omit_by!(json!({"x": {"a": 0, "b": 1}, "y": {"a": 2, "b": 1}}), "a"), json!({"x":{"a":0,"b":1}}));
 /// ```
 #[macro_export]
 macro_rules! omit_by {
@@ -57,6 +61,24 @@ macro_rules! omit_by {
     };
     ($a:expr $(,)*) => {
         $crate::omit_by($a, |v| v.is_null())
+    };
+    ($a:expr, json!($($__sh:tt)+) $(,)*) => {
+        $crate::omit_by($a, $crate::internal::predicate_shorthand($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, serde_json::json!($($__sh:tt)+) $(,)*) => {
+        $crate::omit_by($a, $crate::internal::predicate_shorthand($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, $b:literal $(,)*) => {
+        $crate::omit_by($a, $crate::internal::predicate_shorthand($crate::lib::json!($b)))
+    };
+    ($a:expr, json!($($__sh:tt)+), $($rest:tt)*) => {
+        $crate::omit_by($a, $crate::internal::predicate_shorthand($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, serde_json::json!($($__sh:tt)+), $($rest:tt)*) => {
+        $crate::omit_by($a, $crate::internal::predicate_shorthand($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, $b:literal, $($rest:tt)*) => {
+        $crate::omit_by($a, $crate::internal::predicate_shorthand($crate::lib::json!($b)))
     };
     ($a:expr, $b:expr $(,)*) => {
         $crate::omit_by($a, $b)

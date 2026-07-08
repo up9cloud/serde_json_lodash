@@ -52,6 +52,10 @@ pub fn group_by(collection: Value, iteratee: impl Fn(&Value) -> Value) -> Value 
 /// # use serde_json::json;
 /// assert_eq!(group_by!(), json!({}));
 /// assert_eq!(group_by!(json!(["a", "b", "a"])), json!({"a": ["a", "a"], "b": ["b"]}));
+/// // iteratee shorthands: a json! object is `_.matches`, a [path, value] pair is
+/// // `_.matchesProperty`, a literal is `_.property`
+/// assert_eq!(group_by!(json!([{"a": 0, "b": 1}, {"a": 2, "b": 1}, {"a": 3, "b": 2}]), "a"), json!({"0":[{"a":0,"b":1}],"2":[{"a":2,"b":1}],"3":[{"a":3,"b":2}]}));
+/// assert_eq!(group_by!(json!([{"a": 0, "b": 1}, {"a": 2, "b": 1}, {"a": 3, "b": 2}]), json!({"b": 1})), json!({"false":[{"a":3,"b":2}],"true":[{"a":0,"b":1},{"a":2,"b":1}]}));
 /// ```
 #[macro_export]
 macro_rules! group_by {
@@ -60,6 +64,24 @@ macro_rules! group_by {
     };
     ($a:expr $(,)*) => {
         $crate::group_by($a, |v| v.clone())
+    };
+    ($a:expr, json!($($__sh:tt)+) $(,)*) => {
+        $crate::group_by($a, $crate::iteratee($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, serde_json::json!($($__sh:tt)+) $(,)*) => {
+        $crate::group_by($a, $crate::iteratee($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, $b:literal $(,)*) => {
+        $crate::group_by($a, $crate::iteratee($crate::lib::json!($b)))
+    };
+    ($a:expr, json!($($__sh:tt)+), $($rest:tt)*) => {
+        $crate::group_by($a, $crate::iteratee($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, serde_json::json!($($__sh:tt)+), $($rest:tt)*) => {
+        $crate::group_by($a, $crate::iteratee($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, $b:literal, $($rest:tt)*) => {
+        $crate::group_by($a, $crate::iteratee($crate::lib::json!($b)))
     };
     ($a:expr, $b:expr $(,)*) => {
         $crate::group_by($a, $b)

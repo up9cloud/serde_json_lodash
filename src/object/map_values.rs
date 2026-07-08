@@ -53,6 +53,9 @@ pub fn map_values(object: Value, iteratee: impl Fn(&Value) -> Value) -> Value {
 /// # use serde_json::json;
 /// assert_eq!(map_values!(), json!({}));
 /// assert_eq!(map_values!(json!({"a": 1})), json!({"a": 1}));
+/// // iteratee shorthands: a json! object is `_.matches`, a [path, value] pair is
+/// // `_.matchesProperty`, a literal is `_.property`
+/// assert_eq!(map_values!(json!({"x": {"a": 0, "b": 1}, "y": {"a": 2, "b": 1}}), "a"), json!({"x":0,"y":2}));
 /// ```
 #[macro_export]
 macro_rules! map_values {
@@ -61,6 +64,24 @@ macro_rules! map_values {
     };
     ($a:expr $(,)*) => {
         $crate::to_plain_object($a)
+    };
+    ($a:expr, json!($($__sh:tt)+) $(,)*) => {
+        $crate::map_values($a, $crate::iteratee($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, serde_json::json!($($__sh:tt)+) $(,)*) => {
+        $crate::map_values($a, $crate::iteratee($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, $b:literal $(,)*) => {
+        $crate::map_values($a, $crate::iteratee($crate::lib::json!($b)))
+    };
+    ($a:expr, json!($($__sh:tt)+), $($rest:tt)*) => {
+        $crate::map_values($a, $crate::iteratee($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, serde_json::json!($($__sh:tt)+), $($rest:tt)*) => {
+        $crate::map_values($a, $crate::iteratee($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, $b:literal, $($rest:tt)*) => {
+        $crate::map_values($a, $crate::iteratee($crate::lib::json!($b)))
     };
     ($a:expr, $b:expr $(,)*) => {
         $crate::map_values($a, $b)

@@ -45,6 +45,10 @@ pub fn sum_by(array: Value, iteratee: impl Fn(&Value) -> Value) -> Value {
 /// # use serde_json::json;
 /// assert_eq!(sum_by!(), json!(0));
 /// assert_eq!(sum_by!(json!([1, 2, 3])), json!(6));
+/// // iteratee shorthands: a json! object is `_.matches`, a [path, value] pair is
+/// // `_.matchesProperty`, a literal is `_.property`
+/// assert_eq!(sum_by!(json!([{"a": 0, "b": 1}, {"a": 2, "b": 1}, {"a": 3, "b": 2}]), "a"), json!(5));
+/// assert_eq!(sum_by!(json!([{"a": 0, "b": 1}, {"a": 2, "b": 1}, {"a": 3, "b": 2}]), json!({"b": 1})), json!(2));
 /// ```
 #[macro_export]
 macro_rules! sum_by {
@@ -53,6 +57,24 @@ macro_rules! sum_by {
     };
     ($a:expr $(,)*) => {
         $crate::sum($a)
+    };
+    ($a:expr, json!($($__sh:tt)+) $(,)*) => {
+        $crate::sum_by($a, $crate::iteratee($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, serde_json::json!($($__sh:tt)+) $(,)*) => {
+        $crate::sum_by($a, $crate::iteratee($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, $b:literal $(,)*) => {
+        $crate::sum_by($a, $crate::iteratee($crate::lib::json!($b)))
+    };
+    ($a:expr, json!($($__sh:tt)+), $($rest:tt)*) => {
+        $crate::sum_by($a, $crate::iteratee($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, serde_json::json!($($__sh:tt)+), $($rest:tt)*) => {
+        $crate::sum_by($a, $crate::iteratee($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, $b:literal, $($rest:tt)*) => {
+        $crate::sum_by($a, $crate::iteratee($crate::lib::json!($b)))
     };
     ($a:expr, $b:expr $(,)*) => {
         $crate::sum_by($a, $b)

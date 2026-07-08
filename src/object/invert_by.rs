@@ -60,6 +60,9 @@ pub fn invert_by(v: Value, iteratee: impl Fn(&Value) -> Value) -> Value {
 /// # use serde_json::json;
 /// assert_eq!(invert_by!(), json!({}));
 /// assert_eq!(invert_by!(json!({"a": 1})), json!({"1": ["a"]}));
+/// // iteratee shorthands: a json! object is `_.matches`, a [path, value] pair is
+/// // `_.matchesProperty`, a literal is `_.property`
+/// assert_eq!(invert_by!(json!({"x": {"a": 0, "b": 1}, "y": {"a": 2, "b": 1}}), "a"), json!({"0":["x"],"2":["y"]}));
 /// ```
 #[macro_export]
 macro_rules! invert_by {
@@ -68,6 +71,24 @@ macro_rules! invert_by {
     };
     ($a:expr $(,)*) => {
         $crate::invert_by($a, |v| v.clone())
+    };
+    ($a:expr, json!($($__sh:tt)+) $(,)*) => {
+        $crate::invert_by($a, $crate::iteratee($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, serde_json::json!($($__sh:tt)+) $(,)*) => {
+        $crate::invert_by($a, $crate::iteratee($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, $b:literal $(,)*) => {
+        $crate::invert_by($a, $crate::iteratee($crate::lib::json!($b)))
+    };
+    ($a:expr, json!($($__sh:tt)+), $($rest:tt)*) => {
+        $crate::invert_by($a, $crate::iteratee($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, serde_json::json!($($__sh:tt)+), $($rest:tt)*) => {
+        $crate::invert_by($a, $crate::iteratee($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, $b:literal, $($rest:tt)*) => {
+        $crate::invert_by($a, $crate::iteratee($crate::lib::json!($b)))
     };
     ($a:expr, $b:expr $(,)*) => {
         $crate::invert_by($a, $b)

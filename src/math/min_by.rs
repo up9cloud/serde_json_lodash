@@ -57,6 +57,10 @@ pub fn min_by(array: Value, iteratee: impl Fn(&Value) -> Value) -> Value {
 /// assert_eq!(min_by!(), json!(null));
 /// assert_eq!(min_by!(json!([])), json!(null));
 /// assert_eq!(min_by!(json!([3, 1, 2])), json!(1));
+/// // iteratee shorthands: a json! object is `_.matches`, a [path, value] pair is
+/// // `_.matchesProperty`, a literal is `_.property`
+/// assert_eq!(min_by!(json!([{"a": 0, "b": 1}, {"a": 2, "b": 1}, {"a": 3, "b": 2}]), "a"), json!({"a":0,"b":1}));
+/// assert_eq!(min_by!(json!([{"a": 0, "b": 1}, {"a": 2, "b": 1}, {"a": 3, "b": 2}]), json!({"b": 1})), json!({"a":3,"b":2}));
 /// ```
 #[macro_export]
 macro_rules! min_by {
@@ -65,6 +69,24 @@ macro_rules! min_by {
     };
     ($a:expr $(,)*) => {
         $crate::min($a)
+    };
+    ($a:expr, json!($($__sh:tt)+) $(,)*) => {
+        $crate::min_by($a, $crate::iteratee($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, serde_json::json!($($__sh:tt)+) $(,)*) => {
+        $crate::min_by($a, $crate::iteratee($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, $b:literal $(,)*) => {
+        $crate::min_by($a, $crate::iteratee($crate::lib::json!($b)))
+    };
+    ($a:expr, json!($($__sh:tt)+), $($rest:tt)*) => {
+        $crate::min_by($a, $crate::iteratee($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, serde_json::json!($($__sh:tt)+), $($rest:tt)*) => {
+        $crate::min_by($a, $crate::iteratee($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, $b:literal, $($rest:tt)*) => {
+        $crate::min_by($a, $crate::iteratee($crate::lib::json!($b)))
     };
     ($a:expr, $b:expr $(,)*) => {
         $crate::min_by($a, $b)

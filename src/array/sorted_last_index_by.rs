@@ -47,6 +47,9 @@ pub fn sorted_last_index_by(
 /// assert_eq!(sorted_last_index_by!(json!(1), json!(2)), json!(0));
 /// assert_eq!(sorted_last_index_by!(json!([1, 2, 3]), json!(2)), json!(2));
 /// assert_eq!(sorted_last_index_by!(json!("abc"), json!("bc")), json!(0));
+/// // iteratee shorthands: a json! object is `_.matches`, a [path, value] pair is
+/// // `_.matchesProperty`, a literal is `_.property`
+/// assert_eq!(sorted_last_index_by!(json!([{"a": 10}, {"a": 20}]), json!({"a": 15}), "a"), json!(1));
 /// ```
 #[macro_export]
 macro_rules! sorted_last_index_by {
@@ -58,6 +61,24 @@ macro_rules! sorted_last_index_by {
     };
     ($a:expr, $b:expr $(,)*) => {
         $crate::sorted_last_index($a, $b)
+    };
+        ($a:expr, $b:expr, json!($($__sh:tt)+) $(,)*) => {
+        $crate::sorted_last_index_by($a, $b, $crate::iteratee($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, $b:expr, serde_json::json!($($__sh:tt)+) $(,)*) => {
+        $crate::sorted_last_index_by($a, $b, $crate::iteratee($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, $b:expr, $c:literal $(,)*) => {
+        $crate::sorted_last_index_by($a, $b, $crate::iteratee($crate::lib::json!($c)))
+    };
+    ($a:expr, $b:expr, json!($($__sh:tt)+), $($rest:tt)*) => {
+        $crate::sorted_last_index_by($a, $b, $crate::iteratee($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, $b:expr, serde_json::json!($($__sh:tt)+), $($rest:tt)*) => {
+        $crate::sorted_last_index_by($a, $b, $crate::iteratee($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, $b:expr, $c:literal, $($rest:tt)*) => {
+        $crate::sorted_last_index_by($a, $b, $crate::iteratee($crate::lib::json!($c)))
     };
     ($a:expr, $b:expr, $c:expr $(,)*) => {
         $crate::sorted_last_index_by($a, $b, $c)
@@ -107,6 +128,24 @@ macro_rules! sorted_last_index_by_x {
     };
     ($a:expr, $b:expr $(,)*) => {
         $crate::sorted_last_index($a, $b)
+    };
+        ($a:expr, $b:expr, json!($($__sh:tt)+) $(,)*) => {
+        $crate::sorted_last_index_by_x($a, $b, $crate::iteratee($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, $b:expr, serde_json::json!($($__sh:tt)+) $(,)*) => {
+        $crate::sorted_last_index_by_x($a, $b, $crate::iteratee($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, $b:expr, $c:literal $(,)*) => {
+        $crate::sorted_last_index_by_x($a, $b, $crate::iteratee($crate::lib::json!($c)))
+    };
+    ($a:expr, $b:expr, json!($($__sh:tt)+), $($rest:tt)*) => {
+        $crate::sorted_last_index_by_x($a, $b, $crate::iteratee($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, $b:expr, serde_json::json!($($__sh:tt)+), $($rest:tt)*) => {
+        $crate::sorted_last_index_by_x($a, $b, $crate::iteratee($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, $b:expr, $c:literal, $($rest:tt)*) => {
+        $crate::sorted_last_index_by_x($a, $b, $crate::iteratee($crate::lib::json!($c)))
     };
     ($a:expr, $b:expr, $c:expr $(,)*) => {
         $crate::sorted_last_index_by_x($a, $b, $c)

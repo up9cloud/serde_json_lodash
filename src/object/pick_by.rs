@@ -48,6 +48,10 @@ pub fn pick_by(object: Value, predicate: impl Fn(&Value) -> bool) -> Value {
 /// # use serde_json::json;
 /// assert_eq!(pick_by!(), json!({}));
 /// assert_eq!(pick_by!(json!({"a": 1})), json!({"a": 1}));
+/// // iteratee shorthands: a json! object is `_.matches`, a [path, value] pair is
+/// // `_.matchesProperty`, a literal is `_.property`
+/// assert_eq!(pick_by!(json!({"x": {"a": 0, "b": 1}, "y": {"a": 2, "b": 1}}), json!({"b": 1})), json!({"x":{"a":0,"b":1},"y":{"a":2,"b":1}}));
+/// assert_eq!(pick_by!(json!({"x": {"a": 0, "b": 1}, "y": {"a": 2, "b": 1}}), "a"), json!({"y":{"a":2,"b":1}}));
 /// ```
 #[macro_export]
 macro_rules! pick_by {
@@ -56,6 +60,24 @@ macro_rules! pick_by {
     };
     ($a:expr $(,)*) => {
         $crate::pick_by($a, |v| !v.is_null())
+    };
+    ($a:expr, json!($($__sh:tt)+) $(,)*) => {
+        $crate::pick_by($a, $crate::internal::predicate_shorthand($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, serde_json::json!($($__sh:tt)+) $(,)*) => {
+        $crate::pick_by($a, $crate::internal::predicate_shorthand($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, $b:literal $(,)*) => {
+        $crate::pick_by($a, $crate::internal::predicate_shorthand($crate::lib::json!($b)))
+    };
+    ($a:expr, json!($($__sh:tt)+), $($rest:tt)*) => {
+        $crate::pick_by($a, $crate::internal::predicate_shorthand($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, serde_json::json!($($__sh:tt)+), $($rest:tt)*) => {
+        $crate::pick_by($a, $crate::internal::predicate_shorthand($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, $b:literal, $($rest:tt)*) => {
+        $crate::pick_by($a, $crate::internal::predicate_shorthand($crate::lib::json!($b)))
     };
     ($a:expr, $b:expr $(,)*) => {
         $crate::pick_by($a, $b)

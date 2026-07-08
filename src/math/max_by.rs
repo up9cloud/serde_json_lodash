@@ -57,6 +57,10 @@ pub fn max_by(array: Value, iteratee: impl Fn(&Value) -> Value) -> Value {
 /// assert_eq!(max_by!(), json!(null));
 /// assert_eq!(max_by!(json!([])), json!(null));
 /// assert_eq!(max_by!(json!([1, 2, 3])), json!(3));
+/// // iteratee shorthands: a json! object is `_.matches`, a [path, value] pair is
+/// // `_.matchesProperty`, a literal is `_.property`
+/// assert_eq!(max_by!(json!([{"a": 0, "b": 1}, {"a": 2, "b": 1}, {"a": 3, "b": 2}]), "a"), json!({"a":3,"b":2}));
+/// assert_eq!(max_by!(json!([{"a": 0, "b": 1}, {"a": 2, "b": 1}, {"a": 3, "b": 2}]), json!({"b": 1})), json!({"a":0,"b":1}));
 /// ```
 #[macro_export]
 macro_rules! max_by {
@@ -65,6 +69,24 @@ macro_rules! max_by {
     };
     ($a:expr $(,)*) => {
         $crate::max($a)
+    };
+    ($a:expr, json!($($__sh:tt)+) $(,)*) => {
+        $crate::max_by($a, $crate::iteratee($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, serde_json::json!($($__sh:tt)+) $(,)*) => {
+        $crate::max_by($a, $crate::iteratee($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, $b:literal $(,)*) => {
+        $crate::max_by($a, $crate::iteratee($crate::lib::json!($b)))
+    };
+    ($a:expr, json!($($__sh:tt)+), $($rest:tt)*) => {
+        $crate::max_by($a, $crate::iteratee($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, serde_json::json!($($__sh:tt)+), $($rest:tt)*) => {
+        $crate::max_by($a, $crate::iteratee($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, $b:literal, $($rest:tt)*) => {
+        $crate::max_by($a, $crate::iteratee($crate::lib::json!($b)))
     };
     ($a:expr, $b:expr $(,)*) => {
         $crate::max_by($a, $b)

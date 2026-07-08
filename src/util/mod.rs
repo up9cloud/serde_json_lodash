@@ -160,72 +160,12 @@ macro_rules! flow_right_x {
 build_camel_link!(flowRight, flow_right);
 mod identity;
 pub use identity::*;
-/// **Not ported.** Returns a function implementing the lodash iteratee shorthand; not a Value.
-pub fn iteratee() {
-    todo!()
-}
-/// **Not ported.** Returns a function implementing the lodash iteratee shorthand; not a Value.
-#[macro_export]
-macro_rules! iteratee {
-    ($($t:tt)*) => {
-        $crate::iteratee()
-    };
-}
-/// **Not ported.** Returns a function implementing the lodash iteratee shorthand; not a Value.
-pub fn iteratee_x() {
-    todo!()
-}
-/// **Not ported.** Returns a function implementing the lodash iteratee shorthand; not a Value.
-#[macro_export]
-macro_rules! iteratee_x {
-    ($($t:tt)*) => {
-        $crate::iteratee_x()
-    };
-}
-/// **Not ported.** Returns a predicate function from a source object; not a Value.
-pub fn matches() {
-    todo!()
-}
-/// **Not ported.** Returns a predicate function from a source object; not a Value.
-#[macro_export]
-macro_rules! matches {
-    ($($t:tt)*) => {
-        $crate::matches()
-    };
-}
-/// **Not ported.** Returns a predicate function from a source object; not a Value.
-pub fn matches_x() {
-    todo!()
-}
-/// **Not ported.** Returns a predicate function from a source object; not a Value.
-#[macro_export]
-macro_rules! matches_x {
-    ($($t:tt)*) => {
-        $crate::matches_x()
-    };
-}
-/// **Not ported.** Returns a predicate function for a path/value; not a Value.
-pub fn matches_property() {
-    todo!()
-}
-/// **Not ported.** Returns a predicate function for a path/value; not a Value.
-#[macro_export]
-macro_rules! matches_property {
-    ($($t:tt)*) => {
-        $crate::matches_property()
-    };
-}
-/// **Not ported.** Returns a predicate function for a path/value; not a Value.
-pub fn matches_property_x() {
-    todo!()
-}
-/// **Not ported.** Returns a predicate function for a path/value; not a Value.
-#[macro_export]
-macro_rules! matches_property_x {
-    ($($t:tt)*) => {
-        $crate::matches_property_x()
-    };
-}
+mod iteratee;
+pub use iteratee::*;
+mod matches;
+pub use matches::*;
+mod matches_property;
+pub use matches_property::*;
 #[cfg(feature = "camel")]
 build_camel_link!(matchesProperty, matches_property);
 /// **Not ported.** Returns a function that invokes a method at a path; not a Value.
@@ -416,28 +356,8 @@ macro_rules! over_some_x {
 }
 #[cfg(feature = "camel")]
 build_camel_link!(overSome, over_some);
-/// **Not ported.** Returns a getter function for a path; not a Value.
-pub fn property() {
-    todo!()
-}
-/// **Not ported.** Returns a getter function for a path; not a Value.
-#[macro_export]
-macro_rules! property {
-    ($($t:tt)*) => {
-        $crate::property()
-    };
-}
-/// **Not ported.** Returns a getter function for a path; not a Value.
-pub fn property_x() {
-    todo!()
-}
-/// **Not ported.** Returns a getter function for a path; not a Value.
-#[macro_export]
-macro_rules! property_x {
-    ($($t:tt)*) => {
-        $crate::property_x()
-    };
-}
+mod property;
+pub use property::*;
 /// **Not ported.** Returns a getter function bound to an object; not a Value.
 pub fn property_of() {
     todo!()

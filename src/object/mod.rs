@@ -69,7 +69,7 @@ build_link!(functions_in, functions);
 #[cfg(feature = "camel")]
 build_camel_link!(functionsIn, functions);
 
-mod get;
+pub(crate) mod get;
 pub use get::*;
 
 mod has;

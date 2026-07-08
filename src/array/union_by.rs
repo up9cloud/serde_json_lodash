@@ -48,6 +48,9 @@ pub fn union_by(array: Value, other: Value, iteratee: impl Fn(&Value) -> Value) 
 /// # use serde_json::json;
 /// assert_eq!(union_by!(), json!([]));
 /// assert_eq!(union_by!(json!([1, 1])), json!([1]));
+/// // iteratee shorthands: a json! object is `_.matches`, a [path, value] pair is
+/// // `_.matchesProperty`, a literal is `_.property`
+/// assert_eq!(union_by!(json!([{"a": 1}, {"a": 2}]), json!([{"a": 2}, {"a": 3}]), "a"), json!([{"a":1},{"a":2},{"a":3}]));
 /// ```
 #[macro_export]
 macro_rules! union_by {
@@ -59,6 +62,24 @@ macro_rules! union_by {
     };
     ($a:expr, $b:expr $(,)*) => {
         $crate::union($a, $b)
+    };
+        ($a:expr, $b:expr, json!($($__sh:tt)+) $(,)*) => {
+        $crate::union_by($a, $b, $crate::iteratee($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, $b:expr, serde_json::json!($($__sh:tt)+) $(,)*) => {
+        $crate::union_by($a, $b, $crate::iteratee($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, $b:expr, $c:literal $(,)*) => {
+        $crate::union_by($a, $b, $crate::iteratee($crate::lib::json!($c)))
+    };
+    ($a:expr, $b:expr, json!($($__sh:tt)+), $($rest:tt)*) => {
+        $crate::union_by($a, $b, $crate::iteratee($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, $b:expr, serde_json::json!($($__sh:tt)+), $($rest:tt)*) => {
+        $crate::union_by($a, $b, $crate::iteratee($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, $b:expr, $c:literal, $($rest:tt)*) => {
+        $crate::union_by($a, $b, $crate::iteratee($crate::lib::json!($c)))
     };
     ($a:expr, $b:expr, $c:expr $(,)*) => {
         $crate::union_by($a, $b, $c)

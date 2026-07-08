@@ -62,6 +62,9 @@ pub fn flat_map_depth(
 /// # use serde_json::json;
 /// assert_eq!(flat_map_depth!(), json!([]));
 /// assert_eq!(flat_map_depth!(json!([[1], [2]]), |v| v.clone(), 1), json!([1, 2]));
+/// // iteratee shorthands: a json! object is `_.matches`, a [path, value] pair is
+/// // `_.matchesProperty`, a literal is `_.property`
+/// assert_eq!(flat_map_depth!(json!([{"a": 0, "b": 1}, {"a": 2, "b": 1}, {"a": 3, "b": 2}]), "a", 1), json!([0,2,3]));
 /// ```
 #[macro_export]
 macro_rules! flat_map_depth {
@@ -70,6 +73,33 @@ macro_rules! flat_map_depth {
     };
     ($a:expr $(,)*) => {
         $crate::flat_map_depth($a, |v| v.clone(), 1)
+    };
+    ($a:expr, json!($($__sh:tt)+) $(,)*) => {
+        $crate::flat_map_depth($a, $crate::iteratee($crate::lib::json!($($__sh)+)), 1)
+    };
+    ($a:expr, serde_json::json!($($__sh:tt)+) $(,)*) => {
+        $crate::flat_map_depth($a, $crate::iteratee($crate::lib::json!($($__sh)+)), 1)
+    };
+    ($a:expr, $b:literal $(,)*) => {
+        $crate::flat_map_depth($a, $crate::iteratee($crate::lib::json!($b)), 1)
+    };
+    ($a:expr, json!($($__sh:tt)+), $c:expr $(,)*) => {
+        $crate::flat_map_depth($a, $crate::iteratee($crate::lib::json!($($__sh)+)), $c)
+    };
+    ($a:expr, serde_json::json!($($__sh:tt)+), $c:expr $(,)*) => {
+        $crate::flat_map_depth($a, $crate::iteratee($crate::lib::json!($($__sh)+)), $c)
+    };
+    ($a:expr, $b:literal, $c:expr $(,)*) => {
+        $crate::flat_map_depth($a, $crate::iteratee($crate::lib::json!($b)), $c)
+    };
+    ($a:expr, json!($($__sh:tt)+), $c:expr, $($rest:tt)*) => {
+        $crate::flat_map_depth($a, $crate::iteratee($crate::lib::json!($($__sh)+)), $c)
+    };
+    ($a:expr, serde_json::json!($($__sh:tt)+), $c:expr, $($rest:tt)*) => {
+        $crate::flat_map_depth($a, $crate::iteratee($crate::lib::json!($($__sh)+)), $c)
+    };
+    ($a:expr, $b:literal, $c:expr, $($rest:tt)*) => {
+        $crate::flat_map_depth($a, $crate::iteratee($crate::lib::json!($b)), $c)
     };
     ($a:expr, $b:expr $(,)*) => {
         $crate::flat_map_depth($a, $b, 1)

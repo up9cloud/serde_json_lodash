@@ -45,6 +45,10 @@ pub fn mean_by(array: Value, iteratee: impl Fn(&Value) -> Value) -> Value {
 /// # use serde_json::json;
 /// assert_eq!(mean_by!(), json!(f64::NAN));
 /// assert_eq!(mean_by!(json!([2, 4])), json!(3));
+/// // iteratee shorthands: a json! object is `_.matches`, a [path, value] pair is
+/// // `_.matchesProperty`, a literal is `_.property`
+/// assert_eq!(mean_by!(json!([{"a": 0, "b": 1}, {"a": 2, "b": 1}, {"a": 3, "b": 2}]), "a"), json!(1.6666666666666667));
+/// assert_eq!(mean_by!(json!([{"a": 0, "b": 1}, {"a": 2, "b": 1}, {"a": 3, "b": 2}]), json!({"b": 1})), json!(0.6666666666666666));
 /// ```
 #[macro_export]
 macro_rules! mean_by {
@@ -53,6 +57,24 @@ macro_rules! mean_by {
     };
     ($a:expr $(,)*) => {
         $crate::mean($a)
+    };
+    ($a:expr, json!($($__sh:tt)+) $(,)*) => {
+        $crate::mean_by($a, $crate::iteratee($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, serde_json::json!($($__sh:tt)+) $(,)*) => {
+        $crate::mean_by($a, $crate::iteratee($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, $b:literal $(,)*) => {
+        $crate::mean_by($a, $crate::iteratee($crate::lib::json!($b)))
+    };
+    ($a:expr, json!($($__sh:tt)+), $($rest:tt)*) => {
+        $crate::mean_by($a, $crate::iteratee($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, serde_json::json!($($__sh:tt)+), $($rest:tt)*) => {
+        $crate::mean_by($a, $crate::iteratee($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, $b:literal, $($rest:tt)*) => {
+        $crate::mean_by($a, $crate::iteratee($crate::lib::json!($b)))
     };
     ($a:expr, $b:expr $(,)*) => {
         $crate::mean_by($a, $b)

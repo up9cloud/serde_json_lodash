@@ -59,6 +59,9 @@ pub fn remove(array: &mut Value, predicate: impl Fn(&Value) -> bool) -> Value {
 /// let mut b = json!([1, 2, 3]);
 /// assert_eq!(remove!(&mut b, |_| false), json!([]));
 /// assert_eq!(b, json!([1, 2, 3]));
+/// // iteratee shorthands: a json! object is `_.matches`, a [path, value] pair is
+/// // `_.matchesProperty`, a literal is `_.property`
+/// assert_eq!(remove!(&mut json!([{"a": 0, "b": 1}, {"a": 2, "b": 1}, {"a": 3, "b": 2}]), "a"), json!([{"a":2,"b":1},{"a":3,"b":2}]));
 /// ```
 #[macro_export]
 macro_rules! remove {
@@ -67,6 +70,24 @@ macro_rules! remove {
     };
     ($a:expr $(,)*) => {
         $crate::lib::json!([])
+    };
+    ($a:expr, json!($($__sh:tt)+) $(,)*) => {
+        $crate::remove($a, $crate::internal::predicate_shorthand($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, serde_json::json!($($__sh:tt)+) $(,)*) => {
+        $crate::remove($a, $crate::internal::predicate_shorthand($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, $b:literal $(,)*) => {
+        $crate::remove($a, $crate::internal::predicate_shorthand($crate::lib::json!($b)))
+    };
+    ($a:expr, json!($($__sh:tt)+), $($rest:tt)*) => {
+        $crate::remove($a, $crate::internal::predicate_shorthand($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, serde_json::json!($($__sh:tt)+), $($rest:tt)*) => {
+        $crate::remove($a, $crate::internal::predicate_shorthand($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, $b:literal, $($rest:tt)*) => {
+        $crate::remove($a, $crate::internal::predicate_shorthand($crate::lib::json!($b)))
     };
     ($a:expr, $b:expr $(,)*) => {
         $crate::remove($a, $b)

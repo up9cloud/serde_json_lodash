@@ -86,13 +86,35 @@
 //! snake aliases keep the `_x` suffix (`has_in_x`), camelCase aliases use `X`
 //! (`hasInX`).
 //!
+//! ## Iteratee shorthands
+//!
+//! Like lodash, the collection macros accept a shorthand in place of a
+//! callback: an inline `json!` object is a partial deep match (`_.matches`), a
+//! `json!([path, value])` pair is `_.matchesProperty`, and a string literal is
+//! a `_.property` path — e.g. `filter!(users, json!({"active": true}))` or
+//! `map!(users, "user")`. The combinators behind them are real functions too:
+//! [`iteratee()`](fn@iteratee), [`matches()`](fn@matches),
+//! [`matches_property()`](fn@matches_property) and [`property()`](fn@property)
+//! return closures you can pass anywhere a callback is expected (useful when
+//! the spec lives in a variable).
+//!
+//! The inline form is recognized **syntactically**: exactly the tokens
+//! `json!(…)` or `serde_json::json!(…)` (the contents are expanded with the
+//! bundled `serde_json`, so it works even without importing `json!`). Any
+//! other spelling — a renamed crate path like `my_json::json!(…)`, or a
+//! `Value` in a variable — is passed through as an expression, so wrap it in a
+//! combinator instead: [`matches()`](fn@matches)/[`matches_property()`](fn@matches_property)
+//! in predicate positions, [`iteratee()`](fn@iteratee)/[`property()`](fn@property)
+//! in iteratee positions.
+//!
 //! ## What isn't ported
 //!
 //! Functions whose result is itself a **function** (`debounce`, `curry`,
-//! `memoize`, `flow`, `iteratee`, `property`, …) or that invoke object
-//! **methods** (`invoke`, `invokeMap`, `create`) have no meaningful mapping onto
-//! `serde_json::Value` and are intentionally left unimplemented. Each such stub
-//! is annotated in the source with the reason.
+//! `memoize`, `flow`, …) or that invoke object **methods** (`invoke`,
+//! `invokeMap`, `create`) have no meaningful mapping onto `serde_json::Value`
+//! and are intentionally left unimplemented. Each such stub is annotated in
+//! the source with the reason. (`iteratee`, `matches`, `matchesProperty` and
+//! `property` *are* ported — they return Rust closures.)
 
 #![deny(missing_docs)]
 #![deny(warnings)]

@@ -44,6 +44,10 @@ pub fn sorted_uniq_by(array: Value, iteratee: impl Fn(&Value) -> Value) -> Value
 /// # use serde_json::json;
 /// assert_eq!(sorted_uniq_by!(), json!([]));
 /// assert_eq!(sorted_uniq_by!(json!([1, 1, 2])), json!([1, 2]));
+/// // iteratee shorthands: a json! object is `_.matches`, a [path, value] pair is
+/// // `_.matchesProperty`, a literal is `_.property`
+/// assert_eq!(sorted_uniq_by!(json!([{"a": 0, "b": 1}, {"a": 2, "b": 1}, {"a": 3, "b": 2}]), "a"), json!([{"a":0,"b":1},{"a":2,"b":1},{"a":3,"b":2}]));
+/// assert_eq!(sorted_uniq_by!(json!([{"a": 0, "b": 1}, {"a": 2, "b": 1}, {"a": 3, "b": 2}]), json!({"b": 1})), json!([{"a":0,"b":1},{"a":3,"b":2}]));
 /// ```
 #[macro_export]
 macro_rules! sorted_uniq_by {
@@ -52,6 +56,24 @@ macro_rules! sorted_uniq_by {
     };
     ($a:expr $(,)*) => {
         $crate::sorted_uniq($a)
+    };
+    ($a:expr, json!($($__sh:tt)+) $(,)*) => {
+        $crate::sorted_uniq_by($a, $crate::iteratee($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, serde_json::json!($($__sh:tt)+) $(,)*) => {
+        $crate::sorted_uniq_by($a, $crate::iteratee($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, $b:literal $(,)*) => {
+        $crate::sorted_uniq_by($a, $crate::iteratee($crate::lib::json!($b)))
+    };
+    ($a:expr, json!($($__sh:tt)+), $($rest:tt)*) => {
+        $crate::sorted_uniq_by($a, $crate::iteratee($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, serde_json::json!($($__sh:tt)+), $($rest:tt)*) => {
+        $crate::sorted_uniq_by($a, $crate::iteratee($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, $b:literal, $($rest:tt)*) => {
+        $crate::sorted_uniq_by($a, $crate::iteratee($crate::lib::json!($b)))
     };
     ($a:expr, $b:expr $(,)*) => {
         $crate::sorted_uniq_by($a, $b)

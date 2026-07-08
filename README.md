@@ -57,13 +57,13 @@ Known gaps against lodash, in priority order:
   `intersection`/`difference`/`xor`/`includes`/`index_of`/`is_equal`/…).
   Fix: canonicalize integral floats to integer `Number`s in a shared
   SameValueZero helper and use it everywhere values are compared or hashed.
-- **Iteratee shorthands (`_.matches` / `_.property`)** — lodash collection
-  functions accept `{ 'active': true }` or `'active'` in place of a callback;
-  this port only takes closures, which is also why some official doc examples
-  can't be mirrored yet. Sketch: a `Predicate` trait with impls for
-  `Fn(&Value) -> bool` closures, `Value` (partial deep match via the existing
-  `base_is_match`) and `&str` (property access), accepted by
-  `filter`/`find`/`every`/`some`/`reject`/`partition`/….
+- **Iteratee shorthands in more places** — the collection macros already
+  accept `json!({...})` (`_.matches`), `json!([path, value])`
+  (`_.matchesProperty`) and string literals (`_.property`) in place of a
+  callback, and `iteratee`/`matches`/`matchesProperty`/`property` are ported
+  as closure-returning functions. Not yet covered: multi-key `sortBy`/`orderBy`
+  (arrays of iteratees); shorthands passed as variables to macros need an
+  explicit wrap (`filter!(users, matches(spec))`, `map!(users, property(path))`).
 
 ## Contributing
 

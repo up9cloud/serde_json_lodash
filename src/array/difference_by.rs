@@ -54,6 +54,9 @@ pub fn difference_by(array: Value, other: Value, iteratee: impl Fn(&Value) -> Va
 /// # use serde_json::json;
 /// assert_eq!(difference_by!(), json!([]));
 /// assert_eq!(difference_by!(json!([1, 2])), json!([1, 2]));
+/// // iteratee shorthands: a json! object is `_.matches`, a [path, value] pair is
+/// // `_.matchesProperty`, a literal is `_.property`
+/// assert_eq!(difference_by!(json!([{"a": 1}, {"a": 2}]), json!([{"a": 2}, {"a": 3}]), "a"), json!([{"a":1}]));
 /// ```
 #[macro_export]
 macro_rules! difference_by {
@@ -65,6 +68,24 @@ macro_rules! difference_by {
     };
     ($a:expr, $b:expr $(,)*) => {
         $crate::difference($a, $b)
+    };
+        ($a:expr, $b:expr, json!($($__sh:tt)+) $(,)*) => {
+        $crate::difference_by($a, $b, $crate::iteratee($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, $b:expr, serde_json::json!($($__sh:tt)+) $(,)*) => {
+        $crate::difference_by($a, $b, $crate::iteratee($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, $b:expr, $c:literal $(,)*) => {
+        $crate::difference_by($a, $b, $crate::iteratee($crate::lib::json!($c)))
+    };
+    ($a:expr, $b:expr, json!($($__sh:tt)+), $($rest:tt)*) => {
+        $crate::difference_by($a, $b, $crate::iteratee($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, $b:expr, serde_json::json!($($__sh:tt)+), $($rest:tt)*) => {
+        $crate::difference_by($a, $b, $crate::iteratee($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, $b:expr, $c:literal, $($rest:tt)*) => {
+        $crate::difference_by($a, $b, $crate::iteratee($crate::lib::json!($c)))
     };
     ($a:expr, $b:expr, $c:expr $(,)*) => {
         $crate::difference_by($a, $b, $c)

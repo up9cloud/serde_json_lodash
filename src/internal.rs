@@ -87,6 +87,46 @@ pub(crate) fn f64_to_number(f: f64) -> Option<Number> {
     Number::from_f64(f)
 }
 
+// JS truthiness: null, false, 0 and "" are falsey; everything else
+// (including empty arrays/objects) is truthy
+pub(crate) fn is_truthy(v: &Value) -> bool {
+    match v {
+        Value::Null => false,
+        Value::Bool(b) => *b,
+        Value::Number(n) => n.as_f64() != Some(0.0),
+        Value::String(s) => !s.is_empty(),
+        Value::Array(_) | Value::Object(_) => true,
+    }
+}
+
+// `_.property` on a pre-parsed path
+pub(crate) fn property_in(v: &Value, p_vec: &[String]) -> Value {
+    if p_vec.is_empty() {
+        return Value::Null;
+    }
+    crate::object::get::get_in(v, p_vec).unwrap_or(Value::Null)
+}
+
+// The `_.iteratee` shorthand dispatch: objects are `_.matches`, `[path, value]`
+// pairs are `_.matchesProperty`, null is `_.identity`, anything else is a
+// `_.property` path
+pub(crate) fn value_shorthand(spec: &Value, v: &Value) -> Value {
+    match spec {
+        Value::Object(_) => json!(base_is_match(v, spec)),
+        Value::Array(pair) if pair.len() == 2 => {
+            json!(property_in(v, &crate::to_path_x(pair[0].clone())) == pair[1])
+        }
+        Value::Null => v.clone(),
+        _ => property_in(v, &crate::to_path_x(spec.clone())),
+    }
+}
+
+// `pub` because shorthand macro arms (e.g. `filter!(x, json!({…}))`) expand to
+// `$crate::internal::predicate_shorthand(…)` in other crates
+pub fn predicate_shorthand(spec: Value) -> impl Fn(&Value) -> bool {
+    move |v| is_truthy(&value_shorthand(&spec, v))
+}
+
 // lodash-style fromIndex resolution: a negative index counts back from the
 // end (clamped at 0). Forward searches start here (>= len finds nothing) …
 pub(crate) fn resolve_from_index(len: usize, from: isize) -> usize {

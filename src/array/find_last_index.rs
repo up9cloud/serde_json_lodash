@@ -30,7 +30,24 @@ pub fn find_last_index(
 /// ```rust
 /// #[macro_use] extern crate serde_json_lodash;
 /// use serde_json::json;
-/// assert_eq!(find_last_index!(), json!(-1));
+/// let users = json!([
+///   { "user": "barney",  "active": true },
+///   { "user": "fred",    "active": false },
+///   { "user": "pebbles", "active": false }
+/// ]);
+/// assert_eq!(
+///   find_last_index!(users.clone(), |o| o["user"] == json!("pebbles")),
+///   json!(2)
+/// );
+/// // The `_.matches` iteratee shorthand.
+/// assert_eq!(
+///   find_last_index!(users.clone(), json!({ "user": "barney", "active": true })),
+///   json!(0)
+/// );
+/// // The `_.matchesProperty` iteratee shorthand.
+/// assert_eq!(find_last_index!(users.clone(), json!(["active", false])), json!(2));
+/// // The `_.property` iteratee shorthand.
+/// assert_eq!(find_last_index!(users, "active"), json!(0));
 /// ```
 ///
 /// Additional cases:
@@ -45,6 +62,10 @@ pub fn find_last_index(
 /// assert_eq!(find_last_index!(json!([1, 2, 1, 2]), |v| v == &json!(2), -2), json!(1));
 /// // empty arrays are fine without an explicit fromIndex
 /// assert_eq!(find_last_index!(json!([]), |_| true), json!(-1));
+/// // iteratee shorthands: a json! object is `_.matches`, a [path, value] pair is
+/// // `_.matchesProperty`, a literal is `_.property`
+/// assert_eq!(find_last_index!(json!([{"a": 0, "b": 1}, {"a": 2, "b": 1}, {"a": 3, "b": 2}]), json!(["b", 1]), 1), json!(1));
+/// assert_eq!(find_last_index!(json!([{"a": 0, "b": 1}, {"a": 2, "b": 1}, {"a": 3, "b": 2}]), "a", 1), json!(1));
 /// ```
 #[macro_export]
 macro_rules! find_last_index {
@@ -53,6 +74,36 @@ macro_rules! find_last_index {
     };
     ($a:expr $(,)*) => {
         $crate::lib::json!(-1)
+    };
+    ($a:expr, json!($($__sh:tt)+) $(,)*) => {
+        // -1 resolves to the last element, lodash's default fromIndex
+        $crate::find_last_index($a, $crate::internal::predicate_shorthand($crate::lib::json!($($__sh)+)), -1)
+    };
+    ($a:expr, serde_json::json!($($__sh:tt)+) $(,)*) => {
+        // -1 resolves to the last element, lodash's default fromIndex
+        $crate::find_last_index($a, $crate::internal::predicate_shorthand($crate::lib::json!($($__sh)+)), -1)
+    };
+    ($a:expr, $b:literal $(,)*) => {
+        // -1 resolves to the last element, lodash's default fromIndex
+        $crate::find_last_index($a, $crate::internal::predicate_shorthand($crate::lib::json!($b)), -1)
+    };
+    ($a:expr, json!($($__sh:tt)+), $c:expr $(,)*) => {
+        $crate::find_last_index($a, $crate::internal::predicate_shorthand($crate::lib::json!($($__sh)+)), $c)
+    };
+    ($a:expr, serde_json::json!($($__sh:tt)+), $c:expr $(,)*) => {
+        $crate::find_last_index($a, $crate::internal::predicate_shorthand($crate::lib::json!($($__sh)+)), $c)
+    };
+    ($a:expr, $b:literal, $c:expr $(,)*) => {
+        $crate::find_last_index($a, $crate::internal::predicate_shorthand($crate::lib::json!($b)), $c)
+    };
+    ($a:expr, json!($($__sh:tt)+), $c:expr, $($rest:tt)*) => {
+        $crate::find_last_index($a, $crate::internal::predicate_shorthand($crate::lib::json!($($__sh)+)), $c)
+    };
+    ($a:expr, serde_json::json!($($__sh:tt)+), $c:expr, $($rest:tt)*) => {
+        $crate::find_last_index($a, $crate::internal::predicate_shorthand($crate::lib::json!($($__sh)+)), $c)
+    };
+    ($a:expr, $b:literal, $c:expr, $($rest:tt)*) => {
+        $crate::find_last_index($a, $crate::internal::predicate_shorthand($crate::lib::json!($b)), $c)
     };
     ($a:expr, $b:expr $(,)*) => {
         // -1 resolves to the last element, lodash's default fromIndex
@@ -111,6 +162,9 @@ pub fn find_last_index_x(
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
 /// assert_eq!(find_last_index_x!(json!([1, 2, 3]), |n| n.as_i64().unwrap() > 1, 2), 2);
+/// // a `_.property` literal shorthand works here too
+/// assert_eq!(find_last_index_x!(json!([{"a": 0}, {"a": 2}]), "a"), 1);
+/// assert_eq!(find_last_index_x!(json!([]), "a"), -1);
 /// ```
 #[macro_export]
 macro_rules! find_last_index_x {
@@ -120,10 +174,40 @@ macro_rules! find_last_index_x {
     ($a:expr $(,)*) => {
         -1
     };
-    ($a:expr, $b:expr $(,)*) => {{
-        let from_index = $a.as_array().unwrap_or(&vec![]).len() - 1;
-        $crate::find_last_index_x($a, $b, from_index)
-    }};
+    ($a:expr, json!($($__sh:tt)+) $(,)*) => {
+        // -1 resolves to the last element, lodash's default fromIndex
+        $crate::find_last_index_x($a, $crate::internal::predicate_shorthand($crate::lib::json!($($__sh)+)), -1)
+    };
+    ($a:expr, serde_json::json!($($__sh:tt)+) $(,)*) => {
+        // -1 resolves to the last element, lodash's default fromIndex
+        $crate::find_last_index_x($a, $crate::internal::predicate_shorthand($crate::lib::json!($($__sh)+)), -1)
+    };
+    ($a:expr, $b:literal $(,)*) => {
+        // -1 resolves to the last element, lodash's default fromIndex
+        $crate::find_last_index_x($a, $crate::internal::predicate_shorthand($crate::lib::json!($b)), -1)
+    };
+    ($a:expr, json!($($__sh:tt)+), $c:expr $(,)*) => {
+        $crate::find_last_index_x($a, $crate::internal::predicate_shorthand($crate::lib::json!($($__sh)+)), $c)
+    };
+    ($a:expr, serde_json::json!($($__sh:tt)+), $c:expr $(,)*) => {
+        $crate::find_last_index_x($a, $crate::internal::predicate_shorthand($crate::lib::json!($($__sh)+)), $c)
+    };
+    ($a:expr, $b:literal, $c:expr $(,)*) => {
+        $crate::find_last_index_x($a, $crate::internal::predicate_shorthand($crate::lib::json!($b)), $c)
+    };
+    ($a:expr, json!($($__sh:tt)+), $c:expr, $($rest:tt)*) => {
+        $crate::find_last_index_x($a, $crate::internal::predicate_shorthand($crate::lib::json!($($__sh)+)), $c)
+    };
+    ($a:expr, serde_json::json!($($__sh:tt)+), $c:expr, $($rest:tt)*) => {
+        $crate::find_last_index_x($a, $crate::internal::predicate_shorthand($crate::lib::json!($($__sh)+)), $c)
+    };
+    ($a:expr, $b:literal, $c:expr, $($rest:tt)*) => {
+        $crate::find_last_index_x($a, $crate::internal::predicate_shorthand($crate::lib::json!($b)), $c)
+    };
+    ($a:expr, $b:expr $(,)*) => {
+        // -1 resolves to the last element, lodash's default fromIndex
+        $crate::find_last_index_x($a, $b, -1)
+    };
     ($a:expr, $b:expr, $c:expr $(,)*) => {
         $crate::find_last_index_x($a, $b, $c)
     };

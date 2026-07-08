@@ -63,6 +63,9 @@ pub fn order_by(collection: Value, iteratee: impl Fn(&Value) -> Value, ascending
 /// assert_eq!(order_by!(), json!([]));
 /// assert_eq!(order_by!(json!([1, 3, 2])), json!([1, 2, 3]));
 /// assert_eq!(order_by!(json!([1, 3, 2]), |v| v.clone(), false), json!([3, 2, 1]));
+/// // iteratee shorthands: a json! object is `_.matches`, a [path, value] pair is
+/// // `_.matchesProperty`, a literal is `_.property`
+/// assert_eq!(order_by!(json!([{"a": 0, "b": 1}, {"a": 2, "b": 1}, {"a": 3, "b": 2}]), "a", false), json!([{"a":3,"b":2},{"a":2,"b":1},{"a":0,"b":1}]));
 /// ```
 #[macro_export]
 macro_rules! order_by {
@@ -71,6 +74,33 @@ macro_rules! order_by {
     };
     ($a:expr $(,)*) => {
         $crate::sort_by($a, |v| v.clone())
+    };
+    ($a:expr, json!($($__sh:tt)+) $(,)*) => {
+        $crate::order_by($a, $crate::iteratee($crate::lib::json!($($__sh)+)), true)
+    };
+    ($a:expr, serde_json::json!($($__sh:tt)+) $(,)*) => {
+        $crate::order_by($a, $crate::iteratee($crate::lib::json!($($__sh)+)), true)
+    };
+    ($a:expr, $b:literal $(,)*) => {
+        $crate::order_by($a, $crate::iteratee($crate::lib::json!($b)), true)
+    };
+    ($a:expr, json!($($__sh:tt)+), $c:expr $(,)*) => {
+        $crate::order_by($a, $crate::iteratee($crate::lib::json!($($__sh)+)), $c)
+    };
+    ($a:expr, serde_json::json!($($__sh:tt)+), $c:expr $(,)*) => {
+        $crate::order_by($a, $crate::iteratee($crate::lib::json!($($__sh)+)), $c)
+    };
+    ($a:expr, $b:literal, $c:expr $(,)*) => {
+        $crate::order_by($a, $crate::iteratee($crate::lib::json!($b)), $c)
+    };
+    ($a:expr, json!($($__sh:tt)+), $c:expr, $($rest:tt)*) => {
+        $crate::order_by($a, $crate::iteratee($crate::lib::json!($($__sh)+)), $c)
+    };
+    ($a:expr, serde_json::json!($($__sh:tt)+), $c:expr, $($rest:tt)*) => {
+        $crate::order_by($a, $crate::iteratee($crate::lib::json!($($__sh)+)), $c)
+    };
+    ($a:expr, $b:literal, $c:expr, $($rest:tt)*) => {
+        $crate::order_by($a, $crate::iteratee($crate::lib::json!($b)), $c)
     };
     ($a:expr, $b:expr $(,)*) => {
         $crate::order_by($a, $b, true)

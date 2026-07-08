@@ -56,6 +56,10 @@ pub fn flat_map_deep(collection: Value, iteratee: impl Fn(&Value) -> Value) -> V
 /// # use serde_json::json;
 /// assert_eq!(flat_map_deep!(), json!([]));
 /// assert_eq!(flat_map_deep!(json!([[1], [[2]]])), json!([1, 2]));
+/// // iteratee shorthands: a json! object is `_.matches`, a [path, value] pair is
+/// // `_.matchesProperty`, a literal is `_.property`
+/// assert_eq!(flat_map_deep!(json!([{"a": 0, "b": 1}, {"a": 2, "b": 1}, {"a": 3, "b": 2}]), "a"), json!([0,2,3]));
+/// assert_eq!(flat_map_deep!(json!([{"a": 0, "b": 1}, {"a": 2, "b": 1}, {"a": 3, "b": 2}]), json!({"b": 1})), json!([true,true,false]));
 /// ```
 #[macro_export]
 macro_rules! flat_map_deep {
@@ -64,6 +68,24 @@ macro_rules! flat_map_deep {
     };
     ($a:expr $(,)*) => {
         $crate::flat_map_deep($a, |v| v.clone())
+    };
+    ($a:expr, json!($($__sh:tt)+) $(,)*) => {
+        $crate::flat_map_deep($a, $crate::iteratee($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, serde_json::json!($($__sh:tt)+) $(,)*) => {
+        $crate::flat_map_deep($a, $crate::iteratee($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, $b:literal $(,)*) => {
+        $crate::flat_map_deep($a, $crate::iteratee($crate::lib::json!($b)))
+    };
+    ($a:expr, json!($($__sh:tt)+), $($rest:tt)*) => {
+        $crate::flat_map_deep($a, $crate::iteratee($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, serde_json::json!($($__sh:tt)+), $($rest:tt)*) => {
+        $crate::flat_map_deep($a, $crate::iteratee($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, $b:literal, $($rest:tt)*) => {
+        $crate::flat_map_deep($a, $crate::iteratee($crate::lib::json!($b)))
     };
     ($a:expr, $b:expr $(,)*) => {
         $crate::flat_map_deep($a, $b)

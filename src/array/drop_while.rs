@@ -43,6 +43,11 @@ pub fn drop_while(array: Value, predicate: impl Fn(&Value) -> bool) -> Value {
 /// assert_eq!(drop_while!(), json!([]));
 /// assert_eq!(drop_while!(json!([1, 2, 3])), json!([1, 2, 3]));
 /// assert_eq!(drop_while!(json!([1, 2, 3]), |_| true), json!([]));
+/// // iteratee shorthands: a json! object is `_.matches`, a [path, value] pair is
+/// // `_.matchesProperty`, a literal is `_.property`
+/// assert_eq!(drop_while!(json!([{"a": 0, "b": 1}, {"a": 2, "b": 1}, {"a": 3, "b": 2}]), json!({"b": 1})), json!([{"a":3,"b":2}]));
+/// assert_eq!(drop_while!(json!([{"a": 0, "b": 1}, {"a": 2, "b": 1}, {"a": 3, "b": 2}]), json!(["a", 2])), json!([{"a":0,"b":1},{"a":2,"b":1},{"a":3,"b":2}]));
+/// assert_eq!(drop_while!(json!([{"a": 0, "b": 1}, {"a": 2, "b": 1}, {"a": 3, "b": 2}]), "a"), json!([{"a":0,"b":1},{"a":2,"b":1},{"a":3,"b":2}]));
 /// ```
 #[macro_export]
 macro_rules! drop_while {
@@ -51,6 +56,24 @@ macro_rules! drop_while {
     };
     ($a:expr $(,)*) => {
         $crate::to_array($a)
+    };
+    ($a:expr, json!($($__sh:tt)+) $(,)*) => {
+        $crate::drop_while($a, $crate::internal::predicate_shorthand($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, serde_json::json!($($__sh:tt)+) $(,)*) => {
+        $crate::drop_while($a, $crate::internal::predicate_shorthand($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, $b:literal $(,)*) => {
+        $crate::drop_while($a, $crate::internal::predicate_shorthand($crate::lib::json!($b)))
+    };
+    ($a:expr, json!($($__sh:tt)+), $($rest:tt)*) => {
+        $crate::drop_while($a, $crate::internal::predicate_shorthand($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, serde_json::json!($($__sh:tt)+), $($rest:tt)*) => {
+        $crate::drop_while($a, $crate::internal::predicate_shorthand($crate::lib::json!($($__sh)+)))
+    };
+    ($a:expr, $b:literal, $($rest:tt)*) => {
+        $crate::drop_while($a, $crate::internal::predicate_shorthand($crate::lib::json!($b)))
     };
     ($a:expr, $b:expr $(,)*) => {
         $crate::drop_while($a, $b)
