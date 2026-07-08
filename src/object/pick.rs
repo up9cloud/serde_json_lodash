@@ -15,11 +15,11 @@ use crate::to_string_x;
 /// ```
 pub fn pick(object: Value, paths: Value) -> Value {
     let mut out = Map::new();
-    if let (Value::Object(o), Value::Array(keys)) = (&object, &paths) {
+    if let (Value::Object(mut o), Value::Array(keys)) = (object, paths) {
         for k in keys {
-            let key = to_string_x(k.clone());
-            if let Some(v) = o.get(&key) {
-                out.insert(key, v.clone());
+            let key = to_string_x(k);
+            if let Some(v) = o.remove(&key) {
+                out.insert(key, v);
             }
         }
     }

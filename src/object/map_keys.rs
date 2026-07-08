@@ -17,8 +17,8 @@ pub fn map_keys(object: Value, iteratee: fn(&Value, &str) -> Value) -> Value {
     match object {
         Value::Object(o) => {
             let mut out = Map::new();
-            for (k, v) in o.iter() {
-                out.insert(to_string_x(iteratee(v, k)), v.clone());
+            for (k, v) in o {
+                out.insert(to_string_x(iteratee(&v, &k)), v);
             }
             Value::Object(out)
         }

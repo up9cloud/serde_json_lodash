@@ -13,9 +13,14 @@ use crate::lib::{Value, json};
 /// ```
 pub fn map_values(object: Value, iteratee: fn(&Value) -> Value) -> Value {
     match object {
-        Value::Object(o) => {
-            Value::Object(o.iter().map(|(k, v)| (k.clone(), iteratee(v))).collect())
-        }
+        Value::Object(o) => Value::Object(
+            o.into_iter()
+                .map(|(k, v)| {
+                    let new_v = iteratee(&v);
+                    (k, new_v)
+                })
+                .collect(),
+        ),
         _ => json!({}),
     }
 }

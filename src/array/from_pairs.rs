@@ -1,47 +1,32 @@
 use crate::lib::{Map, Value, json};
 
-fn item_to_string(v: &Value) -> String {
+fn item_to_string(v: Value) -> String {
     match v {
         Value::Null => "null".into(),
-        Value::Bool(_)
-        | Value::String(_)
-        | Value::Number(_)
-        | Value::Object(_)
-        | Value::Array(_) => crate::to_string_x(v.clone()),
+        other => crate::to_string_x(other),
     }
 }
 
-fn value_to_kv(v: &Value) -> Option<(String, Option<Value>)> {
+fn value_to_kv(v: Value) -> Option<(String, Option<Value>)> {
     match v {
-        Value::Null => None,
-        Value::Bool(_) => None,
-        Value::Number(_) => None,
         Value::String(s) => {
             let mut chars = s.chars();
-            if let Some(k) = chars.next() {
-                let k = k.to_string();
-                if let Some(v) = chars.next() {
-                    return Some((k, Some(Value::String(v.to_string()))));
-                }
-                return Some((k, None));
+            let k = chars.next()?.to_string();
+            match chars.next() {
+                Some(c) => Some((k, Some(Value::String(c.to_string())))),
+                None => Some((k, None)),
             }
-            None
         }
         Value::Array(vec) => {
-            if let Some(k) = vec.first() {
-                let k = item_to_string(k);
-                if let Some(v) = vec.get(1) {
-                    return Some((k, Some(v.clone())));
-                }
-                return Some((k, None));
-            }
-            None
+            let mut items = vec.into_iter();
+            let k = item_to_string(items.next()?);
+            Some((k, items.next()))
         }
-        Value::Object(_) => None,
+        _ => None,
     }
 }
 
-fn append_array_to_object(array: &Value, mut map: Map<String, Value>) -> Map<String, Value> {
+fn append_array_to_object(array: Value, mut map: Map<String, Value>) -> Map<String, Value> {
     if let Some((k, v)) = value_to_kv(array) {
         if let Some(vv) = v {
             map.insert(k, vv);
@@ -54,7 +39,7 @@ fn append_array_to_object(array: &Value, mut map: Map<String, Value>) -> Map<Str
 
 fn arrays_to_object(vec: Vec<Value>) -> Value {
     let mut map = Map::new();
-    for item in vec.iter() {
+    for item in vec {
         map = append_array_to_object(item, map);
     }
     Value::Object(map)
