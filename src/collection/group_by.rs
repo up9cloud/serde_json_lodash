@@ -91,23 +91,4 @@ macro_rules! group_by {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [group_by!](crate::group_by!) and read the returned
-/// `Value`.
-///
-/// Macro form: [group_by_x!](crate::group_by_x!)
-pub fn group_by_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [group_by!](crate::group_by!) and read the returned
-/// `Value`.
-///
-/// Fn form: [group_by_x()]
-#[macro_export]
-macro_rules! group_by_x {
-    ($($t:tt)*) => {
-        $crate::group_by_x()
-    };
-}
+build_not_provided_x!(group_by, group_by_x);

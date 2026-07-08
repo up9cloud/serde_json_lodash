@@ -85,23 +85,4 @@ macro_rules! concat {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [concat!](crate::concat!) and read the returned
-/// `Value`.
-///
-/// Macro form: [concat_x!](crate::concat_x!)
-pub fn concat_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [concat!](crate::concat!) and read the returned
-/// `Value`.
-///
-/// Fn form: [concat_x()]
-#[macro_export]
-macro_rules! concat_x {
-    ($($t:tt)*) => {
-        $crate::concat_x()
-    };
-}
+build_not_provided_x!(concat, concat_x);

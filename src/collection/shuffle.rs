@@ -64,23 +64,4 @@ macro_rules! shuffle {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [shuffle!](crate::shuffle!) and read the returned
-/// `Value`.
-///
-/// Macro form: [shuffle_x!](crate::shuffle_x!)
-pub fn shuffle_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [shuffle!](crate::shuffle!) and read the returned
-/// `Value`.
-///
-/// Fn form: [shuffle_x()]
-#[macro_export]
-macro_rules! shuffle_x {
-    ($($t:tt)*) => {
-        $crate::shuffle_x()
-    };
-}
+build_not_provided_x!(shuffle, shuffle_x);

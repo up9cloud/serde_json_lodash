@@ -60,23 +60,4 @@ macro_rules! default_to {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [default_to!](crate::default_to!) and read the returned
-/// `Value`.
-///
-/// Macro form: [default_to_x!](crate::default_to_x!)
-pub fn default_to_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [default_to!](crate::default_to!) and read the returned
-/// `Value`.
-///
-/// Fn form: [default_to_x()]
-#[macro_export]
-macro_rules! default_to_x {
-    ($($t:tt)*) => {
-        $crate::default_to_x()
-    };
-}
+build_not_provided_x!(default_to, default_to_x);

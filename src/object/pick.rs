@@ -69,21 +69,4 @@ macro_rules! pick {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [pick!](crate::pick!) and read the returned `Value`.
-///
-/// Macro form: [pick_x!](crate::pick_x!)
-pub fn pick_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [pick!](crate::pick!) and read the returned `Value`.
-///
-/// Fn form: [pick_x()]
-#[macro_export]
-macro_rules! pick_x {
-    ($($t:tt)*) => {
-        $crate::pick_x()
-    };
-}
+build_not_provided_x!(pick, pick_x);

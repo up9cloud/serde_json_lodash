@@ -95,23 +95,4 @@ macro_rules! transform {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [transform!](crate::transform!) and read the returned
-/// `Value`.
-///
-/// Macro form: [transform_x!](crate::transform_x!)
-pub fn transform_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [transform!](crate::transform!) and read the returned
-/// `Value`.
-///
-/// Fn form: [transform_x()]
-#[macro_export]
-macro_rules! transform_x {
-    ($($t:tt)*) => {
-        $crate::transform_x()
-    };
-}
+build_not_provided_x!(transform, transform_x);

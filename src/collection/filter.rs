@@ -118,23 +118,4 @@ macro_rules! filter {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [filter!](crate::filter!) and read the returned
-/// `Value`.
-///
-/// Macro form: [filter_x!](crate::filter_x!)
-pub fn filter_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [filter!](crate::filter!) and read the returned
-/// `Value`.
-///
-/// Fn form: [filter_x()]
-#[macro_export]
-macro_rules! filter_x {
-    ($($t:tt)*) => {
-        $crate::filter_x()
-    };
-}
+build_not_provided_x!(filter, filter_x);

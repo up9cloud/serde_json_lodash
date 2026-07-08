@@ -47,21 +47,4 @@ macro_rules! noop {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [noop!](crate::noop!) and read the returned `Value`.
-///
-/// Macro form: [noop_x!](crate::noop_x!)
-pub fn noop_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [noop!](crate::noop!) and read the returned `Value`.
-///
-/// Fn form: [noop_x()]
-#[macro_export]
-macro_rules! noop_x {
-    ($($t:tt)*) => {
-        $crate::noop_x()
-    };
-}
+build_not_provided_x!(noop, noop_x);

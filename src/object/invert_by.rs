@@ -98,23 +98,4 @@ macro_rules! invert_by {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [invert_by!](crate::invert_by!) and read the returned
-/// `Value`.
-///
-/// Macro form: [invert_by_x!](crate::invert_by_x!)
-pub fn invert_by_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [invert_by!](crate::invert_by!) and read the returned
-/// `Value`.
-///
-/// Fn form: [invert_by_x()]
-#[macro_export]
-macro_rules! invert_by_x {
-    ($($t:tt)*) => {
-        $crate::invert_by_x()
-    };
-}
+build_not_provided_x!(invert_by, invert_by_x);

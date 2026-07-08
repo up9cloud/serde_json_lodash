@@ -67,23 +67,4 @@ macro_rules! subtract {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [subtract!](crate::subtract!) and read the returned
-/// `Value`.
-///
-/// Macro form: [subtract_x!](crate::subtract_x!)
-pub fn subtract_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [subtract!](crate::subtract!) and read the returned
-/// `Value`.
-///
-/// Fn form: [subtract_x()]
-#[macro_export]
-macro_rules! subtract_x {
-    ($($t:tt)*) => {
-        $crate::subtract_x()
-    };
-}
+build_not_provided_x!(subtract, subtract_x);

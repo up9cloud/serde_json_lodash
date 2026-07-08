@@ -117,23 +117,4 @@ macro_rules! from_pairs {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [from_pairs!](crate::from_pairs!) and read the returned
-/// `Value`.
-///
-/// Macro form: [from_pairs_x!](crate::from_pairs_x!)
-pub fn from_pairs_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [from_pairs!](crate::from_pairs!) and read the returned
-/// `Value`.
-///
-/// Fn form: [from_pairs_x()]
-#[macro_export]
-macro_rules! from_pairs_x {
-    ($($t:tt)*) => {
-        $crate::from_pairs_x()
-    };
-}
+build_not_provided_x!(from_pairs, from_pairs_x);

@@ -79,21 +79,4 @@ macro_rules! slice {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [slice!](crate::slice!) and read the returned `Value`.
-///
-/// Macro form: [slice_x!](crate::slice_x!)
-pub fn slice_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [slice!](crate::slice!) and read the returned `Value`.
-///
-/// Fn form: [slice_x()]
-#[macro_export]
-macro_rules! slice_x {
-    ($($t:tt)*) => {
-        $crate::slice_x()
-    };
-}
+build_not_provided_x!(slice, slice_x);

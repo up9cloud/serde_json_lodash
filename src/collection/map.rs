@@ -97,21 +97,4 @@ macro_rules! map {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [map!](crate::map!) and read the returned `Value`.
-///
-/// Macro form: [map_x!](crate::map_x!)
-pub fn map_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [map!](crate::map!) and read the returned `Value`.
-///
-/// Fn form: [map_x()]
-#[macro_export]
-macro_rules! map_x {
-    ($($t:tt)*) => {
-        $crate::map_x()
-    };
-}
+build_not_provided_x!(map, map_x);

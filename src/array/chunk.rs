@@ -92,21 +92,4 @@ macro_rules! chunk {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [chunk!](crate::chunk!) and read the returned `Value`.
-///
-/// Macro form: [chunk_x!](crate::chunk_x!)
-pub fn chunk_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [chunk!](crate::chunk!) and read the returned `Value`.
-///
-/// Fn form: [chunk_x()]
-#[macro_export]
-macro_rules! chunk_x {
-    ($($t:tt)*) => {
-        $crate::chunk_x()
-    };
-}
+build_not_provided_x!(chunk, chunk_x);

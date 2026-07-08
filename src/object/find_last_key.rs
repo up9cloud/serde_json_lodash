@@ -90,23 +90,4 @@ macro_rules! find_last_key {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [find_last_key!](crate::find_last_key!) and read the
-/// returned `Value`.
-///
-/// Macro form: [find_last_key_x!](crate::find_last_key_x!)
-pub fn find_last_key_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [find_last_key!](crate::find_last_key!) and read the
-/// returned `Value`.
-///
-/// Fn form: [find_last_key_x()]
-#[macro_export]
-macro_rules! find_last_key_x {
-    ($($t:tt)*) => {
-        $crate::find_last_key_x()
-    };
-}
+build_not_provided_x!(find_last_key, find_last_key_x);

@@ -73,21 +73,4 @@ macro_rules! split {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [split!](crate::split!) and read the returned `Value`.
-///
-/// Macro form: [split_x!](crate::split_x!)
-pub fn split_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [split!](crate::split!) and read the returned `Value`.
-///
-/// Fn form: [split_x()]
-#[macro_export]
-macro_rules! split_x {
-    ($($t:tt)*) => {
-        $crate::split_x()
-    };
-}
+build_not_provided_x!(split, split_x);

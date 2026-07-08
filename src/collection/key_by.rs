@@ -94,23 +94,4 @@ macro_rules! key_by {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [key_by!](crate::key_by!) and read the returned
-/// `Value`.
-///
-/// Macro form: [key_by_x!](crate::key_by_x!)
-pub fn key_by_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [key_by!](crate::key_by!) and read the returned
-/// `Value`.
-///
-/// Fn form: [key_by_x()]
-#[macro_export]
-macro_rules! key_by_x {
-    ($($t:tt)*) => {
-        $crate::key_by_x()
-    };
-}
+build_not_provided_x!(key_by, key_by_x);

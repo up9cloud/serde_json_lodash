@@ -172,21 +172,4 @@ macro_rules! merge {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [merge!](crate::merge!) and read the returned `Value`.
-///
-/// Macro form: [merge_x!](crate::merge_x!)
-pub fn merge_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [merge!](crate::merge!) and read the returned `Value`.
-///
-/// Fn form: [merge_x()]
-#[macro_export]
-macro_rules! merge_x {
-    ($($t:tt)*) => {
-        $crate::merge_x()
-    };
-}
+build_not_provided_x!(merge, merge_x);

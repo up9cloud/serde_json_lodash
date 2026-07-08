@@ -79,21 +79,4 @@ macro_rules! round {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [round!](crate::round!) and read the returned `Value`.
-///
-/// Macro form: [round_x!](crate::round_x!)
-pub fn round_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [round!](crate::round!) and read the returned `Value`.
-///
-/// Fn form: [round_x()]
-#[macro_export]
-macro_rules! round_x {
-    ($($t:tt)*) => {
-        $crate::round_x()
-    };
-}
+build_not_provided_x!(round, round_x);

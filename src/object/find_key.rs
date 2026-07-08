@@ -90,23 +90,4 @@ macro_rules! find_key {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [find_key!](crate::find_key!) and read the returned
-/// `Value`.
-///
-/// Macro form: [find_key_x!](crate::find_key_x!)
-pub fn find_key_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [find_key!](crate::find_key!) and read the returned
-/// `Value`.
-///
-/// Fn form: [find_key_x()]
-#[macro_export]
-macro_rules! find_key_x {
-    ($($t:tt)*) => {
-        $crate::find_key_x()
-    };
-}
+build_not_provided_x!(find_key, find_key_x);

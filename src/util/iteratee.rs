@@ -80,21 +80,8 @@ macro_rules! iteratee {
     };
 }
 
-/// **Not provided.** The result is a function, which has no primitive form;
-/// use [iteratee!](crate::iteratee!) and call the returned closure.
-///
-/// Macro form: [iteratee_x!](crate::iteratee_x!)
-pub fn iteratee_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a function, which has no primitive form;
-/// use [iteratee!](crate::iteratee!) and call the returned closure.
-///
-/// Fn form: [iteratee_x()]
-#[macro_export]
-macro_rules! iteratee_x {
-    ($($t:tt)*) => {
-        $crate::iteratee_x()
-    };
-}
+build_not_provided_x!(
+    iteratee,
+    iteratee_x,
+    "The result is a function, which has no primitive form; use [iteratee!](crate::iteratee!) and call the returned closure."
+);

@@ -85,23 +85,4 @@ macro_rules! find_last {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [find_last!](crate::find_last!) and read the returned
-/// `Value`.
-///
-/// Macro form: [find_last_x!](crate::find_last_x!)
-pub fn find_last_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [find_last!](crate::find_last!) and read the returned
-/// `Value`.
-///
-/// Fn form: [find_last_x()]
-#[macro_export]
-macro_rules! find_last_x {
-    ($($t:tt)*) => {
-        $crate::find_last_x()
-    };
-}
+build_not_provided_x!(find_last, find_last_x);

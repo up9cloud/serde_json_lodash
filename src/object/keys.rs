@@ -61,21 +61,4 @@ macro_rules! keys {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [keys!](crate::keys!) and read the returned `Value`.
-///
-/// Macro form: [keys_x!](crate::keys_x!)
-pub fn keys_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [keys!](crate::keys!) and read the returned `Value`.
-///
-/// Fn form: [keys_x()]
-#[macro_export]
-macro_rules! keys_x {
-    ($($t:tt)*) => {
-        $crate::keys_x()
-    };
-}
+build_not_provided_x!(keys, keys_x);

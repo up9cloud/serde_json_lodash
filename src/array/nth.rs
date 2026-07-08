@@ -116,21 +116,4 @@ macro_rules! nth {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [nth!](crate::nth!) and read the returned `Value`.
-///
-/// Macro form: [nth_x!](crate::nth_x!)
-pub fn nth_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [nth!](crate::nth!) and read the returned `Value`.
-///
-/// Fn form: [nth_x()]
-#[macro_export]
-macro_rules! nth_x {
-    ($($t:tt)*) => {
-        $crate::nth_x()
-    };
-}
+build_not_provided_x!(nth, nth_x);

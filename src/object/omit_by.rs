@@ -88,23 +88,4 @@ macro_rules! omit_by {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [omit_by!](crate::omit_by!) and read the returned
-/// `Value`.
-///
-/// Macro form: [omit_by_x!](crate::omit_by_x!)
-pub fn omit_by_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [omit_by!](crate::omit_by!) and read the returned
-/// `Value`.
-///
-/// Fn form: [omit_by_x()]
-#[macro_export]
-macro_rules! omit_by_x {
-    ($($t:tt)*) => {
-        $crate::omit_by_x()
-    };
-}
+build_not_provided_x!(omit_by, omit_by_x);

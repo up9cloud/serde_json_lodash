@@ -1,12 +1,55 @@
 #![macro_use]
 
 // https://github.com/rust-lang/rust/issues/35853#issuecomment-415993963
-#[cfg(feature = "alias")]
 macro_rules! with_dollar_sign {
     ($($body:tt)*) => {
         macro_rules! __with_dollar_sign { $($body)* }
         __with_dollar_sign!($);
     }
+}
+
+/// Generates the **Not provided.** `_x` stub pair (`fn $name_x` + `$name_x!`)
+/// for a function whose result has no primitive form. The default wording
+/// covers composite/runtime-dynamic `Value` results; pass a `$reason` string
+/// (a complete sentence following "**Not provided.** ") for anything else,
+/// e.g. the closure-returning combinators. Both names are passed explicitly
+/// because deriving `_x` would need `paste`, which is an optional dependency.
+macro_rules! build_not_provided_x {
+    ($name:ident, $name_x:ident) => {
+        build_not_provided_x!(
+            $name,
+            $name_x,
+            ::core::concat!(
+                "The result is a composite or runtime-dynamic `Value` with no single primitive to downgrade to; use [",
+                ::core::stringify!($name),
+                "!](crate::",
+                ::core::stringify!($name),
+                "!) and read the returned `Value`."
+            )
+        );
+    };
+    ($name:ident, $name_x:ident, $reason:expr) => {
+        #[doc = ::core::concat!("**Not provided.** ", $reason)]
+        #[doc = ""]
+        #[doc = ::core::concat!("Macro form: [", ::core::stringify!($name_x), "!](crate::", ::core::stringify!($name_x), "!)")]
+        pub fn $name_x() {
+            todo!()
+        }
+
+        with_dollar_sign! {
+            ($d:tt) => {
+                #[doc = ::core::concat!("**Not provided.** ", $reason)]
+                #[doc = ""]
+                #[doc = ::core::concat!("Fn form: [", ::core::stringify!($name_x), "()]")]
+                #[macro_export]
+                macro_rules! $name_x {
+                    ($d($d t:tt)*) => {
+                        $crate::$name_x()
+                    };
+                }
+            }
+        }
+    };
 }
 
 // Aliasing one lodash name to another (a name lodash itself aliases, e.g.
@@ -45,8 +88,9 @@ macro_rules! build_link {
         $crate::paste::paste! {
             #[doc(hidden)]
             pub use $crate::$to as $from;
+            // via __fn so only the fn is imported; see the module's comment
             #[doc(hidden)]
-            pub use $crate::[<$to _x>] as [<$from _x>];
+            pub use $crate::__fn::[<$to _x>] as [<$from _x>];
         }
 
         with_dollar_sign! {
@@ -84,8 +128,9 @@ macro_rules! build_camel_link {
         $crate::paste::paste! {
             #[doc(hidden)]
             pub use $crate::$to as $from;
+            // via __fn so only the fn is imported; see the module's comment
             #[doc(hidden)]
-            pub use $crate::[<$to _x>] as [<$from X>];
+            pub use $crate::__fn::[<$to _x>] as [<$from X>];
         }
 
         with_dollar_sign! {

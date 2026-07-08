@@ -162,21 +162,4 @@ macro_rules! set {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [set!](crate::set!) and read the returned `Value`.
-///
-/// Macro form: [set_x!](crate::set_x!)
-pub fn set_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [set!](crate::set!) and read the returned `Value`.
-///
-/// Fn form: [set_x()]
-#[macro_export]
-macro_rules! set_x {
-    ($($t:tt)*) => {
-        $crate::set_x()
-    };
-}
+build_not_provided_x!(set, set_x);

@@ -70,23 +70,4 @@ macro_rules! to_plain_object {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [to_plain_object!](crate::to_plain_object!) and read
-/// the returned `Value`.
-///
-/// Macro form: [to_plain_object_x!](crate::to_plain_object_x!)
-pub fn to_plain_object_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [to_plain_object!](crate::to_plain_object!) and read
-/// the returned `Value`.
-///
-/// Fn form: [to_plain_object_x()]
-#[macro_export]
-macro_rules! to_plain_object_x {
-    ($($t:tt)*) => {
-        $crate::to_plain_object_x()
-    };
-}
+build_not_provided_x!(to_plain_object, to_plain_object_x);

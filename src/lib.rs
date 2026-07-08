@@ -151,6 +151,17 @@ mod util;
 mod lib_snake;
 pub use lib_snake::*;
 
+// Same fns as the crate root, but reachable through a module path, where the
+// `#[macro_export]` macros (which are mounted at the crate root only) do not
+// exist. The alias machinery imports `_x` fns through here: a plain
+// `pub use $crate::head_x` would also grab the macro namespace, and
+// macro-expanded `#[macro_export]` macros (`build_not_provided_x!` output)
+// cannot be referred to by absolute paths.
+#[doc(hidden)]
+pub mod __fn {
+    pub use crate::lib_snake::*;
+}
+
 #[cfg(feature = "camel")]
 mod lib_camel;
 #[cfg(feature = "camel")]

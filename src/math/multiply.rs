@@ -67,23 +67,4 @@ macro_rules! multiply {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [multiply!](crate::multiply!) and read the returned
-/// `Value`.
-///
-/// Macro form: [multiply_x!](crate::multiply_x!)
-pub fn multiply_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [multiply!](crate::multiply!) and read the returned
-/// `Value`.
-///
-/// Fn form: [multiply_x()]
-#[macro_export]
-macro_rules! multiply_x {
-    ($($t:tt)*) => {
-        $crate::multiply_x()
-    };
-}
+build_not_provided_x!(multiply, multiply_x);

@@ -61,23 +61,4 @@ macro_rules! clone_with {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [clone_with!](crate::clone_with!) and read the returned
-/// `Value`.
-///
-/// Macro form: [clone_with_x!](crate::clone_with_x!)
-pub fn clone_with_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [clone_with!](crate::clone_with!) and read the returned
-/// `Value`.
-///
-/// Fn form: [clone_with_x()]
-#[macro_export]
-macro_rules! clone_with_x {
-    ($($t:tt)*) => {
-        $crate::clone_with_x()
-    };
-}
+build_not_provided_x!(clone_with, clone_with_x);

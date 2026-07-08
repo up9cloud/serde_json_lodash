@@ -113,23 +113,4 @@ macro_rules! order_by {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [order_by!](crate::order_by!) and read the returned
-/// `Value`.
-///
-/// Macro form: [order_by_x!](crate::order_by_x!)
-pub fn order_by_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [order_by!](crate::order_by!) and read the returned
-/// `Value`.
-///
-/// Fn form: [order_by_x()]
-#[macro_export]
-macro_rules! order_by_x {
-    ($($t:tt)*) => {
-        $crate::order_by_x()
-    };
-}
+build_not_provided_x!(order_by, order_by_x);

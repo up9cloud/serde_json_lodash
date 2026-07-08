@@ -77,21 +77,4 @@ macro_rules! times {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [times!](crate::times!) and read the returned `Value`.
-///
-/// Macro form: [times_x!](crate::times_x!)
-pub fn times_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [times!](crate::times!) and read the returned `Value`.
-///
-/// Fn form: [times_x()]
-#[macro_export]
-macro_rules! times_x {
-    ($($t:tt)*) => {
-        $crate::times_x()
-    };
-}
+build_not_provided_x!(times, times_x);

@@ -64,23 +64,4 @@ macro_rules! for_own {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [for_own!](crate::for_own!) and read the returned
-/// `Value`.
-///
-/// Macro form: [for_own_x!](crate::for_own_x!)
-pub fn for_own_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [for_own!](crate::for_own!) and read the returned
-/// `Value`.
-///
-/// Fn form: [for_own_x()]
-#[macro_export]
-macro_rules! for_own_x {
-    ($($t:tt)*) => {
-        $crate::for_own_x()
-    };
-}
+build_not_provided_x!(for_own, for_own_x);

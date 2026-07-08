@@ -96,23 +96,4 @@ macro_rules! min_by {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [min_by!](crate::min_by!) and read the returned
-/// `Value`.
-///
-/// Macro form: [min_by_x!](crate::min_by_x!)
-pub fn min_by_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [min_by!](crate::min_by!) and read the returned
-/// `Value`.
-///
-/// Fn form: [min_by_x()]
-#[macro_export]
-macro_rules! min_by_x {
-    ($($t:tt)*) => {
-        $crate::min_by_x()
-    };
-}
+build_not_provided_x!(min_by, min_by_x);

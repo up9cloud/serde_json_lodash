@@ -86,23 +86,4 @@ macro_rules! drop_right {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [drop_right!](crate::drop_right!) and read the returned
-/// `Value`.
-///
-/// Macro form: [drop_right_x!](crate::drop_right_x!)
-pub fn drop_right_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [drop_right!](crate::drop_right!) and read the returned
-/// `Value`.
-///
-/// Fn form: [drop_right_x()]
-#[macro_export]
-macro_rules! drop_right_x {
-    ($($t:tt)*) => {
-        $crate::drop_right_x()
-    };
-}
+build_not_provided_x!(drop_right, drop_right_x);

@@ -75,21 +75,4 @@ macro_rules! mean {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [mean!](crate::mean!) and read the returned `Value`.
-///
-/// Macro form: [mean_x!](crate::mean_x!)
-pub fn mean_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [mean!](crate::mean!) and read the returned `Value`.
-///
-/// Fn form: [mean_x()]
-#[macro_export]
-macro_rules! mean_x {
-    ($($t:tt)*) => {
-        $crate::mean_x()
-    };
-}
+build_not_provided_x!(mean, mean_x);

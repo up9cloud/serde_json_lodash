@@ -101,23 +101,4 @@ macro_rules! flatten {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [flatten!](crate::flatten!) and read the returned
-/// `Value`.
-///
-/// Macro form: [flatten_x!](crate::flatten_x!)
-pub fn flatten_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [flatten!](crate::flatten!) and read the returned
-/// `Value`.
-///
-/// Fn form: [flatten_x()]
-#[macro_export]
-macro_rules! flatten_x {
-    ($($t:tt)*) => {
-        $crate::flatten_x()
-    };
-}
+build_not_provided_x!(flatten, flatten_x);

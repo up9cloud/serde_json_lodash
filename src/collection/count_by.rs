@@ -88,23 +88,4 @@ macro_rules! count_by {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [count_by!](crate::count_by!) and read the returned
-/// `Value`.
-///
-/// Macro form: [count_by_x!](crate::count_by_x!)
-pub fn count_by_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [count_by!](crate::count_by!) and read the returned
-/// `Value`.
-///
-/// Fn form: [count_by_x()]
-#[macro_export]
-macro_rules! count_by_x {
-    ($($t:tt)*) => {
-        $crate::count_by_x()
-    };
-}
+build_not_provided_x!(count_by, count_by_x);

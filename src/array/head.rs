@@ -79,21 +79,4 @@ macro_rules! head {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [head!](crate::head!) and read the returned `Value`.
-///
-/// Macro form: [head_x!](crate::head_x!)
-pub fn head_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [head!](crate::head!) and read the returned `Value`.
-///
-/// Fn form: [head_x()]
-#[macro_export]
-macro_rules! head_x {
-    ($($t:tt)*) => {
-        $crate::head_x()
-    };
-}
+build_not_provided_x!(head, head_x);

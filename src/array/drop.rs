@@ -85,21 +85,4 @@ macro_rules! drop {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [drop!](crate::drop!) and read the returned `Value`.
-///
-/// Macro form: [drop_x!](crate::drop_x!)
-pub fn drop_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [drop!](crate::drop!) and read the returned `Value`.
-///
-/// Fn form: [drop_x()]
-#[macro_export]
-macro_rules! drop_x {
-    ($($t:tt)*) => {
-        $crate::drop_x()
-    };
-}
+build_not_provided_x!(drop, drop_x);

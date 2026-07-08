@@ -51,23 +51,4 @@ macro_rules! functions {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [functions!](crate::functions!) and read the returned
-/// `Value`.
-///
-/// Macro form: [functions_x!](crate::functions_x!)
-pub fn functions_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [functions!](crate::functions!) and read the returned
-/// `Value`.
-///
-/// Fn form: [functions_x()]
-#[macro_export]
-macro_rules! functions_x {
-    ($($t:tt)*) => {
-        $crate::functions_x()
-    };
-}
+build_not_provided_x!(functions, functions_x);

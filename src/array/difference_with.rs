@@ -75,23 +75,4 @@ macro_rules! difference_with {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [difference_with!](crate::difference_with!) and read
-/// the returned `Value`.
-///
-/// Macro form: [difference_with_x!](crate::difference_with_x!)
-pub fn difference_with_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [difference_with!](crate::difference_with!) and read
-/// the returned `Value`.
-///
-/// Fn form: [difference_with_x()]
-#[macro_export]
-macro_rules! difference_with_x {
-    ($($t:tt)*) => {
-        $crate::difference_with_x()
-    };
-}
+build_not_provided_x!(difference_with, difference_with_x);

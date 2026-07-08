@@ -58,21 +58,4 @@ macro_rules! tail {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [tail!](crate::tail!) and read the returned `Value`.
-///
-/// Macro form: [tail_x!](crate::tail_x!)
-pub fn tail_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [tail!](crate::tail!) and read the returned `Value`.
-///
-/// Fn form: [tail_x()]
-#[macro_export]
-macro_rules! tail_x {
-    ($($t:tt)*) => {
-        $crate::tail_x()
-    };
-}
+build_not_provided_x!(tail, tail_x);

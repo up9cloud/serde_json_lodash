@@ -48,23 +48,4 @@ macro_rules! identity {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [identity!](crate::identity!) and read the returned
-/// `Value`.
-///
-/// Macro form: [identity_x!](crate::identity_x!)
-pub fn identity_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [identity!](crate::identity!) and read the returned
-/// `Value`.
-///
-/// Fn form: [identity_x()]
-#[macro_export]
-macro_rules! identity_x {
-    ($($t:tt)*) => {
-        $crate::identity_x()
-    };
-}
+build_not_provided_x!(identity, identity_x);

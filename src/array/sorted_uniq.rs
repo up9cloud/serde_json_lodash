@@ -53,23 +53,4 @@ macro_rules! sorted_uniq {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [sorted_uniq!](crate::sorted_uniq!) and read the
-/// returned `Value`.
-///
-/// Macro form: [sorted_uniq_x!](crate::sorted_uniq_x!)
-pub fn sorted_uniq_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [sorted_uniq!](crate::sorted_uniq!) and read the
-/// returned `Value`.
-///
-/// Fn form: [sorted_uniq_x()]
-#[macro_export]
-macro_rules! sorted_uniq_x {
-    ($($t:tt)*) => {
-        $crate::sorted_uniq_x()
-    };
-}
+build_not_provided_x!(sorted_uniq, sorted_uniq_x);

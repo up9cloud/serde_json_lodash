@@ -106,23 +106,4 @@ macro_rules! xor_by {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [xor_by!](crate::xor_by!) and read the returned
-/// `Value`.
-///
-/// Macro form: [xor_by_x!](crate::xor_by_x!)
-pub fn xor_by_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [xor_by!](crate::xor_by!) and read the returned
-/// `Value`.
-///
-/// Fn form: [xor_by_x()]
-#[macro_export]
-macro_rules! xor_by_x {
-    ($($t:tt)*) => {
-        $crate::xor_by_x()
-    };
-}
+build_not_provided_x!(xor_by, xor_by_x);

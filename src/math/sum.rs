@@ -66,21 +66,4 @@ macro_rules! sum {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [sum!](crate::sum!) and read the returned `Value`.
-///
-/// Macro form: [sum_x!](crate::sum_x!)
-pub fn sum_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [sum!](crate::sum!) and read the returned `Value`.
-///
-/// Fn form: [sum_x()]
-#[macro_export]
-macro_rules! sum_x {
-    ($($t:tt)*) => {
-        $crate::sum_x()
-    };
-}
+build_not_provided_x!(sum, sum_x);

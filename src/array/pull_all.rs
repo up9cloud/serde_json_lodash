@@ -92,23 +92,4 @@ macro_rules! pull_all {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [pull_all!](crate::pull_all!) and read the returned
-/// `Value`.
-///
-/// Macro form: [pull_all_x!](crate::pull_all_x!)
-pub fn pull_all_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [pull_all!](crate::pull_all!) and read the returned
-/// `Value`.
-///
-/// Fn form: [pull_all_x()]
-#[macro_export]
-macro_rules! pull_all_x {
-    ($($t:tt)*) => {
-        $crate::pull_all_x()
-    };
-}
+build_not_provided_x!(pull_all, pull_all_x);

@@ -67,21 +67,4 @@ macro_rules! clamp {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [clamp!](crate::clamp!) and read the returned `Value`.
-///
-/// Macro form: [clamp_x!](crate::clamp_x!)
-pub fn clamp_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [clamp!](crate::clamp!) and read the returned `Value`.
-///
-/// Fn form: [clamp_x()]
-#[macro_export]
-macro_rules! clamp_x {
-    ($($t:tt)*) => {
-        $crate::clamp_x()
-    };
-}
+build_not_provided_x!(clamp, clamp_x);

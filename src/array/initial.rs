@@ -78,23 +78,4 @@ macro_rules! initial {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [initial!](crate::initial!) and read the returned
-/// `Value`.
-///
-/// Macro form: [initial_x!](crate::initial_x!)
-pub fn initial_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [initial!](crate::initial!) and read the returned
-/// `Value`.
-///
-/// Fn form: [initial_x()]
-#[macro_export]
-macro_rules! initial_x {
-    ($($t:tt)*) => {
-        $crate::initial_x()
-    };
-}
+build_not_provided_x!(initial, initial_x);

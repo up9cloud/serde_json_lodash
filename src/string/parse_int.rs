@@ -100,23 +100,4 @@ macro_rules! parse_int {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [parse_int!](crate::parse_int!) and read the returned
-/// `Value`.
-///
-/// Macro form: [parse_int_x!](crate::parse_int_x!)
-pub fn parse_int_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [parse_int!](crate::parse_int!) and read the returned
-/// `Value`.
-///
-/// Fn form: [parse_int_x()]
-#[macro_export]
-macro_rules! parse_int_x {
-    ($($t:tt)*) => {
-        $crate::parse_int_x()
-    };
-}
+build_not_provided_x!(parse_int, parse_int_x);

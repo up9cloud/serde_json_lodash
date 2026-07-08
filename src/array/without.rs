@@ -68,23 +68,4 @@ macro_rules! without {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [without!](crate::without!) and read the returned
-/// `Value`.
-///
-/// Macro form: [without_x!](crate::without_x!)
-pub fn without_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [without!](crate::without!) and read the returned
-/// `Value`.
-///
-/// Fn form: [without_x()]
-#[macro_export]
-macro_rules! without_x {
-    ($($t:tt)*) => {
-        $crate::without_x()
-    };
-}
+build_not_provided_x!(without, without_x);

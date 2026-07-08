@@ -62,21 +62,8 @@ macro_rules! property {
     };
 }
 
-/// **Not provided.** The result is a getter function, which has no primitive
-/// form; use [property!](crate::property!) and call the returned closure.
-///
-/// Macro form: [property_x!](crate::property_x!)
-pub fn property_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a getter function, which has no primitive
-/// form; use [property!](crate::property!) and call the returned closure.
-///
-/// Fn form: [property_x()]
-#[macro_export]
-macro_rules! property_x {
-    ($($t:tt)*) => {
-        $crate::property_x()
-    };
-}
+build_not_provided_x!(
+    property,
+    property_x,
+    "The result is a getter function, which has no primitive form; use [property!](crate::property!) and call the returned closure."
+);

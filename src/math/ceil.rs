@@ -128,21 +128,4 @@ macro_rules! ceil {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [ceil!](crate::ceil!) and read the returned `Value`.
-///
-/// Macro form: [ceil_x!](crate::ceil_x!)
-pub fn ceil_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [ceil!](crate::ceil!) and read the returned `Value`.
-///
-/// Fn form: [ceil_x()]
-#[macro_export]
-macro_rules! ceil_x {
-    ($($t:tt)*) => {
-        $crate::ceil_x()
-    };
-}
+build_not_provided_x!(ceil, ceil_x);

@@ -81,21 +81,4 @@ macro_rules! each {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [each!](crate::each!) and read the returned `Value`.
-///
-/// Macro form: [each_x!](crate::each_x!)
-pub fn each_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [each!](crate::each!) and read the returned `Value`.
-///
-/// Fn form: [each_x()]
-#[macro_export]
-macro_rules! each_x {
-    ($($t:tt)*) => {
-        $crate::each_x()
-    };
-}
+build_not_provided_x!(each, each_x);

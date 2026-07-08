@@ -102,21 +102,4 @@ macro_rules! get {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [get!](crate::get!) and read the returned `Value`.
-///
-/// Macro form: [get_x!](crate::get_x!)
-pub fn get_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [get!](crate::get!) and read the returned `Value`.
-///
-/// Fn form: [get_x()]
-#[macro_export]
-macro_rules! get_x {
-    ($($t:tt)*) => {
-        $crate::get_x()
-    };
-}
+build_not_provided_x!(get, get_x);

@@ -96,23 +96,4 @@ macro_rules! max_by {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [max_by!](crate::max_by!) and read the returned
-/// `Value`.
-///
-/// Macro form: [max_by_x!](crate::max_by_x!)
-pub fn max_by_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [max_by!](crate::max_by!) and read the returned
-/// `Value`.
-///
-/// Fn form: [max_by_x()]
-#[macro_export]
-macro_rules! max_by_x {
-    ($($t:tt)*) => {
-        $crate::max_by_x()
-    };
-}
+build_not_provided_x!(max_by, max_by_x);

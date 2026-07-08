@@ -92,21 +92,4 @@ macro_rules! unset {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [unset!](crate::unset!) and read the returned `Value`.
-///
-/// Macro form: [unset_x!](crate::unset_x!)
-pub fn unset_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [unset!](crate::unset!) and read the returned `Value`.
-///
-/// Fn form: [unset_x()]
-#[macro_export]
-macro_rules! unset_x {
-    ($($t:tt)*) => {
-        $crate::unset_x()
-    };
-}
+build_not_provided_x!(unset, unset_x);

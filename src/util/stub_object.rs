@@ -41,23 +41,4 @@ macro_rules! stub_object {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [stub_object!](crate::stub_object!) and read the
-/// returned `Value`.
-///
-/// Macro form: [stub_object_x!](crate::stub_object_x!)
-pub fn stub_object_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [stub_object!](crate::stub_object!) and read the
-/// returned `Value`.
-///
-/// Fn form: [stub_object_x()]
-#[macro_export]
-macro_rules! stub_object_x {
-    ($($t:tt)*) => {
-        $crate::stub_object_x()
-    };
-}
+build_not_provided_x!(stub_object, stub_object_x);

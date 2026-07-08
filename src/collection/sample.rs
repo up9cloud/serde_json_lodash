@@ -61,23 +61,4 @@ macro_rules! sample {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [sample!](crate::sample!) and read the returned
-/// `Value`.
-///
-/// Macro form: [sample_x!](crate::sample_x!)
-pub fn sample_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [sample!](crate::sample!) and read the returned
-/// `Value`.
-///
-/// Fn form: [sample_x()]
-#[macro_export]
-macro_rules! sample_x {
-    ($($t:tt)*) => {
-        $crate::sample_x()
-    };
-}
+build_not_provided_x!(sample, sample_x);

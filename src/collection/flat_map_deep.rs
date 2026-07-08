@@ -95,23 +95,4 @@ macro_rules! flat_map_deep {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [flat_map_deep!](crate::flat_map_deep!) and read the
-/// returned `Value`.
-///
-/// Macro form: [flat_map_deep_x!](crate::flat_map_deep_x!)
-pub fn flat_map_deep_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [flat_map_deep!](crate::flat_map_deep!) and read the
-/// returned `Value`.
-///
-/// Fn form: [flat_map_deep_x()]
-#[macro_export]
-macro_rules! flat_map_deep_x {
-    ($($t:tt)*) => {
-        $crate::flat_map_deep_x()
-    };
-}
+build_not_provided_x!(flat_map_deep, flat_map_deep_x);

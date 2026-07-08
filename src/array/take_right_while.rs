@@ -93,23 +93,4 @@ macro_rules! take_right_while {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [take_right_while!](crate::take_right_while!) and read
-/// the returned `Value`.
-///
-/// Macro form: [take_right_while_x!](crate::take_right_while_x!)
-pub fn take_right_while_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [take_right_while!](crate::take_right_while!) and read
-/// the returned `Value`.
-///
-/// Fn form: [take_right_while_x()]
-#[macro_export]
-macro_rules! take_right_while_x {
-    ($($t:tt)*) => {
-        $crate::take_right_while_x()
-    };
-}
+build_not_provided_x!(take_right_while, take_right_while_x);

@@ -89,23 +89,4 @@ macro_rules! random {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [random!](crate::random!) and read the returned
-/// `Value`.
-///
-/// Macro form: [random_x!](crate::random_x!)
-pub fn random_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [random!](crate::random!) and read the returned
-/// `Value`.
-///
-/// Fn form: [random_x()]
-#[macro_export]
-macro_rules! random_x {
-    ($($t:tt)*) => {
-        $crate::random_x()
-    };
-}
+build_not_provided_x!(random, random_x);

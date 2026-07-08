@@ -116,23 +116,4 @@ macro_rules! partition {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [partition!](crate::partition!) and read the returned
-/// `Value`.
-///
-/// Macro form: [partition_x!](crate::partition_x!)
-pub fn partition_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [partition!](crate::partition!) and read the returned
-/// `Value`.
-///
-/// Fn form: [partition_x()]
-#[macro_export]
-macro_rules! partition_x {
-    ($($t:tt)*) => {
-        $crate::partition_x()
-    };
-}
+build_not_provided_x!(partition, partition_x);

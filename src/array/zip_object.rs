@@ -70,23 +70,4 @@ macro_rules! zip_object {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [zip_object!](crate::zip_object!) and read the returned
-/// `Value`.
-///
-/// Macro form: [zip_object_x!](crate::zip_object_x!)
-pub fn zip_object_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [zip_object!](crate::zip_object!) and read the returned
-/// `Value`.
-///
-/// Fn form: [zip_object_x()]
-#[macro_export]
-macro_rules! zip_object_x {
-    ($($t:tt)*) => {
-        $crate::zip_object_x()
-    };
-}
+build_not_provided_x!(zip_object, zip_object_x);

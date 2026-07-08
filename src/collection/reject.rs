@@ -105,23 +105,4 @@ macro_rules! reject {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [reject!](crate::reject!) and read the returned
-/// `Value`.
-///
-/// Macro form: [reject_x!](crate::reject_x!)
-pub fn reject_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [reject!](crate::reject!) and read the returned
-/// `Value`.
-///
-/// Fn form: [reject_x()]
-#[macro_export]
-macro_rules! reject_x {
-    ($($t:tt)*) => {
-        $crate::reject_x()
-    };
-}
+build_not_provided_x!(reject, reject_x);

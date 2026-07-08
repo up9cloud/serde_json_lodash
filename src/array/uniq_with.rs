@@ -67,23 +67,4 @@ macro_rules! uniq_with {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [uniq_with!](crate::uniq_with!) and read the returned
-/// `Value`.
-///
-/// Macro form: [uniq_with_x!](crate::uniq_with_x!)
-pub fn uniq_with_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [uniq_with!](crate::uniq_with!) and read the returned
-/// `Value`.
-///
-/// Fn form: [uniq_with_x()]
-#[macro_export]
-macro_rules! uniq_with_x {
-    ($($t:tt)*) => {
-        $crate::uniq_with_x()
-    };
-}
+build_not_provided_x!(uniq_with, uniq_with_x);

@@ -77,23 +77,4 @@ macro_rules! defaults_deep {
     }};
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [defaults_deep!](crate::defaults_deep!) and read the
-/// returned `Value`.
-///
-/// Macro form: [defaults_deep_x!](crate::defaults_deep_x!)
-pub fn defaults_deep_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [defaults_deep!](crate::defaults_deep!) and read the
-/// returned `Value`.
-///
-/// Fn form: [defaults_deep_x()]
-#[macro_export]
-macro_rules! defaults_deep_x {
-    ($($t:tt)*) => {
-        $crate::defaults_deep_x()
-    };
-}
+build_not_provided_x!(defaults_deep, defaults_deep_x);

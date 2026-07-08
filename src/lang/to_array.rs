@@ -56,23 +56,4 @@ macro_rules! to_array {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [to_array!](crate::to_array!) and read the returned
-/// `Value`.
-///
-/// Macro form: [to_array_x!](crate::to_array_x!)
-pub fn to_array_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [to_array!](crate::to_array!) and read the returned
-/// `Value`.
-///
-/// Fn form: [to_array_x()]
-#[macro_export]
-macro_rules! to_array_x {
-    ($($t:tt)*) => {
-        $crate::to_array_x()
-    };
-}
+build_not_provided_x!(to_array, to_array_x);

@@ -89,23 +89,4 @@ macro_rules! union_by {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [union_by!](crate::union_by!) and read the returned
-/// `Value`.
-///
-/// Macro form: [union_by_x!](crate::union_by_x!)
-pub fn union_by_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [union_by!](crate::union_by!) and read the returned
-/// `Value`.
-///
-/// Fn form: [union_by_x()]
-#[macro_export]
-macro_rules! union_by_x {
-    ($($t:tt)*) => {
-        $crate::union_by_x()
-    };
-}
+build_not_provided_x!(union_by, union_by_x);

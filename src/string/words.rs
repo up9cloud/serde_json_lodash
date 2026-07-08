@@ -65,21 +65,4 @@ macro_rules! words {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [words!](crate::words!) and read the returned `Value`.
-///
-/// Macro form: [words_x!](crate::words_x!)
-pub fn words_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [words!](crate::words!) and read the returned `Value`.
-///
-/// Fn form: [words_x()]
-#[macro_export]
-macro_rules! words_x {
-    ($($t:tt)*) => {
-        $crate::words_x()
-    };
-}
+build_not_provided_x!(words, words_x);

@@ -248,21 +248,4 @@ macro_rules! add {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [add!](crate::add!) and read the returned `Value`.
-///
-/// Macro form: [add_x!](crate::add_x!)
-pub fn add_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [add!](crate::add!) and read the returned `Value`.
-///
-/// Fn form: [add_x()]
-#[macro_export]
-macro_rules! add_x {
-    ($($t:tt)*) => {
-        $crate::add_x()
-    };
-}
+build_not_provided_x!(add, add_x);

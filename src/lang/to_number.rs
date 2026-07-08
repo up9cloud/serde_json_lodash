@@ -60,23 +60,4 @@ macro_rules! to_number {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [to_number!](crate::to_number!) and read the returned
-/// `Value`.
-///
-/// Macro form: [to_number_x!](crate::to_number_x!)
-pub fn to_number_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [to_number!](crate::to_number!) and read the returned
-/// `Value`.
-///
-/// Fn form: [to_number_x()]
-#[macro_export]
-macro_rules! to_number_x {
-    ($($t:tt)*) => {
-        $crate::to_number_x()
-    };
-}
+build_not_provided_x!(to_number, to_number_x);

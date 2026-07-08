@@ -99,23 +99,4 @@ macro_rules! intersection_by {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [intersection_by!](crate::intersection_by!) and read
-/// the returned `Value`.
-///
-/// Macro form: [intersection_by_x!](crate::intersection_by_x!)
-pub fn intersection_by_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [intersection_by!](crate::intersection_by!) and read
-/// the returned `Value`.
-///
-/// Fn form: [intersection_by_x()]
-#[macro_export]
-macro_rules! intersection_by_x {
-    ($($t:tt)*) => {
-        $crate::intersection_by_x()
-    };
-}
+build_not_provided_x!(intersection_by, intersection_by_x);

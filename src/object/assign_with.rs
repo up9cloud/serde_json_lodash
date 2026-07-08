@@ -81,23 +81,4 @@ macro_rules! assign_with {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [assign_with!](crate::assign_with!) and read the
-/// returned `Value`.
-///
-/// Macro form: [assign_with_x!](crate::assign_with_x!)
-pub fn assign_with_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [assign_with!](crate::assign_with!) and read the
-/// returned `Value`.
-///
-/// Fn form: [assign_with_x()]
-#[macro_export]
-macro_rules! assign_with_x {
-    ($($t:tt)*) => {
-        $crate::assign_with_x()
-    };
-}
+build_not_provided_x!(assign_with, assign_with_x);

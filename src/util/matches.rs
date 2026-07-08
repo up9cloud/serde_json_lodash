@@ -64,23 +64,8 @@ macro_rules! matches {
     };
 }
 
-/// **Not provided.** The result is a predicate function, which has no
-/// primitive form; use [matches!](crate::matches!) and call the returned
-/// closure.
-///
-/// Macro form: [matches_x!](crate::matches_x!)
-pub fn matches_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a predicate function, which has no
-/// primitive form; use [matches!](crate::matches!) and call the returned
-/// closure.
-///
-/// Fn form: [matches_x()]
-#[macro_export]
-macro_rules! matches_x {
-    ($($t:tt)*) => {
-        $crate::matches_x()
-    };
-}
+build_not_provided_x!(
+    matches,
+    matches_x,
+    "The result is a predicate function, which has no primitive form; use [matches!](crate::matches!) and call the returned closure."
+);

@@ -79,21 +79,4 @@ macro_rules! floor {
     };
 }
 
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [floor!](crate::floor!) and read the returned `Value`.
-///
-/// Macro form: [floor_x!](crate::floor_x!)
-pub fn floor_x() {
-    todo!()
-}
-
-/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
-/// primitive to downgrade to; use [floor!](crate::floor!) and read the returned `Value`.
-///
-/// Fn form: [floor_x()]
-#[macro_export]
-macro_rules! floor_x {
-    ($($t:tt)*) => {
-        $crate::floor_x()
-    };
-}
+build_not_provided_x!(floor, floor_x);
