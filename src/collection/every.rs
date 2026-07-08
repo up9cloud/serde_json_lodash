@@ -28,7 +28,16 @@ pub fn every(collection: Value, predicate: fn(&Value) -> bool) -> Value {
 /// use serde_json::json;
 /// assert_eq!(every!(json!([1, 2, 3]), |n| n.as_i64().unwrap() > 0), json!(true));
 /// assert_eq!(every!(json!([1, 2, 3]), |n| n.as_i64().unwrap() > 1), json!(false));
+/// ```
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
 /// assert_eq!(every!(), json!(true));
+/// assert_eq!(every!(json!(null)), json!(true));
+/// assert_eq!(every!(json!({"a": 1})), json!(true));
 /// assert_eq!(every!(json!([])), json!(true));
 /// ```
 #[macro_export]

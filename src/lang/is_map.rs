@@ -29,6 +29,16 @@ pub fn is_map(_v: &Value) -> Value {
 /// assert_eq!(is_map!(), json!(false));
 /// assert_eq!(is_map!(&json!(null)), json!(false));
 /// ```
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(is_map!(), json!(false));
+/// assert_eq!(is_map!(&json!(null)), json!(false));
+/// assert_eq!(is_map!(&json!({"a": 1})), json!(false));
+/// ```
 #[macro_export]
 macro_rules! is_map {
     () => {

@@ -26,7 +26,20 @@ pub fn is_undefined(v: &Value) -> Value {
 /// use serde_json::json;
 /// assert_eq!(is_undefined!(), json!(true));
 /// assert_eq!(is_undefined!(&json!(null)), json!(true));
+/// ```
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(is_undefined!(), json!(true));
+/// assert_eq!(is_undefined!(&json!(null)), json!(true));
+/// assert_eq!(is_undefined!(&json!(true)), json!(false));
 /// assert_eq!(is_undefined!(&json!(0)), json!(false));
+/// assert_eq!(is_undefined!(&json!("ab")), json!(false));
+/// assert_eq!(is_undefined!(&json!([1, 2])), json!(false));
+/// assert_eq!(is_undefined!(&json!({"a": 1})), json!(false));
 /// ```
 #[macro_export]
 macro_rules! is_undefined {

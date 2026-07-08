@@ -24,8 +24,27 @@ pub fn is_equal(a: &Value, b: &Value) -> Value {
 /// ```rust
 /// #[macro_use] extern crate serde_json_lodash;
 /// use serde_json::json;
+/// assert_eq!(is_equal!(&json!({"a": 1}), &json!({"a": 1})), json!(true));
+/// ```
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
 /// assert_eq!(is_equal!(), json!(true));
+/// assert_eq!(is_equal!(&json!(null)), json!(true));
 /// assert_eq!(is_equal!(&json!(1)), json!(false));
+/// assert_eq!(is_equal!(&json!(true)), json!(false));
+/// assert_eq!(is_equal!(&json!(0)), json!(false));
+/// assert_eq!(is_equal!(&json!("ab")), json!(false));
+/// assert_eq!(is_equal!(&json!([1, 2])), json!(false));
+/// assert_eq!(is_equal!(&json!({"a": 1})), json!(false));
+/// assert_eq!(is_equal!(&json!(null), &json!(null)), json!(true));
+/// assert_eq!(is_equal!(&json!(1), &json!(1)), json!(true));
+/// assert_eq!(is_equal!(&json!(1), &json!(2)), json!(false));
+/// assert_eq!(is_equal!(&json!([1, 2, 3]), &json!(2)), json!(false));
+/// assert_eq!(is_equal!(&json!("abc"), &json!("bc")), json!(false));
 /// assert_eq!(is_equal!(&json!([1, [2]]), &json!([1, [2]])), json!(true));
 /// assert_eq!(is_equal!(&json!(1), &json!("1")), json!(false));
 /// ```

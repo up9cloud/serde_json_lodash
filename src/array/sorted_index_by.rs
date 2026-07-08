@@ -29,6 +29,21 @@ pub fn sorted_index_by(array: Value, value: Value, iteratee: fn(&Value) -> Value
 /// assert_eq!(sorted_index_by!(), json!(0));
 /// assert_eq!(sorted_index_by!(json!([30, 50]), json!(40)), json!(1));
 /// ```
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(sorted_index_by!(), json!(0));
+/// assert_eq!(sorted_index_by!(json!(null)), json!(0));
+/// assert_eq!(sorted_index_by!(json!({"a": 1})), json!(0));
+/// assert_eq!(sorted_index_by!(json!(null), json!(null)), json!(0));
+/// assert_eq!(sorted_index_by!(json!(1), json!(1)), json!(0));
+/// assert_eq!(sorted_index_by!(json!(1), json!(2)), json!(0));
+/// assert_eq!(sorted_index_by!(json!([1, 2, 3]), json!(2)), json!(1));
+/// assert_eq!(sorted_index_by!(json!("abc"), json!("bc")), json!(0));
+/// ```
 #[macro_export]
 macro_rules! sorted_index_by {
     () => {

@@ -29,6 +29,20 @@ pub fn is_array_like_object(v: &Value) -> Value {
 /// assert_eq!(is_array_like_object!(), json!(false));
 /// assert_eq!(is_array_like_object!(&json!(null)), json!(false));
 /// ```
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(is_array_like_object!(), json!(false));
+/// assert_eq!(is_array_like_object!(&json!(null)), json!(false));
+/// assert_eq!(is_array_like_object!(&json!(true)), json!(false));
+/// assert_eq!(is_array_like_object!(&json!(0)), json!(false));
+/// assert_eq!(is_array_like_object!(&json!("ab")), json!(false));
+/// assert_eq!(is_array_like_object!(&json!([1, 2])), json!(true));
+/// assert_eq!(is_array_like_object!(&json!({"a": 1})), json!(false));
+/// ```
 #[macro_export]
 macro_rules! is_array_like_object {
     () => {

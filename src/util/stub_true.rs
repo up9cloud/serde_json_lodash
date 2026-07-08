@@ -26,6 +26,14 @@ pub fn stub_true() -> Value {
 /// use serde_json::json;
 /// assert_eq!(stub_true!(), json!(true));
 /// ```
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(stub_true!(), json!(true));
+/// ```
 #[macro_export]
 macro_rules! stub_true {
     () => {

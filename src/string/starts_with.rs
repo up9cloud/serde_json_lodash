@@ -34,7 +34,21 @@ pub fn starts_with<A: Into<Value>>(v: A, target: Value, position: usize) -> Valu
 /// assert_eq!(starts_with!(json!("abc"), json!("a")), json!(true));
 /// assert_eq!(starts_with!(json!("abc"), json!("b")), json!(false));
 /// assert_eq!(starts_with!(json!("abc"), json!("b"), 1), json!(true));
+/// ```
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
 /// assert_eq!(starts_with!(), json!(false));
+/// assert_eq!(starts_with!(json!(null)), json!(false));
+/// assert_eq!(starts_with!(json!({"a": 1})), json!(false));
+/// assert_eq!(starts_with!(json!(null), json!(null)), json!(true));
+/// assert_eq!(starts_with!(json!(1), json!(1)), json!(true));
+/// assert_eq!(starts_with!(json!(1), json!(2)), json!(false));
+/// assert_eq!(starts_with!(json!([1, 2, 3]), json!(2)), json!(false));
+/// assert_eq!(starts_with!(json!("abc"), json!("bc")), json!(false));
 /// assert_eq!(starts_with!(json!("abc")), json!(false));
 /// assert_eq!(starts_with!(json!("abc"), json!("")), json!(true));
 /// assert_eq!(starts_with!(json!(null), json!("")), json!(true));

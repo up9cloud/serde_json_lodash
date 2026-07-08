@@ -28,9 +28,36 @@ pub fn is_equal_with(
 /// ```rust
 /// #[macro_use] extern crate serde_json_lodash;
 /// use serde_json::json;
+/// use serde_json::Value;
+/// fn greeting(v: &Value) -> bool {
+///     std::matches!(v.as_str(), Some("hi") | Some("hello"))
+/// }
+/// fn customizer(a: &Value, b: &Value) -> Option<bool> {
+///     if greeting(a) && greeting(b) { Some(true) } else { None }
+/// }
+/// // unlike lodash the customizer sees only the two top-level values,
+/// // so the official array example is compared as plain strings here
+/// assert_eq!(is_equal_with!(&json!("hello"), &json!("hi"), customizer), json!(true));
+/// ```
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
 /// assert_eq!(is_equal_with!(), json!(true));
-/// assert_eq!(is_equal_with!(&json!(1)), json!(false));
+/// assert_eq!(is_equal_with!(&json!(null)), json!(true));
+/// assert_eq!(is_equal_with!(&json!(true)), json!(false));
+/// assert_eq!(is_equal_with!(&json!(0)), json!(false));
+/// assert_eq!(is_equal_with!(&json!("ab")), json!(false));
+/// assert_eq!(is_equal_with!(&json!([1, 2])), json!(false));
+/// assert_eq!(is_equal_with!(&json!({"a": 1})), json!(false));
+/// assert_eq!(is_equal_with!(&json!(null), &json!(null)), json!(true));
 /// assert_eq!(is_equal_with!(&json!(1), &json!(1)), json!(true));
+/// assert_eq!(is_equal_with!(&json!(1), &json!(2)), json!(false));
+/// assert_eq!(is_equal_with!(&json!([1, 2, 3]), &json!(2)), json!(false));
+/// assert_eq!(is_equal_with!(&json!("abc"), &json!("bc")), json!(false));
+/// assert_eq!(is_equal_with!(&json!(1)), json!(false));
 /// ```
 #[macro_export]
 macro_rules! is_equal_with {

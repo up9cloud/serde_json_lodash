@@ -26,6 +26,14 @@ pub fn stub_string() -> Value {
 /// use serde_json::json;
 /// assert_eq!(stub_string!(), json!(""));
 /// ```
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(stub_string!(), json!(""));
+/// ```
 #[macro_export]
 macro_rules! stub_string {
     () => {

@@ -26,8 +26,16 @@ pub fn is_weak_set(_v: &Value) -> Value {
 /// use serde_json::json;
 /// assert_eq!(is_weak_set!(&json!({})), json!(false));
 /// assert_eq!(is_weak_set!(&json!("a")), json!(false));
+/// ```
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
 /// assert_eq!(is_weak_set!(), json!(false));
 /// assert_eq!(is_weak_set!(&json!(null)), json!(false));
+/// assert_eq!(is_weak_set!(&json!({"a": 1})), json!(false));
 /// ```
 #[macro_export]
 macro_rules! is_weak_set {

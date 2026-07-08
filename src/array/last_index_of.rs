@@ -26,8 +26,21 @@ pub fn last_index_of(array: Value, value: Value, from_index: usize) -> Value {
 /// use serde_json::json;
 /// assert_eq!(last_index_of!(json!([1, 2, 1, 2]), json!(2)), json!(3));
 /// assert_eq!(last_index_of!(json!([1, 2, 1, 2]), json!(2), 2), json!(1));
+/// ```
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
 /// assert_eq!(last_index_of!(), json!(-1));
 /// assert_eq!(last_index_of!(json!(null)), json!(-1));
+/// assert_eq!(last_index_of!(json!({"a": 1})), json!(-1));
+/// assert_eq!(last_index_of!(json!(null), json!(null)), json!(-1));
+/// assert_eq!(last_index_of!(json!(1), json!(1)), json!(-1));
+/// assert_eq!(last_index_of!(json!(1), json!(2)), json!(-1));
+/// assert_eq!(last_index_of!(json!([1, 2, 3]), json!(2)), json!(1));
+/// assert_eq!(last_index_of!(json!("abc"), json!("bc")), json!(-1));
 /// assert_eq!(last_index_of!(json!(true)), json!(-1));
 /// assert_eq!(last_index_of!(json!(0)), json!(-1));
 /// assert_eq!(last_index_of!(json!("")), json!(-1));
@@ -56,8 +69,8 @@ macro_rules! last_index_of {
         $crate::lib::json!(-1)
     };
     ($a:expr, $b:expr $(,)*) => {{
-        let i = $a.as_array().unwrap_or(&vec![]).len();
-        $crate::last_index_of($a, $b, i - 1)
+        let i = $a.as_array().map(|v| v.len()).unwrap_or(0);
+        $crate::last_index_of($a, $b, i.saturating_sub(1))
     }};
     ($a:expr, $b:expr, $c:expr $(,)*) => {
         $crate::last_index_of($a, $b, $c)

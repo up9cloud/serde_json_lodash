@@ -36,7 +36,21 @@ pub fn ends_with<A: Into<Value>>(v: A, target: Value, position: usize) -> Value 
 /// assert_eq!(ends_with!(json!("abc"), json!("c")), json!(true));
 /// assert_eq!(ends_with!(json!("abc"), json!("b")), json!(false));
 /// assert_eq!(ends_with!(json!("abc"), json!("b"), 2), json!(true));
+/// ```
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
 /// assert_eq!(ends_with!(), json!(false));
+/// assert_eq!(ends_with!(json!(null)), json!(false));
+/// assert_eq!(ends_with!(json!({"a": 1})), json!(false));
+/// assert_eq!(ends_with!(json!(null), json!(null)), json!(true));
+/// assert_eq!(ends_with!(json!(1), json!(1)), json!(true));
+/// assert_eq!(ends_with!(json!(1), json!(2)), json!(false));
+/// assert_eq!(ends_with!(json!([1, 2, 3]), json!(2)), json!(false));
+/// assert_eq!(ends_with!(json!("abc"), json!("bc")), json!(true));
 /// assert_eq!(ends_with!(json!("abc")), json!(false));
 /// assert_eq!(ends_with!(json!("abc"), json!("")), json!(true));
 /// assert_eq!(ends_with!(json!(null), json!("")), json!(true));

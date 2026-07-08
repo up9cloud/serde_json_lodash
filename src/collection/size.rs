@@ -27,8 +27,20 @@ pub fn size(collection: Value) -> Value {
 /// assert_eq!(size!(json!([1, 2, 3])), json!(3));
 /// assert_eq!(size!(json!({ "a": 1, "b": 2 })), json!(2));
 /// assert_eq!(size!(json!("pebbles")), json!(7));
+/// ```
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
 /// assert_eq!(size!(), json!(0));
 /// assert_eq!(size!(json!(null)), json!(0));
+/// assert_eq!(size!(json!(true)), json!(0));
+/// assert_eq!(size!(json!(0)), json!(0));
+/// assert_eq!(size!(json!("ab")), json!(2));
+/// assert_eq!(size!(json!([1, 2])), json!(2));
+/// assert_eq!(size!(json!({"a": 1})), json!(1));
 /// assert_eq!(size!(json!(123)), json!(0));
 /// ```
 #[macro_export]

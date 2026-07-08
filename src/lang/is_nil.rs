@@ -27,6 +27,20 @@ pub fn is_nil(v: &Value) -> Value {
 /// assert_eq!(is_nil!(&json!(null)), json!(true));
 /// assert_eq!(is_nil!(), json!(true));
 /// assert_eq!(is_nil!(&json!(0)), json!(false));
+/// ```
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(is_nil!(), json!(true));
+/// assert_eq!(is_nil!(&json!(null)), json!(true));
+/// assert_eq!(is_nil!(&json!(true)), json!(false));
+/// assert_eq!(is_nil!(&json!(0)), json!(false));
+/// assert_eq!(is_nil!(&json!("ab")), json!(false));
+/// assert_eq!(is_nil!(&json!([1, 2])), json!(false));
+/// assert_eq!(is_nil!(&json!({"a": 1})), json!(false));
 /// assert_eq!(is_nil!(&json!("")), json!(false));
 /// ```
 #[macro_export]

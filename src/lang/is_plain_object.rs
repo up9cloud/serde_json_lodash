@@ -28,6 +28,20 @@ pub fn is_plain_object(v: &Value) -> Value {
 /// assert_eq!(is_plain_object!(&json!({ "x": 0, "y": 0 })), json!(true));
 /// assert_eq!(is_plain_object!(), json!(false));
 /// assert_eq!(is_plain_object!(&json!(null)), json!(false));
+/// ```
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(is_plain_object!(), json!(false));
+/// assert_eq!(is_plain_object!(&json!(null)), json!(false));
+/// assert_eq!(is_plain_object!(&json!(true)), json!(false));
+/// assert_eq!(is_plain_object!(&json!(0)), json!(false));
+/// assert_eq!(is_plain_object!(&json!("ab")), json!(false));
+/// assert_eq!(is_plain_object!(&json!([1, 2])), json!(false));
+/// assert_eq!(is_plain_object!(&json!({"a": 1})), json!(true));
 /// assert_eq!(is_plain_object!(&json!({})), json!(true));
 /// ```
 #[macro_export]

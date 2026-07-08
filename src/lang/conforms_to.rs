@@ -27,8 +27,21 @@ pub fn conforms_to(object: &Value, source: Vec<Conform>) -> Value {
 /// ```rust
 /// #[macro_use] extern crate serde_json_lodash;
 /// use serde_json::json;
+/// use serde_json::Value;
+/// let object = json!({ "a": 1, "b": 2 });
+/// assert_eq!(conforms_to!(&object, vec![("b", |n: &Value| n.as_i64().unwrap() > 1)]), json!(true));
+/// assert_eq!(conforms_to!(&object, vec![("b", |n: &Value| n.as_i64().unwrap() > 2)]), json!(false));
+/// ```
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
 /// assert_eq!(conforms_to!(), json!(true));
+/// assert_eq!(conforms_to!(&json!(null)), json!(true));
 /// assert_eq!(conforms_to!(&json!({})), json!(true));
+/// assert_eq!(conforms_to!(&json!({"a": 1})), json!(true));
 /// assert_eq!(conforms_to!(&json!({}), vec![("a", |_: &serde_json::Value| true)]), json!(false));
 /// ```
 #[macro_export]

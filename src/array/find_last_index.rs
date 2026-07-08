@@ -26,6 +26,16 @@ pub fn find_last_index(array: Value, predicate: fn(&Value) -> bool, from_index: 
 /// use serde_json::json;
 /// assert_eq!(find_last_index!(), json!(-1));
 /// ```
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(find_last_index!(), json!(-1));
+/// assert_eq!(find_last_index!(json!(null)), json!(-1));
+/// assert_eq!(find_last_index!(json!({"a": 1})), json!(-1));
+/// ```
 #[macro_export]
 macro_rules! find_last_index {
     () => {

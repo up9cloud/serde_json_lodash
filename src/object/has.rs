@@ -30,6 +30,16 @@ pub fn has(object: &Value, path: Value) -> Value {
 /// assert_eq!(has!(&json!({"a": 1})), json!(false));
 /// assert_eq!(has!(&json!({"a": [{"b": 3}]}), json!("a[0].b")), json!(true));
 /// ```
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(has!(), json!(false));
+/// assert_eq!(has!(json!(null)), json!(false));
+/// assert_eq!(has!(json!({"a": 1})), json!(false));
+/// ```
 #[macro_export]
 macro_rules! has {
     () => {

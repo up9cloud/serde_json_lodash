@@ -27,7 +27,21 @@ pub fn sorted_last_index(array: Value, value: Value) -> Value {
 /// #[macro_use] extern crate serde_json_lodash;
 /// use serde_json::json;
 /// assert_eq!(sorted_last_index!(json!([4, 5, 5, 5, 6]), json!(5)), json!(4));
+/// ```
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
 /// assert_eq!(sorted_last_index!(), json!(0));
+/// assert_eq!(sorted_last_index!(json!(null)), json!(0));
+/// assert_eq!(sorted_last_index!(json!({"a": 1})), json!(0));
+/// assert_eq!(sorted_last_index!(json!(null), json!(null)), json!(0));
+/// assert_eq!(sorted_last_index!(json!(1), json!(1)), json!(0));
+/// assert_eq!(sorted_last_index!(json!(1), json!(2)), json!(0));
+/// assert_eq!(sorted_last_index!(json!([1, 2, 3]), json!(2)), json!(2));
+/// assert_eq!(sorted_last_index!(json!("abc"), json!("bc")), json!(0));
 /// assert_eq!(sorted_last_index!(json!([20, 30, 30, 50]), json!(30)), json!(3));
 /// ```
 #[macro_export]

@@ -49,8 +49,6 @@ pub fn capitalize<A: Into<Value>>(v: A) -> Value {
 ///   capitalize!(json!("FRED")),
 ///   json!("Fred")
 /// );
-/// // a primitive `&str` argument is accepted too
-/// assert_eq!(capitalize!("FRED"), json!("Fred"));
 /// ```
 ///
 /// Additional cases:
@@ -58,6 +56,8 @@ pub fn capitalize<A: Into<Value>>(v: A) -> Value {
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
+/// // a primitive `&str` argument is accepted too
+/// assert_eq!(capitalize!("FRED"), json!("Fred"));
 /// assert_eq!(capitalize!(), json!(""));
 /// assert_eq!(capitalize!(json!(null)), json!(""));
 /// assert_eq!(capitalize!(json!(false)), json!("False"));

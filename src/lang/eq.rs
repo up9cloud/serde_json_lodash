@@ -29,6 +29,25 @@ pub fn eq(a: &Value, b: &Value) -> Value {
 /// assert_eq!(eq!(&json!(null)), json!(true));
 /// assert_eq!(eq!(&json!(1), &json!("1")), json!(false));
 /// ```
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(eq!(), json!(true));
+/// assert_eq!(eq!(&json!(null)), json!(true));
+/// assert_eq!(eq!(&json!(true)), json!(false));
+/// assert_eq!(eq!(&json!(0)), json!(false));
+/// assert_eq!(eq!(&json!("ab")), json!(false));
+/// assert_eq!(eq!(&json!([1, 2])), json!(false));
+/// assert_eq!(eq!(&json!({"a": 1})), json!(false));
+/// assert_eq!(eq!(&json!(null), &json!(null)), json!(true));
+/// assert_eq!(eq!(&json!(1), &json!(1)), json!(true));
+/// assert_eq!(eq!(&json!(1), &json!(2)), json!(false));
+/// assert_eq!(eq!(&json!([1, 2, 3]), &json!(2)), json!(false));
+/// assert_eq!(eq!(&json!("abc"), &json!("bc")), json!(false));
+/// ```
 #[macro_export]
 macro_rules! eq {
     () => {

@@ -28,7 +28,20 @@ pub fn is_finite(v: &Value) -> Value {
 /// assert_eq!(is_finite!(&json!(5e-324)), json!(true));
 /// assert_eq!(is_finite!(&json!("3")), json!(false));
 /// assert_eq!(is_finite!(), json!(false));
+/// ```
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(is_finite!(), json!(false));
 /// assert_eq!(is_finite!(&json!(null)), json!(false));
+/// assert_eq!(is_finite!(&json!(true)), json!(false));
+/// assert_eq!(is_finite!(&json!(0)), json!(true));
+/// assert_eq!(is_finite!(&json!("ab")), json!(false));
+/// assert_eq!(is_finite!(&json!([1, 2])), json!(false));
+/// assert_eq!(is_finite!(&json!({"a": 1})), json!(false));
 /// ```
 #[macro_export]
 macro_rules! is_finite {

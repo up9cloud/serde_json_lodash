@@ -26,8 +26,16 @@ pub fn is_element(_v: &Value) -> Value {
 /// use serde_json::json;
 /// assert_eq!(is_element!(&json!({})), json!(false));
 /// assert_eq!(is_element!(&json!("a")), json!(false));
+/// ```
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
 /// assert_eq!(is_element!(), json!(false));
 /// assert_eq!(is_element!(&json!(null)), json!(false));
+/// assert_eq!(is_element!(&json!({"a": 1})), json!(false));
 /// ```
 #[macro_export]
 macro_rules! is_element {

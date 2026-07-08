@@ -26,8 +26,16 @@ pub fn is_error(_v: &Value) -> Value {
 /// use serde_json::json;
 /// assert_eq!(is_error!(&json!({})), json!(false));
 /// assert_eq!(is_error!(&json!("a")), json!(false));
+/// ```
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
 /// assert_eq!(is_error!(), json!(false));
 /// assert_eq!(is_error!(&json!(null)), json!(false));
+/// assert_eq!(is_error!(&json!({"a": 1})), json!(false));
 /// ```
 #[macro_export]
 macro_rules! is_error {

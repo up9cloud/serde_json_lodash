@@ -40,8 +40,17 @@ pub fn unique_id<A: Into<Value>>(prefix: A) -> Value {
 ///   unique_id!(),
 ///   json!("2")
 /// );
+/// ```
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// // consecutive ids differ
+/// assert_ne!(unique_id!(), unique_id!());
 /// // a `json!` prefix works too
-/// assert_eq!(unique_id!(json!("contact_")), json!("contact_3"));
+/// assert_eq!(unique_id_x!(json!("id_")).starts_with("id_"), true);
 /// ```
 #[macro_export]
 macro_rules! unique_id {

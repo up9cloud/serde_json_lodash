@@ -29,6 +29,21 @@ pub fn sorted_last_index_by(array: Value, value: Value, iteratee: fn(&Value) -> 
 /// assert_eq!(sorted_last_index_by!(), json!(0));
 /// assert_eq!(sorted_last_index_by!(json!([4, 5, 5, 6]), json!(5)), json!(3));
 /// ```
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(sorted_last_index_by!(), json!(0));
+/// assert_eq!(sorted_last_index_by!(json!(null)), json!(0));
+/// assert_eq!(sorted_last_index_by!(json!({"a": 1})), json!(0));
+/// assert_eq!(sorted_last_index_by!(json!(null), json!(null)), json!(0));
+/// assert_eq!(sorted_last_index_by!(json!(1), json!(1)), json!(0));
+/// assert_eq!(sorted_last_index_by!(json!(1), json!(2)), json!(0));
+/// assert_eq!(sorted_last_index_by!(json!([1, 2, 3]), json!(2)), json!(2));
+/// assert_eq!(sorted_last_index_by!(json!("abc"), json!("bc")), json!(0));
+/// ```
 #[macro_export]
 macro_rules! sorted_last_index_by {
     () => {

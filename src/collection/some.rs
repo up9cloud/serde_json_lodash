@@ -31,6 +31,16 @@ pub fn some(collection: Value, predicate: fn(&Value) -> bool) -> Value {
 /// assert_eq!(some!(), json!(false));
 /// assert_eq!(some!(json!([])), json!(false));
 /// ```
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(some!(), json!(false));
+/// assert_eq!(some!(json!(null)), json!(false));
+/// assert_eq!(some!(json!({"a": 1})), json!(false));
+/// ```
 #[macro_export]
 macro_rules! some {
     () => {

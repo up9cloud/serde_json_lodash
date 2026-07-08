@@ -28,6 +28,20 @@ pub fn is_object_like(v: &Value) -> Value {
 /// assert_eq!(is_object_like!(&json!([1, 2, 3])), json!(true));
 /// assert_eq!(is_object_like!(&json!(null)), json!(false));
 /// assert_eq!(is_object_like!(), json!(false));
+/// ```
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(is_object_like!(), json!(false));
+/// assert_eq!(is_object_like!(&json!(null)), json!(false));
+/// assert_eq!(is_object_like!(&json!(true)), json!(false));
+/// assert_eq!(is_object_like!(&json!(0)), json!(false));
+/// assert_eq!(is_object_like!(&json!("ab")), json!(false));
+/// assert_eq!(is_object_like!(&json!([1, 2])), json!(true));
+/// assert_eq!(is_object_like!(&json!({"a": 1})), json!(true));
 /// assert_eq!(is_object_like!(&json!("abc")), json!(false));
 /// ```
 #[macro_export]

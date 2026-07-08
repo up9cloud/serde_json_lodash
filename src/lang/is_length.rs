@@ -28,6 +28,20 @@ pub fn is_length(v: &Value) -> Value {
 /// assert_eq!(is_length!(&json!(5e-324)), json!(false));
 /// assert_eq!(is_length!(&json!("3")), json!(false));
 /// assert_eq!(is_length!(), json!(false));
+/// ```
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(is_length!(), json!(false));
+/// assert_eq!(is_length!(&json!(null)), json!(false));
+/// assert_eq!(is_length!(&json!(true)), json!(false));
+/// assert_eq!(is_length!(&json!(0)), json!(true));
+/// assert_eq!(is_length!(&json!("ab")), json!(false));
+/// assert_eq!(is_length!(&json!([1, 2])), json!(false));
+/// assert_eq!(is_length!(&json!({"a": 1})), json!(false));
 /// assert_eq!(is_length!(&json!(-1)), json!(false));
 /// assert_eq!(is_length!(&json!(3.2)), json!(false));
 /// ```

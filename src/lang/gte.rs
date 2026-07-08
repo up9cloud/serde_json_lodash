@@ -33,6 +33,21 @@ pub fn gte(a: &Value, b: &Value) -> Value {
 /// assert_eq!(gte!(&json!(1)), json!(false));
 /// assert_eq!(gte!(&json!("a"), &json!("a")), json!(true));
 /// ```
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(gte!(), json!(false));
+/// assert_eq!(gte!(json!(null)), json!(false));
+/// assert_eq!(gte!(json!({"a": 1})), json!(false));
+/// assert_eq!(gte!(&json!(null), &json!(null)), json!(true));
+/// assert_eq!(gte!(&json!(1), &json!(1)), json!(true));
+/// assert_eq!(gte!(&json!(1), &json!(2)), json!(false));
+/// assert_eq!(gte!(&json!([1, 2, 3]), &json!(2)), json!(false));
+/// assert_eq!(gte!(&json!("abc"), &json!("bc")), json!(false));
+/// ```
 #[macro_export]
 macro_rules! gte {
     () => {

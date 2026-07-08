@@ -26,8 +26,21 @@ pub fn is_safe_integer(v: &Value) -> Value {
 /// use serde_json::json;
 /// assert_eq!(is_safe_integer!(&json!(3)), json!(true));
 /// assert_eq!(is_safe_integer!(&json!(5e-324)), json!(false));
-/// assert_eq!(is_safe_integer!(&json!("3")), json!(false));
 /// assert_eq!(is_safe_integer!(), json!(false));
+/// assert_eq!(is_safe_integer!(&json!("3")), json!(false));
+/// ```
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(is_safe_integer!(&json!(null)), json!(false));
+/// assert_eq!(is_safe_integer!(&json!(true)), json!(false));
+/// assert_eq!(is_safe_integer!(&json!(0)), json!(true));
+/// assert_eq!(is_safe_integer!(&json!("ab")), json!(false));
+/// assert_eq!(is_safe_integer!(&json!([1, 2])), json!(false));
+/// assert_eq!(is_safe_integer!(&json!({"a": 1})), json!(false));
 /// assert_eq!(is_safe_integer!(&json!(9007199254740991u64)), json!(true));
 /// assert_eq!(is_safe_integer!(&json!(9007199254740992u64)), json!(false));
 /// ```

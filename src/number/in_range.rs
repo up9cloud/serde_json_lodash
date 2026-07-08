@@ -30,10 +30,24 @@ pub fn in_range(number: Value, start: Value, end: Value) -> Value {
 /// assert_eq!(in_range!(json!(4), json!(8)), json!(true));
 /// assert_eq!(in_range!(json!(4), json!(2)), json!(false));
 /// assert_eq!(in_range!(json!(2), json!(2)), json!(false));
-/// assert_eq!(in_range!(json!(-3), json!(-2), json!(-6)), json!(true));
-/// assert_eq!(in_range!(), json!(false));
 /// assert_eq!(in_range!(json!(1.2), json!(2)), json!(true));
 /// assert_eq!(in_range!(json!(5.2), json!(4)), json!(false));
+/// assert_eq!(in_range!(json!(-3), json!(-2), json!(-6)), json!(true));
+/// ```
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(in_range!(), json!(false));
+/// assert_eq!(in_range!(json!(null)), json!(false));
+/// assert_eq!(in_range!(json!({"a": 1})), json!(false));
+/// assert_eq!(in_range!(json!(null), json!(null)), json!(false));
+/// assert_eq!(in_range!(json!(1), json!(1)), json!(false));
+/// assert_eq!(in_range!(json!(1), json!(2)), json!(true));
+/// assert_eq!(in_range!(json!([1, 2, 3]), json!(2)), json!(false));
+/// assert_eq!(in_range!(json!("abc"), json!("bc")), json!(false));
 /// ```
 #[macro_export]
 macro_rules! in_range {

@@ -29,7 +29,20 @@ pub fn is_empty(v: &Value) -> Value {
 /// assert_eq!(is_empty!(&json!(1)), json!(true));
 /// assert_eq!(is_empty!(&json!([1, 2, 3])), json!(false));
 /// assert_eq!(is_empty!(&json!({"a": 1})), json!(false));
+/// ```
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
 /// assert_eq!(is_empty!(), json!(true));
+/// assert_eq!(is_empty!(&json!(null)), json!(true));
+/// assert_eq!(is_empty!(&json!(true)), json!(true));
+/// assert_eq!(is_empty!(&json!(0)), json!(true));
+/// assert_eq!(is_empty!(&json!("ab")), json!(false));
+/// assert_eq!(is_empty!(&json!([1, 2])), json!(false));
+/// assert_eq!(is_empty!(&json!({"a": 1})), json!(false));
 /// assert_eq!(is_empty!(&json!("")), json!(true));
 /// assert_eq!(is_empty!(&json!("abc")), json!(false));
 /// assert_eq!(is_empty!(&json!([])), json!(true));

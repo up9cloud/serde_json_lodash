@@ -33,6 +33,21 @@ pub fn lt(a: &Value, b: &Value) -> Value {
 /// assert_eq!(lt!(&json!(1)), json!(false));
 /// assert_eq!(lt!(&json!("a"), &json!("b")), json!(true));
 /// ```
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(lt!(), json!(false));
+/// assert_eq!(lt!(json!(null)), json!(false));
+/// assert_eq!(lt!(json!({"a": 1})), json!(false));
+/// assert_eq!(lt!(&json!(null), &json!(null)), json!(false));
+/// assert_eq!(lt!(&json!(1), &json!(1)), json!(false));
+/// assert_eq!(lt!(&json!(1), &json!(2)), json!(true));
+/// assert_eq!(lt!(&json!([1, 2, 3]), &json!(2)), json!(false));
+/// assert_eq!(lt!(&json!("abc"), &json!("bc")), json!(true));
+/// ```
 #[macro_export]
 macro_rules! lt {
     () => {

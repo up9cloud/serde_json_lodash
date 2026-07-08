@@ -26,7 +26,20 @@ pub fn is_null(v: &Value) -> Value {
 /// use serde_json::json;
 /// assert_eq!(is_null!(&json!(null)), json!(true));
 /// assert_eq!(is_null!(&json!(1)), json!(false));
+/// ```
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
 /// assert_eq!(is_null!(), json!(false));
+/// assert_eq!(is_null!(&json!(null)), json!(true));
+/// assert_eq!(is_null!(&json!(true)), json!(false));
+/// assert_eq!(is_null!(&json!(0)), json!(false));
+/// assert_eq!(is_null!(&json!("ab")), json!(false));
+/// assert_eq!(is_null!(&json!([1, 2])), json!(false));
+/// assert_eq!(is_null!(&json!({"a": 1})), json!(false));
 /// assert_eq!(is_null!(&json!("")), json!(false));
 /// ```
 #[macro_export]

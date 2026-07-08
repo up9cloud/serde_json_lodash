@@ -26,9 +26,20 @@ pub fn is_boolean(v: &Value) -> Value {
 /// use serde_json::json;
 /// assert_eq!(is_boolean!(&json!(false)), json!(true));
 /// assert_eq!(is_boolean!(&json!(null)), json!(false));
+/// ```
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
 /// assert_eq!(is_boolean!(), json!(false));
+/// assert_eq!(is_boolean!(&json!(null)), json!(false));
 /// assert_eq!(is_boolean!(&json!(true)), json!(true));
 /// assert_eq!(is_boolean!(&json!(0)), json!(false));
+/// assert_eq!(is_boolean!(&json!("ab")), json!(false));
+/// assert_eq!(is_boolean!(&json!([1, 2])), json!(false));
+/// assert_eq!(is_boolean!(&json!({"a": 1})), json!(false));
 /// ```
 #[macro_export]
 macro_rules! is_boolean {

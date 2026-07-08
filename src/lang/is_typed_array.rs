@@ -29,6 +29,16 @@ pub fn is_typed_array(_v: &Value) -> Value {
 /// assert_eq!(is_typed_array!(), json!(false));
 /// assert_eq!(is_typed_array!(&json!(null)), json!(false));
 /// ```
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(is_typed_array!(), json!(false));
+/// assert_eq!(is_typed_array!(&json!(null)), json!(false));
+/// assert_eq!(is_typed_array!(&json!({"a": 1})), json!(false));
+/// ```
 #[macro_export]
 macro_rules! is_typed_array {
     () => {

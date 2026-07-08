@@ -58,7 +58,21 @@ pub fn sorted_index(array: Value, value: Value) -> Value {
 /// #[macro_use] extern crate serde_json_lodash;
 /// use serde_json::json;
 /// assert_eq!(sorted_index!(json!([30, 50]), json!(40)), json!(1));
+/// ```
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
 /// assert_eq!(sorted_index!(), json!(0));
+/// assert_eq!(sorted_index!(json!(null)), json!(0));
+/// assert_eq!(sorted_index!(json!({"a": 1})), json!(0));
+/// assert_eq!(sorted_index!(json!(null), json!(null)), json!(0));
+/// assert_eq!(sorted_index!(json!(1), json!(1)), json!(0));
+/// assert_eq!(sorted_index!(json!(1), json!(2)), json!(0));
+/// assert_eq!(sorted_index!(json!([1, 2, 3]), json!(2)), json!(1));
+/// assert_eq!(sorted_index!(json!("abc"), json!("bc")), json!(0));
 /// assert_eq!(sorted_index!(json!([20, 30, 50]), json!(10)), json!(0));
 /// assert_eq!(sorted_index!(json!([20, 30, 30, 50]), json!(30)), json!(1));
 /// ```
