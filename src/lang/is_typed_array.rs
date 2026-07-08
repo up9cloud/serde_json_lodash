@@ -24,10 +24,10 @@ pub fn is_typed_array(_v: &Value) -> Value {
 /// ```rust
 /// #[macro_use] extern crate serde_json_lodash;
 /// use serde_json::json;
-/// assert_eq!(is_typed_array!(&json!({})), json!(false));
-/// assert_eq!(is_typed_array!(&json!("a")), json!(false));
+/// assert_eq!(is_typed_array!(json!({})), json!(false));
+/// assert_eq!(is_typed_array!(json!("a")), json!(false));
 /// assert_eq!(is_typed_array!(), json!(false));
-/// assert_eq!(is_typed_array!(&json!(null)), json!(false));
+/// assert_eq!(is_typed_array!(json!(null)), json!(false));
 /// ```
 ///
 /// Additional cases:
@@ -36,8 +36,8 @@ pub fn is_typed_array(_v: &Value) -> Value {
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
 /// assert_eq!(is_typed_array!(), json!(false));
-/// assert_eq!(is_typed_array!(&json!(null)), json!(false));
-/// assert_eq!(is_typed_array!(&json!({"a": 1})), json!(false));
+/// assert_eq!(is_typed_array!(json!(null)), json!(false));
+/// assert_eq!(is_typed_array!(json!({"a": 1})), json!(false));
 /// ```
 #[macro_export]
 macro_rules! is_typed_array {
@@ -45,10 +45,10 @@ macro_rules! is_typed_array {
         $crate::lib::json!(false)
     };
     ($a:expr $(,)*) => {
-        $crate::is_typed_array($a)
+        $crate::is_typed_array(&$a)
     };
     ($a:expr, $($rest:tt)*) => {
-        $crate::is_typed_array($a)
+        $crate::is_typed_array(&$a)
     };
 }
 
@@ -76,7 +76,7 @@ pub fn is_typed_array_x(_v: &Value) -> bool {
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
-/// assert_eq!(is_typed_array_x!(&json!({})), false);
+/// assert_eq!(is_typed_array_x!(json!({})), false);
 /// ```
 #[macro_export]
 macro_rules! is_typed_array_x {
@@ -84,9 +84,9 @@ macro_rules! is_typed_array_x {
         false
     };
     ($a:expr $(,)*) => {
-        $crate::is_typed_array_x($a)
+        $crate::is_typed_array_x(&$a)
     };
     ($a:expr, $($rest:tt)*) => {
-        $crate::is_typed_array_x($a)
+        $crate::is_typed_array_x(&$a)
     };
 }

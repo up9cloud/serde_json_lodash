@@ -24,9 +24,9 @@ pub fn is_integer(v: &Value) -> Value {
 /// ```rust
 /// #[macro_use] extern crate serde_json_lodash;
 /// use serde_json::json;
-/// assert_eq!(is_integer!(&json!(3)), json!(true));
-/// assert_eq!(is_integer!(&json!(5e-324)), json!(false));
-/// assert_eq!(is_integer!(&json!("3")), json!(false));
+/// assert_eq!(is_integer!(json!(3)), json!(true));
+/// assert_eq!(is_integer!(json!(5e-324)), json!(false));
+/// assert_eq!(is_integer!(json!("3")), json!(false));
 /// assert_eq!(is_integer!(), json!(false));
 /// ```
 ///
@@ -36,15 +36,15 @@ pub fn is_integer(v: &Value) -> Value {
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
 /// assert_eq!(is_integer!(), json!(false));
-/// assert_eq!(is_integer!(&json!(null)), json!(false));
-/// assert_eq!(is_integer!(&json!(true)), json!(false));
-/// assert_eq!(is_integer!(&json!(0)), json!(true));
-/// assert_eq!(is_integer!(&json!("ab")), json!(false));
-/// assert_eq!(is_integer!(&json!([1, 2])), json!(false));
-/// assert_eq!(is_integer!(&json!({"a": 1})), json!(false));
-/// assert_eq!(is_integer!(&json!(3.0)), json!(true));
-/// assert_eq!(is_integer!(&json!(3.2)), json!(false));
-/// assert_eq!(is_integer!(&json!(-3)), json!(true));
+/// assert_eq!(is_integer!(json!(null)), json!(false));
+/// assert_eq!(is_integer!(json!(true)), json!(false));
+/// assert_eq!(is_integer!(json!(0)), json!(true));
+/// assert_eq!(is_integer!(json!("ab")), json!(false));
+/// assert_eq!(is_integer!(json!([1, 2])), json!(false));
+/// assert_eq!(is_integer!(json!({"a": 1})), json!(false));
+/// assert_eq!(is_integer!(json!(3.0)), json!(true));
+/// assert_eq!(is_integer!(json!(3.2)), json!(false));
+/// assert_eq!(is_integer!(json!(-3)), json!(true));
 /// ```
 #[macro_export]
 macro_rules! is_integer {
@@ -52,10 +52,10 @@ macro_rules! is_integer {
         $crate::lib::json!(false)
     };
     ($a:expr $(,)*) => {
-        $crate::is_integer($a)
+        $crate::is_integer(&$a)
     };
     ($a:expr, $($rest:tt)*) => {
-        $crate::is_integer($a)
+        $crate::is_integer(&$a)
     };
 }
 
@@ -88,7 +88,7 @@ pub fn is_integer_x(v: &Value) -> bool {
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
-/// assert_eq!(is_integer_x!(&json!(3)), true);
+/// assert_eq!(is_integer_x!(json!(3)), true);
 /// ```
 #[macro_export]
 macro_rules! is_integer_x {
@@ -96,9 +96,9 @@ macro_rules! is_integer_x {
         false
     };
     ($a:expr $(,)*) => {
-        $crate::is_integer_x($a)
+        $crate::is_integer_x(&$a)
     };
     ($a:expr, $($rest:tt)*) => {
-        $crate::is_integer_x($a)
+        $crate::is_integer_x(&$a)
     };
 }

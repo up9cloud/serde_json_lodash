@@ -37,7 +37,7 @@ pub fn is_equal_with(
 /// }
 /// // unlike lodash the customizer sees only the two top-level values,
 /// // so the official array example is compared as plain strings here
-/// assert_eq!(is_equal_with!(&json!("hello"), &json!("hi"), customizer), json!(true));
+/// assert_eq!(is_equal_with!(json!("hello"), json!("hi"), customizer), json!(true));
 /// ```
 ///
 /// Additional cases:
@@ -46,18 +46,18 @@ pub fn is_equal_with(
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
 /// assert_eq!(is_equal_with!(), json!(true));
-/// assert_eq!(is_equal_with!(&json!(null)), json!(true));
-/// assert_eq!(is_equal_with!(&json!(true)), json!(false));
-/// assert_eq!(is_equal_with!(&json!(0)), json!(false));
-/// assert_eq!(is_equal_with!(&json!("ab")), json!(false));
-/// assert_eq!(is_equal_with!(&json!([1, 2])), json!(false));
-/// assert_eq!(is_equal_with!(&json!({"a": 1})), json!(false));
-/// assert_eq!(is_equal_with!(&json!(null), &json!(null)), json!(true));
-/// assert_eq!(is_equal_with!(&json!(1), &json!(1)), json!(true));
-/// assert_eq!(is_equal_with!(&json!(1), &json!(2)), json!(false));
-/// assert_eq!(is_equal_with!(&json!([1, 2, 3]), &json!(2)), json!(false));
-/// assert_eq!(is_equal_with!(&json!("abc"), &json!("bc")), json!(false));
-/// assert_eq!(is_equal_with!(&json!(1)), json!(false));
+/// assert_eq!(is_equal_with!(json!(null)), json!(true));
+/// assert_eq!(is_equal_with!(json!(true)), json!(false));
+/// assert_eq!(is_equal_with!(json!(0)), json!(false));
+/// assert_eq!(is_equal_with!(json!("ab")), json!(false));
+/// assert_eq!(is_equal_with!(json!([1, 2])), json!(false));
+/// assert_eq!(is_equal_with!(json!({"a": 1})), json!(false));
+/// assert_eq!(is_equal_with!(json!(null), json!(null)), json!(true));
+/// assert_eq!(is_equal_with!(json!(1), json!(1)), json!(true));
+/// assert_eq!(is_equal_with!(json!(1), json!(2)), json!(false));
+/// assert_eq!(is_equal_with!(json!([1, 2, 3]), json!(2)), json!(false));
+/// assert_eq!(is_equal_with!(json!("abc"), json!("bc")), json!(false));
+/// assert_eq!(is_equal_with!(json!(1)), json!(false));
 /// ```
 #[macro_export]
 macro_rules! is_equal_with {
@@ -65,16 +65,16 @@ macro_rules! is_equal_with {
         $crate::lib::json!(true)
     };
     ($a:expr $(,)*) => {
-        $crate::is_equal($a, &$crate::lib::json!(null))
+        $crate::is_equal(&$a, &$crate::lib::json!(null))
     };
     ($a:expr, $b:expr $(,)*) => {
-        $crate::is_equal($a, $b)
+        $crate::is_equal(&$a, &$b)
     };
     ($a:expr, $b:expr, $c:expr $(,)*) => {
-        $crate::is_equal_with($a, $b, $c)
+        $crate::is_equal_with(&$a, &$b, $c)
     };
     ($a:expr, $b:expr, $c:expr, $($rest:tt)*) => {
-        $crate::is_equal_with($a, $b, $c)
+        $crate::is_equal_with(&$a, &$b, $c)
     };
 }
 
@@ -109,7 +109,7 @@ pub fn is_equal_with_x(
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
-/// assert_eq!(is_equal_with_x!(&json!(1), &json!(1), |_, _| None), true);
+/// assert_eq!(is_equal_with_x!(json!(1), json!(1), |_, _| None), true);
 /// ```
 #[macro_export]
 macro_rules! is_equal_with_x {
@@ -117,15 +117,15 @@ macro_rules! is_equal_with_x {
         true
     };
     ($a:expr $(,)*) => {
-        $crate::is_equal($a, &$crate::lib::json!(null))
+        $crate::is_equal(&$a, &$crate::lib::json!(null))
     };
     ($a:expr, $b:expr $(,)*) => {
-        $crate::is_equal($a, $b)
+        $crate::is_equal(&$a, &$b)
     };
     ($a:expr, $b:expr, $c:expr $(,)*) => {
-        $crate::is_equal_with_x($a, $b, $c)
+        $crate::is_equal_with_x(&$a, &$b, $c)
     };
     ($a:expr, $b:expr, $c:expr, $($rest:tt)*) => {
-        $crate::is_equal_with_x($a, $b, $c)
+        $crate::is_equal_with_x(&$a, &$b, $c)
     };
 }

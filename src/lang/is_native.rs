@@ -24,8 +24,8 @@ pub fn is_native(_v: &Value) -> Value {
 /// ```rust
 /// #[macro_use] extern crate serde_json_lodash;
 /// use serde_json::json;
-/// assert_eq!(is_native!(&json!({})), json!(false));
-/// assert_eq!(is_native!(&json!("a")), json!(false));
+/// assert_eq!(is_native!(json!({})), json!(false));
+/// assert_eq!(is_native!(json!("a")), json!(false));
 /// ```
 ///
 /// Additional cases:
@@ -34,8 +34,8 @@ pub fn is_native(_v: &Value) -> Value {
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
 /// assert_eq!(is_native!(), json!(false));
-/// assert_eq!(is_native!(&json!(null)), json!(false));
-/// assert_eq!(is_native!(&json!({"a": 1})), json!(false));
+/// assert_eq!(is_native!(json!(null)), json!(false));
+/// assert_eq!(is_native!(json!({"a": 1})), json!(false));
 /// ```
 #[macro_export]
 macro_rules! is_native {
@@ -43,10 +43,10 @@ macro_rules! is_native {
         $crate::lib::json!(false)
     };
     ($a:expr $(,)*) => {
-        $crate::is_native($a)
+        $crate::is_native(&$a)
     };
     ($a:expr, $($rest:tt)*) => {
-        $crate::is_native($a)
+        $crate::is_native(&$a)
     };
 }
 
@@ -74,7 +74,7 @@ pub fn is_native_x(_v: &Value) -> bool {
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
-/// assert_eq!(is_native_x!(&json!({})), false);
+/// assert_eq!(is_native_x!(json!({})), false);
 /// ```
 #[macro_export]
 macro_rules! is_native_x {
@@ -82,9 +82,9 @@ macro_rules! is_native_x {
         false
     };
     ($a:expr $(,)*) => {
-        $crate::is_native_x($a)
+        $crate::is_native_x(&$a)
     };
     ($a:expr, $($rest:tt)*) => {
-        $crate::is_native_x($a)
+        $crate::is_native_x(&$a)
     };
 }

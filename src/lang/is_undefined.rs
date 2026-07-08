@@ -25,7 +25,7 @@ pub fn is_undefined(v: &Value) -> Value {
 /// #[macro_use] extern crate serde_json_lodash;
 /// use serde_json::json;
 /// assert_eq!(is_undefined!(), json!(true));
-/// assert_eq!(is_undefined!(&json!(null)), json!(true));
+/// assert_eq!(is_undefined!(json!(null)), json!(true));
 /// ```
 ///
 /// Additional cases:
@@ -34,12 +34,12 @@ pub fn is_undefined(v: &Value) -> Value {
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
 /// assert_eq!(is_undefined!(), json!(true));
-/// assert_eq!(is_undefined!(&json!(null)), json!(true));
-/// assert_eq!(is_undefined!(&json!(true)), json!(false));
-/// assert_eq!(is_undefined!(&json!(0)), json!(false));
-/// assert_eq!(is_undefined!(&json!("ab")), json!(false));
-/// assert_eq!(is_undefined!(&json!([1, 2])), json!(false));
-/// assert_eq!(is_undefined!(&json!({"a": 1})), json!(false));
+/// assert_eq!(is_undefined!(json!(null)), json!(true));
+/// assert_eq!(is_undefined!(json!(true)), json!(false));
+/// assert_eq!(is_undefined!(json!(0)), json!(false));
+/// assert_eq!(is_undefined!(json!("ab")), json!(false));
+/// assert_eq!(is_undefined!(json!([1, 2])), json!(false));
+/// assert_eq!(is_undefined!(json!({"a": 1})), json!(false));
 /// ```
 #[macro_export]
 macro_rules! is_undefined {
@@ -47,10 +47,10 @@ macro_rules! is_undefined {
         $crate::lib::json!(true)
     };
     ($a:expr $(,)*) => {
-        $crate::is_undefined($a)
+        $crate::is_undefined(&$a)
     };
     ($a:expr, $($rest:tt)*) => {
-        $crate::is_undefined($a)
+        $crate::is_undefined(&$a)
     };
 }
 
@@ -78,7 +78,7 @@ pub fn is_undefined_x(v: &Value) -> bool {
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
-/// assert_eq!(is_undefined_x!(&json!(null)), true);
+/// assert_eq!(is_undefined_x!(json!(null)), true);
 /// ```
 #[macro_export]
 macro_rules! is_undefined_x {
@@ -86,9 +86,9 @@ macro_rules! is_undefined_x {
         true
     };
     ($a:expr $(,)*) => {
-        $crate::is_undefined_x($a)
+        $crate::is_undefined_x(&$a)
     };
     ($a:expr, $($rest:tt)*) => {
-        $crate::is_undefined_x($a)
+        $crate::is_undefined_x(&$a)
     };
 }

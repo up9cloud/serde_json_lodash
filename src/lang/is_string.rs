@@ -24,8 +24,8 @@ pub fn is_string(v: &Value) -> Value {
 /// ```rust
 /// #[macro_use] extern crate serde_json_lodash;
 /// use serde_json::json;
-/// assert_eq!(is_string!(&json!("abc")), json!(true));
-/// assert_eq!(is_string!(&json!(1)), json!(false));
+/// assert_eq!(is_string!(json!("abc")), json!(true));
+/// assert_eq!(is_string!(json!(1)), json!(false));
 /// ```
 ///
 /// Additional cases:
@@ -34,13 +34,13 @@ pub fn is_string(v: &Value) -> Value {
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
 /// assert_eq!(is_string!(), json!(false));
-/// assert_eq!(is_string!(&json!(null)), json!(false));
-/// assert_eq!(is_string!(&json!(true)), json!(false));
-/// assert_eq!(is_string!(&json!(0)), json!(false));
-/// assert_eq!(is_string!(&json!("ab")), json!(true));
-/// assert_eq!(is_string!(&json!([1, 2])), json!(false));
-/// assert_eq!(is_string!(&json!({"a": 1})), json!(false));
-/// assert_eq!(is_string!(&json!("")), json!(true));
+/// assert_eq!(is_string!(json!(null)), json!(false));
+/// assert_eq!(is_string!(json!(true)), json!(false));
+/// assert_eq!(is_string!(json!(0)), json!(false));
+/// assert_eq!(is_string!(json!("ab")), json!(true));
+/// assert_eq!(is_string!(json!([1, 2])), json!(false));
+/// assert_eq!(is_string!(json!({"a": 1})), json!(false));
+/// assert_eq!(is_string!(json!("")), json!(true));
 /// ```
 #[macro_export]
 macro_rules! is_string {
@@ -48,10 +48,10 @@ macro_rules! is_string {
         $crate::lib::json!(false)
     };
     ($a:expr $(,)*) => {
-        $crate::is_string($a)
+        $crate::is_string(&$a)
     };
     ($a:expr, $($rest:tt)*) => {
-        $crate::is_string($a)
+        $crate::is_string(&$a)
     };
 }
 
@@ -79,7 +79,7 @@ pub fn is_string_x(v: &Value) -> bool {
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
-/// assert_eq!(is_string_x!(&json!("abc")), true);
+/// assert_eq!(is_string_x!(json!("abc")), true);
 /// ```
 #[macro_export]
 macro_rules! is_string_x {
@@ -87,9 +87,9 @@ macro_rules! is_string_x {
         false
     };
     ($a:expr $(,)*) => {
-        $crate::is_string_x($a)
+        $crate::is_string_x(&$a)
     };
     ($a:expr, $($rest:tt)*) => {
-        $crate::is_string_x($a)
+        $crate::is_string_x(&$a)
     };
 }

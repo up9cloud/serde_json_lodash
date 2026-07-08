@@ -24,8 +24,8 @@ pub fn is_error(_v: &Value) -> Value {
 /// ```rust
 /// #[macro_use] extern crate serde_json_lodash;
 /// use serde_json::json;
-/// assert_eq!(is_error!(&json!({})), json!(false));
-/// assert_eq!(is_error!(&json!("a")), json!(false));
+/// assert_eq!(is_error!(json!({})), json!(false));
+/// assert_eq!(is_error!(json!("a")), json!(false));
 /// ```
 ///
 /// Additional cases:
@@ -34,8 +34,8 @@ pub fn is_error(_v: &Value) -> Value {
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
 /// assert_eq!(is_error!(), json!(false));
-/// assert_eq!(is_error!(&json!(null)), json!(false));
-/// assert_eq!(is_error!(&json!({"a": 1})), json!(false));
+/// assert_eq!(is_error!(json!(null)), json!(false));
+/// assert_eq!(is_error!(json!({"a": 1})), json!(false));
 /// ```
 #[macro_export]
 macro_rules! is_error {
@@ -43,10 +43,10 @@ macro_rules! is_error {
         $crate::lib::json!(false)
     };
     ($a:expr $(,)*) => {
-        $crate::is_error($a)
+        $crate::is_error(&$a)
     };
     ($a:expr, $($rest:tt)*) => {
-        $crate::is_error($a)
+        $crate::is_error(&$a)
     };
 }
 
@@ -74,7 +74,7 @@ pub fn is_error_x(_v: &Value) -> bool {
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
-/// assert_eq!(is_error_x!(&json!({})), false);
+/// assert_eq!(is_error_x!(json!({})), false);
 /// ```
 #[macro_export]
 macro_rules! is_error_x {
@@ -82,9 +82,9 @@ macro_rules! is_error_x {
         false
     };
     ($a:expr $(,)*) => {
-        $crate::is_error_x($a)
+        $crate::is_error_x(&$a)
     };
     ($a:expr, $($rest:tt)*) => {
-        $crate::is_error_x($a)
+        $crate::is_error_x(&$a)
     };
 }

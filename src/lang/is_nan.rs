@@ -24,10 +24,10 @@ pub fn is_nan(_v: &Value) -> Value {
 /// ```rust
 /// #[macro_use] extern crate serde_json_lodash;
 /// use serde_json::json;
-/// assert_eq!(is_nan!(&json!(f64::NAN)), json!(false));
-/// assert_eq!(is_nan!(&json!(null)), json!(false));
+/// assert_eq!(is_nan!(json!(f64::NAN)), json!(false));
+/// assert_eq!(is_nan!(json!(null)), json!(false));
 /// assert_eq!(is_nan!(), json!(false));
-/// assert_eq!(is_nan!(&json!(1)), json!(false));
+/// assert_eq!(is_nan!(json!(1)), json!(false));
 /// ```
 ///
 /// Additional cases:
@@ -36,8 +36,8 @@ pub fn is_nan(_v: &Value) -> Value {
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
 /// assert_eq!(is_nan!(), json!(false));
-/// assert_eq!(is_nan!(&json!(null)), json!(false));
-/// assert_eq!(is_nan!(&json!({"a": 1})), json!(false));
+/// assert_eq!(is_nan!(json!(null)), json!(false));
+/// assert_eq!(is_nan!(json!({"a": 1})), json!(false));
 /// ```
 #[macro_export]
 macro_rules! is_nan {
@@ -45,10 +45,10 @@ macro_rules! is_nan {
         $crate::lib::json!(false)
     };
     ($a:expr $(,)*) => {
-        $crate::is_nan($a)
+        $crate::is_nan(&$a)
     };
     ($a:expr, $($rest:tt)*) => {
-        $crate::is_nan($a)
+        $crate::is_nan(&$a)
     };
 }
 
@@ -76,7 +76,7 @@ pub fn is_nan_x(_v: &Value) -> bool {
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
-/// assert_eq!(is_nan_x!(&json!(f64::NAN)), false);
+/// assert_eq!(is_nan_x!(json!(f64::NAN)), false);
 /// ```
 #[macro_export]
 macro_rules! is_nan_x {
@@ -84,9 +84,9 @@ macro_rules! is_nan_x {
         false
     };
     ($a:expr $(,)*) => {
-        $crate::is_nan_x($a)
+        $crate::is_nan_x(&$a)
     };
     ($a:expr, $($rest:tt)*) => {
-        $crate::is_nan_x($a)
+        $crate::is_nan_x(&$a)
     };
 }

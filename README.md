@@ -45,6 +45,26 @@ optional/variadic arguments; use the function for a fixed signature.
 inputs), the Cargo features, what isn't ported, and every function with its
 examples — is on **[docs.rs](https://docs.rs/serde_json_lodash)**.
 
+## TODO
+
+Known gaps against lodash, in priority order:
+
+- **Number unification (SameValueZero)** — JS has a single number type, so
+  lodash treats `1` and `1.0` as the same value; `serde_json::Number` keeps
+  them distinct, so every equality/hash-based function deviates today
+  (`uniq!(json!([1, 1.0]))` → `[1, 1.0]` instead of `[1]`, `eq!(json!(1),
+  json!(1.0))` → `false` instead of `true`, same for
+  `intersection`/`difference`/`xor`/`includes`/`index_of`/`is_equal`/…).
+  Fix: canonicalize integral floats to integer `Number`s in a shared
+  SameValueZero helper and use it everywhere values are compared or hashed.
+- **Iteratee shorthands (`_.matches` / `_.property`)** — lodash collection
+  functions accept `{ 'active': true }` or `'active'` in place of a callback;
+  this port only takes closures, which is also why some official doc examples
+  can't be mirrored yet. Sketch: a `Predicate` trait with impls for
+  `Fn(&Value) -> bool` closures, `Value` (partial deep match via the existing
+  `base_is_match`) and `&str` (property access), accepted by
+  `filter`/`find`/`every`/`some`/`reject`/`partition`/….
+
 ## Contributing
 
 Dev commands, the release flow, and how to check lodash's real behavior are in

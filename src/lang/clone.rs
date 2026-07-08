@@ -38,8 +38,8 @@ pub fn clone(v: &Value) -> Value {
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
 /// assert_eq!(clone!(), json!(null));
-/// assert_eq!(clone!(&json!(null)), json!(null));
-/// assert_eq!(clone!(&json!([1, 2])), json!([1, 2]));
+/// assert_eq!(clone!(json!(null)), json!(null));
+/// assert_eq!(clone!(json!([1, 2])), json!([1, 2]));
 /// ```
 #[macro_export]
 macro_rules! clone {
@@ -47,10 +47,10 @@ macro_rules! clone {
         $crate::lib::json!(null)
     };
     ($a:expr $(,)*) => {
-        $crate::clone($a)
+        $crate::clone(&$a)
     };
     ($a:expr, $($rest:tt)*) => {
-        $crate::clone($a)
+        $crate::clone(&$a)
     };
 }
 

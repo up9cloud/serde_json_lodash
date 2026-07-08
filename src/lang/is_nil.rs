@@ -24,9 +24,9 @@ pub fn is_nil(v: &Value) -> Value {
 /// ```rust
 /// #[macro_use] extern crate serde_json_lodash;
 /// use serde_json::json;
-/// assert_eq!(is_nil!(&json!(null)), json!(true));
+/// assert_eq!(is_nil!(json!(null)), json!(true));
 /// assert_eq!(is_nil!(), json!(true));
-/// assert_eq!(is_nil!(&json!(0)), json!(false));
+/// assert_eq!(is_nil!(json!(0)), json!(false));
 /// ```
 ///
 /// Additional cases:
@@ -35,13 +35,13 @@ pub fn is_nil(v: &Value) -> Value {
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
 /// assert_eq!(is_nil!(), json!(true));
-/// assert_eq!(is_nil!(&json!(null)), json!(true));
-/// assert_eq!(is_nil!(&json!(true)), json!(false));
-/// assert_eq!(is_nil!(&json!(0)), json!(false));
-/// assert_eq!(is_nil!(&json!("ab")), json!(false));
-/// assert_eq!(is_nil!(&json!([1, 2])), json!(false));
-/// assert_eq!(is_nil!(&json!({"a": 1})), json!(false));
-/// assert_eq!(is_nil!(&json!("")), json!(false));
+/// assert_eq!(is_nil!(json!(null)), json!(true));
+/// assert_eq!(is_nil!(json!(true)), json!(false));
+/// assert_eq!(is_nil!(json!(0)), json!(false));
+/// assert_eq!(is_nil!(json!("ab")), json!(false));
+/// assert_eq!(is_nil!(json!([1, 2])), json!(false));
+/// assert_eq!(is_nil!(json!({"a": 1})), json!(false));
+/// assert_eq!(is_nil!(json!("")), json!(false));
 /// ```
 #[macro_export]
 macro_rules! is_nil {
@@ -49,10 +49,10 @@ macro_rules! is_nil {
         $crate::lib::json!(true)
     };
     ($a:expr $(,)*) => {
-        $crate::is_nil($a)
+        $crate::is_nil(&$a)
     };
     ($a:expr, $($rest:tt)*) => {
-        $crate::is_nil($a)
+        $crate::is_nil(&$a)
     };
 }
 
@@ -80,7 +80,7 @@ pub fn is_nil_x(v: &Value) -> bool {
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
-/// assert_eq!(is_nil_x!(&json!(null)), true);
+/// assert_eq!(is_nil_x!(json!(null)), true);
 /// ```
 #[macro_export]
 macro_rules! is_nil_x {
@@ -88,9 +88,9 @@ macro_rules! is_nil_x {
         true
     };
     ($a:expr $(,)*) => {
-        $crate::is_nil_x($a)
+        $crate::is_nil_x(&$a)
     };
     ($a:expr, $($rest:tt)*) => {
-        $crate::is_nil_x($a)
+        $crate::is_nil_x(&$a)
     };
 }

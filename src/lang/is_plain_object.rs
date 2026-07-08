@@ -24,10 +24,10 @@ pub fn is_plain_object(v: &Value) -> Value {
 /// ```rust
 /// #[macro_use] extern crate serde_json_lodash;
 /// use serde_json::json;
-/// assert_eq!(is_plain_object!(&json!([1, 2, 3])), json!(false));
-/// assert_eq!(is_plain_object!(&json!({ "x": 0, "y": 0 })), json!(true));
+/// assert_eq!(is_plain_object!(json!([1, 2, 3])), json!(false));
+/// assert_eq!(is_plain_object!(json!({ "x": 0, "y": 0 })), json!(true));
 /// assert_eq!(is_plain_object!(), json!(false));
-/// assert_eq!(is_plain_object!(&json!(null)), json!(false));
+/// assert_eq!(is_plain_object!(json!(null)), json!(false));
 /// ```
 ///
 /// Additional cases:
@@ -36,13 +36,13 @@ pub fn is_plain_object(v: &Value) -> Value {
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
 /// assert_eq!(is_plain_object!(), json!(false));
-/// assert_eq!(is_plain_object!(&json!(null)), json!(false));
-/// assert_eq!(is_plain_object!(&json!(true)), json!(false));
-/// assert_eq!(is_plain_object!(&json!(0)), json!(false));
-/// assert_eq!(is_plain_object!(&json!("ab")), json!(false));
-/// assert_eq!(is_plain_object!(&json!([1, 2])), json!(false));
-/// assert_eq!(is_plain_object!(&json!({"a": 1})), json!(true));
-/// assert_eq!(is_plain_object!(&json!({})), json!(true));
+/// assert_eq!(is_plain_object!(json!(null)), json!(false));
+/// assert_eq!(is_plain_object!(json!(true)), json!(false));
+/// assert_eq!(is_plain_object!(json!(0)), json!(false));
+/// assert_eq!(is_plain_object!(json!("ab")), json!(false));
+/// assert_eq!(is_plain_object!(json!([1, 2])), json!(false));
+/// assert_eq!(is_plain_object!(json!({"a": 1})), json!(true));
+/// assert_eq!(is_plain_object!(json!({})), json!(true));
 /// ```
 #[macro_export]
 macro_rules! is_plain_object {
@@ -50,10 +50,10 @@ macro_rules! is_plain_object {
         $crate::lib::json!(false)
     };
     ($a:expr $(,)*) => {
-        $crate::is_plain_object($a)
+        $crate::is_plain_object(&$a)
     };
     ($a:expr, $($rest:tt)*) => {
-        $crate::is_plain_object($a)
+        $crate::is_plain_object(&$a)
     };
 }
 
@@ -81,7 +81,7 @@ pub fn is_plain_object_x(v: &Value) -> bool {
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
-/// assert_eq!(is_plain_object_x!(&json!([1, 2, 3])), false);
+/// assert_eq!(is_plain_object_x!(json!([1, 2, 3])), false);
 /// ```
 #[macro_export]
 macro_rules! is_plain_object_x {
@@ -89,9 +89,9 @@ macro_rules! is_plain_object_x {
         false
     };
     ($a:expr $(,)*) => {
-        $crate::is_plain_object_x($a)
+        $crate::is_plain_object_x(&$a)
     };
     ($a:expr, $($rest:tt)*) => {
-        $crate::is_plain_object_x($a)
+        $crate::is_plain_object_x(&$a)
     };
 }

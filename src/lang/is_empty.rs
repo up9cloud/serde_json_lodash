@@ -24,11 +24,11 @@ pub fn is_empty(v: &Value) -> Value {
 /// ```rust
 /// #[macro_use] extern crate serde_json_lodash;
 /// use serde_json::json;
-/// assert_eq!(is_empty!(&json!(null)), json!(true));
-/// assert_eq!(is_empty!(&json!(true)), json!(true));
-/// assert_eq!(is_empty!(&json!(1)), json!(true));
-/// assert_eq!(is_empty!(&json!([1, 2, 3])), json!(false));
-/// assert_eq!(is_empty!(&json!({"a": 1})), json!(false));
+/// assert_eq!(is_empty!(json!(null)), json!(true));
+/// assert_eq!(is_empty!(json!(true)), json!(true));
+/// assert_eq!(is_empty!(json!(1)), json!(true));
+/// assert_eq!(is_empty!(json!([1, 2, 3])), json!(false));
+/// assert_eq!(is_empty!(json!({"a": 1})), json!(false));
 /// ```
 ///
 /// Additional cases:
@@ -37,16 +37,16 @@ pub fn is_empty(v: &Value) -> Value {
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
 /// assert_eq!(is_empty!(), json!(true));
-/// assert_eq!(is_empty!(&json!(null)), json!(true));
-/// assert_eq!(is_empty!(&json!(true)), json!(true));
-/// assert_eq!(is_empty!(&json!(0)), json!(true));
-/// assert_eq!(is_empty!(&json!("ab")), json!(false));
-/// assert_eq!(is_empty!(&json!([1, 2])), json!(false));
-/// assert_eq!(is_empty!(&json!({"a": 1})), json!(false));
-/// assert_eq!(is_empty!(&json!("")), json!(true));
-/// assert_eq!(is_empty!(&json!("abc")), json!(false));
-/// assert_eq!(is_empty!(&json!([])), json!(true));
-/// assert_eq!(is_empty!(&json!({})), json!(true));
+/// assert_eq!(is_empty!(json!(null)), json!(true));
+/// assert_eq!(is_empty!(json!(true)), json!(true));
+/// assert_eq!(is_empty!(json!(0)), json!(true));
+/// assert_eq!(is_empty!(json!("ab")), json!(false));
+/// assert_eq!(is_empty!(json!([1, 2])), json!(false));
+/// assert_eq!(is_empty!(json!({"a": 1})), json!(false));
+/// assert_eq!(is_empty!(json!("")), json!(true));
+/// assert_eq!(is_empty!(json!("abc")), json!(false));
+/// assert_eq!(is_empty!(json!([])), json!(true));
+/// assert_eq!(is_empty!(json!({})), json!(true));
 /// ```
 #[macro_export]
 macro_rules! is_empty {
@@ -54,10 +54,10 @@ macro_rules! is_empty {
         $crate::lib::json!(true)
     };
     ($a:expr $(,)*) => {
-        $crate::is_empty($a)
+        $crate::is_empty(&$a)
     };
     ($a:expr, $($rest:tt)*) => {
-        $crate::is_empty($a)
+        $crate::is_empty(&$a)
     };
 }
 
@@ -90,7 +90,7 @@ pub fn is_empty_x(v: &Value) -> bool {
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
-/// assert_eq!(is_empty_x!(&json!(null)), true);
+/// assert_eq!(is_empty_x!(json!(null)), true);
 /// ```
 #[macro_export]
 macro_rules! is_empty_x {
@@ -98,9 +98,9 @@ macro_rules! is_empty_x {
         true
     };
     ($a:expr $(,)*) => {
-        $crate::is_empty_x($a)
+        $crate::is_empty_x(&$a)
     };
     ($a:expr, $($rest:tt)*) => {
-        $crate::is_empty_x($a)
+        $crate::is_empty_x(&$a)
     };
 }

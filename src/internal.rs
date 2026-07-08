@@ -87,6 +87,24 @@ pub(crate) fn f64_to_number(f: f64) -> Option<Number> {
     Number::from_f64(f)
 }
 
+// lodash-style fromIndex resolution: a negative index counts back from the
+// end (clamped at 0). Forward searches start here (>= len finds nothing) …
+pub(crate) fn resolve_from_index(len: usize, from: isize) -> usize {
+    if from < 0 {
+        len.saturating_sub(from.unsigned_abs())
+    } else {
+        from as usize
+    }
+}
+// … backward searches also clamp to the last element, like lodash lastIndexOf
+pub(crate) fn resolve_from_index_back(len: usize, from: isize) -> usize {
+    if from < 0 {
+        len.saturating_sub(from.unsigned_abs())
+    } else {
+        (from as usize).min(len.saturating_sub(1))
+    }
+}
+
 // JS-ish relational comparison: strings compare lexicographically when both
 // sides are strings, otherwise both sides are coerced to numbers
 pub(crate) fn compare_values(a: &Value, b: &Value) -> Option<std::cmp::Ordering> {

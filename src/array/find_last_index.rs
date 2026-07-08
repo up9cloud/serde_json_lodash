@@ -1,5 +1,7 @@
 use crate::lib::{Value, json};
 
+use crate::internal::resolve_from_index_back;
+
 /// Fn form of [find_last_index!](crate::find_last_index!); see it for the full docs
 ///
 /// `_x` forms: [find_last_index_x!](crate::find_last_index_x!), [find_last_index_x()]
@@ -14,7 +16,7 @@ use crate::lib::{Value, json};
 pub fn find_last_index(
     array: Value,
     predicate: impl Fn(&Value) -> bool,
-    from_index: usize,
+    from_index: isize,
 ) -> Value {
     json!(find_last_index_x(array, predicate, from_index))
 }
@@ -39,6 +41,10 @@ pub fn find_last_index(
 /// assert_eq!(find_last_index!(), json!(-1));
 /// assert_eq!(find_last_index!(json!(null)), json!(-1));
 /// assert_eq!(find_last_index!(json!({"a": 1})), json!(-1));
+/// // negative fromIndex counts back from the end
+/// assert_eq!(find_last_index!(json!([1, 2, 1, 2]), |v| v == &json!(2), -2), json!(1));
+/// // empty arrays are fine without an explicit fromIndex
+/// assert_eq!(find_last_index!(json!([]), |_| true), json!(-1));
 /// ```
 #[macro_export]
 macro_rules! find_last_index {
@@ -48,10 +54,10 @@ macro_rules! find_last_index {
     ($a:expr $(,)*) => {
         $crate::lib::json!(-1)
     };
-    ($a:expr, $b:expr $(,)*) => {{
-        let from_index = $a.as_array().unwrap_or(&vec![]).len() - 1;
-        $crate::find_last_index($a, $b, from_index)
-    }};
+    ($a:expr, $b:expr $(,)*) => {
+        // -1 resolves to the last element, lodash's default fromIndex
+        $crate::find_last_index($a, $b, -1)
+    };
     ($a:expr, $b:expr, $c:expr $(,)*) => {
         $crate::find_last_index($a, $b, $c)
     };
@@ -74,7 +80,7 @@ macro_rules! find_last_index {
 pub fn find_last_index_x(
     array: Value,
     predicate: impl Fn(&Value) -> bool,
-    from_index: usize,
+    from_index: isize,
 ) -> isize {
     match array {
         Value::Null | Value::Bool(_) | Value::Number(_) | Value::String(_) | Value::Object(_) => {
@@ -84,11 +90,8 @@ pub fn find_last_index_x(
             if vec.is_empty() {
                 return -1;
             }
-            let mut real_from_index = from_index;
-            if from_index >= vec.len() {
-                real_from_index = vec.len() - 1;
-            }
-            for i in (0..=real_from_index).rev() {
+            let start = resolve_from_index_back(vec.len(), from_index);
+            for i in (0..=start).rev() {
                 if predicate(&vec[i]) {
                     return i as isize;
                 }

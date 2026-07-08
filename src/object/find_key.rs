@@ -49,8 +49,8 @@ pub fn find_key(object: &Value, predicate: impl Fn(&Value) -> bool) -> Value {
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
 /// assert_eq!(find_key!(), json!(null));
-/// assert_eq!(find_key!(&json!({"a": 1})), json!(null));
-/// assert_eq!(find_key!(&json!({"a": 1, "b": 2}), |v| v == &json!(2)), json!("b"));
+/// assert_eq!(find_key!(json!({"a": 1})), json!(null));
+/// assert_eq!(find_key!(json!({"a": 1, "b": 2}), |v| v == &json!(2)), json!("b"));
 /// ```
 #[macro_export]
 macro_rules! find_key {
@@ -61,10 +61,10 @@ macro_rules! find_key {
         $crate::lib::json!(null)
     };
     ($a:expr, $b:expr $(,)*) => {
-        $crate::find_key($a, $b)
+        $crate::find_key(&$a, $b)
     };
     ($a:expr, $b:expr, $($rest:tt)*) => {
-        $crate::find_key($a, $b)
+        $crate::find_key(&$a, $b)
     };
 }
 

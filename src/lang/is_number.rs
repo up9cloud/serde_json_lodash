@@ -24,9 +24,9 @@ pub fn is_number(v: &Value) -> Value {
 /// ```rust
 /// #[macro_use] extern crate serde_json_lodash;
 /// use serde_json::json;
-/// assert_eq!(is_number!(&json!(3)), json!(true));
-/// assert_eq!(is_number!(&json!(5e-324)), json!(true));
-/// assert_eq!(is_number!(&json!("3")), json!(false));
+/// assert_eq!(is_number!(json!(3)), json!(true));
+/// assert_eq!(is_number!(json!(5e-324)), json!(true));
+/// assert_eq!(is_number!(json!("3")), json!(false));
 /// assert_eq!(is_number!(), json!(false));
 /// ```
 ///
@@ -36,12 +36,12 @@ pub fn is_number(v: &Value) -> Value {
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
 /// assert_eq!(is_number!(), json!(false));
-/// assert_eq!(is_number!(&json!(null)), json!(false));
-/// assert_eq!(is_number!(&json!(true)), json!(false));
-/// assert_eq!(is_number!(&json!(0)), json!(true));
-/// assert_eq!(is_number!(&json!("ab")), json!(false));
-/// assert_eq!(is_number!(&json!([1, 2])), json!(false));
-/// assert_eq!(is_number!(&json!({"a": 1})), json!(false));
+/// assert_eq!(is_number!(json!(null)), json!(false));
+/// assert_eq!(is_number!(json!(true)), json!(false));
+/// assert_eq!(is_number!(json!(0)), json!(true));
+/// assert_eq!(is_number!(json!("ab")), json!(false));
+/// assert_eq!(is_number!(json!([1, 2])), json!(false));
+/// assert_eq!(is_number!(json!({"a": 1})), json!(false));
 /// ```
 #[macro_export]
 macro_rules! is_number {
@@ -49,10 +49,10 @@ macro_rules! is_number {
         $crate::lib::json!(false)
     };
     ($a:expr $(,)*) => {
-        $crate::is_number($a)
+        $crate::is_number(&$a)
     };
     ($a:expr, $($rest:tt)*) => {
-        $crate::is_number($a)
+        $crate::is_number(&$a)
     };
 }
 
@@ -80,7 +80,7 @@ pub fn is_number_x(v: &Value) -> bool {
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
-/// assert_eq!(is_number_x!(&json!(3)), true);
+/// assert_eq!(is_number_x!(json!(3)), true);
 /// ```
 #[macro_export]
 macro_rules! is_number_x {
@@ -88,9 +88,9 @@ macro_rules! is_number_x {
         false
     };
     ($a:expr $(,)*) => {
-        $crate::is_number_x($a)
+        $crate::is_number_x(&$a)
     };
     ($a:expr, $($rest:tt)*) => {
-        $crate::is_number_x($a)
+        $crate::is_number_x(&$a)
     };
 }

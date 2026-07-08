@@ -1,5 +1,7 @@
 use crate::lib::{Value, json};
 
+use crate::internal::resolve_from_index;
+
 /// Fn form of [index_of!](crate::index_of!); see it for the full docs
 ///
 /// `_x` forms: [index_of_x!](crate::index_of_x!), [index_of_x()]
@@ -11,7 +13,7 @@ use crate::lib::{Value, json};
 /// # use serde_json::json;
 /// assert_eq!(index_of(json!([1, 2, 1, 2]), json!(2), 0), json!(1));
 /// ```
-pub fn index_of(array: Value, value: Value, from_index: usize) -> Value {
+pub fn index_of(array: Value, value: Value, from_index: isize) -> Value {
     json!(index_of_x(array, value, from_index))
 }
 
@@ -58,6 +60,9 @@ pub fn index_of(array: Value, value: Value, from_index: usize) -> Value {
 /// assert_eq!(index_of!(json!([{"a":1},1,2,1,2]), json!(2)), json!(2));
 /// assert_eq!(index_of!(json!([{"a":1},1,2,1,2]), json!(2), 3), json!(4));
 /// assert_eq!(index_of!(json!([{"a":1},1,2,1,2]), json!(2), 6), json!(-1));
+/// // negative fromIndex counts back from the end
+/// assert_eq!(index_of!(json!([1, 2, 1, 2]), json!(2), -2), json!(3));
+/// assert_eq!(index_of!(json!([1, 2, 1, 2]), json!(2), -9), json!(1));
 /// ```
 #[macro_export]
 macro_rules! index_of {
@@ -87,7 +92,7 @@ macro_rules! index_of {
 /// # use serde_json::json;
 /// assert_eq!(index_of_x(json!([1, 2, 1, 2]), json!(2), 0), 1);
 /// ```
-pub fn index_of_x(array: Value, value: Value, from_index: usize) -> isize {
+pub fn index_of_x(array: Value, value: Value, from_index: isize) -> isize {
     match value {
         Value::Null | Value::Bool(_) | Value::Number(_) | Value::String(_) => match array {
             Value::Null
@@ -96,7 +101,8 @@ pub fn index_of_x(array: Value, value: Value, from_index: usize) -> isize {
             | Value::String(_)
             | Value::Object(_) => -1,
             Value::Array(vec) => {
-                for (i, item) in vec.iter().enumerate().skip(from_index) {
+                let start = resolve_from_index(vec.len(), from_index);
+                for (i, item) in vec.iter().enumerate().skip(start) {
                     if item == &value {
                         return i as isize;
                     }

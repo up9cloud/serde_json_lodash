@@ -26,14 +26,14 @@ pub fn gt(a: &Value, b: &Value) -> Value {
 /// ```rust
 /// #[macro_use] extern crate serde_json_lodash;
 /// use serde_json::json;
-/// assert_eq!(gt!(&json!(3), &json!(1)), json!(true));
-/// assert_eq!(gt!(&json!(3), &json!(3)), json!(false));
-/// assert_eq!(gt!(&json!(1), &json!(3)), json!(false));
+/// assert_eq!(gt!(json!(3), json!(1)), json!(true));
+/// assert_eq!(gt!(json!(3), json!(3)), json!(false));
+/// assert_eq!(gt!(json!(1), json!(3)), json!(false));
 /// assert_eq!(gt!(), json!(false));
-/// assert_eq!(gt!(&json!(1)), json!(false));
-/// assert_eq!(gt!(&json!("b"), &json!("a")), json!(true));
-/// assert_eq!(gt!(&json!("3"), &json!(1)), json!(true));
-/// assert_eq!(gt!(&json!({}), &json!(1)), json!(false));
+/// assert_eq!(gt!(json!(1)), json!(false));
+/// assert_eq!(gt!(json!("b"), json!("a")), json!(true));
+/// assert_eq!(gt!(json!("3"), json!(1)), json!(true));
+/// assert_eq!(gt!(json!({}), json!(1)), json!(false));
 /// ```
 ///
 /// Additional cases:
@@ -44,11 +44,11 @@ pub fn gt(a: &Value, b: &Value) -> Value {
 /// assert_eq!(gt!(), json!(false));
 /// assert_eq!(gt!(json!(null)), json!(false));
 /// assert_eq!(gt!(json!({"a": 1})), json!(false));
-/// assert_eq!(gt!(&json!(null), &json!(null)), json!(false));
-/// assert_eq!(gt!(&json!(1), &json!(1)), json!(false));
-/// assert_eq!(gt!(&json!(1), &json!(2)), json!(false));
-/// assert_eq!(gt!(&json!([1, 2, 3]), &json!(2)), json!(false));
-/// assert_eq!(gt!(&json!("abc"), &json!("bc")), json!(false));
+/// assert_eq!(gt!(json!(null), json!(null)), json!(false));
+/// assert_eq!(gt!(json!(1), json!(1)), json!(false));
+/// assert_eq!(gt!(json!(1), json!(2)), json!(false));
+/// assert_eq!(gt!(json!([1, 2, 3]), json!(2)), json!(false));
+/// assert_eq!(gt!(json!("abc"), json!("bc")), json!(false));
 /// ```
 #[macro_export]
 macro_rules! gt {
@@ -59,10 +59,10 @@ macro_rules! gt {
         $crate::lib::json!(false)
     };
     ($a:expr, $b:expr $(,)*) => {
-        $crate::gt($a, $b)
+        $crate::gt(&$a, &$b)
     };
     ($a:expr, $b:expr, $($rest:tt)*) => {
-        $crate::gt($a, $b)
+        $crate::gt(&$a, &$b)
     };
 }
 
@@ -90,7 +90,7 @@ pub fn gt_x(a: &Value, b: &Value) -> bool {
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
-/// assert_eq!(gt_x!(&json!(3), &json!(1)), true);
+/// assert_eq!(gt_x!(json!(3), json!(1)), true);
 /// ```
 #[macro_export]
 macro_rules! gt_x {
@@ -101,9 +101,9 @@ macro_rules! gt_x {
         false
     };
     ($a:expr, $b:expr $(,)*) => {
-        $crate::gt_x($a, $b)
+        $crate::gt_x(&$a, &$b)
     };
     ($a:expr, $b:expr, $($rest:tt)*) => {
-        $crate::gt_x($a, $b)
+        $crate::gt_x(&$a, &$b)
     };
 }

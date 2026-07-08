@@ -27,8 +27,8 @@ pub fn has(object: &Value, path: Value) -> Value {
 /// #[macro_use] extern crate serde_json_lodash;
 /// use serde_json::json;
 /// assert_eq!(has!(), json!(false));
-/// assert_eq!(has!(&json!({"a": 1})), json!(false));
-/// assert_eq!(has!(&json!({"a": [{"b": 3}]}), json!("a[0].b")), json!(true));
+/// assert_eq!(has!(json!({"a": 1})), json!(false));
+/// assert_eq!(has!(json!({"a": [{"b": 3}]}), json!("a[0].b")), json!(true));
 /// ```
 ///
 /// Additional cases:
@@ -49,10 +49,10 @@ macro_rules! has {
         $crate::lib::json!(false)
     };
     ($a:expr, $b:expr $(,)*) => {
-        $crate::has($a, $b)
+        $crate::has(&$a, $b)
     };
     ($a:expr, $b:expr, $($rest:tt)*) => {
-        $crate::has($a, $b)
+        $crate::has(&$a, $b)
     };
 }
 
@@ -98,7 +98,7 @@ pub fn has_x(object: &Value, path: Value) -> bool {
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
-/// assert_eq!(has_x!(&json!({"a": {"b": 2}}), json!("a.b")), true);
+/// assert_eq!(has_x!(json!({"a": {"b": 2}}), json!("a.b")), true);
 /// ```
 #[macro_export]
 macro_rules! has_x {
@@ -109,9 +109,9 @@ macro_rules! has_x {
         false
     };
     ($a:expr, $b:expr $(,)*) => {
-        $crate::has_x($a, $b)
+        $crate::has_x(&$a, $b)
     };
     ($a:expr, $b:expr, $($rest:tt)*) => {
-        $crate::has_x($a, $b)
+        $crate::has_x(&$a, $b)
     };
 }

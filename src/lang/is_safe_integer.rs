@@ -24,10 +24,10 @@ pub fn is_safe_integer(v: &Value) -> Value {
 /// ```rust
 /// #[macro_use] extern crate serde_json_lodash;
 /// use serde_json::json;
-/// assert_eq!(is_safe_integer!(&json!(3)), json!(true));
-/// assert_eq!(is_safe_integer!(&json!(5e-324)), json!(false));
+/// assert_eq!(is_safe_integer!(json!(3)), json!(true));
+/// assert_eq!(is_safe_integer!(json!(5e-324)), json!(false));
 /// assert_eq!(is_safe_integer!(), json!(false));
-/// assert_eq!(is_safe_integer!(&json!("3")), json!(false));
+/// assert_eq!(is_safe_integer!(json!("3")), json!(false));
 /// ```
 ///
 /// Additional cases:
@@ -35,14 +35,14 @@ pub fn is_safe_integer(v: &Value) -> Value {
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
-/// assert_eq!(is_safe_integer!(&json!(null)), json!(false));
-/// assert_eq!(is_safe_integer!(&json!(true)), json!(false));
-/// assert_eq!(is_safe_integer!(&json!(0)), json!(true));
-/// assert_eq!(is_safe_integer!(&json!("ab")), json!(false));
-/// assert_eq!(is_safe_integer!(&json!([1, 2])), json!(false));
-/// assert_eq!(is_safe_integer!(&json!({"a": 1})), json!(false));
-/// assert_eq!(is_safe_integer!(&json!(9007199254740991u64)), json!(true));
-/// assert_eq!(is_safe_integer!(&json!(9007199254740992u64)), json!(false));
+/// assert_eq!(is_safe_integer!(json!(null)), json!(false));
+/// assert_eq!(is_safe_integer!(json!(true)), json!(false));
+/// assert_eq!(is_safe_integer!(json!(0)), json!(true));
+/// assert_eq!(is_safe_integer!(json!("ab")), json!(false));
+/// assert_eq!(is_safe_integer!(json!([1, 2])), json!(false));
+/// assert_eq!(is_safe_integer!(json!({"a": 1})), json!(false));
+/// assert_eq!(is_safe_integer!(json!(9007199254740991u64)), json!(true));
+/// assert_eq!(is_safe_integer!(json!(9007199254740992u64)), json!(false));
 /// ```
 #[macro_export]
 macro_rules! is_safe_integer {
@@ -50,10 +50,10 @@ macro_rules! is_safe_integer {
         $crate::lib::json!(false)
     };
     ($a:expr $(,)*) => {
-        $crate::is_safe_integer($a)
+        $crate::is_safe_integer(&$a)
     };
     ($a:expr, $($rest:tt)*) => {
-        $crate::is_safe_integer($a)
+        $crate::is_safe_integer(&$a)
     };
 }
 
@@ -89,7 +89,7 @@ pub fn is_safe_integer_x(v: &Value) -> bool {
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
-/// assert_eq!(is_safe_integer_x!(&json!(3)), true);
+/// assert_eq!(is_safe_integer_x!(json!(3)), true);
 /// ```
 #[macro_export]
 macro_rules! is_safe_integer_x {
@@ -97,9 +97,9 @@ macro_rules! is_safe_integer_x {
         false
     };
     ($a:expr $(,)*) => {
-        $crate::is_safe_integer_x($a)
+        $crate::is_safe_integer_x(&$a)
     };
     ($a:expr, $($rest:tt)*) => {
-        $crate::is_safe_integer_x($a)
+        $crate::is_safe_integer_x(&$a)
     };
 }

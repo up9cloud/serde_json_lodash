@@ -24,9 +24,9 @@ pub fn is_object_like(v: &Value) -> Value {
 /// ```rust
 /// #[macro_use] extern crate serde_json_lodash;
 /// use serde_json::json;
-/// assert_eq!(is_object_like!(&json!({})), json!(true));
-/// assert_eq!(is_object_like!(&json!([1, 2, 3])), json!(true));
-/// assert_eq!(is_object_like!(&json!(null)), json!(false));
+/// assert_eq!(is_object_like!(json!({})), json!(true));
+/// assert_eq!(is_object_like!(json!([1, 2, 3])), json!(true));
+/// assert_eq!(is_object_like!(json!(null)), json!(false));
 /// assert_eq!(is_object_like!(), json!(false));
 /// ```
 ///
@@ -36,13 +36,13 @@ pub fn is_object_like(v: &Value) -> Value {
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
 /// assert_eq!(is_object_like!(), json!(false));
-/// assert_eq!(is_object_like!(&json!(null)), json!(false));
-/// assert_eq!(is_object_like!(&json!(true)), json!(false));
-/// assert_eq!(is_object_like!(&json!(0)), json!(false));
-/// assert_eq!(is_object_like!(&json!("ab")), json!(false));
-/// assert_eq!(is_object_like!(&json!([1, 2])), json!(true));
-/// assert_eq!(is_object_like!(&json!({"a": 1})), json!(true));
-/// assert_eq!(is_object_like!(&json!("abc")), json!(false));
+/// assert_eq!(is_object_like!(json!(null)), json!(false));
+/// assert_eq!(is_object_like!(json!(true)), json!(false));
+/// assert_eq!(is_object_like!(json!(0)), json!(false));
+/// assert_eq!(is_object_like!(json!("ab")), json!(false));
+/// assert_eq!(is_object_like!(json!([1, 2])), json!(true));
+/// assert_eq!(is_object_like!(json!({"a": 1})), json!(true));
+/// assert_eq!(is_object_like!(json!("abc")), json!(false));
 /// ```
 #[macro_export]
 macro_rules! is_object_like {
@@ -50,10 +50,10 @@ macro_rules! is_object_like {
         $crate::lib::json!(false)
     };
     ($a:expr $(,)*) => {
-        $crate::is_object_like($a)
+        $crate::is_object_like(&$a)
     };
     ($a:expr, $($rest:tt)*) => {
-        $crate::is_object_like($a)
+        $crate::is_object_like(&$a)
     };
 }
 
@@ -81,7 +81,7 @@ pub fn is_object_like_x(v: &Value) -> bool {
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
-/// assert_eq!(is_object_like_x!(&json!({})), true);
+/// assert_eq!(is_object_like_x!(json!({})), true);
 /// ```
 #[macro_export]
 macro_rules! is_object_like_x {
@@ -89,9 +89,9 @@ macro_rules! is_object_like_x {
         false
     };
     ($a:expr $(,)*) => {
-        $crate::is_object_like_x($a)
+        $crate::is_object_like_x(&$a)
     };
     ($a:expr, $($rest:tt)*) => {
-        $crate::is_object_like_x($a)
+        $crate::is_object_like_x(&$a)
     };
 }

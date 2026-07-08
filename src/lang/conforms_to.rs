@@ -43,10 +43,10 @@ pub fn conforms_to(object: &Value, source: Vec<Conform>) -> Value {
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
 /// assert_eq!(conforms_to!(), json!(true));
-/// assert_eq!(conforms_to!(&json!(null)), json!(true));
-/// assert_eq!(conforms_to!(&json!({})), json!(true));
-/// assert_eq!(conforms_to!(&json!({"a": 1})), json!(true));
-/// assert_eq!(conforms_to!(&json!({}), vec![("a", &|_: &serde_json::Value| true)]), json!(false));
+/// assert_eq!(conforms_to!(json!(null)), json!(true));
+/// assert_eq!(conforms_to!(json!({})), json!(true));
+/// assert_eq!(conforms_to!(json!({"a": 1})), json!(true));
+/// assert_eq!(conforms_to!(json!({}), vec![("a", &|_: &serde_json::Value| true)]), json!(false));
 /// // capturing closures work, and different keys may use different closures
 /// let limit = 1;
 /// assert_eq!(
@@ -66,13 +66,13 @@ macro_rules! conforms_to {
         $crate::lib::json!(true)
     };
     ($a:expr $(,)*) => {
-        $crate::conforms_to($a, vec![])
+        $crate::conforms_to(&$a, vec![])
     };
     ($a:expr, $b:expr $(,)*) => {
-        $crate::conforms_to($a, $b)
+        $crate::conforms_to(&$a, $b)
     };
     ($a:expr, $b:expr, $($rest:tt)*) => {
-        $crate::conforms_to($a, $b)
+        $crate::conforms_to(&$a, $b)
     };
 }
 
@@ -110,7 +110,7 @@ pub fn conforms_to_x(object: &Value, source: Vec<Conform>) -> bool {
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
-/// assert_eq!(conforms_to_x!(&json!({}), vec![("a", &|_: &serde_json::Value| true)]), false);
+/// assert_eq!(conforms_to_x!(json!({}), vec![("a", &|_: &serde_json::Value| true)]), false);
 /// ```
 #[macro_export]
 macro_rules! conforms_to_x {
@@ -118,12 +118,12 @@ macro_rules! conforms_to_x {
         true
     };
     ($a:expr $(,)*) => {
-        $crate::conforms_to_x($a, vec![])
+        $crate::conforms_to_x(&$a, vec![])
     };
     ($a:expr, $b:expr $(,)*) => {
-        $crate::conforms_to_x($a, $b)
+        $crate::conforms_to_x(&$a, $b)
     };
     ($a:expr, $b:expr, $($rest:tt)*) => {
-        $crate::conforms_to_x($a, $b)
+        $crate::conforms_to_x(&$a, $b)
     };
 }

@@ -24,10 +24,10 @@ pub fn is_date(_v: &Value) -> Value {
 /// ```rust
 /// #[macro_use] extern crate serde_json_lodash;
 /// use serde_json::json;
-/// assert_eq!(is_date!(&json!({})), json!(false));
-/// assert_eq!(is_date!(&json!("a")), json!(false));
+/// assert_eq!(is_date!(json!({})), json!(false));
+/// assert_eq!(is_date!(json!("a")), json!(false));
 /// assert_eq!(is_date!(), json!(false));
-/// assert_eq!(is_date!(&json!(null)), json!(false));
+/// assert_eq!(is_date!(json!(null)), json!(false));
 /// ```
 ///
 /// Additional cases:
@@ -36,8 +36,8 @@ pub fn is_date(_v: &Value) -> Value {
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
 /// assert_eq!(is_date!(), json!(false));
-/// assert_eq!(is_date!(&json!(null)), json!(false));
-/// assert_eq!(is_date!(&json!({"a": 1})), json!(false));
+/// assert_eq!(is_date!(json!(null)), json!(false));
+/// assert_eq!(is_date!(json!({"a": 1})), json!(false));
 /// ```
 #[macro_export]
 macro_rules! is_date {
@@ -45,10 +45,10 @@ macro_rules! is_date {
         $crate::lib::json!(false)
     };
     ($a:expr $(,)*) => {
-        $crate::is_date($a)
+        $crate::is_date(&$a)
     };
     ($a:expr, $($rest:tt)*) => {
-        $crate::is_date($a)
+        $crate::is_date(&$a)
     };
 }
 
@@ -76,7 +76,7 @@ pub fn is_date_x(_v: &Value) -> bool {
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
-/// assert_eq!(is_date_x!(&json!({})), false);
+/// assert_eq!(is_date_x!(json!({})), false);
 /// ```
 #[macro_export]
 macro_rules! is_date_x {
@@ -84,9 +84,9 @@ macro_rules! is_date_x {
         false
     };
     ($a:expr $(,)*) => {
-        $crate::is_date_x($a)
+        $crate::is_date_x(&$a)
     };
     ($a:expr, $($rest:tt)*) => {
-        $crate::is_date_x($a)
+        $crate::is_date_x(&$a)
     };
 }

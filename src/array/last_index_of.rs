@@ -1,5 +1,7 @@
 use crate::lib::{Value, json};
 
+use crate::internal::resolve_from_index_back;
+
 /// Fn form of [last_index_of!](crate::last_index_of!); see it for the full docs
 ///
 /// `_x` forms: [last_index_of_x!](crate::last_index_of_x!), [last_index_of_x()]
@@ -11,7 +13,7 @@ use crate::lib::{Value, json};
 /// # use serde_json::json;
 /// assert_eq!(last_index_of(json!([1, 2, 1, 2]), json!(2), 3), json!(3));
 /// ```
-pub fn last_index_of(array: Value, value: Value, from_index: usize) -> Value {
+pub fn last_index_of(array: Value, value: Value, from_index: isize) -> Value {
     json!(last_index_of_x(array, value, from_index))
 }
 
@@ -59,6 +61,9 @@ pub fn last_index_of(array: Value, value: Value, from_index: usize) -> Value {
 /// assert_eq!(last_index_of!(json!([{"a":1},1,2,1,2]), json!(2), 3), json!(2));
 /// assert_eq!(last_index_of!(json!([{"a":1},1,2,1,2]), json!(2), 6), json!(4));
 /// assert_eq!(last_index_of!(json!([1,1,1]), json!(1), 2), json!(2));
+/// // negative fromIndex counts back from the end
+/// assert_eq!(last_index_of!(json!([1, 2, 1, 2]), json!(2), -2), json!(1));
+/// assert_eq!(last_index_of!(json!([1, 2, 1, 2]), json!(2), 9), json!(3));
 /// ```
 #[macro_export]
 macro_rules! last_index_of {
@@ -68,10 +73,10 @@ macro_rules! last_index_of {
     ($a:expr $(,)*) => {
         $crate::lib::json!(-1)
     };
-    ($a:expr, $b:expr $(,)*) => {{
-        let i = $a.as_array().map(|v| v.len()).unwrap_or(0);
-        $crate::last_index_of($a, $b, i.saturating_sub(1))
-    }};
+    ($a:expr, $b:expr $(,)*) => {
+        // -1 resolves to the last element, lodash's default fromIndex
+        $crate::last_index_of($a, $b, -1)
+    };
     ($a:expr, $b:expr, $c:expr $(,)*) => {
         $crate::last_index_of($a, $b, $c)
     };
@@ -91,7 +96,7 @@ macro_rules! last_index_of {
 /// # use serde_json::json;
 /// assert_eq!(last_index_of_x(json!([1, 2, 1, 2]), json!(2), 3), 3);
 /// ```
-pub fn last_index_of_x(array: Value, value: Value, from_index: usize) -> isize {
+pub fn last_index_of_x(array: Value, value: Value, from_index: isize) -> isize {
     match value {
         Value::Null | Value::Bool(_) | Value::Number(_) | Value::String(_) => match array {
             Value::Null
@@ -100,7 +105,8 @@ pub fn last_index_of_x(array: Value, value: Value, from_index: usize) -> isize {
             | Value::String(_)
             | Value::Object(_) => -1,
             Value::Array(vec) => {
-                for (i, item) in vec.iter().enumerate().take(from_index + 1).rev() {
+                let start = resolve_from_index_back(vec.len(), from_index);
+                for (i, item) in vec.iter().enumerate().take(start + 1).rev() {
                     if item == &value {
                         return i as isize;
                     }

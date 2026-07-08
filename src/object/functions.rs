@@ -27,7 +27,7 @@ pub fn functions(_object: &Value) -> Value {
 /// #[macro_use] extern crate serde_json_lodash;
 /// use serde_json::json;
 /// // js returns the names of function-valued properties; JSON has none
-/// assert_eq!(functions!(&json!({ "a": 1, "b": 2 })), json!([]));
+/// assert_eq!(functions!(json!({ "a": 1, "b": 2 })), json!([]));
 /// ```
 ///
 /// Additional cases:
@@ -36,7 +36,7 @@ pub fn functions(_object: &Value) -> Value {
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
 /// assert_eq!(functions!(), json!([]));
-/// assert_eq!(functions!(&json!(null)), json!([]));
+/// assert_eq!(functions!(json!(null)), json!([]));
 /// ```
 #[macro_export]
 macro_rules! functions {
@@ -44,10 +44,10 @@ macro_rules! functions {
         $crate::lib::json!([])
     };
     ($a:expr $(,)*) => {
-        $crate::functions($a)
+        $crate::functions(&$a)
     };
     ($a:expr, $($rest:tt)*) => {
-        $crate::functions($a)
+        $crate::functions(&$a)
     };
 }
 

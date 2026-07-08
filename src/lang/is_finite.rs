@@ -24,9 +24,9 @@ pub fn is_finite(v: &Value) -> Value {
 /// ```rust
 /// #[macro_use] extern crate serde_json_lodash;
 /// use serde_json::json;
-/// assert_eq!(is_finite!(&json!(3)), json!(true));
-/// assert_eq!(is_finite!(&json!(5e-324)), json!(true));
-/// assert_eq!(is_finite!(&json!("3")), json!(false));
+/// assert_eq!(is_finite!(json!(3)), json!(true));
+/// assert_eq!(is_finite!(json!(5e-324)), json!(true));
+/// assert_eq!(is_finite!(json!("3")), json!(false));
 /// assert_eq!(is_finite!(), json!(false));
 /// ```
 ///
@@ -36,12 +36,12 @@ pub fn is_finite(v: &Value) -> Value {
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
 /// assert_eq!(is_finite!(), json!(false));
-/// assert_eq!(is_finite!(&json!(null)), json!(false));
-/// assert_eq!(is_finite!(&json!(true)), json!(false));
-/// assert_eq!(is_finite!(&json!(0)), json!(true));
-/// assert_eq!(is_finite!(&json!("ab")), json!(false));
-/// assert_eq!(is_finite!(&json!([1, 2])), json!(false));
-/// assert_eq!(is_finite!(&json!({"a": 1})), json!(false));
+/// assert_eq!(is_finite!(json!(null)), json!(false));
+/// assert_eq!(is_finite!(json!(true)), json!(false));
+/// assert_eq!(is_finite!(json!(0)), json!(true));
+/// assert_eq!(is_finite!(json!("ab")), json!(false));
+/// assert_eq!(is_finite!(json!([1, 2])), json!(false));
+/// assert_eq!(is_finite!(json!({"a": 1})), json!(false));
 /// ```
 #[macro_export]
 macro_rules! is_finite {
@@ -49,10 +49,10 @@ macro_rules! is_finite {
         $crate::lib::json!(false)
     };
     ($a:expr $(,)*) => {
-        $crate::is_finite($a)
+        $crate::is_finite(&$a)
     };
     ($a:expr, $($rest:tt)*) => {
-        $crate::is_finite($a)
+        $crate::is_finite(&$a)
     };
 }
 
@@ -80,7 +80,7 @@ pub fn is_finite_x(v: &Value) -> bool {
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
-/// assert_eq!(is_finite_x!(&json!(3)), true);
+/// assert_eq!(is_finite_x!(json!(3)), true);
 /// ```
 #[macro_export]
 macro_rules! is_finite_x {
@@ -88,9 +88,9 @@ macro_rules! is_finite_x {
         false
     };
     ($a:expr $(,)*) => {
-        $crate::is_finite_x($a)
+        $crate::is_finite_x(&$a)
     };
     ($a:expr, $($rest:tt)*) => {
-        $crate::is_finite_x($a)
+        $crate::is_finite_x(&$a)
     };
 }

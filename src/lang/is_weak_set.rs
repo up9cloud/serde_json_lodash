@@ -24,8 +24,8 @@ pub fn is_weak_set(_v: &Value) -> Value {
 /// ```rust
 /// #[macro_use] extern crate serde_json_lodash;
 /// use serde_json::json;
-/// assert_eq!(is_weak_set!(&json!({})), json!(false));
-/// assert_eq!(is_weak_set!(&json!("a")), json!(false));
+/// assert_eq!(is_weak_set!(json!({})), json!(false));
+/// assert_eq!(is_weak_set!(json!("a")), json!(false));
 /// ```
 ///
 /// Additional cases:
@@ -34,8 +34,8 @@ pub fn is_weak_set(_v: &Value) -> Value {
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
 /// assert_eq!(is_weak_set!(), json!(false));
-/// assert_eq!(is_weak_set!(&json!(null)), json!(false));
-/// assert_eq!(is_weak_set!(&json!({"a": 1})), json!(false));
+/// assert_eq!(is_weak_set!(json!(null)), json!(false));
+/// assert_eq!(is_weak_set!(json!({"a": 1})), json!(false));
 /// ```
 #[macro_export]
 macro_rules! is_weak_set {
@@ -43,10 +43,10 @@ macro_rules! is_weak_set {
         $crate::lib::json!(false)
     };
     ($a:expr $(,)*) => {
-        $crate::is_weak_set($a)
+        $crate::is_weak_set(&$a)
     };
     ($a:expr, $($rest:tt)*) => {
-        $crate::is_weak_set($a)
+        $crate::is_weak_set(&$a)
     };
 }
 
@@ -74,7 +74,7 @@ pub fn is_weak_set_x(_v: &Value) -> bool {
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
-/// assert_eq!(is_weak_set_x!(&json!({})), false);
+/// assert_eq!(is_weak_set_x!(json!({})), false);
 /// ```
 #[macro_export]
 macro_rules! is_weak_set_x {
@@ -82,9 +82,9 @@ macro_rules! is_weak_set_x {
         false
     };
     ($a:expr $(,)*) => {
-        $crate::is_weak_set_x($a)
+        $crate::is_weak_set_x(&$a)
     };
     ($a:expr, $($rest:tt)*) => {
-        $crate::is_weak_set_x($a)
+        $crate::is_weak_set_x(&$a)
     };
 }

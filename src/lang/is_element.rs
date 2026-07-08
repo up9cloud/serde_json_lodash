@@ -24,8 +24,8 @@ pub fn is_element(_v: &Value) -> Value {
 /// ```rust
 /// #[macro_use] extern crate serde_json_lodash;
 /// use serde_json::json;
-/// assert_eq!(is_element!(&json!({})), json!(false));
-/// assert_eq!(is_element!(&json!("a")), json!(false));
+/// assert_eq!(is_element!(json!({})), json!(false));
+/// assert_eq!(is_element!(json!("a")), json!(false));
 /// ```
 ///
 /// Additional cases:
@@ -34,8 +34,8 @@ pub fn is_element(_v: &Value) -> Value {
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
 /// assert_eq!(is_element!(), json!(false));
-/// assert_eq!(is_element!(&json!(null)), json!(false));
-/// assert_eq!(is_element!(&json!({"a": 1})), json!(false));
+/// assert_eq!(is_element!(json!(null)), json!(false));
+/// assert_eq!(is_element!(json!({"a": 1})), json!(false));
 /// ```
 #[macro_export]
 macro_rules! is_element {
@@ -43,10 +43,10 @@ macro_rules! is_element {
         $crate::lib::json!(false)
     };
     ($a:expr $(,)*) => {
-        $crate::is_element($a)
+        $crate::is_element(&$a)
     };
     ($a:expr, $($rest:tt)*) => {
-        $crate::is_element($a)
+        $crate::is_element(&$a)
     };
 }
 
@@ -74,7 +74,7 @@ pub fn is_element_x(_v: &Value) -> bool {
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
-/// assert_eq!(is_element_x!(&json!({})), false);
+/// assert_eq!(is_element_x!(json!({})), false);
 /// ```
 #[macro_export]
 macro_rules! is_element_x {
@@ -82,9 +82,9 @@ macro_rules! is_element_x {
         false
     };
     ($a:expr $(,)*) => {
-        $crate::is_element_x($a)
+        $crate::is_element_x(&$a)
     };
     ($a:expr, $($rest:tt)*) => {
-        $crate::is_element_x($a)
+        $crate::is_element_x(&$a)
     };
 }

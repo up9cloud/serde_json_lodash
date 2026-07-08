@@ -50,13 +50,13 @@ pub fn is_match_with(
 /// assert_eq!(is_match_with!(), json!(true));
 /// assert_eq!(is_match_with!(json!(null)), json!(true));
 /// assert_eq!(is_match_with!(json!({"a": 1})), json!(true));
-/// assert_eq!(is_match_with!(&json!(null), &json!(null)), json!(true));
-/// assert_eq!(is_match_with!(&json!(1), &json!(1)), json!(true));
-/// assert_eq!(is_match_with!(&json!(1), &json!(2)), json!(false));
-/// assert_eq!(is_match_with!(&json!([1, 2, 3]), &json!(2)), json!(false));
-/// assert_eq!(is_match_with!(&json!("abc"), &json!("bc")), json!(false));
-/// assert_eq!(is_match_with!(&json!({"a": 1})), json!(true));
-/// assert_eq!(is_match_with!(&json!({"a": 1}), &json!({"a": 1})), json!(true));
+/// assert_eq!(is_match_with!(json!(null), json!(null)), json!(true));
+/// assert_eq!(is_match_with!(json!(1), json!(1)), json!(true));
+/// assert_eq!(is_match_with!(json!(1), json!(2)), json!(false));
+/// assert_eq!(is_match_with!(json!([1, 2, 3]), json!(2)), json!(false));
+/// assert_eq!(is_match_with!(json!("abc"), json!("bc")), json!(false));
+/// assert_eq!(is_match_with!(json!({"a": 1})), json!(true));
+/// assert_eq!(is_match_with!(json!({"a": 1}), json!({"a": 1})), json!(true));
 /// ```
 #[macro_export]
 macro_rules! is_match_with {
@@ -67,13 +67,13 @@ macro_rules! is_match_with {
         $crate::lib::json!(true)
     };
     ($a:expr, $b:expr $(,)*) => {
-        $crate::is_match($a, $b)
+        $crate::is_match(&$a, &$b)
     };
     ($a:expr, $b:expr, $c:expr $(,)*) => {
-        $crate::is_match_with($a, $b, $c)
+        $crate::is_match_with(&$a, &$b, $c)
     };
     ($a:expr, $b:expr, $c:expr, $($rest:tt)*) => {
-        $crate::is_match_with($a, $b, $c)
+        $crate::is_match_with(&$a, &$b, $c)
     };
 }
 
@@ -120,7 +120,7 @@ pub fn is_match_with_x(
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
-/// assert_eq!(is_match_with_x!(&json!({"a": 1}), &json!({"a": 1}), |_, _| None), true);
+/// assert_eq!(is_match_with_x!(json!({"a": 1}), json!({"a": 1}), |_, _| None), true);
 /// ```
 #[macro_export]
 macro_rules! is_match_with_x {
@@ -131,12 +131,12 @@ macro_rules! is_match_with_x {
         true
     };
     ($a:expr, $b:expr $(,)*) => {
-        $crate::is_match($a, $b)
+        $crate::is_match(&$a, &$b)
     };
     ($a:expr, $b:expr, $c:expr $(,)*) => {
-        $crate::is_match_with_x($a, $b, $c)
+        $crate::is_match_with_x(&$a, &$b, $c)
     };
     ($a:expr, $b:expr, $c:expr, $($rest:tt)*) => {
-        $crate::is_match_with_x($a, $b, $c)
+        $crate::is_match_with_x(&$a, &$b, $c)
     };
 }

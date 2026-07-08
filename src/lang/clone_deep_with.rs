@@ -47,7 +47,7 @@ pub fn clone_deep_with(v: &Value, customizer: impl Fn(&Value) -> Option<Value>) 
 ///   if v.is_number() { Some(json!(0)) } else { None }
 /// }
 /// assert_eq!(
-///   clone_deep_with!(&json!({"a": [1, 2]}), customizer),
+///   clone_deep_with!(json!({"a": [1, 2]}), customizer),
 ///   json!({"a": [0, 0]})
 /// );
 /// ```
@@ -58,7 +58,7 @@ pub fn clone_deep_with(v: &Value, customizer: impl Fn(&Value) -> Option<Value>) 
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
 /// assert_eq!(clone_deep_with!(), json!(null));
-/// assert_eq!(clone_deep_with!(&json!([1])), json!([1]));
+/// assert_eq!(clone_deep_with!(json!([1])), json!([1]));
 /// ```
 #[macro_export]
 macro_rules! clone_deep_with {
@@ -66,13 +66,13 @@ macro_rules! clone_deep_with {
         $crate::lib::json!(null)
     };
     ($a:expr $(,)*) => {
-        $crate::clone_deep($a)
+        $crate::clone_deep(&$a)
     };
     ($a:expr, $b:expr $(,)*) => {
-        $crate::clone_deep_with($a, $b)
+        $crate::clone_deep_with(&$a, $b)
     };
     ($a:expr, $b:expr, $($rest:tt)*) => {
-        $crate::clone_deep_with($a, $b)
+        $crate::clone_deep_with(&$a, $b)
     };
 }
 

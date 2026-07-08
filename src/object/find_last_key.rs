@@ -50,7 +50,7 @@ pub fn find_last_key(object: &Value, predicate: impl Fn(&Value) -> bool) -> Valu
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
 /// assert_eq!(find_last_key!(), json!(null));
-/// assert_eq!(find_last_key!(&json!({"a": 1, "b": 1}), |v| v == &json!(1)), json!("b"));
+/// assert_eq!(find_last_key!(json!({"a": 1, "b": 1}), |v| v == &json!(1)), json!("b"));
 /// ```
 #[macro_export]
 macro_rules! find_last_key {
@@ -61,10 +61,10 @@ macro_rules! find_last_key {
         $crate::lib::json!(null)
     };
     ($a:expr, $b:expr $(,)*) => {
-        $crate::find_last_key($a, $b)
+        $crate::find_last_key(&$a, $b)
     };
     ($a:expr, $b:expr, $($rest:tt)*) => {
-        $crate::find_last_key($a, $b)
+        $crate::find_last_key(&$a, $b)
     };
 }
 

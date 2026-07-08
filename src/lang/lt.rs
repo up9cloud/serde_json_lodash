@@ -26,12 +26,12 @@ pub fn lt(a: &Value, b: &Value) -> Value {
 /// ```rust
 /// #[macro_use] extern crate serde_json_lodash;
 /// use serde_json::json;
-/// assert_eq!(lt!(&json!(1), &json!(3)), json!(true));
-/// assert_eq!(lt!(&json!(3), &json!(3)), json!(false));
-/// assert_eq!(lt!(&json!(3), &json!(1)), json!(false));
+/// assert_eq!(lt!(json!(1), json!(3)), json!(true));
+/// assert_eq!(lt!(json!(3), json!(3)), json!(false));
+/// assert_eq!(lt!(json!(3), json!(1)), json!(false));
 /// assert_eq!(lt!(), json!(false));
-/// assert_eq!(lt!(&json!(1)), json!(false));
-/// assert_eq!(lt!(&json!("a"), &json!("b")), json!(true));
+/// assert_eq!(lt!(json!(1)), json!(false));
+/// assert_eq!(lt!(json!("a"), json!("b")), json!(true));
 /// ```
 ///
 /// Additional cases:
@@ -42,11 +42,11 @@ pub fn lt(a: &Value, b: &Value) -> Value {
 /// assert_eq!(lt!(), json!(false));
 /// assert_eq!(lt!(json!(null)), json!(false));
 /// assert_eq!(lt!(json!({"a": 1})), json!(false));
-/// assert_eq!(lt!(&json!(null), &json!(null)), json!(false));
-/// assert_eq!(lt!(&json!(1), &json!(1)), json!(false));
-/// assert_eq!(lt!(&json!(1), &json!(2)), json!(true));
-/// assert_eq!(lt!(&json!([1, 2, 3]), &json!(2)), json!(false));
-/// assert_eq!(lt!(&json!("abc"), &json!("bc")), json!(true));
+/// assert_eq!(lt!(json!(null), json!(null)), json!(false));
+/// assert_eq!(lt!(json!(1), json!(1)), json!(false));
+/// assert_eq!(lt!(json!(1), json!(2)), json!(true));
+/// assert_eq!(lt!(json!([1, 2, 3]), json!(2)), json!(false));
+/// assert_eq!(lt!(json!("abc"), json!("bc")), json!(true));
 /// ```
 #[macro_export]
 macro_rules! lt {
@@ -57,10 +57,10 @@ macro_rules! lt {
         $crate::lib::json!(false)
     };
     ($a:expr, $b:expr $(,)*) => {
-        $crate::lt($a, $b)
+        $crate::lt(&$a, &$b)
     };
     ($a:expr, $b:expr, $($rest:tt)*) => {
-        $crate::lt($a, $b)
+        $crate::lt(&$a, &$b)
     };
 }
 
@@ -88,7 +88,7 @@ pub fn lt_x(a: &Value, b: &Value) -> bool {
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
-/// assert_eq!(lt_x!(&json!(1), &json!(3)), true);
+/// assert_eq!(lt_x!(json!(1), json!(3)), true);
 /// ```
 #[macro_export]
 macro_rules! lt_x {
@@ -99,9 +99,9 @@ macro_rules! lt_x {
         false
     };
     ($a:expr, $b:expr $(,)*) => {
-        $crate::lt_x($a, $b)
+        $crate::lt_x(&$a, &$b)
     };
     ($a:expr, $b:expr, $($rest:tt)*) => {
-        $crate::lt_x($a, $b)
+        $crate::lt_x(&$a, &$b)
     };
 }

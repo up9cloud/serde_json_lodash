@@ -24,8 +24,8 @@ pub fn is_null(v: &Value) -> Value {
 /// ```rust
 /// #[macro_use] extern crate serde_json_lodash;
 /// use serde_json::json;
-/// assert_eq!(is_null!(&json!(null)), json!(true));
-/// assert_eq!(is_null!(&json!(1)), json!(false));
+/// assert_eq!(is_null!(json!(null)), json!(true));
+/// assert_eq!(is_null!(json!(1)), json!(false));
 /// ```
 ///
 /// Additional cases:
@@ -34,13 +34,13 @@ pub fn is_null(v: &Value) -> Value {
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
 /// assert_eq!(is_null!(), json!(false));
-/// assert_eq!(is_null!(&json!(null)), json!(true));
-/// assert_eq!(is_null!(&json!(true)), json!(false));
-/// assert_eq!(is_null!(&json!(0)), json!(false));
-/// assert_eq!(is_null!(&json!("ab")), json!(false));
-/// assert_eq!(is_null!(&json!([1, 2])), json!(false));
-/// assert_eq!(is_null!(&json!({"a": 1})), json!(false));
-/// assert_eq!(is_null!(&json!("")), json!(false));
+/// assert_eq!(is_null!(json!(null)), json!(true));
+/// assert_eq!(is_null!(json!(true)), json!(false));
+/// assert_eq!(is_null!(json!(0)), json!(false));
+/// assert_eq!(is_null!(json!("ab")), json!(false));
+/// assert_eq!(is_null!(json!([1, 2])), json!(false));
+/// assert_eq!(is_null!(json!({"a": 1})), json!(false));
+/// assert_eq!(is_null!(json!("")), json!(false));
 /// ```
 #[macro_export]
 macro_rules! is_null {
@@ -48,10 +48,10 @@ macro_rules! is_null {
         $crate::lib::json!(false)
     };
     ($a:expr $(,)*) => {
-        $crate::is_null($a)
+        $crate::is_null(&$a)
     };
     ($a:expr, $($rest:tt)*) => {
-        $crate::is_null($a)
+        $crate::is_null(&$a)
     };
 }
 
@@ -79,7 +79,7 @@ pub fn is_null_x(v: &Value) -> bool {
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
-/// assert_eq!(is_null_x!(&json!(null)), true);
+/// assert_eq!(is_null_x!(json!(null)), true);
 /// ```
 #[macro_export]
 macro_rules! is_null_x {
@@ -87,9 +87,9 @@ macro_rules! is_null_x {
         false
     };
     ($a:expr $(,)*) => {
-        $crate::is_null_x($a)
+        $crate::is_null_x(&$a)
     };
     ($a:expr, $($rest:tt)*) => {
-        $crate::is_null_x($a)
+        $crate::is_null_x(&$a)
     };
 }

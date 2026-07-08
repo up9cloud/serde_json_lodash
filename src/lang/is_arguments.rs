@@ -24,10 +24,10 @@ pub fn is_arguments(_v: &Value) -> Value {
 /// ```rust
 /// #[macro_use] extern crate serde_json_lodash;
 /// use serde_json::json;
-/// assert_eq!(is_arguments!(&json!({})), json!(false));
-/// assert_eq!(is_arguments!(&json!("a")), json!(false));
+/// assert_eq!(is_arguments!(json!({})), json!(false));
+/// assert_eq!(is_arguments!(json!("a")), json!(false));
 /// assert_eq!(is_arguments!(), json!(false));
-/// assert_eq!(is_arguments!(&json!(null)), json!(false));
+/// assert_eq!(is_arguments!(json!(null)), json!(false));
 /// ```
 ///
 /// Additional cases:
@@ -36,8 +36,8 @@ pub fn is_arguments(_v: &Value) -> Value {
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
 /// assert_eq!(is_arguments!(), json!(false));
-/// assert_eq!(is_arguments!(&json!(null)), json!(false));
-/// assert_eq!(is_arguments!(&json!({"a": 1})), json!(false));
+/// assert_eq!(is_arguments!(json!(null)), json!(false));
+/// assert_eq!(is_arguments!(json!({"a": 1})), json!(false));
 /// ```
 #[macro_export]
 macro_rules! is_arguments {
@@ -45,10 +45,10 @@ macro_rules! is_arguments {
         $crate::lib::json!(false)
     };
     ($a:expr $(,)*) => {
-        $crate::is_arguments($a)
+        $crate::is_arguments(&$a)
     };
     ($a:expr, $($rest:tt)*) => {
-        $crate::is_arguments($a)
+        $crate::is_arguments(&$a)
     };
 }
 
@@ -76,7 +76,7 @@ pub fn is_arguments_x(_v: &Value) -> bool {
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
-/// assert_eq!(is_arguments_x!(&json!({})), false);
+/// assert_eq!(is_arguments_x!(json!({})), false);
 /// ```
 #[macro_export]
 macro_rules! is_arguments_x {
@@ -84,9 +84,9 @@ macro_rules! is_arguments_x {
         false
     };
     ($a:expr $(,)*) => {
-        $crate::is_arguments_x($a)
+        $crate::is_arguments_x(&$a)
     };
     ($a:expr, $($rest:tt)*) => {
-        $crate::is_arguments_x($a)
+        $crate::is_arguments_x(&$a)
     };
 }

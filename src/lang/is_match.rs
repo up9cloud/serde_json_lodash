@@ -26,8 +26,8 @@ pub fn is_match(object: &Value, source: &Value) -> Value {
 /// ```rust
 /// #[macro_use] extern crate serde_json_lodash;
 /// use serde_json::json;
-/// assert_eq!(is_match!(&json!({"a": 1, "b": 2}), &json!({"b": 2})), json!(true));
-/// assert_eq!(is_match!(&json!({"a": 1, "b": 2}), &json!({"b": 1})), json!(false));
+/// assert_eq!(is_match!(json!({"a": 1, "b": 2}), json!({"b": 2})), json!(true));
+/// assert_eq!(is_match!(json!({"a": 1, "b": 2}), json!({"b": 1})), json!(false));
 /// ```
 ///
 /// Additional cases:
@@ -37,16 +37,16 @@ pub fn is_match(object: &Value, source: &Value) -> Value {
 /// # use serde_json::json;
 /// assert_eq!(is_match!(), json!(true));
 /// assert_eq!(is_match!(json!(null)), json!(true));
-/// assert_eq!(is_match!(&json!(1)), json!(true));
+/// assert_eq!(is_match!(json!(1)), json!(true));
 /// assert_eq!(is_match!(json!({"a": 1})), json!(true));
-/// assert_eq!(is_match!(&json!(null), &json!(null)), json!(true));
-/// assert_eq!(is_match!(&json!(1), &json!(1)), json!(true));
-/// assert_eq!(is_match!(&json!(1), &json!(2)), json!(false));
-/// assert_eq!(is_match!(&json!([1, 2, 3]), &json!(2)), json!(false));
-/// assert_eq!(is_match!(&json!("abc"), &json!("bc")), json!(false));
-/// assert_eq!(is_match!(&json!({"a": [1, 2, 3]}), &json!({"a": [1, 3]})), json!(true));
-/// assert_eq!(is_match!(&json!({"a": {"b": 1, "c": 2}}), &json!({"a": {"b": 1}})), json!(true));
-/// assert_eq!(is_match!(&json!(1), &json!({})), json!(true));
+/// assert_eq!(is_match!(json!(null), json!(null)), json!(true));
+/// assert_eq!(is_match!(json!(1), json!(1)), json!(true));
+/// assert_eq!(is_match!(json!(1), json!(2)), json!(false));
+/// assert_eq!(is_match!(json!([1, 2, 3]), json!(2)), json!(false));
+/// assert_eq!(is_match!(json!("abc"), json!("bc")), json!(false));
+/// assert_eq!(is_match!(json!({"a": [1, 2, 3]}), json!({"a": [1, 3]})), json!(true));
+/// assert_eq!(is_match!(json!({"a": {"b": 1, "c": 2}}), json!({"a": {"b": 1}})), json!(true));
+/// assert_eq!(is_match!(json!(1), json!({})), json!(true));
 /// ```
 #[macro_export]
 macro_rules! is_match {
@@ -57,10 +57,10 @@ macro_rules! is_match {
         $crate::lib::json!(true)
     };
     ($a:expr, $b:expr $(,)*) => {
-        $crate::is_match($a, $b)
+        $crate::is_match(&$a, &$b)
     };
     ($a:expr, $b:expr, $($rest:tt)*) => {
-        $crate::is_match($a, $b)
+        $crate::is_match(&$a, &$b)
     };
 }
 
@@ -88,7 +88,7 @@ pub fn is_match_x(object: &Value, source: &Value) -> bool {
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
-/// assert_eq!(is_match_x!(&json!({"a": 1}), &json!({"a": 1})), true);
+/// assert_eq!(is_match_x!(json!({"a": 1}), json!({"a": 1})), true);
 /// ```
 #[macro_export]
 macro_rules! is_match_x {
@@ -99,9 +99,9 @@ macro_rules! is_match_x {
         true
     };
     ($a:expr, $b:expr $(,)*) => {
-        $crate::is_match_x($a, $b)
+        $crate::is_match_x(&$a, &$b)
     };
     ($a:expr, $b:expr, $($rest:tt)*) => {
-        $crate::is_match_x($a, $b)
+        $crate::is_match_x(&$a, &$b)
     };
 }

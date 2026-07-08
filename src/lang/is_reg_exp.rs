@@ -24,10 +24,10 @@ pub fn is_reg_exp(_v: &Value) -> Value {
 /// ```rust
 /// #[macro_use] extern crate serde_json_lodash;
 /// use serde_json::json;
-/// assert_eq!(is_reg_exp!(&json!({})), json!(false));
-/// assert_eq!(is_reg_exp!(&json!("a")), json!(false));
+/// assert_eq!(is_reg_exp!(json!({})), json!(false));
+/// assert_eq!(is_reg_exp!(json!("a")), json!(false));
 /// assert_eq!(is_reg_exp!(), json!(false));
-/// assert_eq!(is_reg_exp!(&json!(null)), json!(false));
+/// assert_eq!(is_reg_exp!(json!(null)), json!(false));
 /// ```
 ///
 /// Additional cases:
@@ -36,8 +36,8 @@ pub fn is_reg_exp(_v: &Value) -> Value {
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
 /// assert_eq!(is_reg_exp!(), json!(false));
-/// assert_eq!(is_reg_exp!(&json!(null)), json!(false));
-/// assert_eq!(is_reg_exp!(&json!({"a": 1})), json!(false));
+/// assert_eq!(is_reg_exp!(json!(null)), json!(false));
+/// assert_eq!(is_reg_exp!(json!({"a": 1})), json!(false));
 /// ```
 #[macro_export]
 macro_rules! is_reg_exp {
@@ -45,10 +45,10 @@ macro_rules! is_reg_exp {
         $crate::lib::json!(false)
     };
     ($a:expr $(,)*) => {
-        $crate::is_reg_exp($a)
+        $crate::is_reg_exp(&$a)
     };
     ($a:expr, $($rest:tt)*) => {
-        $crate::is_reg_exp($a)
+        $crate::is_reg_exp(&$a)
     };
 }
 
@@ -76,7 +76,7 @@ pub fn is_reg_exp_x(_v: &Value) -> bool {
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
-/// assert_eq!(is_reg_exp_x!(&json!({})), false);
+/// assert_eq!(is_reg_exp_x!(json!({})), false);
 /// ```
 #[macro_export]
 macro_rules! is_reg_exp_x {
@@ -84,9 +84,9 @@ macro_rules! is_reg_exp_x {
         false
     };
     ($a:expr $(,)*) => {
-        $crate::is_reg_exp_x($a)
+        $crate::is_reg_exp_x(&$a)
     };
     ($a:expr, $($rest:tt)*) => {
-        $crate::is_reg_exp_x($a)
+        $crate::is_reg_exp_x(&$a)
     };
 }

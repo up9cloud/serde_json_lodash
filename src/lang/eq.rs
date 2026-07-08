@@ -24,10 +24,10 @@ pub fn eq(a: &Value, b: &Value) -> Value {
 /// ```rust
 /// #[macro_use] extern crate serde_json_lodash;
 /// use serde_json::json;
-/// assert_eq!(eq!(&json!("a"), &json!("a")), json!(true));
+/// assert_eq!(eq!(json!("a"), json!("a")), json!(true));
 /// assert_eq!(eq!(), json!(true));
-/// assert_eq!(eq!(&json!(null)), json!(true));
-/// assert_eq!(eq!(&json!(1), &json!("1")), json!(false));
+/// assert_eq!(eq!(json!(null)), json!(true));
+/// assert_eq!(eq!(json!(1), json!("1")), json!(false));
 /// ```
 ///
 /// Additional cases:
@@ -36,17 +36,17 @@ pub fn eq(a: &Value, b: &Value) -> Value {
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
 /// assert_eq!(eq!(), json!(true));
-/// assert_eq!(eq!(&json!(null)), json!(true));
-/// assert_eq!(eq!(&json!(true)), json!(false));
-/// assert_eq!(eq!(&json!(0)), json!(false));
-/// assert_eq!(eq!(&json!("ab")), json!(false));
-/// assert_eq!(eq!(&json!([1, 2])), json!(false));
-/// assert_eq!(eq!(&json!({"a": 1})), json!(false));
-/// assert_eq!(eq!(&json!(null), &json!(null)), json!(true));
-/// assert_eq!(eq!(&json!(1), &json!(1)), json!(true));
-/// assert_eq!(eq!(&json!(1), &json!(2)), json!(false));
-/// assert_eq!(eq!(&json!([1, 2, 3]), &json!(2)), json!(false));
-/// assert_eq!(eq!(&json!("abc"), &json!("bc")), json!(false));
+/// assert_eq!(eq!(json!(null)), json!(true));
+/// assert_eq!(eq!(json!(true)), json!(false));
+/// assert_eq!(eq!(json!(0)), json!(false));
+/// assert_eq!(eq!(json!("ab")), json!(false));
+/// assert_eq!(eq!(json!([1, 2])), json!(false));
+/// assert_eq!(eq!(json!({"a": 1})), json!(false));
+/// assert_eq!(eq!(json!(null), json!(null)), json!(true));
+/// assert_eq!(eq!(json!(1), json!(1)), json!(true));
+/// assert_eq!(eq!(json!(1), json!(2)), json!(false));
+/// assert_eq!(eq!(json!([1, 2, 3]), json!(2)), json!(false));
+/// assert_eq!(eq!(json!("abc"), json!("bc")), json!(false));
 /// ```
 #[macro_export]
 macro_rules! eq {
@@ -54,13 +54,13 @@ macro_rules! eq {
         $crate::lib::json!(true)
     };
     ($a:expr $(,)*) => {
-        $crate::eq($a, &$crate::lib::json!(null))
+        $crate::eq(&$a, &$crate::lib::json!(null))
     };
     ($a:expr, $b:expr $(,)*) => {
-        $crate::eq($a, $b)
+        $crate::eq(&$a, &$b)
     };
     ($a:expr, $b:expr, $($rest:tt)*) => {
-        $crate::eq($a, $b)
+        $crate::eq(&$a, &$b)
     };
 }
 
@@ -88,7 +88,7 @@ pub fn eq_x(a: &Value, b: &Value) -> bool {
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
-/// assert_eq!(eq_x!(&json!("a"), &json!("a")), true);
+/// assert_eq!(eq_x!(json!("a"), json!("a")), true);
 /// ```
 #[macro_export]
 macro_rules! eq_x {
@@ -96,12 +96,12 @@ macro_rules! eq_x {
         true
     };
     ($a:expr $(,)*) => {
-        $crate::eq_x($a, &$crate::lib::json!(null))
+        $crate::eq_x(&$a, &$crate::lib::json!(null))
     };
     ($a:expr, $b:expr $(,)*) => {
-        $crate::eq_x($a, $b)
+        $crate::eq_x(&$a, &$b)
     };
     ($a:expr, $b:expr, $($rest:tt)*) => {
-        $crate::eq_x($a, $b)
+        $crate::eq_x(&$a, &$b)
     };
 }

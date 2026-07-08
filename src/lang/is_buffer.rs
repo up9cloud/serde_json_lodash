@@ -24,10 +24,10 @@ pub fn is_buffer(_v: &Value) -> Value {
 /// ```rust
 /// #[macro_use] extern crate serde_json_lodash;
 /// use serde_json::json;
-/// assert_eq!(is_buffer!(&json!({})), json!(false));
-/// assert_eq!(is_buffer!(&json!("a")), json!(false));
+/// assert_eq!(is_buffer!(json!({})), json!(false));
+/// assert_eq!(is_buffer!(json!("a")), json!(false));
 /// assert_eq!(is_buffer!(), json!(false));
-/// assert_eq!(is_buffer!(&json!(null)), json!(false));
+/// assert_eq!(is_buffer!(json!(null)), json!(false));
 /// ```
 ///
 /// Additional cases:
@@ -36,8 +36,8 @@ pub fn is_buffer(_v: &Value) -> Value {
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
 /// assert_eq!(is_buffer!(), json!(false));
-/// assert_eq!(is_buffer!(&json!(null)), json!(false));
-/// assert_eq!(is_buffer!(&json!({"a": 1})), json!(false));
+/// assert_eq!(is_buffer!(json!(null)), json!(false));
+/// assert_eq!(is_buffer!(json!({"a": 1})), json!(false));
 /// ```
 #[macro_export]
 macro_rules! is_buffer {
@@ -45,10 +45,10 @@ macro_rules! is_buffer {
         $crate::lib::json!(false)
     };
     ($a:expr $(,)*) => {
-        $crate::is_buffer($a)
+        $crate::is_buffer(&$a)
     };
     ($a:expr, $($rest:tt)*) => {
-        $crate::is_buffer($a)
+        $crate::is_buffer(&$a)
     };
 }
 
@@ -76,7 +76,7 @@ pub fn is_buffer_x(_v: &Value) -> bool {
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
-/// assert_eq!(is_buffer_x!(&json!({})), false);
+/// assert_eq!(is_buffer_x!(json!({})), false);
 /// ```
 #[macro_export]
 macro_rules! is_buffer_x {
@@ -84,9 +84,9 @@ macro_rules! is_buffer_x {
         false
     };
     ($a:expr $(,)*) => {
-        $crate::is_buffer_x($a)
+        $crate::is_buffer_x(&$a)
     };
     ($a:expr, $($rest:tt)*) => {
-        $crate::is_buffer_x($a)
+        $crate::is_buffer_x(&$a)
     };
 }

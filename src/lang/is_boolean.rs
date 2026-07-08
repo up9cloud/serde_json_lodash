@@ -24,8 +24,8 @@ pub fn is_boolean(v: &Value) -> Value {
 /// ```rust
 /// #[macro_use] extern crate serde_json_lodash;
 /// use serde_json::json;
-/// assert_eq!(is_boolean!(&json!(false)), json!(true));
-/// assert_eq!(is_boolean!(&json!(null)), json!(false));
+/// assert_eq!(is_boolean!(json!(false)), json!(true));
+/// assert_eq!(is_boolean!(json!(null)), json!(false));
 /// ```
 ///
 /// Additional cases:
@@ -34,12 +34,12 @@ pub fn is_boolean(v: &Value) -> Value {
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
 /// assert_eq!(is_boolean!(), json!(false));
-/// assert_eq!(is_boolean!(&json!(null)), json!(false));
-/// assert_eq!(is_boolean!(&json!(true)), json!(true));
-/// assert_eq!(is_boolean!(&json!(0)), json!(false));
-/// assert_eq!(is_boolean!(&json!("ab")), json!(false));
-/// assert_eq!(is_boolean!(&json!([1, 2])), json!(false));
-/// assert_eq!(is_boolean!(&json!({"a": 1})), json!(false));
+/// assert_eq!(is_boolean!(json!(null)), json!(false));
+/// assert_eq!(is_boolean!(json!(true)), json!(true));
+/// assert_eq!(is_boolean!(json!(0)), json!(false));
+/// assert_eq!(is_boolean!(json!("ab")), json!(false));
+/// assert_eq!(is_boolean!(json!([1, 2])), json!(false));
+/// assert_eq!(is_boolean!(json!({"a": 1})), json!(false));
 /// ```
 #[macro_export]
 macro_rules! is_boolean {
@@ -47,10 +47,10 @@ macro_rules! is_boolean {
         $crate::lib::json!(false)
     };
     ($a:expr $(,)*) => {
-        $crate::is_boolean($a)
+        $crate::is_boolean(&$a)
     };
     ($a:expr, $($rest:tt)*) => {
-        $crate::is_boolean($a)
+        $crate::is_boolean(&$a)
     };
 }
 
@@ -78,7 +78,7 @@ pub fn is_boolean_x(v: &Value) -> bool {
 /// ```rust
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
-/// assert_eq!(is_boolean_x!(&json!(false)), true);
+/// assert_eq!(is_boolean_x!(json!(false)), true);
 /// ```
 #[macro_export]
 macro_rules! is_boolean_x {
@@ -86,9 +86,9 @@ macro_rules! is_boolean_x {
         false
     };
     ($a:expr $(,)*) => {
-        $crate::is_boolean_x($a)
+        $crate::is_boolean_x(&$a)
     };
     ($a:expr, $($rest:tt)*) => {
-        $crate::is_boolean_x($a)
+        $crate::is_boolean_x(&$a)
     };
 }
