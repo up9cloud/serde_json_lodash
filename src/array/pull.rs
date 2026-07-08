@@ -1,3 +1,4 @@
+use crate::internal::same_value_zero;
 use crate::lib::Value;
 
 /// Fn form of [pull!](crate::pull!); see it for the full docs
@@ -23,7 +24,7 @@ pub fn pull(mut array: Value, value: Value) -> Value {
             }
             let mut new_vec = vec![];
             for item in vec.iter() {
-                if item != &value {
+                if !same_value_zero(item, &value) {
                     new_vec.push(item.clone())
                 }
             }
@@ -65,6 +66,8 @@ pub fn pull(mut array: Value, value: Value) -> Value {
 /// assert_eq!(pull!(json!([[]]), json!([])), json!([[]]));
 /// assert_eq!(pull!(json!([{}]), json!({})), json!([{}]));
 /// assert_eq!(pull!(json!({})), json!({}));
+/// // SameValueZero: JS has one number type, so 1 == 1.0
+/// assert_eq!(pull!(json!([1, 1.0, 2]), json!(1)), json!([2]));
 /// ```
 #[macro_export]
 macro_rules! pull {

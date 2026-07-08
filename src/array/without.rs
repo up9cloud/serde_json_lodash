@@ -1,3 +1,4 @@
+use crate::internal::Svz;
 use crate::lib::{Value, json};
 
 use std::collections::HashSet;
@@ -16,11 +17,17 @@ use std::collections::HashSet;
 pub fn without(array: Value, values: Value) -> Value {
     match array {
         Value::Array(vec) => {
-            let excluded: HashSet<Value> = match values {
-                Value::Array(v) => v.into_iter().collect(),
+            let excluded: HashSet<Svz> = match values {
+                Value::Array(v) => v.into_iter().map(Svz).collect(),
                 _ => HashSet::new(),
             };
-            Value::Array(vec.into_iter().filter(|v| !excluded.contains(v)).collect())
+            Value::Array(
+                vec.into_iter()
+                    .map(Svz)
+                    .filter(|k| !excluded.contains(k))
+                    .map(|k| k.0)
+                    .collect(),
+            )
         }
         _ => json!([]),
     }
@@ -51,6 +58,8 @@ pub fn without(array: Value, values: Value) -> Value {
 /// assert_eq!(without!(), json!([]));
 /// assert_eq!(without!(json!([1, 2, 3])), json!([1, 2, 3]));
 /// assert_eq!(without!(json!([1, 2, 3]), json!([9])), json!([1, 2, 3]));
+/// // SameValueZero: JS has one number type, so 1 == 1.0
+/// assert_eq!(without!(json!([1, 1.0, 2]), json!([1])), json!([2]));
 /// ```
 #[macro_export]
 macro_rules! without {

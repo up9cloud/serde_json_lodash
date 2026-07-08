@@ -1,3 +1,4 @@
+use crate::internal::Svz;
 use crate::lib::{Value, json};
 
 use std::collections::HashSet;
@@ -22,10 +23,10 @@ pub fn difference_by(array: Value, other: Value, iteratee: impl Fn(&Value) -> Va
         Value::Array(v) => v,
         _ => return Value::Array(a),
     };
-    let b_keys: HashSet<Value> = b.iter().map(&iteratee).collect();
+    let b_keys: HashSet<Svz> = b.iter().map(|v| Svz(iteratee(v))).collect();
     Value::Array(
         a.into_iter()
-            .filter(|v| !b_keys.contains(&iteratee(v)))
+            .filter(|v| !b_keys.contains(&Svz(iteratee(v))))
             .collect(),
     )
 }

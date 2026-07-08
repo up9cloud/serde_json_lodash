@@ -1,3 +1,4 @@
+use crate::internal::same_value_zero;
 use crate::lib::{Value, json};
 
 /// Fn form of [is_equal_with!](crate::is_equal_with!); see it for the full docs
@@ -96,7 +97,7 @@ pub fn is_equal_with_x(
 ) -> bool {
     match customizer(a, b) {
         Some(result) => result,
-        None => a == b,
+        None => same_value_zero(a, b),
     }
 }
 

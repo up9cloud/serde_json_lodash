@@ -1,3 +1,4 @@
+use crate::internal::same_value_zero;
 use crate::lib::{Value, json};
 
 use crate::internal::resolve_from_index;
@@ -56,6 +57,8 @@ pub fn includes(collection: &Value, value: &Value, from_index: isize) -> Value {
 /// assert_eq!(includes!(json!("abcd"), json!("bc"), 1), json!(true));
 /// assert_eq!(includes!(json!("abcd"), json!("bc"), 2), json!(false));
 /// assert_eq!(includes!(json!("abcd"), json!("cd"), -2), json!(true));
+/// // SameValueZero: JS has one number type, so 1 == 1.0
+/// assert_eq!(includes!(json!([1.0, 2]), json!(1)), json!(true));
 /// ```
 #[macro_export]
 macro_rules! includes {
@@ -104,12 +107,12 @@ pub fn includes_x(collection: &Value, value: &Value, from_index: isize) -> bool 
         },
         Value::Array(vec) => {
             let start = resolve_from_index(vec.len(), from_index);
-            vec.iter().skip(start).any(|v| v == value)
+            vec.iter().skip(start).any(|v| same_value_zero(v, value))
         }
         // like lodash, fromIndex applies to the object's values sequence
         Value::Object(o) => {
             let start = resolve_from_index(o.len(), from_index);
-            o.values().skip(start).any(|v| v == value)
+            o.values().skip(start).any(|v| same_value_zero(v, value))
         }
         _ => false,
     }

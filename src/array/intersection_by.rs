@@ -1,3 +1,4 @@
+use crate::internal::Svz;
 use crate::lib::{Value, json};
 
 use std::collections::HashSet;
@@ -22,11 +23,11 @@ pub fn intersection_by(array: Value, other: Value, iteratee: impl Fn(&Value) -> 
         Value::Array(v) => v,
         _ => return json!([]),
     };
-    let b_keys: HashSet<Value> = b.iter().map(&iteratee).collect();
+    let b_keys: HashSet<Svz> = b.iter().map(|v| Svz(iteratee(v))).collect();
     let mut out = vec![];
-    let mut out_keys: HashSet<Value> = HashSet::new();
+    let mut out_keys: HashSet<Svz> = HashSet::new();
     for v in a {
-        let k = iteratee(&v);
+        let k = Svz(iteratee(&v));
         if b_keys.contains(&k) && out_keys.insert(k) {
             out.push(v);
         }

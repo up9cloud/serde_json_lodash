@@ -1,3 +1,4 @@
+use crate::internal::same_value_zero;
 use crate::lib::{Value, json};
 
 use crate::array::sorted_index::sorted_index_impl;
@@ -75,7 +76,7 @@ pub fn sorted_last_index_of_x(array: Value, value: Value) -> isize {
     let i = sorted_index_impl(&array, &value, true, |v| v.clone());
     if let Value::Array(vec) = &array
         && i > 0
-        && vec[i - 1] == value
+        && same_value_zero(&vec[i - 1], &value)
     {
         return (i - 1) as isize;
     }

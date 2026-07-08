@@ -1,3 +1,4 @@
+use crate::internal::SvzRef;
 use crate::lib::Value;
 
 use std::collections::HashSet;
@@ -22,17 +23,17 @@ pub fn xor(array: Value, other: Value) -> Value {
         Value::Array(v) => v,
         _ => vec![],
     };
-    let a_set: HashSet<&Value> = a.iter().collect();
-    let b_set: HashSet<&Value> = b.iter().collect();
-    let mut seen: HashSet<&Value> = HashSet::new();
+    let a_set: HashSet<SvzRef> = a.iter().map(SvzRef).collect();
+    let b_set: HashSet<SvzRef> = b.iter().map(SvzRef).collect();
+    let mut seen: HashSet<SvzRef> = HashSet::new();
     let mut out = vec![];
     for v in a.iter() {
-        if !b_set.contains(v) && seen.insert(v) {
+        if !b_set.contains(&SvzRef(v)) && seen.insert(SvzRef(v)) {
             out.push(v.clone());
         }
     }
     for v in b.iter() {
-        if !a_set.contains(v) && seen.insert(v) {
+        if !a_set.contains(&SvzRef(v)) && seen.insert(SvzRef(v)) {
             out.push(v.clone());
         }
     }
@@ -62,6 +63,8 @@ pub fn xor(array: Value, other: Value) -> Value {
 /// assert_eq!(xor!(), json!([]));
 /// assert_eq!(xor!(json!([1, 2])), json!([1, 2]));
 /// assert_eq!(xor!(json!([1, 2]), json!([1, 2])), json!([]));
+/// // SameValueZero: JS has one number type, so 1 == 1.0
+/// assert_eq!(xor!(json!([1, 2]), json!([1.0])), json!([2]));
 /// ```
 #[macro_export]
 macro_rules! xor {

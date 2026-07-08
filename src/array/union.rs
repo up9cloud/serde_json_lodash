@@ -44,6 +44,8 @@ pub fn union(array: Value, other: Value) -> Value {
 /// assert_eq!(union!(), json!([]));
 /// assert_eq!(union!(json!([1, 2])), json!([1, 2]));
 /// assert_eq!(union!(json!([1]), json!([2]), json!([1, 3])), json!([1, 2, 3]));
+/// // SameValueZero: JS has one number type, so 1 == 1.0
+/// assert_eq!(union!(json!([1]), json!([1.0, 2])), json!([1, 2]));
 /// ```
 #[macro_export]
 macro_rules! union {

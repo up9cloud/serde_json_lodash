@@ -1,3 +1,4 @@
+use crate::internal::same_value_zero;
 use crate::lib::{Value, json};
 
 /// Fn form of [is_equal!](crate::is_equal!); see it for the full docs
@@ -47,6 +48,8 @@ pub fn is_equal(a: &Value, b: &Value) -> Value {
 /// assert_eq!(is_equal!(json!("abc"), json!("bc")), json!(false));
 /// assert_eq!(is_equal!(json!([1, [2]]), json!([1, [2]])), json!(true));
 /// assert_eq!(is_equal!(json!(1), json!("1")), json!(false));
+/// // SameValueZero: JS has one number type, so 1 == 1.0
+/// assert_eq!(is_equal!(json!({"a": 1}), json!({"a": 1.0})), json!(true));
 /// ```
 #[macro_export]
 macro_rules! is_equal {
@@ -76,7 +79,7 @@ macro_rules! is_equal {
 /// assert_eq!(is_equal_x(&json!(1), &json!(1)), true);
 /// ```
 pub fn is_equal_x(a: &Value, b: &Value) -> bool {
-    a == b
+    same_value_zero(a, b)
 }
 
 /// `_x` helper for [is_equal!](crate::is_equal!): returns a primitive value instead of a [`Value`](crate::lib::Value).

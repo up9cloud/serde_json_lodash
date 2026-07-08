@@ -1,3 +1,4 @@
+use crate::internal::same_value_zero;
 use crate::lib::Value;
 
 use crate::internal::property_in;
@@ -19,7 +20,7 @@ pub fn matches_property(
 ) -> impl Fn(&Value) -> bool {
     let p_vec = crate::to_path_x(path);
     let src_value = src_value.into();
-    move |v| property_in(v, &p_vec) == src_value
+    move |v| same_value_zero(&property_in(v, &p_vec), &src_value)
 }
 
 /// See lodash [matchesProperty](https://lodash.com/docs/#matchesProperty)
@@ -51,6 +52,8 @@ pub fn matches_property(
 /// # use serde_json::json;
 /// assert_eq!(matches_property!("a.b", json!(1))(&json!({"a": {"b": 1}})), true);
 /// assert_eq!(matches_property!("x", json!(null))(&json!({"a": 1})), true); // missing path is null
+/// // SameValueZero: JS has one number type, so 1 == 1.0
+/// assert_eq!(matches_property!("a", json!(1))(&json!({"a": 1.0})), true);
 /// ```
 #[macro_export]
 macro_rules! matches_property {

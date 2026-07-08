@@ -49,14 +49,12 @@ examples — is on **[docs.rs](https://docs.rs/serde_json_lodash)**.
 
 Known gaps against lodash, in priority order:
 
-- **Number unification (SameValueZero)** — JS has a single number type, so
-  lodash treats `1` and `1.0` as the same value; `serde_json::Number` keeps
-  them distinct, so every equality/hash-based function deviates today
-  (`uniq!(json!([1, 1.0]))` → `[1, 1.0]` instead of `[1]`, `eq!(json!(1),
-  json!(1.0))` → `false` instead of `true`, same for
-  `intersection`/`difference`/`xor`/`includes`/`index_of`/`is_equal`/…).
-  Fix: canonicalize integral floats to integer `Number`s in a shared
-  SameValueZero helper and use it everywhere values are compared or hashed.
+- **Number-to-string coercion** — equality now follows SameValueZero (JS's
+  single number type: `eq!(json!(1), json!(1.0))` → `true`, `uniq!` dedups
+  `1`/`1.0`, …), but *string* coercion still shows the JSON representation:
+  `to_string!(json!(1.0))` is `"1.0"` where JS `String(1.0)` is `"1"`, which
+  also affects string-keyed functions (`group_by`/`count_by`/`key_by`/
+  `invert`/`join` keys for integral floats).
 - **Iteratee shorthands in more places** — the collection macros already
   accept `json!({...})` (`_.matches`), `json!([path, value])`
   (`_.matchesProperty`) and string literals (`_.property`) in place of a

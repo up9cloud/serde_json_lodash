@@ -1,3 +1,4 @@
+use crate::internal::SvzRef;
 use crate::lib::Value;
 
 use std::collections::HashSet;
@@ -27,10 +28,11 @@ pub fn pull_all_by(mut array: Value, values: Value, iteratee: impl Fn(&Value) ->
                 | Value::Object(_) => return array,
                 Value::Array(vec) => vec,
             };
-            let excluded_keys: HashSet<&Value> = values_vec.iter().map(&iteratee).collect();
+            let excluded_keys: HashSet<SvzRef> =
+                values_vec.iter().map(|v| SvzRef(iteratee(v))).collect();
             let mut new_vec = vec![];
             for item in vec.iter() {
-                if !excluded_keys.contains(iteratee(item)) {
+                if !excluded_keys.contains(&SvzRef(iteratee(item))) {
                     new_vec.push(item.clone())
                 }
             }

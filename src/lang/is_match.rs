@@ -47,6 +47,8 @@ pub fn is_match(object: &Value, source: &Value) -> Value {
 /// assert_eq!(is_match!(json!({"a": [1, 2, 3]}), json!({"a": [1, 3]})), json!(true));
 /// assert_eq!(is_match!(json!({"a": {"b": 1, "c": 2}}), json!({"a": {"b": 1}})), json!(true));
 /// assert_eq!(is_match!(json!(1), json!({})), json!(true));
+/// // SameValueZero: JS has one number type, so 1 == 1.0
+/// assert_eq!(is_match!(json!({"a": 1}), json!({"a": 1.0})), json!(true));
 /// ```
 #[macro_export]
 macro_rules! is_match {

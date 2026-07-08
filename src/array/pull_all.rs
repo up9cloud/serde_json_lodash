@@ -1,3 +1,4 @@
+use crate::internal::SvzRef;
 use crate::lib::Value;
 
 use std::collections::HashSet;
@@ -27,10 +28,10 @@ pub fn pull_all(mut array: Value, values: Value) -> Value {
                 | Value::Object(_) => return array,
                 Value::Array(vec) => vec,
             };
-            let excluded: HashSet<&Value> = values_vec.iter().collect();
+            let excluded: HashSet<SvzRef> = values_vec.iter().map(SvzRef).collect();
             let mut new_vec = vec![];
             for item in vec.iter() {
-                if !excluded.contains(item) {
+                if !excluded.contains(&SvzRef(item)) {
                     new_vec.push(item.clone())
                 }
             }
@@ -75,6 +76,8 @@ pub fn pull_all(mut array: Value, values: Value) -> Value {
 /// assert_eq!(pull_all!(json!([null]), json!([null])), json!([]));
 /// assert_eq!(pull_all!(json!([null,0]), json!([null]), json!([0])), json!([0]));
 /// assert_eq!(pull_all!(json!({})), json!({}));
+/// // SameValueZero: JS has one number type, so 1 == 1.0
+/// assert_eq!(pull_all!(json!([1, 1.0, 2]), json!([1])), json!([2]));
 /// ```
 #[macro_export]
 macro_rules! pull_all {

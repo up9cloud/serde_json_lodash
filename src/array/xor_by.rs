@@ -1,3 +1,4 @@
+use crate::internal::SvzRef;
 use crate::lib::Value;
 
 use std::collections::HashSet;
@@ -24,17 +25,17 @@ pub fn xor_by(array: Value, other: Value, iteratee: impl Fn(&Value) -> Value) ->
     };
     let a_keys: Vec<Value> = a.iter().map(&iteratee).collect();
     let b_keys: Vec<Value> = b.iter().map(&iteratee).collect();
-    let a_key_set: HashSet<&Value> = a_keys.iter().collect();
-    let b_key_set: HashSet<&Value> = b_keys.iter().collect();
-    let mut seen: HashSet<&Value> = HashSet::new();
+    let a_key_set: HashSet<SvzRef> = a_keys.iter().map(SvzRef).collect();
+    let b_key_set: HashSet<SvzRef> = b_keys.iter().map(SvzRef).collect();
+    let mut seen: HashSet<SvzRef> = HashSet::new();
     let mut out = vec![];
     for (v, k) in a.iter().zip(a_keys.iter()) {
-        if !b_key_set.contains(k) && seen.insert(k) {
+        if !b_key_set.contains(&SvzRef(k)) && seen.insert(SvzRef(k)) {
             out.push(v.clone());
         }
     }
     for (v, k) in b.iter().zip(b_keys.iter()) {
-        if !a_key_set.contains(k) && seen.insert(k) {
+        if !a_key_set.contains(&SvzRef(k)) && seen.insert(SvzRef(k)) {
             out.push(v.clone());
         }
     }

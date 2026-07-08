@@ -46,10 +46,10 @@ pub(crate) fn bool_to_number(b: bool) -> Number {
 // values deep equality is the sensible equivalent. `Value: Hash` is
 // consistent with its `Eq`, so a hash set keeps this O(n).
 pub(crate) fn uniq_by_key(vec: Vec<Value>, key: impl Fn(&Value) -> Value) -> Vec<Value> {
-    let mut seen: std::collections::HashSet<Value> = std::collections::HashSet::new();
+    let mut seen: std::collections::HashSet<Svz> = std::collections::HashSet::new();
     let mut out = vec![];
     for v in vec {
-        if seen.insert(key(&v)) {
+        if seen.insert(Svz(key(&v))) {
             out.push(v);
         }
     }
@@ -87,6 +87,93 @@ pub(crate) fn f64_to_number(f: f64) -> Option<Number> {
     Number::from_f64(f)
 }
 
+// SameValueZero (https://262.ecma-international.org/7.0/#sec-samevaluezero)
+// adapted to owned JSON values: numbers compare numerically via f64 — JS has
+// a single (double) number type, so `1 == 1.0` — and composites compare
+// deeply, the crate's usual owned-value stand-in for reference identity.
+// Every equality/membership check in the crate should go through this (or the
+// `Svz`/`SvzRef` hash keys below), never plain `==`.
+pub(crate) fn same_value_zero(a: &Value, b: &Value) -> bool {
+    match (a, b) {
+        (Value::Number(x), Value::Number(y)) => x.as_f64() == y.as_f64(),
+        (Value::Array(x), Value::Array(y)) => {
+            x.len() == y.len() && x.iter().zip(y).all(|(u, v)| same_value_zero(u, v))
+        }
+        (Value::Object(x), Value::Object(y)) => {
+            x.len() == y.len()
+                && x.iter()
+                    .all(|(k, va)| y.get(k).is_some_and(|vb| same_value_zero(va, vb)))
+        }
+        _ => a == b,
+    }
+}
+
+fn svz_hash<H: std::hash::Hasher>(v: &Value, state: &mut H) {
+    use std::hash::Hash;
+    match v {
+        Value::Null => state.write_u8(0),
+        Value::Bool(b) => {
+            state.write_u8(1);
+            state.write_u8(*b as u8);
+        }
+        Value::Number(n) => {
+            state.write_u8(2);
+            // normalized f64 bits, so 1, 1.0 (and 0.0/-0.0) hash alike
+            let f = n.as_f64().unwrap_or(0.0);
+            let f = if f == 0.0 { 0.0 } else { f };
+            state.write_u64(f.to_bits());
+        }
+        Value::String(s) => {
+            state.write_u8(3);
+            s.hash(state);
+        }
+        Value::Array(vec) => {
+            state.write_u8(4);
+            state.write_usize(vec.len());
+            for v in vec {
+                svz_hash(v, state);
+            }
+        }
+        // Map iteration is ordered (BTreeMap), so this is canonical
+        Value::Object(o) => {
+            state.write_u8(5);
+            state.write_usize(o.len());
+            for (k, v) in o {
+                k.hash(state);
+                svz_hash(v, state);
+            }
+        }
+    }
+}
+
+// Owned / borrowed hash-set keys with SameValueZero semantics, for the
+// hash-based set operations (uniq/intersection/difference/…)
+pub(crate) struct Svz(pub Value);
+impl PartialEq for Svz {
+    fn eq(&self, other: &Self) -> bool {
+        same_value_zero(&self.0, &other.0)
+    }
+}
+impl Eq for Svz {}
+impl std::hash::Hash for Svz {
+    fn hash<H: std::hash::Hasher>(&self, state: &mut H) {
+        svz_hash(&self.0, state);
+    }
+}
+
+pub(crate) struct SvzRef<'a>(pub &'a Value);
+impl PartialEq for SvzRef<'_> {
+    fn eq(&self, other: &Self) -> bool {
+        same_value_zero(self.0, other.0)
+    }
+}
+impl Eq for SvzRef<'_> {}
+impl std::hash::Hash for SvzRef<'_> {
+    fn hash<H: std::hash::Hasher>(&self, state: &mut H) {
+        svz_hash(self.0, state);
+    }
+}
+
 // JS truthiness: null, false, 0 and "" are falsey; everything else
 // (including empty arrays/objects) is truthy
 pub(crate) fn is_truthy(v: &Value) -> bool {
@@ -114,7 +201,10 @@ pub(crate) fn value_shorthand(spec: &Value, v: &Value) -> Value {
     match spec {
         Value::Object(_) => json!(base_is_match(v, spec)),
         Value::Array(pair) if pair.len() == 2 => {
-            json!(property_in(v, &crate::to_path_x(pair[0].clone())) == pair[1])
+            json!(same_value_zero(
+                &property_in(v, &crate::to_path_x(pair[0].clone())),
+                &pair[1]
+            ))
         }
         Value::Null => v.clone(),
         _ => property_in(v, &crate::to_path_x(spec.clone())),
@@ -173,7 +263,7 @@ pub(crate) fn base_is_match(object: &Value, source: &Value) -> bool {
                 .all(|sv| oa.iter().any(|ov| base_is_match(ov, sv))),
             _ => sa.is_empty(),
         },
-        _ => object == source,
+        _ => same_value_zero(object, source),
     }
 }
 

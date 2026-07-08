@@ -40,6 +40,8 @@ pub fn uniq(array: Value) -> Value {
 /// assert_eq!(uniq!(), json!([]));
 /// assert_eq!(uniq!(json!(null)), json!([]));
 /// assert_eq!(uniq!(json!([1, 1, 2, 3, 3])), json!([1, 2, 3]));
+/// // SameValueZero: JS has one number type, so 1 == 1.0
+/// assert_eq!(uniq!(json!([1, 1.0, 2])), json!([1, 2]));
 /// ```
 #[macro_export]
 macro_rules! uniq {

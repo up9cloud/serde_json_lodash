@@ -1,3 +1,4 @@
+use crate::internal::SvzRef;
 use crate::lib::Value;
 
 use std::collections::HashSet;
@@ -56,6 +57,8 @@ pub fn intersection(v1: Value, v2: Value) -> Value {
 /// assert_eq!(intersection!(json!([null, false, 1]), json!([null,false,0]), json!([false, 2, null])), json!([null,false]));
 /// // duplicates in the inputs still yield unique values, like lodash
 /// assert_eq!(intersection!(json!([2, 1, 2]), json!([2, 3, 2])), json!([2]));
+/// // SameValueZero: JS has one number type, so 1 == 1.0
+/// assert_eq!(intersection!(json!([1, 3]), json!([1.0])), json!([1]));
 /// ```
 #[macro_export]
 macro_rules! intersection {
@@ -99,17 +102,18 @@ pub fn intersection_x(v1: Value, v2: Value) -> Vec<Value> {
     // object. Scalars intersect by value through a hash set (`Value: Hash`
     // is consistent with its `Eq`), unique and in first-array order, in
     // O(len1 + len2).
-    let set2: HashSet<&Value> = vec2
+    let set2: HashSet<SvzRef> = vec2
         .iter()
         .filter(|v| !v.is_object() && !v.is_array())
+        .map(SvzRef)
         .collect();
-    let mut emitted: HashSet<&Value> = HashSet::with_capacity(set2.len());
+    let mut emitted: HashSet<SvzRef> = HashSet::with_capacity(set2.len());
     let mut result = vec![];
     for v in vec1.iter() {
         if v.is_object() || v.is_array() {
             continue;
         }
-        if set2.contains(v) && emitted.insert(v) {
+        if set2.contains(&SvzRef(v)) && emitted.insert(SvzRef(v)) {
             result.push(v.clone());
         }
     }

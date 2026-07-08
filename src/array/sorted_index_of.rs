@@ -1,3 +1,4 @@
+use crate::internal::same_value_zero;
 use crate::lib::{Value, json};
 
 use crate::array::sorted_index::sorted_index_impl;
@@ -43,6 +44,8 @@ pub fn sorted_index_of(array: Value, value: Value) -> Value {
 /// assert_eq!(sorted_index_of!(json!([1, 2, 3]), json!(2)), json!(1));
 /// assert_eq!(sorted_index_of!(json!("abc"), json!("bc")), json!(-1));
 /// assert_eq!(sorted_index_of!(json!([1, 2, 3]), json!(9)), json!(-1));
+/// // SameValueZero: JS has one number type, so 1 == 1.0
+/// assert_eq!(sorted_index_of!(json!([1.0, 2]), json!(1)), json!(0));
 /// ```
 #[macro_export]
 macro_rules! sorted_index_of {
@@ -75,7 +78,7 @@ pub fn sorted_index_of_x(array: Value, value: Value) -> isize {
     let i = sorted_index_impl(&array, &value, false, |v| v.clone());
     if let Value::Array(vec) = &array
         && i < vec.len()
-        && vec[i] == value
+        && same_value_zero(&vec[i], &value)
     {
         return i as isize;
     }

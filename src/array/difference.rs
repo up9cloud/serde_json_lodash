@@ -1,3 +1,4 @@
+use crate::internal::SvzRef;
 use crate::lib::Value;
 
 use std::collections::HashSet;
@@ -31,14 +32,15 @@ pub fn difference(v1: Value, v2: Value) -> Value {
         Value::Array(vec) => {
             // Only scalars can match (SameValueZero: two owned composites are
             // never the same reference), so hash vec2's scalars once — O(n+m).
-            let set2: HashSet<&Value> = vec
+            let set2: HashSet<SvzRef> = vec
                 .iter()
                 .filter(|v| !v.is_object() && !v.is_array())
+                .map(SvzRef)
                 .collect();
             for v in v1.iter() {
                 match v {
                     Value::Null | Value::Bool(_) | Value::Number(_) | Value::String(_) => {
-                        if set2.contains(v) {
+                        if set2.contains(&SvzRef(v)) {
                             continue;
                         }
                     }
@@ -80,6 +82,8 @@ pub fn difference(v1: Value, v2: Value) -> Value {
 /// assert_eq!(difference!(json!([1,null])), json!([1,null]));
 /// assert_eq!(difference!(json!({})), json!([]));
 /// assert_eq!(difference!(json!([null,true,0,"",1.1,[],{}]), json!([null,true,0,"",1.1,[],{}])), json!([ [], {} ]));
+/// // SameValueZero: JS has one number type, so 1 == 1.0
+/// assert_eq!(difference!(json!([1, 2]), json!([1.0])), json!([2]));
 /// ```
 #[macro_export]
 macro_rules! difference {

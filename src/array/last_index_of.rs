@@ -1,3 +1,4 @@
+use crate::internal::same_value_zero;
 use crate::lib::{Value, json};
 
 use crate::internal::resolve_from_index_back;
@@ -64,6 +65,8 @@ pub fn last_index_of(array: Value, value: Value, from_index: isize) -> Value {
 /// // negative fromIndex counts back from the end
 /// assert_eq!(last_index_of!(json!([1, 2, 1, 2]), json!(2), -2), json!(1));
 /// assert_eq!(last_index_of!(json!([1, 2, 1, 2]), json!(2), 9), json!(3));
+/// // SameValueZero: JS has one number type, so 1 == 1.0
+/// assert_eq!(last_index_of!(json!([1.0, 2]), json!(1)), json!(0));
 /// ```
 #[macro_export]
 macro_rules! last_index_of {
@@ -107,7 +110,7 @@ pub fn last_index_of_x(array: Value, value: Value, from_index: isize) -> isize {
             Value::Array(vec) => {
                 let start = resolve_from_index_back(vec.len(), from_index);
                 for (i, item) in vec.iter().enumerate().take(start + 1).rev() {
-                    if item == &value {
+                    if same_value_zero(item, &value) {
                         return i as isize;
                     }
                 }
