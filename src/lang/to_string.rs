@@ -1,5 +1,6 @@
 use crate::lib::Value;
-use crate::internal::{type_name};
+
+use crate::internal::type_name;
 
 pub(crate) fn json_array_to_string_x(vec: Vec<Value>) -> String {
     let mut iter = vec.into_iter();
@@ -25,33 +26,10 @@ pub(crate) fn json_array_to_string_x(vec: Vec<Value>) -> String {
     }
 }
 
-/// `_x` helper for [to_string()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
-/// Additional cases:
+/// Fn form of [to_string!](crate::to_string!); see it for the full docs
 ///
-/// ```rust
-/// # use serde_json_lodash::to_string_x;
-/// # use serde_json::json;
-/// assert_eq!(to_string_x(json!(null)), "".to_owned());
-/// ```
-pub fn to_string_x<A: Into<Value>>(v: A) -> String {
-    let v = v.into();
-    match v {
-        Value::Null => "".into(),
-        Value::Bool(b) => {
-            if b {
-                "true".into()
-            } else {
-                "false".into()
-            }
-        }
-        Value::Number(n) => n.to_string(),
-        Value::String(s) => s,
-        Value::Array(vec) => json_array_to_string_x(vec),
-        Value::Object(o) => type_name(&o).into(), // I don't think put [object Object] here is a good idea, so...
-    }
-}
-
-/// See lodash [toString](https://lodash.com/docs/#toString)
+/// `_x` forms: [to_string_x!](crate::to_string_x!), [to_string_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -64,48 +42,9 @@ pub fn to_string<A: Into<Value>>(v: A) -> Value {
     Value::String(to_string_x(v))
 }
 
-/// Based on [to_string_x()]
+/// See lodash [toString](https://lodash.com/docs/#toString)
 ///
-/// Examples:
-///
-/// ```rust
-/// #[macro_use] extern crate serde_json_lodash;
-/// use serde_json::json;
-/// assert_eq!(
-///   to_string_x!(json!(null)),
-///   "".to_owned()
-/// );
-/// assert_eq!(
-///   to_string_x!(json!(-0)),
-///   "0".to_owned() // In rust world, -0 is 0
-/// );
-/// assert_eq!(
-///   to_string_x!(json!([1, 2, 3])),
-///   "1,2,3".to_owned()
-/// );
-/// ```
-///
-/// Additional cases:
-///
-/// ```rust
-/// # #[macro_use] extern crate serde_json_lodash;
-/// # use serde_json::json;
-/// assert_eq!(to_string_x!(), "".to_owned());
-/// ```
-#[macro_export]
-macro_rules! to_string_x {
-    () => {
-        "".to_owned()
-    };
-    ($a:expr $(,)*) => {
-        $crate::to_string_x($a)
-    };
-    ($a:expr, $($rest:tt)*) => {
-        $crate::to_string_x($a)
-    };
-}
-
-/// Based on [to_string()]
+/// Fn form: [to_string()] | `_x` forms: [to_string_x!](crate::to_string_x!), [to_string_x()]
 ///
 /// Examples:
 ///
@@ -151,5 +90,77 @@ macro_rules! to_string {
     };
     ($a:expr, $($rest:tt)*) => {
         $crate::to_string($a)
+    };
+}
+
+/// `_x` helper for [to_string!](crate::to_string!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Macro form: [to_string_x!](crate::to_string_x!) | `Value` forms: [to_string!](crate::to_string!), [to_string()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::to_string_x;
+/// # use serde_json::json;
+/// assert_eq!(to_string_x(json!(null)), "".to_owned());
+/// ```
+pub fn to_string_x<A: Into<Value>>(v: A) -> String {
+    let v = v.into();
+    match v {
+        Value::Null => "".into(),
+        Value::Bool(b) => {
+            if b {
+                "true".into()
+            } else {
+                "false".into()
+            }
+        }
+        Value::Number(n) => n.to_string(),
+        Value::String(s) => s,
+        Value::Array(vec) => json_array_to_string_x(vec),
+        Value::Object(o) => type_name(&o).into(), // I don't think put [object Object] here is a good idea, so...
+    }
+}
+
+/// `_x` helper for [to_string!](crate::to_string!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Fn form: [to_string_x()] | `Value` forms: [to_string!](crate::to_string!), [to_string()]
+///
+/// Examples:
+///
+/// ```rust
+/// #[macro_use] extern crate serde_json_lodash;
+/// use serde_json::json;
+/// assert_eq!(
+///   to_string_x!(json!(null)),
+///   "".to_owned()
+/// );
+/// assert_eq!(
+///   to_string_x!(json!(-0)),
+///   "0".to_owned() // In rust world, -0 is 0
+/// );
+/// assert_eq!(
+///   to_string_x!(json!([1, 2, 3])),
+///   "1,2,3".to_owned()
+/// );
+/// ```
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(to_string_x!(), "".to_owned());
+/// ```
+#[macro_export]
+macro_rules! to_string_x {
+    () => {
+        "".to_owned()
+    };
+    ($a:expr $(,)*) => {
+        $crate::to_string_x($a)
+    };
+    ($a:expr, $($rest:tt)*) => {
+        $crate::to_string_x($a)
     };
 }

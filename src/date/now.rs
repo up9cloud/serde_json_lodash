@@ -1,8 +1,9 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
-/// See lodash [now](https://lodash.com/docs/#now)
+/// Fn form of [now!](crate::now!); see it for the full docs
 ///
-/// Returns the number of milliseconds that have elapsed since the Unix epoch
+/// `_x` form: **not provided** — see [now_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -19,7 +20,11 @@ pub fn now() -> Value {
     json!(ms)
 }
 
-/// Based on [now()]
+/// See lodash [now](https://lodash.com/docs/#now)
+///
+/// Returns the number of milliseconds that have elapsed since the Unix epoch
+///
+/// Fn form: [now()] | `_x` form: **not provided** — see [now_x()]
 ///
 /// Examples:
 ///
@@ -48,13 +53,18 @@ macro_rules! now {
     };
 }
 
-/// `_x` helper for [now()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [now()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [now!](crate::now!) and read the returned `Value`.
+///
+/// Macro form: [now_x!](crate::now_x!)
 pub fn now_x() {
     todo!()
 }
-/// Based on [now_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [now!](crate::now!) and read the returned `Value`.
+///
+/// Fn form: [now_x()]
 #[macro_export]
 macro_rules! now_x {
     ($($t:tt)*) => {

@@ -1,18 +1,8 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
-/// `_x` helper for [is_weak_set()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
+/// Fn form of [is_weak_set!](crate::is_weak_set!); see it for the full docs
 ///
-/// Additional cases:
-///
-/// ```rust
-/// # use serde_json_lodash::is_weak_set_x;
-/// # use serde_json::json;
-/// assert_eq!(is_weak_set_x(&json!({})), false);
-/// ```
-pub fn is_weak_set_x(_v: &Value) -> bool {
-    false
-}
-/// See lodash [isWeakSet](https://lodash.com/docs/#isWeakSet)
+/// `_x` forms: [is_weak_set_x!](crate::is_weak_set_x!), [is_weak_set_x()]
 ///
 /// Additional cases:
 ///
@@ -25,27 +15,9 @@ pub fn is_weak_set(_v: &Value) -> Value {
     json!(is_weak_set_x(_v))
 }
 
-/// Based on [is_weak_set_x()]
-/// Additional cases:
+/// See lodash [isWeakSet](https://lodash.com/docs/#isWeakSet)
 ///
-/// ```rust
-/// # #[macro_use] extern crate serde_json_lodash;
-/// # use serde_json::json;
-/// assert_eq!(is_weak_set_x!(&json!({})), false);
-/// ```
-#[macro_export]
-macro_rules! is_weak_set_x {
-    () => {
-        false
-    };
-    ($a:expr $(,)*) => {
-        $crate::is_weak_set_x($a)
-    };
-    ($a:expr, $($rest:tt)*) => {
-        $crate::is_weak_set_x($a)
-    };
-}
-/// Based on [is_weak_set()]
+/// Fn form: [is_weak_set()] | `_x` forms: [is_weak_set_x!](crate::is_weak_set_x!), [is_weak_set_x()]
 ///
 /// Examples:
 ///
@@ -67,5 +39,44 @@ macro_rules! is_weak_set {
     };
     ($a:expr, $($rest:tt)*) => {
         $crate::is_weak_set($a)
+    };
+}
+
+/// `_x` helper for [is_weak_set!](crate::is_weak_set!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Macro form: [is_weak_set_x!](crate::is_weak_set_x!) | `Value` forms: [is_weak_set!](crate::is_weak_set!), [is_weak_set()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::is_weak_set_x;
+/// # use serde_json::json;
+/// assert_eq!(is_weak_set_x(&json!({})), false);
+/// ```
+pub fn is_weak_set_x(_v: &Value) -> bool {
+    false
+}
+
+/// `_x` helper for [is_weak_set!](crate::is_weak_set!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Fn form: [is_weak_set_x()] | `Value` forms: [is_weak_set!](crate::is_weak_set!), [is_weak_set()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(is_weak_set_x!(&json!({})), false);
+/// ```
+#[macro_export]
+macro_rules! is_weak_set_x {
+    () => {
+        false
+    };
+    ($a:expr $(,)*) => {
+        $crate::is_weak_set_x($a)
+    };
+    ($a:expr, $($rest:tt)*) => {
+        $crate::is_weak_set_x($a)
     };
 }

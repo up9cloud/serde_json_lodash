@@ -1,8 +1,9 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
-/// See lodash [unzipWith](https://lodash.com/docs/#unzipWith)
+/// Fn form of [unzip_with!](crate::unzip_with!); see it for the full docs
 ///
-/// The inverse of `zip_with`; `iteratee` combines each regrouped tuple
+/// `_x` form: **not provided** — see [unzip_with_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -33,7 +34,11 @@ pub fn unzip_with(array: Value, iteratee: fn(&Value) -> Value) -> Value {
     Value::Array(out)
 }
 
-/// Based on [unzip_with()]
+/// See lodash [unzipWith](https://lodash.com/docs/#unzipWith)
+///
+/// The inverse of `zip_with`; `iteratee` combines each regrouped tuple
+///
+/// Fn form: [unzip_with()] | `_x` form: **not provided** — see [unzip_with_x()]
 ///
 /// Examples:
 ///
@@ -70,13 +75,20 @@ macro_rules! unzip_with {
     };
 }
 
-/// `_x` helper for [unzip_with()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [unzip_with()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [unzip_with!](crate::unzip_with!) and read the returned
+/// `Value`.
+///
+/// Macro form: [unzip_with_x!](crate::unzip_with_x!)
 pub fn unzip_with_x() {
     todo!()
 }
-/// Based on [unzip_with_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [unzip_with!](crate::unzip_with!) and read the returned
+/// `Value`.
+///
+/// Fn form: [unzip_with_x()]
 #[macro_export]
 macro_rules! unzip_with_x {
     ($($t:tt)*) => {

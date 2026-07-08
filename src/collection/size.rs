@@ -1,23 +1,8 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
-/// `_x` helper for [size()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
+/// Fn form of [size!](crate::size!); see it for the full docs
 ///
-/// Additional cases:
-///
-/// ```rust
-/// # use serde_json_lodash::size_x;
-/// # use serde_json::json;
-/// assert_eq!(size_x(json!([1, 2, 3])), 3);
-/// ```
-pub fn size_x(collection: Value) -> usize {
-    match collection {
-        Value::Array(vec) => vec.len(),
-        Value::Object(o) => o.len(),
-        Value::String(s) => s.chars().count(),
-        _ => 0,
-    }
-}
-/// See lodash [size](https://lodash.com/docs/#size)
+/// `_x` forms: [size_x!](crate::size_x!), [size_x()]
 ///
 /// Additional cases:
 ///
@@ -30,27 +15,9 @@ pub fn size(collection: Value) -> Value {
     json!(size_x(collection))
 }
 
-/// Based on [size_x()]
-/// Additional cases:
+/// See lodash [size](https://lodash.com/docs/#size)
 ///
-/// ```rust
-/// # #[macro_use] extern crate serde_json_lodash;
-/// # use serde_json::json;
-/// assert_eq!(size_x!(json!([1, 2, 3])), 3);
-/// ```
-#[macro_export]
-macro_rules! size_x {
-    () => {
-        0
-    };
-    ($a:expr $(,)*) => {
-        $crate::size_x($a)
-    };
-    ($a:expr, $($rest:tt)*) => {
-        $crate::size_x($a)
-    };
-}
-/// Based on [size()]
+/// Fn form: [size()] | `_x` forms: [size_x!](crate::size_x!), [size_x()]
 ///
 /// Examples:
 ///
@@ -74,5 +41,49 @@ macro_rules! size {
     };
     ($a:expr, $($rest:tt)*) => {
         $crate::size($a)
+    };
+}
+
+/// `_x` helper for [size!](crate::size!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Macro form: [size_x!](crate::size_x!) | `Value` forms: [size!](crate::size!), [size()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::size_x;
+/// # use serde_json::json;
+/// assert_eq!(size_x(json!([1, 2, 3])), 3);
+/// ```
+pub fn size_x(collection: Value) -> usize {
+    match collection {
+        Value::Array(vec) => vec.len(),
+        Value::Object(o) => o.len(),
+        Value::String(s) => s.chars().count(),
+        _ => 0,
+    }
+}
+
+/// `_x` helper for [size!](crate::size!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Fn form: [size_x()] | `Value` forms: [size!](crate::size!), [size()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(size_x!(json!([1, 2, 3])), 3);
+/// ```
+#[macro_export]
+macro_rules! size_x {
+    () => {
+        0
+    };
+    ($a:expr $(,)*) => {
+        $crate::size_x($a)
+    };
+    ($a:expr, $($rest:tt)*) => {
+        $crate::size_x($a)
     };
 }

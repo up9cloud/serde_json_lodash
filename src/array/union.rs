@@ -1,7 +1,11 @@
 use crate::lib::Value;
+
 use crate::internal::uniq_by_key;
 
-/// See lodash [union](https://lodash.com/docs/#union)
+/// Fn form of [union!](crate::union!); see it for the full docs
+///
+/// `_x` form: **not provided** — see [union_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -20,7 +24,9 @@ pub fn union(array: Value, other: Value) -> Value {
     Value::Array(uniq_by_key(all, |v| v.clone()))
 }
 
-/// Based on [union()]
+/// See lodash [union](https://lodash.com/docs/#union)
+///
+/// Fn form: [union()] | `_x` form: **not provided** — see [union_x()]
 ///
 /// Examples:
 ///
@@ -56,13 +62,18 @@ macro_rules! union {
     }};
 }
 
-/// `_x` helper for [union()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [union()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [union!](crate::union!) and read the returned `Value`.
+///
+/// Macro form: [union_x!](crate::union_x!)
 pub fn union_x() {
     todo!()
 }
-/// Based on [union_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [union!](crate::union!) and read the returned `Value`.
+///
+/// Fn form: [union_x()]
 #[macro_export]
 macro_rules! union_x {
     ($($t:tt)*) => {

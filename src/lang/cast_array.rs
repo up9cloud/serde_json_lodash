@@ -1,6 +1,9 @@
 use crate::lib::Value;
 
-/// See lodash [castArray](https://lodash.com/docs/#castArray)
+/// Fn form of [cast_array!](crate::cast_array!); see it for the full docs
+///
+/// `_x` form: **not provided** — see [cast_array_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -15,7 +18,9 @@ pub fn cast_array(v: Value) -> Value {
     }
 }
 
-/// Based on [cast_array()]
+/// See lodash [castArray](https://lodash.com/docs/#castArray)
+///
+/// Fn form: [cast_array()] | `_x` form: **not provided** — see [cast_array_x()]
 ///
 /// Examples:
 ///
@@ -49,13 +54,20 @@ macro_rules! cast_array {
     };
 }
 
-/// `_x` helper for [cast_array()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [cast_array()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [cast_array!](crate::cast_array!) and read the returned
+/// `Value`.
+///
+/// Macro form: [cast_array_x!](crate::cast_array_x!)
 pub fn cast_array_x() {
     todo!()
 }
-/// Based on [cast_array_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [cast_array!](crate::cast_array!) and read the returned
+/// `Value`.
+///
+/// Fn form: [cast_array_x()]
 #[macro_export]
 macro_rules! cast_array_x {
     ($($t:tt)*) => {

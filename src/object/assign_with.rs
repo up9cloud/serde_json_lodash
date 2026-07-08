@@ -1,9 +1,9 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
-/// See lodash [assignWith](https://lodash.com/docs/#assignWith)
+/// Fn form of [assign_with!](crate::assign_with!); see it for the full docs
 ///
-/// `customizer(obj_value, src_value)` produces the assigned value; returning
-/// `None` falls back to the source value
+/// `_x` form: **not provided** — see [assign_with_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -30,7 +30,12 @@ pub fn assign_with(
     }
 }
 
-/// Based on [assign_with()]
+/// See lodash [assignWith](https://lodash.com/docs/#assignWith)
+///
+/// `customizer(obj_value, src_value)` produces the assigned value; returning
+/// `None` falls back to the source value
+///
+/// Fn form: [assign_with()] | `_x` form: **not provided** — see [assign_with_x()]
 ///
 /// Examples:
 ///
@@ -76,13 +81,20 @@ macro_rules! assign_with {
     };
 }
 
-/// `_x` helper for [assign_with()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [assign_with()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [assign_with!](crate::assign_with!) and read the
+/// returned `Value`.
+///
+/// Macro form: [assign_with_x!](crate::assign_with_x!)
 pub fn assign_with_x() {
     todo!()
 }
-/// Based on [assign_with_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [assign_with!](crate::assign_with!) and read the
+/// returned `Value`.
+///
+/// Fn form: [assign_with_x()]
 #[macro_export]
 macro_rules! assign_with_x {
     ($($t:tt)*) => {

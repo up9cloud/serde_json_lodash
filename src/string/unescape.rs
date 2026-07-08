@@ -1,4 +1,4 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
 // internal `&str`/primitive worker for [unescape()] / [unescape_x()]
 fn x_unescape_x(s: &str) -> String {
@@ -9,20 +9,10 @@ fn x_unescape_x(s: &str) -> String {
         .replace("&amp;", "&")
 }
 
-/// `_x` helper for [unescape()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
-/// Additional cases:
+/// Fn form of [unescape!](crate::unescape!); see it for the full docs
 ///
-/// ```rust
-/// # use serde_json_lodash::unescape_x;
-/// # use serde_json::json;
-/// assert_eq!(unescape_x(json!("fred, barney, &amp; pebbles")), "fred, barney, & pebbles".to_owned());
-/// ```
-pub fn unescape_x<A: Into<Value>>(v: A) -> String {
-    let v = v.into();
-    x_unescape_x(&crate::to_string_x(v))
-}
-
-/// See lodash [unescape](https://lodash.com/docs/#unescape)
+/// `_x` forms: [unescape_x!](crate::unescape_x!), [unescape_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -35,7 +25,9 @@ pub fn unescape<A: Into<Value>>(v: A) -> Value {
     json!(unescape_x(v))
 }
 
-/// Based on [unescape()]
+/// See lodash [unescape](https://lodash.com/docs/#unescape)
+///
+/// Fn form: [unescape()] | `_x` forms: [unescape_x!](crate::unescape_x!), [unescape_x()]
 ///
 /// Examples:
 ///
@@ -70,8 +62,26 @@ macro_rules! unescape {
     };
 }
 
-/// Based on [unescape_x()]
-#[macro_export]
+/// `_x` helper for [unescape!](crate::unescape!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Macro form: [unescape_x!](crate::unescape_x!) | `Value` forms: [unescape!](crate::unescape!), [unescape()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::unescape_x;
+/// # use serde_json::json;
+/// assert_eq!(unescape_x(json!("fred, barney, &amp; pebbles")), "fred, barney, & pebbles".to_owned());
+/// ```
+pub fn unescape_x<A: Into<Value>>(v: A) -> String {
+    let v = v.into();
+    x_unescape_x(&crate::to_string_x(v))
+}
+
+/// `_x` helper for [unescape!](crate::unescape!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Fn form: [unescape_x()] | `Value` forms: [unescape!](crate::unescape!), [unescape()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -79,6 +89,7 @@ macro_rules! unescape {
 /// # use serde_json::json;
 /// assert_eq!(unescape_x!(json!("fred, barney, &amp; pebbles")), "fred, barney, & pebbles".to_owned());
 /// ```
+#[macro_export]
 macro_rules! unescape_x {
     () => {
         "".to_owned()

@@ -1,4 +1,5 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
+
 use super::pad::make_padding;
 
 // internal `&str`/primitive worker for [pad_end()] / [pad_end_x()]
@@ -12,7 +13,10 @@ fn x_pad_end_x(s: &str, length: usize, chars: &str) -> String {
     out
 }
 
-/// See lodash [padEnd](https://lodash.com/docs/#padEnd)
+/// Fn form of [pad_end!](crate::pad_end!); see it for the full docs
+///
+/// `_x` forms: [pad_end_x!](crate::pad_end_x!), [pad_end_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -25,7 +29,9 @@ pub fn pad_end<A: Into<Value>>(v: A, length: usize, chars: &str) -> Value {
     json!(x_pad_end_x(&crate::to_string_x(v), length, chars))
 }
 
-/// Based on [pad_end()]
+/// See lodash [padEnd](https://lodash.com/docs/#padEnd)
+///
+/// Fn form: [pad_end()] | `_x` forms: [pad_end_x!](crate::pad_end_x!), [pad_end_x()]
 ///
 /// Examples:
 ///
@@ -74,7 +80,10 @@ macro_rules! pad_end {
     };
 }
 
-/// `_x` helper for [pad_end()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
+/// `_x` helper for [pad_end!](crate::pad_end!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Macro form: [pad_end_x!](crate::pad_end_x!) | `Value` forms: [pad_end!](crate::pad_end!), [pad_end()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -87,8 +96,10 @@ pub fn pad_end_x<A: Into<Value>>(v: A, length: usize, chars: &str) -> String {
     x_pad_end_x(&crate::to_string_x(v), length, chars)
 }
 
-/// Based on [pad_end_x()]
-#[macro_export]
+/// `_x` helper for [pad_end!](crate::pad_end!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Fn form: [pad_end_x()] | `Value` forms: [pad_end!](crate::pad_end!), [pad_end()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -96,6 +107,7 @@ pub fn pad_end_x<A: Into<Value>>(v: A, length: usize, chars: &str) -> String {
 /// # use serde_json::json;
 /// assert_eq!(pad_end_x!(json!("abc"), 6, "_-"), "abc_-_".to_owned());
 /// ```
+#[macro_export]
 macro_rules! pad_end_x {
     () => {
         "".to_owned()

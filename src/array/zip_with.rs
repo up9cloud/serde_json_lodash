@@ -1,9 +1,9 @@
 use crate::lib::Value;
 
-/// See lodash [zipWith](https://lodash.com/docs/#zipWith)
+/// Fn form of [zip_with!](crate::zip_with!); see it for the full docs
 ///
-/// `iteratee` combines the grouped values; it receives an array of one
-/// element from each input array
+/// `_x` form: **not provided** — see [zip_with_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -31,7 +31,12 @@ pub fn zip_with(array: Value, other: Value, iteratee: fn(&Value) -> Value) -> Va
     Value::Array(out)
 }
 
-/// Based on [zip_with()]
+/// See lodash [zipWith](https://lodash.com/docs/#zipWith)
+///
+/// `iteratee` combines the grouped values; it receives an array of one
+/// element from each input array
+///
+/// Fn form: [zip_with()] | `_x` form: **not provided** — see [zip_with_x()]
 ///
 /// Examples:
 ///
@@ -71,13 +76,20 @@ macro_rules! zip_with {
     };
 }
 
-/// `_x` helper for [zip_with()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [zip_with()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [zip_with!](crate::zip_with!) and read the returned
+/// `Value`.
+///
+/// Macro form: [zip_with_x!](crate::zip_with_x!)
 pub fn zip_with_x() {
     todo!()
 }
-/// Based on [zip_with_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [zip_with!](crate::zip_with!) and read the returned
+/// `Value`.
+///
+/// Fn form: [zip_with_x()]
 #[macro_export]
 macro_rules! zip_with_x {
     ($($t:tt)*) => {

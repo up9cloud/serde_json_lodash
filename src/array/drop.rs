@@ -1,6 +1,9 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
-/// See lodash [drop](https://lodash.com/docs/#drop)
+/// Fn form of [drop!](crate::drop!); see it for the full docs
+///
+/// `_x` form: **not provided** — see [drop_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -25,7 +28,9 @@ pub fn drop(v: Value, n: usize) -> Value {
     }
 }
 
-/// Based on [drop()]
+/// See lodash [drop](https://lodash.com/docs/#drop)
+///
+/// Fn form: [drop()] | `_x` form: **not provided** — see [drop_x()]
 ///
 /// Examples:
 ///
@@ -80,13 +85,18 @@ macro_rules! drop {
     };
 }
 
-/// `_x` helper for [drop()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [drop()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [drop!](crate::drop!) and read the returned `Value`.
+///
+/// Macro form: [drop_x!](crate::drop_x!)
 pub fn drop_x() {
     todo!()
 }
-/// Based on [drop_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [drop!](crate::drop!) and read the returned `Value`.
+///
+/// Fn form: [drop_x()]
 #[macro_export]
 macro_rules! drop_x {
     ($($t:tt)*) => {

@@ -1,21 +1,11 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
+
 use crate::internal::value_to_option_number;
 
-/// `_x` helper for [to_finite()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
-/// Additional cases:
+/// Fn form of [to_finite!](crate::to_finite!); see it for the full docs
 ///
-/// ```rust
-/// # use serde_json_lodash::to_finite_x;
-/// # use serde_json::json;
-/// assert_eq!(to_finite_x(json!(3.2)), 3.2);
-/// ```
-pub fn to_finite_x(v: Value) -> f64 {
-    match value_to_option_number(v) {
-        Some(n) => n.as_f64().unwrap_or(0.0),
-        None => 0.0,
-    }
-}
-/// See lodash [toFinite](https://lodash.com/docs/#toFinite)
+/// `_x` forms: [to_finite_x!](crate::to_finite_x!), [to_finite_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -27,7 +17,9 @@ pub fn to_finite(v: Value) -> Value {
     json!(to_finite_x(v))
 }
 
-/// Based on [to_finite()]
+/// See lodash [toFinite](https://lodash.com/docs/#toFinite)
+///
+/// Fn form: [to_finite()] | `_x` forms: [to_finite_x!](crate::to_finite_x!), [to_finite_x()]
 ///
 /// Examples:
 ///
@@ -61,8 +53,28 @@ macro_rules! to_finite {
     };
 }
 
-/// Based on [to_finite_x()]
-#[macro_export]
+/// `_x` helper for [to_finite!](crate::to_finite!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Macro form: [to_finite_x!](crate::to_finite_x!) | `Value` forms: [to_finite!](crate::to_finite!), [to_finite()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::to_finite_x;
+/// # use serde_json::json;
+/// assert_eq!(to_finite_x(json!(3.2)), 3.2);
+/// ```
+pub fn to_finite_x(v: Value) -> f64 {
+    match value_to_option_number(v) {
+        Some(n) => n.as_f64().unwrap_or(0.0),
+        None => 0.0,
+    }
+}
+
+/// `_x` helper for [to_finite!](crate::to_finite!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Fn form: [to_finite_x()] | `Value` forms: [to_finite!](crate::to_finite!), [to_finite()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -70,6 +82,7 @@ macro_rules! to_finite {
 /// # use serde_json::json;
 /// assert_eq!(to_finite_x!(json!(3.2)), 3.2);
 /// ```
+#[macro_export]
 macro_rules! to_finite_x {
     () => {
         0.0

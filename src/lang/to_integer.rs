@@ -1,17 +1,9 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
-/// `_x` helper for [to_integer()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
-/// Additional cases:
+/// Fn form of [to_integer!](crate::to_integer!); see it for the full docs
 ///
-/// ```rust
-/// # use serde_json_lodash::to_integer_x;
-/// # use serde_json::json;
-/// assert_eq!(to_integer_x(json!(3.2)), 3);
-/// ```
-pub fn to_integer_x(v: Value) -> i64 {
-    crate::to_finite_x(v).trunc() as i64
-}
-/// See lodash [toInteger](https://lodash.com/docs/#toInteger)
+/// `_x` forms: [to_integer_x!](crate::to_integer_x!), [to_integer_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -23,7 +15,9 @@ pub fn to_integer(v: Value) -> Value {
     json!(to_integer_x(v))
 }
 
-/// Based on [to_integer()]
+/// See lodash [toInteger](https://lodash.com/docs/#toInteger)
+///
+/// Fn form: [to_integer()] | `_x` forms: [to_integer_x!](crate::to_integer_x!), [to_integer_x()]
 ///
 /// Examples:
 ///
@@ -57,8 +51,25 @@ macro_rules! to_integer {
     };
 }
 
-/// Based on [to_integer_x()]
-#[macro_export]
+/// `_x` helper for [to_integer!](crate::to_integer!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Macro form: [to_integer_x!](crate::to_integer_x!) | `Value` forms: [to_integer!](crate::to_integer!), [to_integer()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::to_integer_x;
+/// # use serde_json::json;
+/// assert_eq!(to_integer_x(json!(3.2)), 3);
+/// ```
+pub fn to_integer_x(v: Value) -> i64 {
+    crate::to_finite_x(v).trunc() as i64
+}
+
+/// `_x` helper for [to_integer!](crate::to_integer!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Fn form: [to_integer_x()] | `Value` forms: [to_integer!](crate::to_integer!), [to_integer()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -66,6 +77,7 @@ macro_rules! to_integer {
 /// # use serde_json::json;
 /// assert_eq!(to_integer_x!(json!(3.2)), 3);
 /// ```
+#[macro_export]
 macro_rules! to_integer_x {
     () => {
         0

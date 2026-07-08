@@ -1,6 +1,8 @@
-use crate::lib::{json, Value, Number};
+use crate::lib::{Number, Value, json};
+
 use crate::internal::{value_nan, value_to_option_number, vec_value_to_option_number};
-use crate::{to_string_x, json_array_to_string_x};
+
+use crate::{json_array_to_string_x, to_string_x};
 
 // internal worker for [add()].
 fn x_add_x(n: Number, n2: Number) -> Number {
@@ -62,7 +64,10 @@ fn value_to_value_number(value: Value) -> Value {
     }
 }
 
-/// See lodash [add](https://lodash.com/docs/#add)
+/// Fn form of [add!](crate::add!); see it for the full docs
+///
+/// `_x` form: **not provided** — see [add_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -177,7 +182,9 @@ pub fn add<A: Into<Value>>(augend: A, addend: Value) -> Value {
     }
 }
 
-/// Based on [add()]
+/// See lodash [add](https://lodash.com/docs/#add)
+///
+/// Fn form: [add()] | `_x` form: **not provided** — see [add_x()]
 ///
 /// Examples:
 ///
@@ -241,13 +248,18 @@ macro_rules! add {
     };
 }
 
-/// `_x` helper for [add()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [add()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [add!](crate::add!) and read the returned `Value`.
+///
+/// Macro form: [add_x!](crate::add_x!)
 pub fn add_x() {
     todo!()
 }
-/// Based on [add_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [add!](crate::add!) and read the returned `Value`.
+///
+/// Fn form: [add_x()]
 #[macro_export]
 macro_rules! add_x {
     ($($t:tt)*) => {

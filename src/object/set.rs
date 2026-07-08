@@ -1,8 +1,13 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
+
 use crate::internal::value_undefined;
+
 use crate::to_path_x;
 
-/// See lodash [set](https://lodash.com/docs/#set)
+/// Fn form of [set!](crate::set!); see it for the full docs
+///
+/// `_x` form: **not provided** — see [set_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -101,7 +106,10 @@ pub fn set(mut object: Value, path: Value, value: Value) -> Value {
     }
     object
 }
-/// Based on [set()]
+
+/// See lodash [set](https://lodash.com/docs/#set)
+///
+/// Fn form: [set()] | `_x` form: **not provided** — see [set_x()]
 ///
 /// Examples:
 ///
@@ -154,13 +162,18 @@ macro_rules! set {
     };
 }
 
-/// `_x` helper for [set()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [set()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [set!](crate::set!) and read the returned `Value`.
+///
+/// Macro form: [set_x!](crate::set_x!)
 pub fn set_x() {
     todo!()
 }
-/// Based on [set_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [set!](crate::set!) and read the returned `Value`.
+///
+/// Fn form: [set_x()]
 #[macro_export]
 macro_rules! set_x {
     ($($t:tt)*) => {

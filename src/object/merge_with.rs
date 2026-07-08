@@ -1,11 +1,11 @@
 use crate::lib::Value;
+
 use crate::merge;
 
-/// See lodash [mergeWith](https://lodash.com/docs/#mergeWith)
+/// Fn form of [merge_with!](crate::merge_with!); see it for the full docs
 ///
-/// Like [merge()](fn@crate::merge), but `customizer(obj_value, src_value)` is
-/// consulted for each top level key; returning `None` falls back to the
-/// default recursive merge
+/// `_x` form: **not provided** — see [merge_with_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -34,7 +34,13 @@ pub fn merge_with(
     }
 }
 
-/// Based on [merge_with()]
+/// See lodash [mergeWith](https://lodash.com/docs/#mergeWith)
+///
+/// Like [merge()](fn@crate::merge), but `customizer(obj_value, src_value)` is
+/// consulted for each top level key; returning `None` falls back to the
+/// default recursive merge
+///
+/// Fn form: [merge_with()] | `_x` form: **not provided** — see [merge_with_x()]
 ///
 /// Examples:
 ///
@@ -86,13 +92,20 @@ macro_rules! merge_with {
     };
 }
 
-/// `_x` helper for [merge_with()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [merge_with()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [merge_with!](crate::merge_with!) and read the returned
+/// `Value`.
+///
+/// Macro form: [merge_with_x!](crate::merge_with_x!)
 pub fn merge_with_x() {
     todo!()
 }
-/// Based on [merge_with_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [merge_with!](crate::merge_with!) and read the returned
+/// `Value`.
+///
+/// Fn form: [merge_with_x()]
 #[macro_export]
 macro_rules! merge_with_x {
     ($($t:tt)*) => {

@@ -1,24 +1,14 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
 // internal `&str`/primitive worker for [to_upper()] / [to_upper_x()]
 fn x_to_upper_x(s: &str) -> String {
     s.to_uppercase()
 }
 
-/// `_x` helper for [to_upper()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
-/// Additional cases:
+/// Fn form of [to_upper!](crate::to_upper!); see it for the full docs
 ///
-/// ```rust
-/// # use serde_json_lodash::to_upper_x;
-/// # use serde_json::json;
-/// assert_eq!(to_upper_x(json!("--foo-bar--")), "--FOO-BAR--".to_owned());
-/// ```
-pub fn to_upper_x<A: Into<Value>>(v: A) -> String {
-    let v = v.into();
-    x_to_upper_x(&crate::to_string_x(v))
-}
-
-/// See lodash [toUpper](https://lodash.com/docs/#toUpper)
+/// `_x` forms: [to_upper_x!](crate::to_upper_x!), [to_upper_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -31,7 +21,9 @@ pub fn to_upper<A: Into<Value>>(v: A) -> Value {
     json!(to_upper_x(v))
 }
 
-/// Based on [to_upper()]
+/// See lodash [toUpper](https://lodash.com/docs/#toUpper)
+///
+/// Fn form: [to_upper()] | `_x` forms: [to_upper_x!](crate::to_upper_x!), [to_upper_x()]
 ///
 /// Examples:
 ///
@@ -74,8 +66,26 @@ macro_rules! to_upper {
     };
 }
 
-/// Based on [to_upper_x()]
-#[macro_export]
+/// `_x` helper for [to_upper!](crate::to_upper!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Macro form: [to_upper_x!](crate::to_upper_x!) | `Value` forms: [to_upper!](crate::to_upper!), [to_upper()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::to_upper_x;
+/// # use serde_json::json;
+/// assert_eq!(to_upper_x(json!("--foo-bar--")), "--FOO-BAR--".to_owned());
+/// ```
+pub fn to_upper_x<A: Into<Value>>(v: A) -> String {
+    let v = v.into();
+    x_to_upper_x(&crate::to_string_x(v))
+}
+
+/// `_x` helper for [to_upper!](crate::to_upper!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Fn form: [to_upper_x()] | `Value` forms: [to_upper!](crate::to_upper!), [to_upper()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -83,6 +93,7 @@ macro_rules! to_upper {
 /// # use serde_json::json;
 /// assert_eq!(to_upper_x!(json!("--foo-bar--")), "--FOO-BAR--".to_owned());
 /// ```
+#[macro_export]
 macro_rules! to_upper_x {
     () => {
         "".to_owned()

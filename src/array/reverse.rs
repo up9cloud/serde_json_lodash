@@ -1,6 +1,9 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
-/// See lodash [reverse](https://lodash.com/docs/#reverse)
+/// Fn form of [reverse!](crate::reverse!); see it for the full docs
+///
+/// `_x` form: **not provided** — see [reverse_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -18,7 +21,9 @@ pub fn reverse(array: Value) -> Value {
     }
 }
 
-/// Based on [reverse()]
+/// See lodash [reverse](https://lodash.com/docs/#reverse)
+///
+/// Fn form: [reverse()] | `_x` form: **not provided** — see [reverse_x()]
 ///
 /// Examples:
 ///
@@ -50,13 +55,20 @@ macro_rules! reverse {
     };
 }
 
-/// `_x` helper for [reverse()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [reverse()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [reverse!](crate::reverse!) and read the returned
+/// `Value`.
+///
+/// Macro form: [reverse_x!](crate::reverse_x!)
 pub fn reverse_x() {
     todo!()
 }
-/// Based on [reverse_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [reverse!](crate::reverse!) and read the returned
+/// `Value`.
+///
+/// Fn form: [reverse_x()]
 #[macro_export]
 macro_rules! reverse_x {
     ($($t:tt)*) => {

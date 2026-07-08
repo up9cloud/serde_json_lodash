@@ -1,8 +1,9 @@
-use crate::lib::{Value, Map};
+use crate::lib::{Map, Value};
 
-/// See lodash [pickBy](https://lodash.com/docs/#pickBy)
+/// Fn form of [pick_by!](crate::pick_by!); see it for the full docs
 ///
-/// `predicate` is invoked with each property value
+/// `_x` form: **not provided** — see [pick_by_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -22,7 +23,11 @@ pub fn pick_by(object: Value, predicate: fn(&Value) -> bool) -> Value {
     Value::Object(out)
 }
 
-/// Based on [pick_by()]
+/// See lodash [pickBy](https://lodash.com/docs/#pickBy)
+///
+/// `predicate` is invoked with each property value
+///
+/// Fn form: [pick_by()] | `_x` form: **not provided** — see [pick_by_x()]
 ///
 /// Examples:
 ///
@@ -60,13 +65,20 @@ macro_rules! pick_by {
     };
 }
 
-/// `_x` helper for [pick_by()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [pick_by()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [pick_by!](crate::pick_by!) and read the returned
+/// `Value`.
+///
+/// Macro form: [pick_by_x!](crate::pick_by_x!)
 pub fn pick_by_x() {
     todo!()
 }
-/// Based on [pick_by_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [pick_by!](crate::pick_by!) and read the returned
+/// `Value`.
+///
+/// Fn form: [pick_by_x()]
 #[macro_export]
 macro_rules! pick_by_x {
     ($($t:tt)*) => {

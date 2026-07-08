@@ -1,9 +1,11 @@
-use crate::lib::{json, Value, Map};
+use crate::lib::{Map, Value, json};
+
 use crate::to_string_x;
 
-/// See lodash [invertBy](https://lodash.com/docs/#invertBy)
+/// Fn form of [invert_by!](crate::invert_by!); see it for the full docs
 ///
-/// `iteratee` transforms each value before it becomes the grouping key
+/// `_x` form: **not provided** — see [invert_by_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -33,7 +35,11 @@ pub fn invert_by(v: Value, iteratee: fn(&Value) -> Value) -> Value {
     Value::Object(out)
 }
 
-/// Based on [invert_by()]
+/// See lodash [invertBy](https://lodash.com/docs/#invertBy)
+///
+/// `iteratee` transforms each value before it becomes the grouping key
+///
+/// Fn form: [invert_by()] | `_x` form: **not provided** — see [invert_by_x()]
 ///
 /// Examples:
 ///
@@ -71,13 +77,20 @@ macro_rules! invert_by {
     };
 }
 
-/// `_x` helper for [invert_by()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [invert_by()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [invert_by!](crate::invert_by!) and read the returned
+/// `Value`.
+///
+/// Macro form: [invert_by_x!](crate::invert_by_x!)
 pub fn invert_by_x() {
     todo!()
 }
-/// Based on [invert_by_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [invert_by!](crate::invert_by!) and read the returned
+/// `Value`.
+///
+/// Fn form: [invert_by_x()]
 #[macro_export]
 macro_rules! invert_by_x {
     ($($t:tt)*) => {

@@ -1,11 +1,11 @@
 use crate::lib::{Value, json};
+
 use crate::internal::{f64_to_number, rand_f64, value_to_option_number};
 
-/// See lodash [random](https://lodash.com/docs/#random)
+/// Fn form of [random!](crate::random!); see it for the full docs
 ///
-/// Returns a random number between `lower` and `upper` (inclusive). If
-/// `floating` is `true`, or either bound is not an integer, a floating point
-/// number is returned
+/// `_x` form: **not provided** — see [random_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -37,7 +37,13 @@ pub fn random(lower: Value, upper: Value, floating: bool) -> Value {
     }
 }
 
-/// Based on [random()]
+/// See lodash [random](https://lodash.com/docs/#random)
+///
+/// Returns a random number between `lower` and `upper` (inclusive). If
+/// `floating` is `true`, or either bound is not an integer, a floating point
+/// number is returned
+///
+/// Fn form: [random()] | `_x` form: **not provided** — see [random_x()]
 ///
 /// Examples:
 ///
@@ -83,13 +89,20 @@ macro_rules! random {
     };
 }
 
-/// `_x` helper for [random()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [random()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [random!](crate::random!) and read the returned
+/// `Value`.
+///
+/// Macro form: [random_x!](crate::random_x!)
 pub fn random_x() {
     todo!()
 }
-/// Based on [random_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [random!](crate::random!) and read the returned
+/// `Value`.
+///
+/// Fn form: [random_x()]
 #[macro_export]
 macro_rules! random_x {
     ($($t:tt)*) => {

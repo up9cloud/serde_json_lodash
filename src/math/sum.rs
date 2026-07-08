@@ -1,4 +1,5 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
+
 use crate::internal::{f64_to_number, value_to_option_number};
 
 pub(crate) fn sum_values(vec: Vec<Value>) -> Value {
@@ -12,7 +13,10 @@ pub(crate) fn sum_values(vec: Vec<Value>) -> Value {
     }
 }
 
-/// See lodash [sum](https://lodash.com/docs/#sum)
+/// Fn form of [sum!](crate::sum!); see it for the full docs
+///
+/// `_x` form: **not provided** — see [sum_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -27,7 +31,9 @@ pub fn sum(array: Value) -> Value {
     }
 }
 
-/// Based on [sum()]
+/// See lodash [sum](https://lodash.com/docs/#sum)
+///
+/// Fn form: [sum()] | `_x` form: **not provided** — see [sum_x()]
 ///
 /// Examples:
 ///
@@ -60,13 +66,18 @@ macro_rules! sum {
     };
 }
 
-/// `_x` helper for [sum()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [sum()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [sum!](crate::sum!) and read the returned `Value`.
+///
+/// Macro form: [sum_x!](crate::sum_x!)
 pub fn sum_x() {
     todo!()
 }
-/// Based on [sum_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [sum!](crate::sum!) and read the returned `Value`.
+///
+/// Fn form: [sum_x()]
 #[macro_export]
 macro_rules! sum_x {
     ($($t:tt)*) => {

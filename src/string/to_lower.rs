@@ -1,48 +1,16 @@
 use crate::lib::Value;
-use crate::internal::{type_name};
+
+use crate::internal::type_name;
 
 // internal `&str`/primitive worker for [to_lower()] / [to_lower_x()]
 fn x_to_lower_x(s: &str) -> String {
     s.to_lowercase()
 }
 
-/// `_x` helper for [to_lower()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
-/// Additional cases:
+/// Fn form of [to_lower!](crate::to_lower!); see it for the full docs
 ///
-/// ```rust
-/// # use serde_json_lodash::to_lower_x;
-/// # use serde_json::json;
-/// assert_eq!(to_lower_x(json!("--Foo-Bar--")), "--foo-bar--".to_owned());
-/// ```
-pub fn to_lower_x<A: Into<Value>>(v: A) -> String {
-    let v = v.into();
-    match v {
-        Value::Null => "".into(),
-        Value::Bool(b) => {
-            if b {
-                "true".into()
-            } else {
-                "false".into()
-            }
-        }
-        Value::String(s) => x_to_lower_x(&s),
-        Value::Number(n) => n.to_string(),
-        Value::Array(vec) => {
-            let mut result = vec![];
-            for item in vec.into_iter() {
-                if item.is_null() {
-                    result.push("null".into())
-                } else {
-                    result.push(to_lower_x(item));
-                }
-            }
-            result.join(",")
-        }
-        Value::Object(o) => x_to_lower_x(type_name(&o)),
-    }
-}
-
-/// See lodash [toLower](https://lodash.com/docs/#toLower)
+/// `_x` forms: [to_lower_x!](crate::to_lower_x!), [to_lower_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -55,28 +23,9 @@ pub fn to_lower<A: Into<Value>>(v: A) -> Value {
     Value::String(to_lower_x(v))
 }
 
-/// Based on [to_lower_x()]
-#[macro_export]
-/// Additional cases:
+/// See lodash [toLower](https://lodash.com/docs/#toLower)
 ///
-/// ```rust
-/// # #[macro_use] extern crate serde_json_lodash;
-/// # use serde_json::json;
-/// assert_eq!(to_lower_x!(json!("--Foo-Bar--")), "--foo-bar--".to_owned());
-/// ```
-macro_rules! to_lower_x {
-    () => {
-        "".to_owned()
-    };
-    ($a:expr $(,)*) => {
-        $crate::to_lower_x($a)
-    };
-    ($a:expr, $($rest:tt)*) => {
-        $crate::to_lower_x($a)
-    };
-}
-
-/// Based on [to_lower()]
+/// Fn form: [to_lower()] | `_x` forms: [to_lower_x!](crate::to_lower_x!), [to_lower_x()]
 ///
 /// Examples:
 ///
@@ -121,5 +70,68 @@ macro_rules! to_lower {
     };
     ($a:expr, $($rest:tt)*) => {
         $crate::to_lower($a)
+    };
+}
+
+/// `_x` helper for [to_lower!](crate::to_lower!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Macro form: [to_lower_x!](crate::to_lower_x!) | `Value` forms: [to_lower!](crate::to_lower!), [to_lower()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::to_lower_x;
+/// # use serde_json::json;
+/// assert_eq!(to_lower_x(json!("--Foo-Bar--")), "--foo-bar--".to_owned());
+/// ```
+pub fn to_lower_x<A: Into<Value>>(v: A) -> String {
+    let v = v.into();
+    match v {
+        Value::Null => "".into(),
+        Value::Bool(b) => {
+            if b {
+                "true".into()
+            } else {
+                "false".into()
+            }
+        }
+        Value::String(s) => x_to_lower_x(&s),
+        Value::Number(n) => n.to_string(),
+        Value::Array(vec) => {
+            let mut result = vec![];
+            for item in vec.into_iter() {
+                if item.is_null() {
+                    result.push("null".into())
+                } else {
+                    result.push(to_lower_x(item));
+                }
+            }
+            result.join(",")
+        }
+        Value::Object(o) => x_to_lower_x(type_name(&o)),
+    }
+}
+
+/// `_x` helper for [to_lower!](crate::to_lower!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Fn form: [to_lower_x()] | `Value` forms: [to_lower!](crate::to_lower!), [to_lower()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(to_lower_x!(json!("--Foo-Bar--")), "--foo-bar--".to_owned());
+/// ```
+#[macro_export]
+macro_rules! to_lower_x {
+    () => {
+        "".to_owned()
+    };
+    ($a:expr $(,)*) => {
+        $crate::to_lower_x($a)
+    };
+    ($a:expr, $($rest:tt)*) => {
+        $crate::to_lower_x($a)
     };
 }

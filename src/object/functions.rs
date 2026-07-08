@@ -1,8 +1,9 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
-/// See lodash [functions](https://lodash.com/docs/#functions)
+/// Fn form of [functions!](crate::functions!); see it for the full docs
 ///
-/// JSON values never hold functions, so this always returns an empty array
+/// `_x` form: **not provided** — see [functions_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -14,7 +15,11 @@ pub fn functions(_object: &Value) -> Value {
     json!([])
 }
 
-/// Based on [functions()]
+/// See lodash [functions](https://lodash.com/docs/#functions)
+///
+/// JSON values never hold functions, so this always returns an empty array
+///
+/// Fn form: [functions()] | `_x` form: **not provided** — see [functions_x()]
 ///
 /// Examples:
 ///
@@ -46,13 +51,20 @@ macro_rules! functions {
     };
 }
 
-/// `_x` helper for [functions()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [functions()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [functions!](crate::functions!) and read the returned
+/// `Value`.
+///
+/// Macro form: [functions_x!](crate::functions_x!)
 pub fn functions_x() {
     todo!()
 }
-/// Based on [functions_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [functions!](crate::functions!) and read the returned
+/// `Value`.
+///
+/// Fn form: [functions_x()]
 #[macro_export]
 macro_rules! functions_x {
     ($($t:tt)*) => {

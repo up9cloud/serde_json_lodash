@@ -25,7 +25,10 @@ pub fn zip_arrays(arrays: Vec<Value>) -> Value {
     Value::Array(out)
 }
 
-/// See lodash [zip](https://lodash.com/docs/#zip)
+/// Fn form of [zip!](crate::zip!); see it for the full docs
+///
+/// `_x` form: **not provided** — see [zip_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -37,7 +40,9 @@ pub fn zip(array: Value, other: Value) -> Value {
     zip_arrays(vec![array, other])
 }
 
-/// Based on [zip()]
+/// See lodash [zip](https://lodash.com/docs/#zip)
+///
+/// Fn form: [zip()] | `_x` form: **not provided** — see [zip_x()]
 ///
 /// Examples:
 ///
@@ -69,13 +74,18 @@ macro_rules! zip {
     };
 }
 
-/// `_x` helper for [zip()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [zip()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [zip!](crate::zip!) and read the returned `Value`.
+///
+/// Macro form: [zip_x!](crate::zip_x!)
 pub fn zip_x() {
     todo!()
 }
-/// Based on [zip_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [zip!](crate::zip!) and read the returned `Value`.
+///
+/// Fn form: [zip_x()]
 #[macro_export]
 macro_rules! zip_x {
     ($($t:tt)*) => {

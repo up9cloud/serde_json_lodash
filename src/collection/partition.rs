@@ -1,9 +1,11 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
+
 use crate::collection::collect::collection_values;
 
-/// See lodash [partition](https://lodash.com/docs/#partition)
+/// Fn form of [partition!](crate::partition!); see it for the full docs
 ///
-/// Returns `[matched, unmatched]`
+/// `_x` form: **not provided** — see [partition_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -18,7 +20,11 @@ pub fn partition(collection: Value, predicate: fn(&Value) -> bool) -> Value {
     json!([yes, no])
 }
 
-/// Based on [partition()]
+/// See lodash [partition](https://lodash.com/docs/#partition)
+///
+/// Returns `[matched, unmatched]`
+///
+/// Fn form: [partition()] | `_x` form: **not provided** — see [partition_x()]
 ///
 /// Examples:
 ///
@@ -55,13 +61,20 @@ macro_rules! partition {
     };
 }
 
-/// `_x` helper for [partition()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [partition()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [partition!](crate::partition!) and read the returned
+/// `Value`.
+///
+/// Macro form: [partition_x!](crate::partition_x!)
 pub fn partition_x() {
     todo!()
 }
-/// Based on [partition_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [partition!](crate::partition!) and read the returned
+/// `Value`.
+///
+/// Fn form: [partition_x()]
 #[macro_export]
 macro_rules! partition_x {
     ($($t:tt)*) => {

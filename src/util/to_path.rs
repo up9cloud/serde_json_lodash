@@ -1,4 +1,5 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
+
 use crate::{to_string, to_string_x};
 
 // internal worker for [to_path()].
@@ -105,25 +106,10 @@ fn x_to_path(s: &str) -> Value {
     Value::Array(vec)
 }
 
-/// `_x` helper for [to_path()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
-/// Additional cases:
+/// Fn form of [to_path!](crate::to_path!); see it for the full docs
 ///
-/// ```rust
-/// # use serde_json_lodash::to_path_x;
-/// # use serde_json::json;
-/// assert_eq!(to_path_x(json!("a.b.c")), vec!["a".to_owned(), "b".to_owned(), "c".to_owned()]);
-/// ```
-pub fn to_path_x<A: Into<Value>>(value: A) -> Vec<String> {
-    let value = value.into();
-    match value {
-        Value::Null => vec![],
-        Value::Bool(_) | Value::Number(_) | Value::Object(_) => vec![to_string_x(value)],
-        Value::String(s) => x_to_path_x(&s),
-        Value::Array(vec) => vec.into_iter().map(to_string_x).collect::<Vec<String>>(),
-    }
-}
-
-/// See lodash [toPath](https://lodash.com/docs/#toPath)
+/// `_x` forms: [to_path_x!](crate::to_path_x!), [to_path_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -143,28 +129,9 @@ pub fn to_path<A: Into<Value>>(value: A) -> Value {
     }
 }
 
-/// Based on [to_path_x()]
-/// Additional cases:
+/// See lodash [toPath](https://lodash.com/docs/#toPath)
 ///
-/// ```rust
-/// # #[macro_use] extern crate serde_json_lodash;
-/// # use serde_json::json;
-/// assert_eq!(to_path_x!(json!("a.b.c")), vec!["a".to_owned(), "b".to_owned(), "c".to_owned()]);
-/// ```
-#[macro_export]
-macro_rules! to_path_x {
-    () => {
-        vec![]
-    };
-    ($a:expr $(,)*) => {
-        $crate::to_path_x($a)
-    };
-    ($a:expr, $($rest:tt)*) => {
-        $crate::to_path_x($a)
-    };
-}
-
-/// Based on [to_path()]
+/// Fn form: [to_path()] | `_x` forms: [to_path_x!](crate::to_path_x!), [to_path_x()]
 ///
 /// Examples:
 ///
@@ -219,5 +186,50 @@ macro_rules! to_path {
     };
     ($a:expr, $($rest:tt)*) => {
         $crate::to_path($a)
+    };
+}
+
+/// `_x` helper for [to_path!](crate::to_path!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Macro form: [to_path_x!](crate::to_path_x!) | `Value` forms: [to_path!](crate::to_path!), [to_path()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::to_path_x;
+/// # use serde_json::json;
+/// assert_eq!(to_path_x(json!("a.b.c")), vec!["a".to_owned(), "b".to_owned(), "c".to_owned()]);
+/// ```
+pub fn to_path_x<A: Into<Value>>(value: A) -> Vec<String> {
+    let value = value.into();
+    match value {
+        Value::Null => vec![],
+        Value::Bool(_) | Value::Number(_) | Value::Object(_) => vec![to_string_x(value)],
+        Value::String(s) => x_to_path_x(&s),
+        Value::Array(vec) => vec.into_iter().map(to_string_x).collect::<Vec<String>>(),
+    }
+}
+
+/// `_x` helper for [to_path!](crate::to_path!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Fn form: [to_path_x()] | `Value` forms: [to_path!](crate::to_path!), [to_path()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(to_path_x!(json!("a.b.c")), vec!["a".to_owned(), "b".to_owned(), "c".to_owned()]);
+/// ```
+#[macro_export]
+macro_rules! to_path_x {
+    () => {
+        vec![]
+    };
+    ($a:expr $(,)*) => {
+        $crate::to_path_x($a)
+    };
+    ($a:expr, $($rest:tt)*) => {
+        $crate::to_path_x($a)
     };
 }

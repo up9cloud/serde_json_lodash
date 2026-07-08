@@ -1,9 +1,11 @@
 use crate::lib::Value;
+
 use crate::collection::collect::collection_values;
 
-/// See lodash [findLast](https://lodash.com/docs/#findLast)
+/// Fn form of [find_last!](crate::find_last!); see it for the full docs
 ///
-/// Like [find()](fn@crate::find) but iterates from the end
+/// `_x` form: **not provided** — see [find_last_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -19,7 +21,11 @@ pub fn find_last(collection: Value, predicate: fn(&Value) -> bool) -> Value {
         .unwrap_or(Value::Null)
 }
 
-/// Based on [find_last()]
+/// See lodash [findLast](https://lodash.com/docs/#findLast)
+///
+/// Like [find()](fn@crate::find) but iterates from the end
+///
+/// Fn form: [find_last()] | `_x` form: **not provided** — see [find_last_x()]
 ///
 /// Examples:
 ///
@@ -56,13 +62,20 @@ macro_rules! find_last {
     };
 }
 
-/// `_x` helper for [find_last()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [find_last()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [find_last!](crate::find_last!) and read the returned
+/// `Value`.
+///
+/// Macro form: [find_last_x!](crate::find_last_x!)
 pub fn find_last_x() {
     todo!()
 }
-/// Based on [find_last_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [find_last!](crate::find_last!) and read the returned
+/// `Value`.
+///
+/// Fn form: [find_last_x()]
 #[macro_export]
 macro_rules! find_last_x {
     ($($t:tt)*) => {

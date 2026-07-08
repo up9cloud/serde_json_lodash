@@ -1,6 +1,9 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
-/// See lodash [last](https://lodash.com/docs/#last)
+/// Fn form of [last!](crate::last!); see it for the full docs
+///
+/// `_x` form: **not provided** — see [last_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -28,7 +31,10 @@ pub fn last(v: Value) -> Value {
         Value::Object(_) => json!(null),
     }
 }
-/// Based on [last()]
+
+/// See lodash [last](https://lodash.com/docs/#last)
+///
+/// Fn form: [last()] | `_x` form: **not provided** — see [last_x()]
 ///
 /// Examples:
 ///
@@ -72,13 +78,18 @@ macro_rules! last {
     };
 }
 
-/// `_x` helper for [last()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [last()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [last!](crate::last!) and read the returned `Value`.
+///
+/// Macro form: [last_x!](crate::last_x!)
 pub fn last_x() {
     todo!()
 }
-/// Based on [last_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [last!](crate::last!) and read the returned `Value`.
+///
+/// Fn form: [last_x()]
 #[macro_export]
 macro_rules! last_x {
     ($($t:tt)*) => {

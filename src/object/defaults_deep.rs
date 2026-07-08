@@ -22,7 +22,10 @@ fn deep_default(object: Value, source: Value) -> Value {
     }
 }
 
-/// See lodash [defaultsDeep](https://lodash.com/docs/#defaultsDeep)
+/// Fn form of [defaults_deep!](crate::defaults_deep!); see it for the full docs
+///
+/// `_x` form: **not provided** — see [defaults_deep_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -34,7 +37,9 @@ pub fn defaults_deep(object: Value, source: Value) -> Value {
     deep_default(object, source)
 }
 
-/// Based on [defaults_deep()]
+/// See lodash [defaultsDeep](https://lodash.com/docs/#defaultsDeep)
+///
+/// Fn form: [defaults_deep()] | `_x` form: **not provided** — see [defaults_deep_x()]
 ///
 /// Examples:
 ///
@@ -72,13 +77,20 @@ macro_rules! defaults_deep {
     }};
 }
 
-/// `_x` helper for [defaults_deep()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [defaults_deep()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [defaults_deep!](crate::defaults_deep!) and read the
+/// returned `Value`.
+///
+/// Macro form: [defaults_deep_x!](crate::defaults_deep_x!)
 pub fn defaults_deep_x() {
     todo!()
 }
-/// Based on [defaults_deep_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [defaults_deep!](crate::defaults_deep!) and read the
+/// returned `Value`.
+///
+/// Fn form: [defaults_deep_x()]
 #[macro_export]
 macro_rules! defaults_deep_x {
     ($($t:tt)*) => {

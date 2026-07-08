@@ -1,4 +1,4 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
 // internal worker for [split()].
 fn x_split(s: &str, separator: &str, limit: usize) -> Value {
@@ -13,7 +13,10 @@ fn x_split(s: &str, separator: &str, limit: usize) -> Value {
     json!(parts)
 }
 
-/// See lodash [split](https://lodash.com/docs/#split)
+/// Fn form of [split!](crate::split!); see it for the full docs
+///
+/// `_x` form: **not provided** — see [split_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -26,7 +29,9 @@ pub fn split<A: Into<Value>>(v: A, separator: &str, limit: usize) -> Value {
     x_split(&crate::to_string_x(v), separator, limit)
 }
 
-/// Based on [split()]
+/// See lodash [split](https://lodash.com/docs/#split)
+///
+/// Fn form: [split()] | `_x` form: **not provided** — see [split_x()]
 ///
 /// Examples:
 ///
@@ -68,13 +73,18 @@ macro_rules! split {
     };
 }
 
-/// `_x` helper for [split()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [split()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [split!](crate::split!) and read the returned `Value`.
+///
+/// Macro form: [split_x!](crate::split_x!)
 pub fn split_x() {
     todo!()
 }
-/// Based on [split_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [split!](crate::split!) and read the returned `Value`.
+///
+/// Fn form: [split_x()]
 #[macro_export]
 macro_rules! split_x {
     ($($t:tt)*) => {

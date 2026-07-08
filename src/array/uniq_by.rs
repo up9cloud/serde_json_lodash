@@ -1,9 +1,11 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
+
 use crate::internal::uniq_by_key;
 
-/// See lodash [uniqBy](https://lodash.com/docs/#uniqBy)
+/// Fn form of [uniq_by!](crate::uniq_by!); see it for the full docs
 ///
-/// `iteratee` maps each element to the value used for uniqueness
+/// `_x` form: **not provided** — see [uniq_by_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -18,7 +20,11 @@ pub fn uniq_by(array: Value, iteratee: fn(&Value) -> Value) -> Value {
     }
 }
 
-/// Based on [uniq_by()]
+/// See lodash [uniqBy](https://lodash.com/docs/#uniqBy)
+///
+/// `iteratee` maps each element to the value used for uniqueness
+///
+/// Fn form: [uniq_by()] | `_x` form: **not provided** — see [uniq_by_x()]
 ///
 /// Examples:
 ///
@@ -55,13 +61,20 @@ macro_rules! uniq_by {
     };
 }
 
-/// `_x` helper for [uniq_by()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [uniq_by()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [uniq_by!](crate::uniq_by!) and read the returned
+/// `Value`.
+///
+/// Macro form: [uniq_by_x!](crate::uniq_by_x!)
 pub fn uniq_by_x() {
     todo!()
 }
-/// Based on [uniq_by_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [uniq_by!](crate::uniq_by!) and read the returned
+/// `Value`.
+///
+/// Fn form: [uniq_by_x()]
 #[macro_export]
 macro_rules! uniq_by_x {
     ($($t:tt)*) => {

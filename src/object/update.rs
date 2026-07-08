@@ -1,9 +1,11 @@
 use crate::lib::Value;
+
 use crate::{get, set};
 
-/// See lodash [update](https://lodash.com/docs/#update)
+/// Fn form of [update!](crate::update!); see it for the full docs
 ///
-/// Updates the value at `path` using the result of `updater(current_value)`
+/// `_x` form: **not provided** — see [update_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -16,7 +18,11 @@ pub fn update(object: Value, path: Value, updater: fn(Value) -> Value) -> Value 
     set(object, path, updater(current))
 }
 
-/// Based on [update()]
+/// See lodash [update](https://lodash.com/docs/#update)
+///
+/// Updates the value at `path` using the result of `updater(current_value)`
+///
+/// Fn form: [update()] | `_x` form: **not provided** — see [update_x()]
 ///
 /// Examples:
 ///
@@ -61,13 +67,20 @@ macro_rules! update {
     };
 }
 
-/// `_x` helper for [update()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [update()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [update!](crate::update!) and read the returned
+/// `Value`.
+///
+/// Macro form: [update_x!](crate::update_x!)
 pub fn update_x() {
     todo!()
 }
-/// Based on [update_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [update!](crate::update!) and read the returned
+/// `Value`.
+///
+/// Fn form: [update_x()]
 #[macro_export]
 macro_rules! update_x {
     ($($t:tt)*) => {

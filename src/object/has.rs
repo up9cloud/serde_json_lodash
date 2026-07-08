@@ -1,7 +1,54 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
+
 use crate::to_path_x;
 
-/// `_x` helper for [has()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
+/// Fn form of [has!](crate::has!); see it for the full docs
+///
+/// `_x` forms: [has_x!](crate::has_x!), [has_x()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::has;
+/// # use serde_json::json;
+/// assert_eq!(has(&json!({"a": {"b": 2}}), json!("a.b")), json!(true));
+/// ```
+pub fn has(object: &Value, path: Value) -> Value {
+    json!(has_x(object, path))
+}
+
+/// See lodash [has](https://lodash.com/docs/#has)
+///
+/// Fn form: [has()] | `_x` forms: [has_x!](crate::has_x!), [has_x()]
+///
+/// Examples:
+///
+/// ```rust
+/// #[macro_use] extern crate serde_json_lodash;
+/// use serde_json::json;
+/// assert_eq!(has!(), json!(false));
+/// assert_eq!(has!(&json!({"a": 1})), json!(false));
+/// assert_eq!(has!(&json!({"a": [{"b": 3}]}), json!("a[0].b")), json!(true));
+/// ```
+#[macro_export]
+macro_rules! has {
+    () => {
+        $crate::lib::json!(false)
+    };
+    ($a:expr $(,)*) => {
+        $crate::lib::json!(false)
+    };
+    ($a:expr, $b:expr $(,)*) => {
+        $crate::has($a, $b)
+    };
+    ($a:expr, $b:expr, $($rest:tt)*) => {
+        $crate::has($a, $b)
+    };
+}
+
+/// `_x` helper for [has!](crate::has!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Macro form: [has_x!](crate::has_x!) | `Value` forms: [has!](crate::has!), [has()]
 ///
 /// Additional cases:
 ///
@@ -31,20 +78,11 @@ pub fn has_x(object: &Value, path: Value) -> bool {
     }
     true
 }
-/// See lodash [has](https://lodash.com/docs/#has)
-///
-/// Additional cases:
-///
-/// ```rust
-/// # use serde_json_lodash::has;
-/// # use serde_json::json;
-/// assert_eq!(has(&json!({"a": {"b": 2}}), json!("a.b")), json!(true));
-/// ```
-pub fn has(object: &Value, path: Value) -> Value {
-    json!(has_x(object, path))
-}
 
-/// Based on [has_x()]
+/// `_x` helper for [has!](crate::has!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Fn form: [has_x()] | `Value` forms: [has!](crate::has!), [has()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -65,31 +103,5 @@ macro_rules! has_x {
     };
     ($a:expr, $b:expr, $($rest:tt)*) => {
         $crate::has_x($a, $b)
-    };
-}
-/// Based on [has()]
-///
-/// Examples:
-///
-/// ```rust
-/// #[macro_use] extern crate serde_json_lodash;
-/// use serde_json::json;
-/// assert_eq!(has!(), json!(false));
-/// assert_eq!(has!(&json!({"a": 1})), json!(false));
-/// assert_eq!(has!(&json!({"a": [{"b": 3}]}), json!("a[0].b")), json!(true));
-/// ```
-#[macro_export]
-macro_rules! has {
-    () => {
-        $crate::lib::json!(false)
-    };
-    ($a:expr $(,)*) => {
-        $crate::lib::json!(false)
-    };
-    ($a:expr, $b:expr $(,)*) => {
-        $crate::has($a, $b)
-    };
-    ($a:expr, $b:expr, $($rest:tt)*) => {
-        $crate::has($a, $b)
     };
 }

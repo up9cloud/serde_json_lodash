@@ -1,10 +1,11 @@
-use crate::lib::{json, Value, Map};
+use crate::lib::{Map, Value, json};
+
 use crate::to_string_x;
 
-/// See lodash [mapKeys](https://lodash.com/docs/#mapKeys)
+/// Fn form of [map_keys!](crate::map_keys!); see it for the full docs
 ///
-/// `iteratee` is invoked with `(value, key)` and its result (coerced to a
-/// string) becomes the new key
+/// `_x` form: **not provided** — see [map_keys_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -25,7 +26,12 @@ pub fn map_keys(object: Value, iteratee: fn(&Value, &str) -> Value) -> Value {
     }
 }
 
-/// Based on [map_keys()]
+/// See lodash [mapKeys](https://lodash.com/docs/#mapKeys)
+///
+/// `iteratee` is invoked with `(value, key)` and its result (coerced to a
+/// string) becomes the new key
+///
+/// Fn form: [map_keys()] | `_x` form: **not provided** — see [map_keys_x()]
 ///
 /// Examples:
 ///
@@ -63,13 +69,20 @@ macro_rules! map_keys {
     };
 }
 
-/// `_x` helper for [map_keys()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [map_keys()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [map_keys!](crate::map_keys!) and read the returned
+/// `Value`.
+///
+/// Macro form: [map_keys_x!](crate::map_keys_x!)
 pub fn map_keys_x() {
     todo!()
 }
-/// Based on [map_keys_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [map_keys!](crate::map_keys!) and read the returned
+/// `Value`.
+///
+/// Fn form: [map_keys_x()]
 #[macro_export]
 macro_rules! map_keys_x {
     ($($t:tt)*) => {

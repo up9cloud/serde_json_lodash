@@ -1,10 +1,13 @@
 use crate::lib::Value;
+
 use crate::internal::rand_f64;
+
 use crate::collection::collect::collection_values;
 
-/// See lodash [sample](https://lodash.com/docs/#sample)
+/// Fn form of [sample!](crate::sample!); see it for the full docs
 ///
-/// Returns a random element, or `Null` for an empty collection
+/// `_x` form: **not provided** — see [sample_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -21,7 +24,11 @@ pub fn sample(collection: Value) -> Value {
     vec[i.min(vec.len() - 1)].clone()
 }
 
-/// Based on [sample()]
+/// See lodash [sample](https://lodash.com/docs/#sample)
+///
+/// Returns a random element, or `Null` for an empty collection
+///
+/// Fn form: [sample()] | `_x` form: **not provided** — see [sample_x()]
 ///
 /// Examples:
 ///
@@ -54,13 +61,20 @@ macro_rules! sample {
     };
 }
 
-/// `_x` helper for [sample()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [sample()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [sample!](crate::sample!) and read the returned
+/// `Value`.
+///
+/// Macro form: [sample_x!](crate::sample_x!)
 pub fn sample_x() {
     todo!()
 }
-/// Based on [sample_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [sample!](crate::sample!) and read the returned
+/// `Value`.
+///
+/// Fn form: [sample_x()]
 #[macro_export]
 macro_rules! sample_x {
     ($($t:tt)*) => {

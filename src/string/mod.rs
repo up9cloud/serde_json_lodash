@@ -40,7 +40,7 @@ pub use starts_with::*;
 pub fn template() {
     todo!()
 }
-/// Based on [template()]
+/// **Not ported.** Compiles a string into a render function; requires a template engine, out of scope.
 #[macro_export]
 macro_rules! template {
     ($($t:tt)*) => {
@@ -51,7 +51,7 @@ macro_rules! template {
 pub fn template_x() {
     todo!()
 }
-/// Based on [template_x()]
+/// **Not ported.** Compiles a string into a render function; requires a template engine, out of scope.
 #[macro_export]
 macro_rules! template_x {
     ($($t:tt)*) => {

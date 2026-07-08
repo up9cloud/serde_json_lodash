@@ -1,9 +1,9 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
-/// See lodash [remove](https://lodash.com/docs/#remove)
+/// Fn form of [remove!](crate::remove!); see it for the full docs
 ///
-/// Removes the elements matching `predicate` from `array` (mutating it) and
-/// returns the removed elements
+/// `_x` form: **not provided** — see [remove_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -31,7 +31,12 @@ pub fn remove(array: &mut Value, predicate: fn(&Value) -> bool) -> Value {
     }
 }
 
-/// Based on [remove()]
+/// See lodash [remove](https://lodash.com/docs/#remove)
+///
+/// Removes the elements matching `predicate` from `array` (mutating it) and
+/// returns the removed elements
+///
+/// Fn form: [remove()] | `_x` form: **not provided** — see [remove_x()]
 ///
 /// Examples:
 ///
@@ -71,13 +76,20 @@ macro_rules! remove {
     };
 }
 
-/// `_x` helper for [remove()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [remove()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [remove!](crate::remove!) and read the returned
+/// `Value`.
+///
+/// Macro form: [remove_x!](crate::remove_x!)
 pub fn remove_x() {
     todo!()
 }
-/// Based on [remove_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [remove!](crate::remove!) and read the returned
+/// `Value`.
+///
+/// Fn form: [remove_x()]
 #[macro_export]
 macro_rules! remove_x {
     ($($t:tt)*) => {

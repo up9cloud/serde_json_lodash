@@ -1,8 +1,9 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
-/// See lodash [takeRightWhile](https://lodash.com/docs/#takeRightWhile)
+/// Fn form of [take_right_while!](crate::take_right_while!); see it for the full docs
 ///
-/// Takes elements from the end while `predicate` returns `true`
+/// `_x` form: **not provided** — see [take_right_while_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -27,7 +28,11 @@ pub fn take_right_while(array: Value, predicate: fn(&Value) -> bool) -> Value {
     }
 }
 
-/// Based on [take_right_while()]
+/// See lodash [takeRightWhile](https://lodash.com/docs/#takeRightWhile)
+///
+/// Takes elements from the end while `predicate` returns `true`
+///
+/// Fn form: [take_right_while()] | `_x` form: **not provided** — see [take_right_while_x()]
 ///
 /// Examples:
 ///
@@ -65,13 +70,20 @@ macro_rules! take_right_while {
     };
 }
 
-/// `_x` helper for [take_right_while()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [take_right_while()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [take_right_while!](crate::take_right_while!) and read
+/// the returned `Value`.
+///
+/// Macro form: [take_right_while_x!](crate::take_right_while_x!)
 pub fn take_right_while_x() {
     todo!()
 }
-/// Based on [take_right_while_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [take_right_while!](crate::take_right_while!) and read
+/// the returned `Value`.
+///
+/// Fn form: [take_right_while_x()]
 #[macro_export]
 macro_rules! take_right_while_x {
     ($($t:tt)*) => {

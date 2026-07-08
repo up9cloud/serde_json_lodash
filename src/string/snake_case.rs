@@ -1,4 +1,5 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
+
 use crate::internal;
 
 // internal `&str`/primitive worker for [snake_case()] / [snake_case_x()]
@@ -10,20 +11,10 @@ fn x_snake_case_x(s: &str) -> String {
         .join("_")
 }
 
-/// `_x` helper for [snake_case()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
-/// Additional cases:
+/// Fn form of [snake_case!](crate::snake_case!); see it for the full docs
 ///
-/// ```rust
-/// # use serde_json_lodash::snake_case_x;
-/// # use serde_json::json;
-/// assert_eq!(snake_case_x(json!("Foo Bar")), "foo_bar".to_owned());
-/// ```
-pub fn snake_case_x<A: Into<Value>>(v: A) -> String {
-    let v = v.into();
-    x_snake_case_x(&crate::to_string_x(v))
-}
-
-/// See lodash [snakeCase](https://lodash.com/docs/#snakeCase)
+/// `_x` forms: [snake_case_x!](crate::snake_case_x!), [snake_case_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -36,7 +27,9 @@ pub fn snake_case<A: Into<Value>>(v: A) -> Value {
     json!(snake_case_x(v))
 }
 
-/// Based on [snake_case()]
+/// See lodash [snakeCase](https://lodash.com/docs/#snakeCase)
+///
+/// Fn form: [snake_case()] | `_x` forms: [snake_case_x!](crate::snake_case_x!), [snake_case_x()]
 ///
 /// Examples:
 ///
@@ -78,8 +71,26 @@ macro_rules! snake_case {
     };
 }
 
-/// Based on [snake_case_x()]
-#[macro_export]
+/// `_x` helper for [snake_case!](crate::snake_case!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Macro form: [snake_case_x!](crate::snake_case_x!) | `Value` forms: [snake_case!](crate::snake_case!), [snake_case()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::snake_case_x;
+/// # use serde_json::json;
+/// assert_eq!(snake_case_x(json!("Foo Bar")), "foo_bar".to_owned());
+/// ```
+pub fn snake_case_x<A: Into<Value>>(v: A) -> String {
+    let v = v.into();
+    x_snake_case_x(&crate::to_string_x(v))
+}
+
+/// `_x` helper for [snake_case!](crate::snake_case!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Fn form: [snake_case_x()] | `Value` forms: [snake_case!](crate::snake_case!), [snake_case()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -87,6 +98,7 @@ macro_rules! snake_case {
 /// # use serde_json::json;
 /// assert_eq!(snake_case_x!(json!("Foo Bar")), "foo_bar".to_owned());
 /// ```
+#[macro_export]
 macro_rules! snake_case_x {
     () => {
         "".to_owned()

@@ -1,19 +1,10 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
+
 use crate::internal::base_is_match;
 
-/// `_x` helper for [is_match()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
+/// Fn form of [is_match!](crate::is_match!); see it for the full docs
 ///
-/// Additional cases:
-///
-/// ```rust
-/// # use serde_json_lodash::is_match_x;
-/// # use serde_json::json;
-/// assert_eq!(is_match_x(&json!({"a": 1}), &json!({"a": 1})), true);
-/// ```
-pub fn is_match_x(object: &Value, source: &Value) -> bool {
-    base_is_match(object, source)
-}
-/// See lodash [isMatch](https://lodash.com/docs/#isMatch)
+/// `_x` forms: [is_match_x!](crate::is_match_x!), [is_match_x()]
 ///
 /// Additional cases:
 ///
@@ -26,30 +17,9 @@ pub fn is_match(object: &Value, source: &Value) -> Value {
     json!(is_match_x(object, source))
 }
 
-/// Based on [is_match_x()]
-/// Additional cases:
+/// See lodash [isMatch](https://lodash.com/docs/#isMatch)
 ///
-/// ```rust
-/// # #[macro_use] extern crate serde_json_lodash;
-/// # use serde_json::json;
-/// assert_eq!(is_match_x!(&json!({"a": 1}), &json!({"a": 1})), true);
-/// ```
-#[macro_export]
-macro_rules! is_match_x {
-    () => {
-        true
-    };
-    ($a:expr $(,)*) => {
-        true
-    };
-    ($a:expr, $b:expr $(,)*) => {
-        $crate::is_match_x($a, $b)
-    };
-    ($a:expr, $b:expr, $($rest:tt)*) => {
-        $crate::is_match_x($a, $b)
-    };
-}
-/// Based on [is_match()]
+/// Fn form: [is_match()] | `_x` forms: [is_match_x!](crate::is_match_x!), [is_match_x()]
 ///
 /// Examples:
 ///
@@ -75,5 +45,47 @@ macro_rules! is_match {
     };
     ($a:expr, $b:expr, $($rest:tt)*) => {
         $crate::is_match($a, $b)
+    };
+}
+
+/// `_x` helper for [is_match!](crate::is_match!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Macro form: [is_match_x!](crate::is_match_x!) | `Value` forms: [is_match!](crate::is_match!), [is_match()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::is_match_x;
+/// # use serde_json::json;
+/// assert_eq!(is_match_x(&json!({"a": 1}), &json!({"a": 1})), true);
+/// ```
+pub fn is_match_x(object: &Value, source: &Value) -> bool {
+    base_is_match(object, source)
+}
+
+/// `_x` helper for [is_match!](crate::is_match!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Fn form: [is_match_x()] | `Value` forms: [is_match!](crate::is_match!), [is_match()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(is_match_x!(&json!({"a": 1}), &json!({"a": 1})), true);
+/// ```
+#[macro_export]
+macro_rules! is_match_x {
+    () => {
+        true
+    };
+    ($a:expr $(,)*) => {
+        true
+    };
+    ($a:expr, $b:expr $(,)*) => {
+        $crate::is_match_x($a, $b)
+    };
+    ($a:expr, $b:expr, $($rest:tt)*) => {
+        $crate::is_match_x($a, $b)
     };
 }

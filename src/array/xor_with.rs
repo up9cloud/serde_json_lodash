@@ -1,8 +1,9 @@
 use crate::lib::Value;
 
-/// See lodash [xorWith](https://lodash.com/docs/#xorWith)
+/// Fn form of [xor_with!](crate::xor_with!); see it for the full docs
 ///
-/// `comparator` is invoked to compare elements
+/// `_x` form: **not provided** — see [xor_with_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -33,7 +34,11 @@ pub fn xor_with(array: Value, other: Value, comparator: fn(&Value, &Value) -> bo
     Value::Array(out)
 }
 
-/// Based on [xor_with()]
+/// See lodash [xorWith](https://lodash.com/docs/#xorWith)
+///
+/// `comparator` is invoked to compare elements
+///
+/// Fn form: [xor_with()] | `_x` form: **not provided** — see [xor_with_x()]
 ///
 /// Examples:
 ///
@@ -73,13 +78,20 @@ macro_rules! xor_with {
     };
 }
 
-/// `_x` helper for [xor_with()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [xor_with()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [xor_with!](crate::xor_with!) and read the returned
+/// `Value`.
+///
+/// Macro form: [xor_with_x!](crate::xor_with_x!)
 pub fn xor_with_x() {
     todo!()
 }
-/// Based on [xor_with_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [xor_with!](crate::xor_with!) and read the returned
+/// `Value`.
+///
+/// Fn form: [xor_with_x()]
 #[macro_export]
 macro_rules! xor_with_x {
     ($($t:tt)*) => {

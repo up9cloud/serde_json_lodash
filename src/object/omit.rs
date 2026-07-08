@@ -1,9 +1,11 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
+
 use crate::to_string_x;
 
-/// See lodash [omit](https://lodash.com/docs/#omit)
+/// Fn form of [omit!](crate::omit!); see it for the full docs
 ///
-/// `paths` is an array of (top level) property names to drop
+/// `_x` form: **not provided** — see [omit_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -25,7 +27,11 @@ pub fn omit(object: Value, paths: Value) -> Value {
     }
 }
 
-/// Based on [omit()]
+/// See lodash [omit](https://lodash.com/docs/#omit)
+///
+/// `paths` is an array of (top level) property names to drop
+///
+/// Fn form: [omit()] | `_x` form: **not provided** — see [omit_x()]
 ///
 /// Examples:
 ///
@@ -64,13 +70,18 @@ macro_rules! omit {
     };
 }
 
-/// `_x` helper for [omit()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [omit()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [omit!](crate::omit!) and read the returned `Value`.
+///
+/// Macro form: [omit_x!](crate::omit_x!)
 pub fn omit_x() {
     todo!()
 }
-/// Based on [omit_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [omit!](crate::omit!) and read the returned `Value`.
+///
+/// Fn form: [omit_x()]
 #[macro_export]
 macro_rules! omit_x {
     ($($t:tt)*) => {

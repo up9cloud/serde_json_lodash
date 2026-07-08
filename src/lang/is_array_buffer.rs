@@ -1,18 +1,8 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
-/// `_x` helper for [is_array_buffer()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
+/// Fn form of [is_array_buffer!](crate::is_array_buffer!); see it for the full docs
 ///
-/// Additional cases:
-///
-/// ```rust
-/// # use serde_json_lodash::is_array_buffer_x;
-/// # use serde_json::json;
-/// assert_eq!(is_array_buffer_x(&json!({})), false);
-/// ```
-pub fn is_array_buffer_x(_v: &Value) -> bool {
-    false
-}
-/// See lodash [isArrayBuffer](https://lodash.com/docs/#isArrayBuffer)
+/// `_x` forms: [is_array_buffer_x!](crate::is_array_buffer_x!), [is_array_buffer_x()]
 ///
 /// Additional cases:
 ///
@@ -25,27 +15,9 @@ pub fn is_array_buffer(_v: &Value) -> Value {
     json!(is_array_buffer_x(_v))
 }
 
-/// Based on [is_array_buffer_x()]
-/// Additional cases:
+/// See lodash [isArrayBuffer](https://lodash.com/docs/#isArrayBuffer)
 ///
-/// ```rust
-/// # #[macro_use] extern crate serde_json_lodash;
-/// # use serde_json::json;
-/// assert_eq!(is_array_buffer_x!(&json!({})), false);
-/// ```
-#[macro_export]
-macro_rules! is_array_buffer_x {
-    () => {
-        false
-    };
-    ($a:expr $(,)*) => {
-        $crate::is_array_buffer_x($a)
-    };
-    ($a:expr, $($rest:tt)*) => {
-        $crate::is_array_buffer_x($a)
-    };
-}
-/// Based on [is_array_buffer()]
+/// Fn form: [is_array_buffer()] | `_x` forms: [is_array_buffer_x!](crate::is_array_buffer_x!), [is_array_buffer_x()]
 ///
 /// Examples:
 ///
@@ -67,5 +39,44 @@ macro_rules! is_array_buffer {
     };
     ($a:expr, $($rest:tt)*) => {
         $crate::is_array_buffer($a)
+    };
+}
+
+/// `_x` helper for [is_array_buffer!](crate::is_array_buffer!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Macro form: [is_array_buffer_x!](crate::is_array_buffer_x!) | `Value` forms: [is_array_buffer!](crate::is_array_buffer!), [is_array_buffer()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::is_array_buffer_x;
+/// # use serde_json::json;
+/// assert_eq!(is_array_buffer_x(&json!({})), false);
+/// ```
+pub fn is_array_buffer_x(_v: &Value) -> bool {
+    false
+}
+
+/// `_x` helper for [is_array_buffer!](crate::is_array_buffer!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Fn form: [is_array_buffer_x()] | `Value` forms: [is_array_buffer!](crate::is_array_buffer!), [is_array_buffer()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(is_array_buffer_x!(&json!({})), false);
+/// ```
+#[macro_export]
+macro_rules! is_array_buffer_x {
+    () => {
+        false
+    };
+    ($a:expr $(,)*) => {
+        $crate::is_array_buffer_x($a)
+    };
+    ($a:expr, $($rest:tt)*) => {
+        $crate::is_array_buffer_x($a)
     };
 }

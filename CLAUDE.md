@@ -10,21 +10,21 @@ README.md and the crate-level rustdoc (`//!` in `src/lib.rs`) serve the same pur
 
 ## Commands
 
+Dev shortcuts are cargo aliases in `.cargo/config.toml` (keep them and CONTRIBUTING.md's Dev memo in sync).
+
 ```bash
 # Run all tests (doc tests are the test suite; lazy_static feature is needed by some examples)
-cargo test --features lazy_static
+cargo t                 # = cargo test --features lazy_static
 
 # Test a single function's doc tests (e.g. `set`)
-cargo test --features lazy_static --doc set
+cargo t --doc set
 
-# Watch mode (wraps the above in cargo-watch)
-./dev.sh              # all tests
-./dev.sh --doc set    # single function
+# Watch mode (needs cargo-watch)
+cargo dev               # all tests
 
 # Lint — CI enforces both of these
 cargo fmt --all -- --check
-cargo clippy -- -D warnings
-./lint.sh             # local variant: fmt (writing) + nightly clippy
+cargo lint              # = cargo clippy --all-features -- -D warnings
 
 # Benchmarks (criterion)
 cargo bench
@@ -41,7 +41,7 @@ cargo bump patch --git-tag   # or minor / major
 git push && git push --tags
 ```
 
-Update the `serde_json_lodash = "..."` version in README.md's Install section when a release changes the required version.
+README.md's Install section uses `cargo add serde_json_lodash` (no pinned version), so releases never require a README version bump.
 
 Edition is 2024. **No features are enabled by default** (snake_case fns/macros only). Features: `alias` (the `paste`-based aliasing machinery plus snake_case lodash aliases like `first`/`entries`/`has_in`; pulls in the optional `paste` crate — without `alias` those names don't exist, use the canonical name), `camel` (camelCase aliases — requires and enables `alias`), `lazy_static`, `all` (`camel` + `lazy_static`). The crate has `#![deny(missing_docs)]` and `#![deny(warnings)]`, so any public item without a doc comment (even an empty `///`) fails the build. `src/seq`, `src/properties`, and `src/methods` are not re-exported from `src/lib_snake.rs` (they hold only commented-out chaining/template-settings stubs); do not add empty glob re-exports of them or the build fails under `#![deny(warnings)]`.
 
@@ -64,6 +64,8 @@ Each `<name>.rs` implements the base fn and a `_x` output helper, each with a ma
 
 There is no longer any `x_name` / `x_name_x` primitive-**input** helper — the generic `Into<Value>` base subsumes them. Option-like parameters (sizes, indexes, pad chars) take primitive types (`usize`, `isize`, `&str`), not `Value`; predicates take `Fn(&Value) -> bool`. Lodash functions with unlimited optional args keep exactly one in the fn form; the macro accepts more (e.g. `merge!(a, b, c)`).
 
+Item order within a file is fixed: internal helpers first, then `fn name`, `name!`, `fn name_x`, `name_x!`. `name!` is the recommended entry point (closest to the lodash experience), so it carries the primary docs: its first doc line is `See lodash [camelName](https://lodash.com/docs/#camelName)` plus any behavior notes, followed by a `Fn form: [name()] | `_x` forms: …` link line. The other three forms start with a pointer back to the macro (`Fn form of [name!](crate::name!)…` / `` `_x` helper for [name!](crate::name!)… ``) and cross-link their sibling forms so readers can switch quickly; macro links must use the qualified `[name!](crate::name!)` form (unqualified `[concat!]` etc. can collide with std macros). Void `_x` markers start their docs with `**Not provided.**` + the reason; not-ported stub macros in `mod.rs` repeat the fn's `**Not ported.**` line (never a bare `Based on […]`). Doc lines always come before attributes like `#[macro_export]`, and section headers (`Examples:`/`Additional cases:`) must be preceded by a blank `///` line so the rustdoc summary stays a single line.
+
 ## Test convention
 
 Tests are doc tests on the macros/fns, in two sections:
@@ -73,4 +75,4 @@ Tests are doc tests on the macros/fns, in two sections:
 
 ## Style
 
-`.rustfmt.toml` sets `reorder_imports = false` and `reorder_modules = false` — do not reorder imports or module declarations; the `mod.rs` files keep lodash's alphabetical function order interleaved with stubs.
+Default rustfmt (no `.rustfmt.toml`). The `mod.rs` files keep lodash's doc order (`mod x; pub use x::*;` pairs interleaved with stubs) — rustfmt can't disturb it because it only reorders *consecutive* `mod`/`use` items, so keep that interleaved structure when adding functions.

@@ -1,4 +1,4 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
 // internal worker for [flatten()].
 fn x_flatten_x(vec: Vec<Value>) -> Vec<Value> {
@@ -25,7 +25,10 @@ fn x_flatten_x(vec: Vec<Value>) -> Vec<Value> {
     result
 }
 
-/// See lodash [flatten](https://lodash.com/docs/#flatten)
+/// Fn form of [flatten!](crate::flatten!); see it for the full docs
+///
+/// `_x` form: **not provided** — see [flatten_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -54,7 +57,9 @@ pub fn flatten<A: Into<Value>>(v: A) -> Value {
     }
 }
 
-/// Based on [flatten()]
+/// See lodash [flatten](https://lodash.com/docs/#flatten)
+///
+/// Fn form: [flatten()] | `_x` form: **not provided** — see [flatten_x()]
 ///
 /// Examples:
 ///
@@ -96,13 +101,20 @@ macro_rules! flatten {
     };
 }
 
-/// `_x` helper for [flatten()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [flatten()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [flatten!](crate::flatten!) and read the returned
+/// `Value`.
+///
+/// Macro form: [flatten_x!](crate::flatten_x!)
 pub fn flatten_x() {
     todo!()
 }
-/// Based on [flatten_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [flatten!](crate::flatten!) and read the returned
+/// `Value`.
+///
+/// Fn form: [flatten_x()]
 #[macro_export]
 macro_rules! flatten_x {
     ($($t:tt)*) => {

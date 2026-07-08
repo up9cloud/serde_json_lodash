@@ -1,7 +1,11 @@
 use crate::lib::Value;
+
 use crate::internal::{f64_to_number, value_nan, value_to_option_number};
 
-/// See lodash [multiply](https://lodash.com/docs/#multiply)
+/// Fn form of [multiply!](crate::multiply!); see it for the full docs
+///
+/// `_x` form: **not provided** — see [multiply_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -22,7 +26,9 @@ pub fn multiply(multiplier: Value, multiplicand: Value) -> Value {
     }
 }
 
-/// Based on [multiply()]
+/// See lodash [multiply](https://lodash.com/docs/#multiply)
+///
+/// Fn form: [multiply()] | `_x` form: **not provided** — see [multiply_x()]
 ///
 /// Examples:
 ///
@@ -61,13 +67,20 @@ macro_rules! multiply {
     };
 }
 
-/// `_x` helper for [multiply()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [multiply()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [multiply!](crate::multiply!) and read the returned
+/// `Value`.
+///
+/// Macro form: [multiply_x!](crate::multiply_x!)
 pub fn multiply_x() {
     todo!()
 }
-/// Based on [multiply_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [multiply!](crate::multiply!) and read the returned
+/// `Value`.
+///
+/// Fn form: [multiply_x()]
 #[macro_export]
 macro_rules! multiply_x {
     ($($t:tt)*) => {

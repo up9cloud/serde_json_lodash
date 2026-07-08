@@ -31,7 +31,7 @@ pub use includes::*;
 pub fn invoke_map() {
     todo!()
 }
-/// Based on [invoke_map()]
+/// **Not ported.** Invokes a named method on each element; JSON values have no methods.
 #[macro_export]
 macro_rules! invoke_map {
     ($($t:tt)*) => {
@@ -42,7 +42,7 @@ macro_rules! invoke_map {
 pub fn invoke_map_x() {
     todo!()
 }
-/// Based on [invoke_map_x()]
+/// **Not ported.** Invokes a named method on each element; JSON values have no methods.
 #[macro_export]
 macro_rules! invoke_map_x {
     ($($t:tt)*) => {

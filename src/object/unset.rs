@@ -1,9 +1,11 @@
 use crate::lib::Value;
+
 use crate::to_path_x;
 
-/// See lodash [unset](https://lodash.com/docs/#unset)
+/// Fn form of [unset!](crate::unset!); see it for the full docs
 ///
-/// Removes the property at `path`, returning the (possibly modified) object
+/// `_x` form: **not provided** — see [unset_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -47,7 +49,11 @@ pub fn unset(mut object: Value, path: Value) -> Value {
     object
 }
 
-/// Based on [unset()]
+/// See lodash [unset](https://lodash.com/docs/#unset)
+///
+/// Removes the property at `path`, returning the (possibly modified) object
+///
+/// Fn form: [unset()] | `_x` form: **not provided** — see [unset_x()]
 ///
 /// Examples:
 ///
@@ -86,13 +92,18 @@ macro_rules! unset {
     };
 }
 
-/// `_x` helper for [unset()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [unset()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [unset!](crate::unset!) and read the returned `Value`.
+///
+/// Macro form: [unset_x!](crate::unset_x!)
 pub fn unset_x() {
     todo!()
 }
-/// Based on [unset_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [unset!](crate::unset!) and read the returned `Value`.
+///
+/// Fn form: [unset_x()]
 #[macro_export]
 macro_rules! unset_x {
     ($($t:tt)*) => {

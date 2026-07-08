@@ -1,9 +1,11 @@
 use crate::lib::Value;
+
 use crate::internal::value_to_option_number;
 
-/// See lodash [minBy](https://lodash.com/docs/#minBy)
+/// Fn form of [min_by!](crate::min_by!); see it for the full docs
 ///
-/// `iteratee` maps each element to the value used for comparison
+/// `_x` form: **not provided** — see [min_by_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -29,7 +31,11 @@ pub fn min_by(array: Value, iteratee: fn(&Value) -> Value) -> Value {
     }
 }
 
-/// Based on [min_by()]
+/// See lodash [minBy](https://lodash.com/docs/#minBy)
+///
+/// `iteratee` maps each element to the value used for comparison
+///
+/// Fn form: [min_by()] | `_x` form: **not provided** — see [min_by_x()]
 ///
 /// Examples:
 ///
@@ -68,13 +74,20 @@ macro_rules! min_by {
     };
 }
 
-/// `_x` helper for [min_by()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [min_by()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [min_by!](crate::min_by!) and read the returned
+/// `Value`.
+///
+/// Macro form: [min_by_x!](crate::min_by_x!)
 pub fn min_by_x() {
     todo!()
 }
-/// Based on [min_by_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [min_by!](crate::min_by!) and read the returned
+/// `Value`.
+///
+/// Fn form: [min_by_x()]
 #[macro_export]
 macro_rules! min_by_x {
     ($($t:tt)*) => {

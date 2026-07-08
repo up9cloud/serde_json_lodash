@@ -1,9 +1,11 @@
-use crate::lib::{json, Value, Map};
+use crate::lib::{Map, Value, json};
+
 use crate::to_string_x;
 
-/// See lodash [zipObject](https://lodash.com/docs/#zipObject)
+/// Fn form of [zip_object!](crate::zip_object!); see it for the full docs
 ///
-/// Builds an object from `keys` and `values` arrays
+/// `_x` form: **not provided** — see [zip_object_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -27,7 +29,11 @@ pub fn zip_object(keys: Value, values: Value) -> Value {
     Value::Object(out)
 }
 
-/// Based on [zip_object()]
+/// See lodash [zipObject](https://lodash.com/docs/#zipObject)
+///
+/// Builds an object from `keys` and `values` arrays
+///
+/// Fn form: [zip_object()] | `_x` form: **not provided** — see [zip_object_x()]
 ///
 /// Examples:
 ///
@@ -64,13 +70,20 @@ macro_rules! zip_object {
     };
 }
 
-/// `_x` helper for [zip_object()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [zip_object()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [zip_object!](crate::zip_object!) and read the returned
+/// `Value`.
+///
+/// Macro form: [zip_object_x!](crate::zip_object_x!)
 pub fn zip_object_x() {
     todo!()
 }
-/// Based on [zip_object_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [zip_object!](crate::zip_object!) and read the returned
+/// `Value`.
+///
+/// Fn form: [zip_object_x()]
 #[macro_export]
 macro_rules! zip_object_x {
     ($($t:tt)*) => {

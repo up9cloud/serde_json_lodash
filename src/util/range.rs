@@ -1,5 +1,7 @@
-use crate::lib::{json, Value};
-use crate::{to_safe_integer_x};
+use crate::lib::{Value, json};
+
+use crate::to_safe_integer_x;
+
 // internal worker for [range()].
 pub(crate) fn x_range_x(start: isize, end: isize, step: isize) -> Vec<isize> {
     let mut result = vec![];
@@ -54,21 +56,10 @@ fn x_range(start: isize, end: isize, step: isize) -> Value {
     )
 }
 
-/// `_x` helper for [range()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
-/// Additional cases:
+/// Fn form of [range!](crate::range!); see it for the full docs
 ///
-/// ```rust
-/// # use serde_json_lodash::range_x;
-/// # use serde_json::json;
-/// assert_eq!(range_x(json!(0), json!(4), 1), vec![0_isize, 1, 2, 3]);
-/// ```
-pub fn range_x<A: Into<Value>, B: Into<Value>>(start: A, end: B, step: isize) -> Vec<isize> {
-    let start = start.into();
-    let end = end.into();
-    x_range_x(to_safe_integer_x(start), to_safe_integer_x(end), step)
-}
-
-/// See lodash [range](https://lodash.com/docs/#range)
+/// `_x` forms: [range_x!](crate::range_x!), [range_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -82,40 +73,9 @@ pub fn range<A: Into<Value>, B: Into<Value>>(start: A, end: B, step: isize) -> V
     x_range(to_safe_integer_x(start), to_safe_integer_x(end), step)
 }
 
-/// Based on [range_x()]
-/// Additional cases:
+/// See lodash [range](https://lodash.com/docs/#range)
 ///
-/// ```rust
-/// # #[macro_use] extern crate serde_json_lodash;
-/// # use serde_json::json;
-/// assert_eq!(range_x!(json!(0), json!(4)), vec![0_isize, 1, 2, 3]);
-/// ```
-#[macro_export]
-macro_rules! range_x {
-    () => {{
-        let a: Vec<isize> = vec![];
-        a
-    }};
-    ($a:expr $(,)*) => {{
-        let end = $crate::to_safe_integer_x($a);
-        if end >= 0 {
-            $crate::x_range_x(0, end, 1)
-        } else {
-            $crate::x_range_x(0, end, -1)
-        }
-    }};
-    ($a:expr, $b:expr $(,)*) => {
-        $crate::range_x($a, $b, 1)
-    };
-    ($a:expr, $b:expr, $c:expr $(,)*) => {
-        $crate::range_x($a, $b, $c)
-    };
-    ($a:expr, $b:expr, $c:expr, $($rest:tt)*) => {
-        $crate::range_x($a, $b, $c)
-    };
-}
-
-/// Based on [range()]
+/// Fn form: [range()] | `_x` forms: [range_x!](crate::range_x!), [range_x()]
 ///
 /// Examples:
 ///
@@ -180,5 +140,58 @@ macro_rules! range {
     };
     ($a:expr, $b:expr, $c:expr, $($rest:tt)*) => {
         $crate::range($a, $b, $c)
+    };
+}
+
+/// `_x` helper for [range!](crate::range!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Macro form: [range_x!](crate::range_x!) | `Value` forms: [range!](crate::range!), [range()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::range_x;
+/// # use serde_json::json;
+/// assert_eq!(range_x(json!(0), json!(4), 1), vec![0_isize, 1, 2, 3]);
+/// ```
+pub fn range_x<A: Into<Value>, B: Into<Value>>(start: A, end: B, step: isize) -> Vec<isize> {
+    let start = start.into();
+    let end = end.into();
+    x_range_x(to_safe_integer_x(start), to_safe_integer_x(end), step)
+}
+
+/// `_x` helper for [range!](crate::range!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Fn form: [range_x()] | `Value` forms: [range!](crate::range!), [range()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(range_x!(json!(0), json!(4)), vec![0_isize, 1, 2, 3]);
+/// ```
+#[macro_export]
+macro_rules! range_x {
+    () => {{
+        let a: Vec<isize> = vec![];
+        a
+    }};
+    ($a:expr $(,)*) => {{
+        let end = $crate::to_safe_integer_x($a);
+        if end >= 0 {
+            $crate::x_range_x(0, end, 1)
+        } else {
+            $crate::x_range_x(0, end, -1)
+        }
+    }};
+    ($a:expr, $b:expr $(,)*) => {
+        $crate::range_x($a, $b, 1)
+    };
+    ($a:expr, $b:expr, $c:expr $(,)*) => {
+        $crate::range_x($a, $b, $c)
+    };
+    ($a:expr, $b:expr, $c:expr, $($rest:tt)*) => {
+        $crate::range_x($a, $b, $c)
     };
 }

@@ -1,4 +1,4 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
 // internal worker for [ends_with()].
 fn x_ends_with_x(s: &str, target: &str, position: usize) -> bool {
@@ -8,25 +8,9 @@ fn x_ends_with_x(s: &str, target: &str, position: usize) -> bool {
     head.ends_with(target)
 }
 
-/// `_x` helper for [ends_with()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
+/// Fn form of [ends_with!](crate::ends_with!); see it for the full docs
 ///
-/// Additional cases:
-///
-/// ```rust
-/// # use serde_json_lodash::ends_with_x;
-/// # use serde_json::json;
-/// assert_eq!(ends_with_x(json!("abc"), json!("c"), usize::MAX), true);
-/// ```
-pub fn ends_with_x<A: Into<Value>>(v: A, target: Value, position: usize) -> bool {
-    let v = v.into();
-    x_ends_with_x(
-        &crate::to_string_x(v),
-        &crate::to_string_x(target),
-        position,
-    )
-}
-
-/// See lodash [endsWith](https://lodash.com/docs/#endsWith)
+/// `_x` forms: [ends_with_x!](crate::ends_with_x!), [ends_with_x()]
 ///
 /// Additional cases:
 ///
@@ -40,34 +24,9 @@ pub fn ends_with<A: Into<Value>>(v: A, target: Value, position: usize) -> Value 
     json!(ends_with_x(v, target, position))
 }
 
-/// Based on [ends_with_x()]
-/// Additional cases:
+/// See lodash [endsWith](https://lodash.com/docs/#endsWith)
 ///
-/// ```rust
-/// # #[macro_use] extern crate serde_json_lodash;
-/// # use serde_json::json;
-/// assert_eq!(ends_with_x!(json!("abc"), json!("c"), usize::MAX), true);
-/// ```
-#[macro_export]
-macro_rules! ends_with_x {
-    () => {
-        false
-    };
-    ($a:expr $(,)*) => {
-        false
-    };
-    ($a:expr, $b:expr $(,)*) => {
-        $crate::ends_with_x($a, $b, usize::MAX)
-    };
-    ($a:expr, $b:expr, $c:expr $(,)*) => {
-        $crate::ends_with_x($a, $b, $c)
-    };
-    ($a:expr, $b:expr, $c:expr, $($rest:tt)*) => {
-        $crate::ends_with_x($a, $b, $c)
-    };
-}
-
-/// Based on [ends_with()]
+/// Fn form: [ends_with()] | `_x` forms: [ends_with_x!](crate::ends_with_x!), [ends_with_x()]
 ///
 /// Examples:
 ///
@@ -98,5 +57,55 @@ macro_rules! ends_with {
     };
     ($a:expr, $b:expr, $c:expr, $($rest:tt)*) => {
         $crate::ends_with($a, $b, $c)
+    };
+}
+
+/// `_x` helper for [ends_with!](crate::ends_with!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Macro form: [ends_with_x!](crate::ends_with_x!) | `Value` forms: [ends_with!](crate::ends_with!), [ends_with()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::ends_with_x;
+/// # use serde_json::json;
+/// assert_eq!(ends_with_x(json!("abc"), json!("c"), usize::MAX), true);
+/// ```
+pub fn ends_with_x<A: Into<Value>>(v: A, target: Value, position: usize) -> bool {
+    let v = v.into();
+    x_ends_with_x(
+        &crate::to_string_x(v),
+        &crate::to_string_x(target),
+        position,
+    )
+}
+
+/// `_x` helper for [ends_with!](crate::ends_with!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Fn form: [ends_with_x()] | `Value` forms: [ends_with!](crate::ends_with!), [ends_with()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(ends_with_x!(json!("abc"), json!("c"), usize::MAX), true);
+/// ```
+#[macro_export]
+macro_rules! ends_with_x {
+    () => {
+        false
+    };
+    ($a:expr $(,)*) => {
+        false
+    };
+    ($a:expr, $b:expr $(,)*) => {
+        $crate::ends_with_x($a, $b, usize::MAX)
+    };
+    ($a:expr, $b:expr, $c:expr $(,)*) => {
+        $crate::ends_with_x($a, $b, $c)
+    };
+    ($a:expr, $b:expr, $c:expr, $($rest:tt)*) => {
+        $crate::ends_with_x($a, $b, $c)
     };
 }

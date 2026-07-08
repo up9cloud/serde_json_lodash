@@ -1,18 +1,8 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
-/// `_x` helper for [is_equal()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
+/// Fn form of [is_equal!](crate::is_equal!); see it for the full docs
 ///
-/// Additional cases:
-///
-/// ```rust
-/// # use serde_json_lodash::is_equal_x;
-/// # use serde_json::json;
-/// assert_eq!(is_equal_x(&json!(1), &json!(1)), true);
-/// ```
-pub fn is_equal_x(a: &Value, b: &Value) -> bool {
-    a == b
-}
-/// See lodash [isEqual](https://lodash.com/docs/#isEqual)
+/// `_x` forms: [is_equal_x!](crate::is_equal_x!), [is_equal_x()]
 ///
 /// Additional cases:
 ///
@@ -25,30 +15,9 @@ pub fn is_equal(a: &Value, b: &Value) -> Value {
     json!(is_equal_x(a, b))
 }
 
-/// Based on [is_equal_x()]
-/// Additional cases:
+/// See lodash [isEqual](https://lodash.com/docs/#isEqual)
 ///
-/// ```rust
-/// # #[macro_use] extern crate serde_json_lodash;
-/// # use serde_json::json;
-/// assert_eq!(is_equal_x!(&json!(1), &json!(1)), true);
-/// ```
-#[macro_export]
-macro_rules! is_equal_x {
-    () => {
-        true
-    };
-    ($a:expr $(,)*) => {
-        $crate::is_equal_x($a, &$crate::lib::json!(null))
-    };
-    ($a:expr, $b:expr $(,)*) => {
-        $crate::is_equal_x($a, $b)
-    };
-    ($a:expr, $b:expr, $($rest:tt)*) => {
-        $crate::is_equal_x($a, $b)
-    };
-}
-/// Based on [is_equal()]
+/// Fn form: [is_equal()] | `_x` forms: [is_equal_x!](crate::is_equal_x!), [is_equal_x()]
 ///
 /// Examples:
 ///
@@ -73,5 +42,47 @@ macro_rules! is_equal {
     };
     ($a:expr, $b:expr, $($rest:tt)*) => {
         $crate::is_equal($a, $b)
+    };
+}
+
+/// `_x` helper for [is_equal!](crate::is_equal!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Macro form: [is_equal_x!](crate::is_equal_x!) | `Value` forms: [is_equal!](crate::is_equal!), [is_equal()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::is_equal_x;
+/// # use serde_json::json;
+/// assert_eq!(is_equal_x(&json!(1), &json!(1)), true);
+/// ```
+pub fn is_equal_x(a: &Value, b: &Value) -> bool {
+    a == b
+}
+
+/// `_x` helper for [is_equal!](crate::is_equal!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Fn form: [is_equal_x()] | `Value` forms: [is_equal!](crate::is_equal!), [is_equal()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(is_equal_x!(&json!(1), &json!(1)), true);
+/// ```
+#[macro_export]
+macro_rules! is_equal_x {
+    () => {
+        true
+    };
+    ($a:expr $(,)*) => {
+        $crate::is_equal_x($a, &$crate::lib::json!(null))
+    };
+    ($a:expr, $b:expr $(,)*) => {
+        $crate::is_equal_x($a, $b)
+    };
+    ($a:expr, $b:expr, $($rest:tt)*) => {
+        $crate::is_equal_x($a, $b)
     };
 }

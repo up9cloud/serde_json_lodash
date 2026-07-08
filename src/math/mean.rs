@@ -1,4 +1,5 @@
 use crate::lib::Value;
+
 use crate::internal::{f64_to_number, value_nan, value_to_option_number};
 
 pub(crate) fn mean_values(vec: Vec<Value>) -> Value {
@@ -20,9 +21,10 @@ pub(crate) fn mean_values(vec: Vec<Value>) -> Value {
     }
 }
 
-/// See lodash [mean](https://lodash.com/docs/#mean)
+/// Fn form of [mean!](crate::mean!); see it for the full docs
 ///
-/// Returns `Value::Null` (js `NaN`) for an empty array
+/// `_x` form: **not provided** — see [mean_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -37,7 +39,11 @@ pub fn mean(array: Value) -> Value {
     }
 }
 
-/// Based on [mean()]
+/// See lodash [mean](https://lodash.com/docs/#mean)
+///
+/// Returns `Value::Null` (js `NaN`) for an empty array
+///
+/// Fn form: [mean()] | `_x` form: **not provided** — see [mean_x()]
 ///
 /// Examples:
 ///
@@ -69,13 +75,18 @@ macro_rules! mean {
     };
 }
 
-/// `_x` helper for [mean()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [mean()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [mean!](crate::mean!) and read the returned `Value`.
+///
+/// Macro form: [mean_x!](crate::mean_x!)
 pub fn mean_x() {
     todo!()
 }
-/// Based on [mean_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [mean!](crate::mean!) and read the returned `Value`.
+///
+/// Fn form: [mean_x()]
 #[macro_export]
 macro_rules! mean_x {
     ($($t:tt)*) => {

@@ -1,18 +1,8 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
-/// `_x` helper for [is_plain_object()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
+/// Fn form of [is_plain_object!](crate::is_plain_object!); see it for the full docs
 ///
-/// Additional cases:
-///
-/// ```rust
-/// # use serde_json_lodash::is_plain_object_x;
-/// # use serde_json::json;
-/// assert_eq!(is_plain_object_x(&json!([1, 2, 3])), false);
-/// ```
-pub fn is_plain_object_x(v: &Value) -> bool {
-    v.is_object()
-}
-/// See lodash [isPlainObject](https://lodash.com/docs/#isPlainObject)
+/// `_x` forms: [is_plain_object_x!](crate::is_plain_object_x!), [is_plain_object_x()]
 ///
 /// Additional cases:
 ///
@@ -25,27 +15,9 @@ pub fn is_plain_object(v: &Value) -> Value {
     json!(is_plain_object_x(v))
 }
 
-/// Based on [is_plain_object_x()]
-/// Additional cases:
+/// See lodash [isPlainObject](https://lodash.com/docs/#isPlainObject)
 ///
-/// ```rust
-/// # #[macro_use] extern crate serde_json_lodash;
-/// # use serde_json::json;
-/// assert_eq!(is_plain_object_x!(&json!([1, 2, 3])), false);
-/// ```
-#[macro_export]
-macro_rules! is_plain_object_x {
-    () => {
-        false
-    };
-    ($a:expr $(,)*) => {
-        $crate::is_plain_object_x($a)
-    };
-    ($a:expr, $($rest:tt)*) => {
-        $crate::is_plain_object_x($a)
-    };
-}
-/// Based on [is_plain_object()]
+/// Fn form: [is_plain_object()] | `_x` forms: [is_plain_object_x!](crate::is_plain_object_x!), [is_plain_object_x()]
 ///
 /// Examples:
 ///
@@ -68,5 +40,44 @@ macro_rules! is_plain_object {
     };
     ($a:expr, $($rest:tt)*) => {
         $crate::is_plain_object($a)
+    };
+}
+
+/// `_x` helper for [is_plain_object!](crate::is_plain_object!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Macro form: [is_plain_object_x!](crate::is_plain_object_x!) | `Value` forms: [is_plain_object!](crate::is_plain_object!), [is_plain_object()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::is_plain_object_x;
+/// # use serde_json::json;
+/// assert_eq!(is_plain_object_x(&json!([1, 2, 3])), false);
+/// ```
+pub fn is_plain_object_x(v: &Value) -> bool {
+    v.is_object()
+}
+
+/// `_x` helper for [is_plain_object!](crate::is_plain_object!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Fn form: [is_plain_object_x()] | `Value` forms: [is_plain_object!](crate::is_plain_object!), [is_plain_object()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(is_plain_object_x!(&json!([1, 2, 3])), false);
+/// ```
+#[macro_export]
+macro_rules! is_plain_object_x {
+    () => {
+        false
+    };
+    ($a:expr $(,)*) => {
+        $crate::is_plain_object_x($a)
+    };
+    ($a:expr, $($rest:tt)*) => {
+        $crate::is_plain_object_x($a)
     };
 }

@@ -1,10 +1,13 @@
-use crate::lib::{json, Value, Map};
+use crate::lib::{Map, Value, json};
+
 use crate::to_string_x;
+
 use crate::collection::collect::collection_values;
 
-/// See lodash [groupBy](https://lodash.com/docs/#groupBy)
+/// Fn form of [group_by!](crate::group_by!); see it for the full docs
 ///
-/// `iteratee` maps each element to a grouping key (coerced to a string)
+/// `_x` form: **not provided** — see [group_by_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -25,7 +28,11 @@ pub fn group_by(collection: Value, iteratee: fn(&Value) -> Value) -> Value {
     Value::Object(out)
 }
 
-/// Based on [group_by()]
+/// See lodash [groupBy](https://lodash.com/docs/#groupBy)
+///
+/// `iteratee` maps each element to a grouping key (coerced to a string)
+///
+/// Fn form: [group_by()] | `_x` form: **not provided** — see [group_by_x()]
 ///
 /// Examples:
 ///
@@ -62,13 +69,20 @@ macro_rules! group_by {
     };
 }
 
-/// `_x` helper for [group_by()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [group_by()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [group_by!](crate::group_by!) and read the returned
+/// `Value`.
+///
+/// Macro form: [group_by_x!](crate::group_by_x!)
 pub fn group_by_x() {
     todo!()
 }
-/// Based on [group_by_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [group_by!](crate::group_by!) and read the returned
+/// `Value`.
+///
+/// Fn form: [group_by_x()]
 #[macro_export]
 macro_rules! group_by_x {
     ($($t:tt)*) => {

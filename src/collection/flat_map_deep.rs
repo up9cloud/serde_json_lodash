@@ -1,4 +1,5 @@
 use crate::lib::Value;
+
 use crate::collection::collect::collection_values;
 
 fn flatten_all(v: Value, out: &mut Vec<Value>) {
@@ -12,9 +13,10 @@ fn flatten_all(v: Value, out: &mut Vec<Value>) {
     }
 }
 
-/// See lodash [flatMapDeep](https://lodash.com/docs/#flatMapDeep)
+/// Fn form of [flat_map_deep!](crate::flat_map_deep!); see it for the full docs
 ///
-/// Maps each element with `iteratee`, then recursively flattens the result
+/// `_x` form: **not provided** — see [flat_map_deep_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -30,7 +32,11 @@ pub fn flat_map_deep(collection: Value, iteratee: fn(&Value) -> Value) -> Value 
     Value::Array(out)
 }
 
-/// Based on [flat_map_deep()]
+/// See lodash [flatMapDeep](https://lodash.com/docs/#flatMapDeep)
+///
+/// Maps each element with `iteratee`, then recursively flattens the result
+///
+/// Fn form: [flat_map_deep()] | `_x` form: **not provided** — see [flat_map_deep_x()]
 ///
 /// Examples:
 ///
@@ -67,13 +73,20 @@ macro_rules! flat_map_deep {
     };
 }
 
-/// `_x` helper for [flat_map_deep()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [flat_map_deep()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [flat_map_deep!](crate::flat_map_deep!) and read the
+/// returned `Value`.
+///
+/// Macro form: [flat_map_deep_x!](crate::flat_map_deep_x!)
 pub fn flat_map_deep_x() {
     todo!()
 }
-/// Based on [flat_map_deep_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [flat_map_deep!](crate::flat_map_deep!) and read the
+/// returned `Value`.
+///
+/// Fn form: [flat_map_deep_x()]
 #[macro_export]
 macro_rules! flat_map_deep_x {
     ($($t:tt)*) => {

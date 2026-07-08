@@ -1,6 +1,9 @@
-use crate::lib::{Value};
+use crate::lib::Value;
 
-/// See lodash [pullAt](https://lodash.com/docs/#pullAt)
+/// Fn form of [pull_at!](crate::pull_at!); see it for the full docs
+///
+/// `_x` form: **not provided** — see [pull_at_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -38,7 +41,9 @@ pub fn pull_at(array: &mut Value, indexes: Vec<usize>) -> Value {
     Value::Array(pulled_vec)
 }
 
-/// Based on [pull_at()]
+/// See lodash [pullAt](https://lodash.com/docs/#pullAt)
+///
+/// Fn form: [pull_at()] | `_x` form: **not provided** — see [pull_at_x()]
 ///
 /// Examples:
 ///
@@ -86,13 +91,20 @@ macro_rules! pull_at {
     };
 }
 
-/// `_x` helper for [pull_at()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [pull_at()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [pull_at!](crate::pull_at!) and read the returned
+/// `Value`.
+///
+/// Macro form: [pull_at_x!](crate::pull_at_x!)
 pub fn pull_at_x() {
     todo!()
 }
-/// Based on [pull_at_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [pull_at!](crate::pull_at!) and read the returned
+/// `Value`.
+///
+/// Fn form: [pull_at_x()]
 #[macro_export]
 macro_rules! pull_at_x {
     ($($t:tt)*) => {

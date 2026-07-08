@@ -1,12 +1,15 @@
 use crate::lib::Value;
+
 use crate::internal::compare_values;
+
 use crate::collection::collect::collection_values;
+
 use std::cmp::Ordering;
 
-/// See lodash [orderBy](https://lodash.com/docs/#orderBy)
+/// Fn form of [order_by!](crate::order_by!); see it for the full docs
 ///
-/// `iteratee` maps each element to a sort key; `ascending` picks the
-/// direction
+/// `_x` form: **not provided** — see [order_by_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -23,7 +26,12 @@ pub fn order_by(collection: Value, iteratee: fn(&Value) -> Value, ascending: boo
     Value::Array(vec)
 }
 
-/// Based on [order_by()]
+/// See lodash [orderBy](https://lodash.com/docs/#orderBy)
+///
+/// `iteratee` maps each element to a sort key; `ascending` picks the
+/// direction
+///
+/// Fn form: [order_by()] | `_x` form: **not provided** — see [order_by_x()]
 ///
 /// Examples:
 ///
@@ -71,13 +79,20 @@ macro_rules! order_by {
     };
 }
 
-/// `_x` helper for [order_by()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [order_by()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [order_by!](crate::order_by!) and read the returned
+/// `Value`.
+///
+/// Macro form: [order_by_x!](crate::order_by_x!)
 pub fn order_by_x() {
     todo!()
 }
-/// Based on [order_by_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [order_by!](crate::order_by!) and read the returned
+/// `Value`.
+///
+/// Fn form: [order_by_x()]
 #[macro_export]
 macro_rules! order_by_x {
     ($($t:tt)*) => {

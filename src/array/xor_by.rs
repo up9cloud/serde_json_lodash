@@ -1,8 +1,9 @@
 use crate::lib::Value;
 
-/// See lodash [xorBy](https://lodash.com/docs/#xorBy)
+/// Fn form of [xor_by!](crate::xor_by!); see it for the full docs
 ///
-/// `iteratee` maps each element to the value used for comparison
+/// `_x` form: **not provided** — see [xor_by_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -38,7 +39,11 @@ pub fn xor_by(array: Value, other: Value, iteratee: fn(&Value) -> Value) -> Valu
     Value::Array(out)
 }
 
-/// Based on [xor_by()]
+/// See lodash [xorBy](https://lodash.com/docs/#xorBy)
+///
+/// `iteratee` maps each element to the value used for comparison
+///
+/// Fn form: [xor_by()] | `_x` form: **not provided** — see [xor_by_x()]
 ///
 /// Examples:
 ///
@@ -78,13 +83,20 @@ macro_rules! xor_by {
     };
 }
 
-/// `_x` helper for [xor_by()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [xor_by()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [xor_by!](crate::xor_by!) and read the returned
+/// `Value`.
+///
+/// Macro form: [xor_by_x!](crate::xor_by_x!)
 pub fn xor_by_x() {
     todo!()
 }
-/// Based on [xor_by_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [xor_by!](crate::xor_by!) and read the returned
+/// `Value`.
+///
+/// Fn form: [xor_by_x()]
 #[macro_export]
 macro_rules! xor_by_x {
     ($($t:tt)*) => {

@@ -1,4 +1,4 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
 // internal `&str`/primitive worker for [trim()] / [trim_x()]
 fn x_trim_x(s: &str, chars: &str) -> String {
@@ -8,7 +8,10 @@ fn x_trim_x(s: &str, chars: &str) -> String {
     s.trim_matches(|c| chars.contains(c)).into()
 }
 
-/// See lodash [trim](https://lodash.com/docs/#trim)
+/// Fn form of [trim!](crate::trim!); see it for the full docs
+///
+/// `_x` forms: [trim_x!](crate::trim_x!), [trim_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -21,7 +24,9 @@ pub fn trim<A: Into<Value>>(v: A, chars: &str) -> Value {
     json!(x_trim_x(&crate::to_string_x(v), chars))
 }
 
-/// Based on [trim()]
+/// See lodash [trim](https://lodash.com/docs/#trim)
+///
+/// Fn form: [trim()] | `_x` forms: [trim_x!](crate::trim_x!), [trim_x()]
 ///
 /// Examples:
 ///
@@ -63,7 +68,10 @@ macro_rules! trim {
     };
 }
 
-/// `_x` helper for [trim()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
+/// `_x` helper for [trim!](crate::trim!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Macro form: [trim_x!](crate::trim_x!) | `Value` forms: [trim!](crate::trim!), [trim()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -76,8 +84,10 @@ pub fn trim_x<A: Into<Value>>(v: A, chars: &str) -> String {
     x_trim_x(&crate::to_string_x(v), chars)
 }
 
-/// Based on [trim_x()]
-#[macro_export]
+/// `_x` helper for [trim!](crate::trim!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Fn form: [trim_x()] | `Value` forms: [trim!](crate::trim!), [trim()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -85,6 +95,7 @@ pub fn trim_x<A: Into<Value>>(v: A, chars: &str) -> String {
 /// # use serde_json::json;
 /// assert_eq!(trim_x!(json!("-_-abc-_-"), "_-"), "abc".to_owned());
 /// ```
+#[macro_export]
 macro_rules! trim_x {
     () => {
         "".to_owned()

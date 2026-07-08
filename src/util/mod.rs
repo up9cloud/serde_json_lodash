@@ -2,7 +2,7 @@
 pub fn attempt() {
     todo!()
 }
-/// Based on [attempt()]
+/// **Not ported.** Invokes a function and captures thrown errors; no function to invoke in JSON.
 #[macro_export]
 macro_rules! attempt {
     ($($t:tt)*) => {
@@ -13,7 +13,7 @@ macro_rules! attempt {
 pub fn attempt_x() {
     todo!()
 }
-/// Based on [attempt_x()]
+/// **Not ported.** Invokes a function and captures thrown errors; no function to invoke in JSON.
 #[macro_export]
 macro_rules! attempt_x {
     ($($t:tt)*) => {
@@ -24,7 +24,7 @@ macro_rules! attempt_x {
 pub fn bind_all() {
     todo!()
 }
-/// Based on [bind_all()]
+/// **Not ported.** Binds object methods in place; JSON objects have no methods.
 #[macro_export]
 macro_rules! bind_all {
     ($($t:tt)*) => {
@@ -35,7 +35,7 @@ macro_rules! bind_all {
 pub fn bind_all_x() {
     todo!()
 }
-/// Based on [bind_all_x()]
+/// **Not ported.** Binds object methods in place; JSON objects have no methods.
 #[macro_export]
 macro_rules! bind_all_x {
     ($($t:tt)*) => {
@@ -48,7 +48,7 @@ build_camel_link!(bindAll, bind_all);
 pub fn cond() {
     todo!()
 }
-/// Based on [cond()]
+/// **Not ported.** Returns a function chosen from predicate/function pairs; not a Value.
 #[macro_export]
 macro_rules! cond {
     ($($t:tt)*) => {
@@ -59,7 +59,7 @@ macro_rules! cond {
 pub fn cond_x() {
     todo!()
 }
-/// Based on [cond_x()]
+/// **Not ported.** Returns a function chosen from predicate/function pairs; not a Value.
 #[macro_export]
 macro_rules! cond_x {
     ($($t:tt)*) => {
@@ -70,7 +70,7 @@ macro_rules! cond_x {
 pub fn conforms() {
     todo!()
 }
-/// Based on [conforms()]
+/// **Not ported.** Returns a predicate function from a spec; not a Value.
 #[macro_export]
 macro_rules! conforms {
     ($($t:tt)*) => {
@@ -81,7 +81,7 @@ macro_rules! conforms {
 pub fn conforms_x() {
     todo!()
 }
-/// Based on [conforms_x()]
+/// **Not ported.** Returns a predicate function from a spec; not a Value.
 #[macro_export]
 macro_rules! conforms_x {
     ($($t:tt)*) => {
@@ -92,7 +92,7 @@ macro_rules! conforms_x {
 pub fn constant() {
     todo!()
 }
-/// Based on [constant()]
+/// **Not ported.** Returns a function that returns a constant; not a Value.
 #[macro_export]
 macro_rules! constant {
     ($($t:tt)*) => {
@@ -103,7 +103,7 @@ macro_rules! constant {
 pub fn constant_x() {
     todo!()
 }
-/// Based on [constant_x()]
+/// **Not ported.** Returns a function that returns a constant; not a Value.
 #[macro_export]
 macro_rules! constant_x {
     ($($t:tt)*) => {
@@ -116,7 +116,7 @@ pub use default_to::*;
 pub fn flow() {
     todo!()
 }
-/// Based on [flow()]
+/// **Not ported.** Composes functions left-to-right; not a Value.
 #[macro_export]
 macro_rules! flow {
     ($($t:tt)*) => {
@@ -127,7 +127,7 @@ macro_rules! flow {
 pub fn flow_x() {
     todo!()
 }
-/// Based on [flow_x()]
+/// **Not ported.** Composes functions left-to-right; not a Value.
 #[macro_export]
 macro_rules! flow_x {
     ($($t:tt)*) => {
@@ -138,7 +138,7 @@ macro_rules! flow_x {
 pub fn flow_right() {
     todo!()
 }
-/// Based on [flow_right()]
+/// **Not ported.** Composes functions right-to-left; not a Value.
 #[macro_export]
 macro_rules! flow_right {
     ($($t:tt)*) => {
@@ -149,7 +149,7 @@ macro_rules! flow_right {
 pub fn flow_right_x() {
     todo!()
 }
-/// Based on [flow_right_x()]
+/// **Not ported.** Composes functions right-to-left; not a Value.
 #[macro_export]
 macro_rules! flow_right_x {
     ($($t:tt)*) => {
@@ -164,7 +164,7 @@ pub use identity::*;
 pub fn iteratee() {
     todo!()
 }
-/// Based on [iteratee()]
+/// **Not ported.** Returns a function implementing the lodash iteratee shorthand; not a Value.
 #[macro_export]
 macro_rules! iteratee {
     ($($t:tt)*) => {
@@ -175,7 +175,7 @@ macro_rules! iteratee {
 pub fn iteratee_x() {
     todo!()
 }
-/// Based on [iteratee_x()]
+/// **Not ported.** Returns a function implementing the lodash iteratee shorthand; not a Value.
 #[macro_export]
 macro_rules! iteratee_x {
     ($($t:tt)*) => {
@@ -186,7 +186,7 @@ macro_rules! iteratee_x {
 pub fn matches() {
     todo!()
 }
-/// Based on [matches()]
+/// **Not ported.** Returns a predicate function from a source object; not a Value.
 #[macro_export]
 macro_rules! matches {
     ($($t:tt)*) => {
@@ -197,7 +197,7 @@ macro_rules! matches {
 pub fn matches_x() {
     todo!()
 }
-/// Based on [matches_x()]
+/// **Not ported.** Returns a predicate function from a source object; not a Value.
 #[macro_export]
 macro_rules! matches_x {
     ($($t:tt)*) => {
@@ -208,7 +208,7 @@ macro_rules! matches_x {
 pub fn matches_property() {
     todo!()
 }
-/// Based on [matches_property()]
+/// **Not ported.** Returns a predicate function for a path/value; not a Value.
 #[macro_export]
 macro_rules! matches_property {
     ($($t:tt)*) => {
@@ -219,7 +219,7 @@ macro_rules! matches_property {
 pub fn matches_property_x() {
     todo!()
 }
-/// Based on [matches_property_x()]
+/// **Not ported.** Returns a predicate function for a path/value; not a Value.
 #[macro_export]
 macro_rules! matches_property_x {
     ($($t:tt)*) => {
@@ -232,7 +232,7 @@ build_camel_link!(matchesProperty, matches_property);
 pub fn method() {
     todo!()
 }
-/// Based on [method()]
+/// **Not ported.** Returns a function that invokes a method at a path; not a Value.
 #[macro_export]
 macro_rules! method {
     ($($t:tt)*) => {
@@ -243,7 +243,7 @@ macro_rules! method {
 pub fn method_x() {
     todo!()
 }
-/// Based on [method_x()]
+/// **Not ported.** Returns a function that invokes a method at a path; not a Value.
 #[macro_export]
 macro_rules! method_x {
     ($($t:tt)*) => {
@@ -254,7 +254,7 @@ macro_rules! method_x {
 pub fn method_of() {
     todo!()
 }
-/// Based on [method_of()]
+/// **Not ported.** Returns a function that invokes a method of an object; not a Value.
 #[macro_export]
 macro_rules! method_of {
     ($($t:tt)*) => {
@@ -265,7 +265,7 @@ macro_rules! method_of {
 pub fn method_of_x() {
     todo!()
 }
-/// Based on [method_of_x()]
+/// **Not ported.** Returns a function that invokes a method of an object; not a Value.
 #[macro_export]
 macro_rules! method_of_x {
     ($($t:tt)*) => {
@@ -278,7 +278,7 @@ build_camel_link!(methodOf, method_of);
 pub fn mixin() {
     todo!()
 }
-/// Based on [mixin()]
+/// **Not ported.** Adds functions to an object/lodash; JSON objects hold no functions.
 #[macro_export]
 macro_rules! mixin {
     ($($t:tt)*) => {
@@ -289,7 +289,7 @@ macro_rules! mixin {
 pub fn mixin_x() {
     todo!()
 }
-/// Based on [mixin_x()]
+/// **Not ported.** Adds functions to an object/lodash; JSON objects hold no functions.
 #[macro_export]
 macro_rules! mixin_x {
     ($($t:tt)*) => {
@@ -300,7 +300,7 @@ macro_rules! mixin_x {
 pub fn no_conflict() {
     todo!()
 }
-/// Based on [no_conflict()]
+/// **Not ported.** Restores the global `_` binding; not applicable to a Rust library.
 #[macro_export]
 macro_rules! no_conflict {
     ($($t:tt)*) => {
@@ -311,7 +311,7 @@ macro_rules! no_conflict {
 pub fn no_conflict_x() {
     todo!()
 }
-/// Based on [no_conflict_x()]
+/// **Not ported.** Restores the global `_` binding; not applicable to a Rust library.
 #[macro_export]
 macro_rules! no_conflict_x {
     ($($t:tt)*) => {
@@ -326,7 +326,7 @@ pub use noop::*;
 pub fn nth_arg() {
     todo!()
 }
-/// Based on [nth_arg()]
+/// **Not ported.** Returns a function selecting the nth argument; not a Value.
 #[macro_export]
 macro_rules! nth_arg {
     ($($t:tt)*) => {
@@ -337,7 +337,7 @@ macro_rules! nth_arg {
 pub fn nth_arg_x() {
     todo!()
 }
-/// Based on [nth_arg_x()]
+/// **Not ported.** Returns a function selecting the nth argument; not a Value.
 #[macro_export]
 macro_rules! nth_arg_x {
     ($($t:tt)*) => {
@@ -350,7 +350,7 @@ build_camel_link!(nthArg, nth_arg);
 pub fn over() {
     todo!()
 }
-/// Based on [over()]
+/// **Not ported.** Returns a function invoking several iteratees; not a Value.
 #[macro_export]
 macro_rules! over {
     ($($t:tt)*) => {
@@ -361,7 +361,7 @@ macro_rules! over {
 pub fn over_x() {
     todo!()
 }
-/// Based on [over_x()]
+/// **Not ported.** Returns a function invoking several iteratees; not a Value.
 #[macro_export]
 macro_rules! over_x {
     ($($t:tt)*) => {
@@ -372,7 +372,7 @@ macro_rules! over_x {
 pub fn over_every() {
     todo!()
 }
-/// Based on [over_every()]
+/// **Not ported.** Returns a function AND-ing several predicates; not a Value.
 #[macro_export]
 macro_rules! over_every {
     ($($t:tt)*) => {
@@ -383,7 +383,7 @@ macro_rules! over_every {
 pub fn over_every_x() {
     todo!()
 }
-/// Based on [over_every_x()]
+/// **Not ported.** Returns a function AND-ing several predicates; not a Value.
 #[macro_export]
 macro_rules! over_every_x {
     ($($t:tt)*) => {
@@ -396,7 +396,7 @@ build_camel_link!(overEvery, over_every);
 pub fn over_some() {
     todo!()
 }
-/// Based on [over_some()]
+/// **Not ported.** Returns a function OR-ing several predicates; not a Value.
 #[macro_export]
 macro_rules! over_some {
     ($($t:tt)*) => {
@@ -407,7 +407,7 @@ macro_rules! over_some {
 pub fn over_some_x() {
     todo!()
 }
-/// Based on [over_some_x()]
+/// **Not ported.** Returns a function OR-ing several predicates; not a Value.
 #[macro_export]
 macro_rules! over_some_x {
     ($($t:tt)*) => {
@@ -420,7 +420,7 @@ build_camel_link!(overSome, over_some);
 pub fn property() {
     todo!()
 }
-/// Based on [property()]
+/// **Not ported.** Returns a getter function for a path; not a Value.
 #[macro_export]
 macro_rules! property {
     ($($t:tt)*) => {
@@ -431,7 +431,7 @@ macro_rules! property {
 pub fn property_x() {
     todo!()
 }
-/// Based on [property_x()]
+/// **Not ported.** Returns a getter function for a path; not a Value.
 #[macro_export]
 macro_rules! property_x {
     ($($t:tt)*) => {
@@ -442,7 +442,7 @@ macro_rules! property_x {
 pub fn property_of() {
     todo!()
 }
-/// Based on [property_of()]
+/// **Not ported.** Returns a getter function bound to an object; not a Value.
 #[macro_export]
 macro_rules! property_of {
     ($($t:tt)*) => {
@@ -453,7 +453,7 @@ macro_rules! property_of {
 pub fn property_of_x() {
     todo!()
 }
-/// Based on [property_of_x()]
+/// **Not ported.** Returns a getter function bound to an object; not a Value.
 #[macro_export]
 macro_rules! property_of_x {
     ($($t:tt)*) => {
@@ -470,7 +470,7 @@ pub use range_right::*;
 pub fn run_in_context() {
     todo!()
 }
-/// Based on [run_in_context()]
+/// **Not ported.** Creates a lodash bound to a context; not applicable to a Rust library.
 #[macro_export]
 macro_rules! run_in_context {
     ($($t:tt)*) => {
@@ -481,7 +481,7 @@ macro_rules! run_in_context {
 pub fn run_in_context_x() {
     todo!()
 }
-/// Based on [run_in_context_x()]
+/// **Not ported.** Creates a lodash bound to a context; not applicable to a Rust library.
 #[macro_export]
 macro_rules! run_in_context_x {
     ($($t:tt)*) => {

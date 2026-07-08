@@ -1,18 +1,8 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
-/// `_x` helper for [is_arguments()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
+/// Fn form of [is_arguments!](crate::is_arguments!); see it for the full docs
 ///
-/// Additional cases:
-///
-/// ```rust
-/// # use serde_json_lodash::is_arguments_x;
-/// # use serde_json::json;
-/// assert_eq!(is_arguments_x(&json!({})), false);
-/// ```
-pub fn is_arguments_x(_v: &Value) -> bool {
-    false
-}
-/// See lodash [isArguments](https://lodash.com/docs/#isArguments)
+/// `_x` forms: [is_arguments_x!](crate::is_arguments_x!), [is_arguments_x()]
 ///
 /// Additional cases:
 ///
@@ -25,27 +15,9 @@ pub fn is_arguments(_v: &Value) -> Value {
     json!(is_arguments_x(_v))
 }
 
-/// Based on [is_arguments_x()]
-/// Additional cases:
+/// See lodash [isArguments](https://lodash.com/docs/#isArguments)
 ///
-/// ```rust
-/// # #[macro_use] extern crate serde_json_lodash;
-/// # use serde_json::json;
-/// assert_eq!(is_arguments_x!(&json!({})), false);
-/// ```
-#[macro_export]
-macro_rules! is_arguments_x {
-    () => {
-        false
-    };
-    ($a:expr $(,)*) => {
-        $crate::is_arguments_x($a)
-    };
-    ($a:expr, $($rest:tt)*) => {
-        $crate::is_arguments_x($a)
-    };
-}
-/// Based on [is_arguments()]
+/// Fn form: [is_arguments()] | `_x` forms: [is_arguments_x!](crate::is_arguments_x!), [is_arguments_x()]
 ///
 /// Examples:
 ///
@@ -67,5 +39,44 @@ macro_rules! is_arguments {
     };
     ($a:expr, $($rest:tt)*) => {
         $crate::is_arguments($a)
+    };
+}
+
+/// `_x` helper for [is_arguments!](crate::is_arguments!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Macro form: [is_arguments_x!](crate::is_arguments_x!) | `Value` forms: [is_arguments!](crate::is_arguments!), [is_arguments()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::is_arguments_x;
+/// # use serde_json::json;
+/// assert_eq!(is_arguments_x(&json!({})), false);
+/// ```
+pub fn is_arguments_x(_v: &Value) -> bool {
+    false
+}
+
+/// `_x` helper for [is_arguments!](crate::is_arguments!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Fn form: [is_arguments_x()] | `Value` forms: [is_arguments!](crate::is_arguments!), [is_arguments()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(is_arguments_x!(&json!({})), false);
+/// ```
+#[macro_export]
+macro_rules! is_arguments_x {
+    () => {
+        false
+    };
+    ($a:expr $(,)*) => {
+        $crate::is_arguments_x($a)
+    };
+    ($a:expr, $($rest:tt)*) => {
+        $crate::is_arguments_x($a)
     };
 }

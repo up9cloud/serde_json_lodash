@@ -1,6 +1,8 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
-/// See lodash [stubTrue](https://lodash.com/docs/#stubTrue)
+/// Fn form of [stub_true!](crate::stub_true!); see it for the full docs
+///
+/// `_x` form: **not provided** — see [stub_true_x()]
 ///
 /// Additional cases:
 ///
@@ -13,7 +15,9 @@ pub fn stub_true() -> Value {
     json!(true)
 }
 
-/// Based on [stub_true()]
+/// See lodash [stubTrue](https://lodash.com/docs/#stubTrue)
+///
+/// Fn form: [stub_true()] | `_x` form: **not provided** — see [stub_true_x()]
 ///
 /// Examples:
 ///
@@ -29,13 +33,20 @@ macro_rules! stub_true {
     };
 }
 
-/// `_x` helper for [stub_true()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [stub_true()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [stub_true!](crate::stub_true!) and read the returned
+/// `Value`.
+///
+/// Macro form: [stub_true_x!](crate::stub_true_x!)
 pub fn stub_true_x() {
     todo!()
 }
-/// Based on [stub_true_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [stub_true!](crate::stub_true!) and read the returned
+/// `Value`.
+///
+/// Fn form: [stub_true_x()]
 #[macro_export]
 macro_rules! stub_true_x {
     ($($t:tt)*) => {

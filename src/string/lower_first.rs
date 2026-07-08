@@ -1,4 +1,4 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
 // internal `&str`/primitive worker for [lower_first()] / [lower_first_x()]
 fn x_lower_first_x(s: &str) -> String {
@@ -13,20 +13,10 @@ fn x_lower_first_x(s: &str) -> String {
     }
 }
 
-/// `_x` helper for [lower_first()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
-/// Additional cases:
+/// Fn form of [lower_first!](crate::lower_first!); see it for the full docs
 ///
-/// ```rust
-/// # use serde_json_lodash::lower_first_x;
-/// # use serde_json::json;
-/// assert_eq!(lower_first_x(json!("Fred")), "fred".to_owned());
-/// ```
-pub fn lower_first_x<A: Into<Value>>(v: A) -> String {
-    let v = v.into();
-    x_lower_first_x(&crate::to_string_x(v))
-}
-
-/// See lodash [lowerFirst](https://lodash.com/docs/#lowerFirst)
+/// `_x` forms: [lower_first_x!](crate::lower_first_x!), [lower_first_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -39,7 +29,9 @@ pub fn lower_first<A: Into<Value>>(v: A) -> Value {
     json!(lower_first_x(v))
 }
 
-/// Based on [lower_first()]
+/// See lodash [lowerFirst](https://lodash.com/docs/#lowerFirst)
+///
+/// Fn form: [lower_first()] | `_x` forms: [lower_first_x!](crate::lower_first_x!), [lower_first_x()]
 ///
 /// Examples:
 ///
@@ -77,8 +69,26 @@ macro_rules! lower_first {
     };
 }
 
-/// Based on [lower_first_x()]
-#[macro_export]
+/// `_x` helper for [lower_first!](crate::lower_first!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Macro form: [lower_first_x!](crate::lower_first_x!) | `Value` forms: [lower_first!](crate::lower_first!), [lower_first()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::lower_first_x;
+/// # use serde_json::json;
+/// assert_eq!(lower_first_x(json!("Fred")), "fred".to_owned());
+/// ```
+pub fn lower_first_x<A: Into<Value>>(v: A) -> String {
+    let v = v.into();
+    x_lower_first_x(&crate::to_string_x(v))
+}
+
+/// `_x` helper for [lower_first!](crate::lower_first!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Fn form: [lower_first_x()] | `Value` forms: [lower_first!](crate::lower_first!), [lower_first()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -86,6 +96,7 @@ macro_rules! lower_first {
 /// # use serde_json::json;
 /// assert_eq!(lower_first_x!(json!("Fred")), "fred".to_owned());
 /// ```
+#[macro_export]
 macro_rules! lower_first_x {
     () => {
         "".to_owned()

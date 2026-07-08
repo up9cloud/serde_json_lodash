@@ -1,9 +1,11 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
+
 use crate::array::zip::zip_arrays;
 
-/// See lodash [unzip](https://lodash.com/docs/#unzip)
+/// Fn form of [unzip!](crate::unzip!); see it for the full docs
 ///
-/// The inverse of `zip`
+/// `_x` form: **not provided** — see [unzip_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -18,7 +20,11 @@ pub fn unzip(array: Value) -> Value {
     }
 }
 
-/// Based on [unzip()]
+/// See lodash [unzip](https://lodash.com/docs/#unzip)
+///
+/// The inverse of `zip`
+///
+/// Fn form: [unzip()] | `_x` form: **not provided** — see [unzip_x()]
 ///
 /// Examples:
 ///
@@ -52,13 +58,18 @@ macro_rules! unzip {
     };
 }
 
-/// `_x` helper for [unzip()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [unzip()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [unzip!](crate::unzip!) and read the returned `Value`.
+///
+/// Macro form: [unzip_x!](crate::unzip_x!)
 pub fn unzip_x() {
     todo!()
 }
-/// Based on [unzip_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [unzip!](crate::unzip!) and read the returned `Value`.
+///
+/// Fn form: [unzip_x()]
 #[macro_export]
 macro_rules! unzip_x {
     ($($t:tt)*) => {

@@ -1,6 +1,9 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
-/// See lodash [dropRight](https://lodash.com/docs/#dropRight)
+/// Fn form of [drop_right!](crate::drop_right!); see it for the full docs
+///
+/// `_x` form: **not provided** — see [drop_right_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -26,7 +29,9 @@ pub fn drop_right(v: Value, n: usize) -> Value {
     }
 }
 
-/// Based on [drop_right()]
+/// See lodash [dropRight](https://lodash.com/docs/#dropRight)
+///
+/// Fn form: [drop_right()] | `_x` form: **not provided** — see [drop_right_x()]
 ///
 /// Examples:
 ///
@@ -81,13 +86,20 @@ macro_rules! drop_right {
     };
 }
 
-/// `_x` helper for [drop_right()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [drop_right()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [drop_right!](crate::drop_right!) and read the returned
+/// `Value`.
+///
+/// Macro form: [drop_right_x!](crate::drop_right_x!)
 pub fn drop_right_x() {
     todo!()
 }
-/// Based on [drop_right_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [drop_right!](crate::drop_right!) and read the returned
+/// `Value`.
+///
+/// Fn form: [drop_right_x()]
 #[macro_export]
 macro_rules! drop_right_x {
     ($($t:tt)*) => {

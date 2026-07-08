@@ -1,8 +1,9 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
-/// See lodash [intersectionBy](https://lodash.com/docs/#intersectionBy)
+/// Fn form of [intersection_by!](crate::intersection_by!); see it for the full docs
 ///
-/// `iteratee` maps each element to the value used for comparison
+/// `_x` form: **not provided** — see [intersection_by_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -32,7 +33,11 @@ pub fn intersection_by(array: Value, other: Value, iteratee: fn(&Value) -> Value
     Value::Array(out)
 }
 
-/// Based on [intersection_by()]
+/// See lodash [intersectionBy](https://lodash.com/docs/#intersectionBy)
+///
+/// `iteratee` maps each element to the value used for comparison
+///
+/// Fn form: [intersection_by()] | `_x` form: **not provided** — see [intersection_by_x()]
 ///
 /// Examples:
 ///
@@ -72,13 +77,20 @@ macro_rules! intersection_by {
     };
 }
 
-/// `_x` helper for [intersection_by()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [intersection_by()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [intersection_by!](crate::intersection_by!) and read
+/// the returned `Value`.
+///
+/// Macro form: [intersection_by_x!](crate::intersection_by_x!)
 pub fn intersection_by_x() {
     todo!()
 }
-/// Based on [intersection_by_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [intersection_by!](crate::intersection_by!) and read
+/// the returned `Value`.
+///
+/// Fn form: [intersection_by_x()]
 #[macro_export]
 macro_rules! intersection_by_x {
     ($($t:tt)*) => {

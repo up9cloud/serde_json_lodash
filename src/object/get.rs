@@ -1,7 +1,11 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
+
 use crate::to_path_x;
 
-/// See lodash [get](https://lodash.com/docs/#get)
+/// Fn form of [get!](crate::get!); see it for the full docs
+///
+/// `_x` form: **not provided** — see [get_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -40,7 +44,10 @@ pub fn get(object: Value, path: Value, default: Value) -> Value {
     }
     cur
 }
-/// Based on [get()]
+
+/// See lodash [get](https://lodash.com/docs/#get)
+///
+/// Fn form: [get()] | `_x` form: **not provided** — see [get_x()]
 ///
 /// Examples:
 ///
@@ -95,13 +102,18 @@ macro_rules! get {
     };
 }
 
-/// `_x` helper for [get()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [get()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [get!](crate::get!) and read the returned `Value`.
+///
+/// Macro form: [get_x!](crate::get_x!)
 pub fn get_x() {
     todo!()
 }
-/// Based on [get_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [get!](crate::get!) and read the returned `Value`.
+///
+/// Fn form: [get_x()]
 #[macro_export]
 macro_rules! get_x {
     ($($t:tt)*) => {

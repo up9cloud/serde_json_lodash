@@ -1,4 +1,5 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
+
 use crate::internal;
 
 // internal `&str`/primitive worker for [lower_case()] / [lower_case_x()]
@@ -10,20 +11,10 @@ fn x_lower_case_x(s: &str) -> String {
         .join(" ")
 }
 
-/// `_x` helper for [lower_case()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
-/// Additional cases:
+/// Fn form of [lower_case!](crate::lower_case!); see it for the full docs
 ///
-/// ```rust
-/// # use serde_json_lodash::lower_case_x;
-/// # use serde_json::json;
-/// assert_eq!(lower_case_x(json!("--Foo-Bar--")), "foo bar".to_owned());
-/// ```
-pub fn lower_case_x<A: Into<Value>>(v: A) -> String {
-    let v = v.into();
-    x_lower_case_x(&crate::to_string_x(v))
-}
-
-/// See lodash [lowerCase](https://lodash.com/docs/#lowerCase)
+/// `_x` forms: [lower_case_x!](crate::lower_case_x!), [lower_case_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -36,7 +27,9 @@ pub fn lower_case<A: Into<Value>>(v: A) -> Value {
     json!(lower_case_x(v))
 }
 
-/// Based on [lower_case()]
+/// See lodash [lowerCase](https://lodash.com/docs/#lowerCase)
+///
+/// Fn form: [lower_case()] | `_x` forms: [lower_case_x!](crate::lower_case_x!), [lower_case_x()]
 ///
 /// Examples:
 ///
@@ -78,8 +71,26 @@ macro_rules! lower_case {
     };
 }
 
-/// Based on [lower_case_x()]
-#[macro_export]
+/// `_x` helper for [lower_case!](crate::lower_case!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Macro form: [lower_case_x!](crate::lower_case_x!) | `Value` forms: [lower_case!](crate::lower_case!), [lower_case()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::lower_case_x;
+/// # use serde_json::json;
+/// assert_eq!(lower_case_x(json!("--Foo-Bar--")), "foo bar".to_owned());
+/// ```
+pub fn lower_case_x<A: Into<Value>>(v: A) -> String {
+    let v = v.into();
+    x_lower_case_x(&crate::to_string_x(v))
+}
+
+/// `_x` helper for [lower_case!](crate::lower_case!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Fn form: [lower_case_x()] | `Value` forms: [lower_case!](crate::lower_case!), [lower_case()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -87,6 +98,7 @@ macro_rules! lower_case {
 /// # use serde_json::json;
 /// assert_eq!(lower_case_x!(json!("--Foo-Bar--")), "foo bar".to_owned());
 /// ```
+#[macro_export]
 macro_rules! lower_case_x {
     () => {
         "".to_owned()

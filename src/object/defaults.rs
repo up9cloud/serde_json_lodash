@@ -1,9 +1,9 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
-/// See lodash [defaults](https://lodash.com/docs/#defaults)
+/// Fn form of [defaults!](crate::defaults!); see it for the full docs
 ///
-/// Assigns `source` properties for keys that resolve to `undefined`/missing
-/// in `object`
+/// `_x` form: **not provided** — see [defaults_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -31,7 +31,12 @@ pub fn defaults(object: Value, source: Value) -> Value {
     }
 }
 
-/// Based on [defaults()]
+/// See lodash [defaults](https://lodash.com/docs/#defaults)
+///
+/// Assigns `source` properties for keys that resolve to `undefined`/missing
+/// in `object`
+///
+/// Fn form: [defaults()] | `_x` form: **not provided** — see [defaults_x()]
 ///
 /// Examples:
 ///
@@ -70,13 +75,20 @@ macro_rules! defaults {
     }};
 }
 
-/// `_x` helper for [defaults()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [defaults()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [defaults!](crate::defaults!) and read the returned
+/// `Value`.
+///
+/// Macro form: [defaults_x!](crate::defaults_x!)
 pub fn defaults_x() {
     todo!()
 }
-/// Based on [defaults_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [defaults!](crate::defaults!) and read the returned
+/// `Value`.
+///
+/// Fn form: [defaults_x()]
 #[macro_export]
 macro_rules! defaults_x {
     ($($t:tt)*) => {

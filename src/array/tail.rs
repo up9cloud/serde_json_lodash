@@ -1,6 +1,9 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
-/// See lodash [tail](https://lodash.com/docs/#tail)
+/// Fn form of [tail!](crate::tail!); see it for the full docs
+///
+/// `_x` form: **not provided** — see [tail_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -20,7 +23,9 @@ pub fn tail(array: Value) -> Value {
     }
 }
 
-/// Based on [tail()]
+/// See lodash [tail](https://lodash.com/docs/#tail)
+///
+/// Fn form: [tail()] | `_x` form: **not provided** — see [tail_x()]
 ///
 /// Examples:
 ///
@@ -53,13 +58,18 @@ macro_rules! tail {
     };
 }
 
-/// `_x` helper for [tail()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [tail()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [tail!](crate::tail!) and read the returned `Value`.
+///
+/// Macro form: [tail_x!](crate::tail_x!)
 pub fn tail_x() {
     todo!()
 }
-/// Based on [tail_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [tail!](crate::tail!) and read the returned `Value`.
+///
+/// Fn form: [tail_x()]
 #[macro_export]
 macro_rules! tail_x {
     ($($t:tt)*) => {

@@ -1,18 +1,8 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
-/// `_x` helper for [is_array()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
+/// Fn form of [is_array!](crate::is_array!); see it for the full docs
 ///
-/// Additional cases:
-///
-/// ```rust
-/// # use serde_json_lodash::is_array_x;
-/// # use serde_json::json;
-/// assert_eq!(is_array_x(&json!([1, 2, 3])), true);
-/// ```
-pub fn is_array_x(v: &Value) -> bool {
-    v.is_array()
-}
-/// See lodash [isArray](https://lodash.com/docs/#isArray)
+/// `_x` forms: [is_array_x!](crate::is_array_x!), [is_array_x()]
 ///
 /// Additional cases:
 ///
@@ -25,28 +15,9 @@ pub fn is_array(v: &Value) -> Value {
     json!(is_array_x(v))
 }
 
-/// Based on [is_array_x()]
+/// See lodash [isArray](https://lodash.com/docs/#isArray)
 ///
-/// Additional cases:
-///
-/// ```rust
-/// # #[macro_use] extern crate serde_json_lodash;
-/// # use serde_json::json;
-/// assert_eq!(is_array_x!(&json!([1, 2, 3])), true);
-/// ```
-#[macro_export]
-macro_rules! is_array_x {
-    () => {
-        false
-    };
-    ($a:expr $(,)*) => {
-        $crate::is_array_x($a)
-    };
-    ($a:expr, $($rest:tt)*) => {
-        $crate::is_array_x($a)
-    };
-}
-/// Based on [is_array()]
+/// Fn form: [is_array()] | `_x` forms: [is_array_x!](crate::is_array_x!), [is_array_x()]
 ///
 /// Examples:
 ///
@@ -76,5 +47,44 @@ macro_rules! is_array {
     };
     ($a:expr, $($rest:tt)*) => {
         $crate::is_array($a)
+    };
+}
+
+/// `_x` helper for [is_array!](crate::is_array!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Macro form: [is_array_x!](crate::is_array_x!) | `Value` forms: [is_array!](crate::is_array!), [is_array()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::is_array_x;
+/// # use serde_json::json;
+/// assert_eq!(is_array_x(&json!([1, 2, 3])), true);
+/// ```
+pub fn is_array_x(v: &Value) -> bool {
+    v.is_array()
+}
+
+/// `_x` helper for [is_array!](crate::is_array!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Fn form: [is_array_x()] | `Value` forms: [is_array!](crate::is_array!), [is_array()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(is_array_x!(&json!([1, 2, 3])), true);
+/// ```
+#[macro_export]
+macro_rules! is_array_x {
+    () => {
+        false
+    };
+    ($a:expr $(,)*) => {
+        $crate::is_array_x($a)
+    };
+    ($a:expr, $($rest:tt)*) => {
+        $crate::is_array_x($a)
     };
 }

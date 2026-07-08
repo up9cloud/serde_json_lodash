@@ -1,9 +1,11 @@
 use crate::lib::Value;
+
 use crate::internal::value_to_option_number;
 
-/// See lodash [maxBy](https://lodash.com/docs/#maxBy)
+/// Fn form of [max_by!](crate::max_by!); see it for the full docs
 ///
-/// `iteratee` maps each element to the value used for comparison
+/// `_x` form: **not provided** — see [max_by_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -29,7 +31,11 @@ pub fn max_by(array: Value, iteratee: fn(&Value) -> Value) -> Value {
     }
 }
 
-/// Based on [max_by()]
+/// See lodash [maxBy](https://lodash.com/docs/#maxBy)
+///
+/// `iteratee` maps each element to the value used for comparison
+///
+/// Fn form: [max_by()] | `_x` form: **not provided** — see [max_by_x()]
 ///
 /// Examples:
 ///
@@ -68,13 +74,20 @@ macro_rules! max_by {
     };
 }
 
-/// `_x` helper for [max_by()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [max_by()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [max_by!](crate::max_by!) and read the returned
+/// `Value`.
+///
+/// Macro form: [max_by_x!](crate::max_by_x!)
 pub fn max_by_x() {
     todo!()
 }
-/// Based on [max_by_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [max_by!](crate::max_by!) and read the returned
+/// `Value`.
+///
+/// Fn form: [max_by_x()]
 #[macro_export]
 macro_rules! max_by_x {
     ($($t:tt)*) => {

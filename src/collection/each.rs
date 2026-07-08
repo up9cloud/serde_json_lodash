@@ -1,10 +1,11 @@
 use crate::lib::Value;
+
 use crate::collection::collect::collection_values;
 
-/// See lodash [forEach](https://lodash.com/docs/#forEach)
+/// Fn form of [each!](crate::each!); see it for the full docs
 ///
-/// Invokes `iteratee` for each element; returning `false` stops iteration.
-/// Returns `collection`
+/// `_x` form: **not provided** — see [each_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -21,7 +22,12 @@ pub fn each(collection: Value, iteratee: fn(&Value) -> bool) -> Value {
     collection
 }
 
-/// Based on [each()]
+/// See lodash [forEach](https://lodash.com/docs/#forEach)
+///
+/// Invokes `iteratee` for each element; returning `false` stops iteration.
+/// Returns `collection`
+///
+/// Fn form: [each()] | `_x` form: **not provided** — see [each_x()]
 ///
 /// Examples:
 ///
@@ -56,13 +62,18 @@ macro_rules! each {
     };
 }
 
-/// `_x` helper for [each()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [each()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [each!](crate::each!) and read the returned `Value`.
+///
+/// Macro form: [each_x!](crate::each_x!)
 pub fn each_x() {
     todo!()
 }
-/// Based on [each_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [each!](crate::each!) and read the returned `Value`.
+///
+/// Fn form: [each_x()]
 #[macro_export]
 macro_rules! each_x {
     ($($t:tt)*) => {

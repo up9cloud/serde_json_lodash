@@ -1,18 +1,8 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
-/// `_x` helper for [is_nil()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
+/// Fn form of [is_nil!](crate::is_nil!); see it for the full docs
 ///
-/// Additional cases:
-///
-/// ```rust
-/// # use serde_json_lodash::is_nil_x;
-/// # use serde_json::json;
-/// assert_eq!(is_nil_x(&json!(null)), true);
-/// ```
-pub fn is_nil_x(v: &Value) -> bool {
-    v.is_null()
-}
-/// See lodash [isNil](https://lodash.com/docs/#isNil)
+/// `_x` forms: [is_nil_x!](crate::is_nil_x!), [is_nil_x()]
 ///
 /// Additional cases:
 ///
@@ -25,27 +15,9 @@ pub fn is_nil(v: &Value) -> Value {
     json!(is_nil_x(v))
 }
 
-/// Based on [is_nil_x()]
-/// Additional cases:
+/// See lodash [isNil](https://lodash.com/docs/#isNil)
 ///
-/// ```rust
-/// # #[macro_use] extern crate serde_json_lodash;
-/// # use serde_json::json;
-/// assert_eq!(is_nil_x!(&json!(null)), true);
-/// ```
-#[macro_export]
-macro_rules! is_nil_x {
-    () => {
-        true
-    };
-    ($a:expr $(,)*) => {
-        $crate::is_nil_x($a)
-    };
-    ($a:expr, $($rest:tt)*) => {
-        $crate::is_nil_x($a)
-    };
-}
-/// Based on [is_nil()]
+/// Fn form: [is_nil()] | `_x` forms: [is_nil_x!](crate::is_nil_x!), [is_nil_x()]
 ///
 /// Examples:
 ///
@@ -67,5 +39,44 @@ macro_rules! is_nil {
     };
     ($a:expr, $($rest:tt)*) => {
         $crate::is_nil($a)
+    };
+}
+
+/// `_x` helper for [is_nil!](crate::is_nil!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Macro form: [is_nil_x!](crate::is_nil_x!) | `Value` forms: [is_nil!](crate::is_nil!), [is_nil()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::is_nil_x;
+/// # use serde_json::json;
+/// assert_eq!(is_nil_x(&json!(null)), true);
+/// ```
+pub fn is_nil_x(v: &Value) -> bool {
+    v.is_null()
+}
+
+/// `_x` helper for [is_nil!](crate::is_nil!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Fn form: [is_nil_x()] | `Value` forms: [is_nil!](crate::is_nil!), [is_nil()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(is_nil_x!(&json!(null)), true);
+/// ```
+#[macro_export]
+macro_rules! is_nil_x {
+    () => {
+        true
+    };
+    ($a:expr $(,)*) => {
+        $crate::is_nil_x($a)
+    };
+    ($a:expr, $($rest:tt)*) => {
+        $crate::is_nil_x($a)
     };
 }

@@ -1,18 +1,8 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
-/// `_x` helper for [is_boolean()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
+/// Fn form of [is_boolean!](crate::is_boolean!); see it for the full docs
 ///
-/// Additional cases:
-///
-/// ```rust
-/// # use serde_json_lodash::is_boolean_x;
-/// # use serde_json::json;
-/// assert_eq!(is_boolean_x(&json!(false)), true);
-/// ```
-pub fn is_boolean_x(v: &Value) -> bool {
-    v.is_boolean()
-}
-/// See lodash [isBoolean](https://lodash.com/docs/#isBoolean)
+/// `_x` forms: [is_boolean_x!](crate::is_boolean_x!), [is_boolean_x()]
 ///
 /// Additional cases:
 ///
@@ -25,27 +15,9 @@ pub fn is_boolean(v: &Value) -> Value {
     json!(is_boolean_x(v))
 }
 
-/// Based on [is_boolean_x()]
-/// Additional cases:
+/// See lodash [isBoolean](https://lodash.com/docs/#isBoolean)
 ///
-/// ```rust
-/// # #[macro_use] extern crate serde_json_lodash;
-/// # use serde_json::json;
-/// assert_eq!(is_boolean_x!(&json!(false)), true);
-/// ```
-#[macro_export]
-macro_rules! is_boolean_x {
-    () => {
-        false
-    };
-    ($a:expr $(,)*) => {
-        $crate::is_boolean_x($a)
-    };
-    ($a:expr, $($rest:tt)*) => {
-        $crate::is_boolean_x($a)
-    };
-}
-/// Based on [is_boolean()]
+/// Fn form: [is_boolean()] | `_x` forms: [is_boolean_x!](crate::is_boolean_x!), [is_boolean_x()]
 ///
 /// Examples:
 ///
@@ -68,5 +40,44 @@ macro_rules! is_boolean {
     };
     ($a:expr, $($rest:tt)*) => {
         $crate::is_boolean($a)
+    };
+}
+
+/// `_x` helper for [is_boolean!](crate::is_boolean!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Macro form: [is_boolean_x!](crate::is_boolean_x!) | `Value` forms: [is_boolean!](crate::is_boolean!), [is_boolean()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::is_boolean_x;
+/// # use serde_json::json;
+/// assert_eq!(is_boolean_x(&json!(false)), true);
+/// ```
+pub fn is_boolean_x(v: &Value) -> bool {
+    v.is_boolean()
+}
+
+/// `_x` helper for [is_boolean!](crate::is_boolean!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Fn form: [is_boolean_x()] | `Value` forms: [is_boolean!](crate::is_boolean!), [is_boolean()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(is_boolean_x!(&json!(false)), true);
+/// ```
+#[macro_export]
+macro_rules! is_boolean_x {
+    () => {
+        false
+    };
+    ($a:expr $(,)*) => {
+        $crate::is_boolean_x($a)
+    };
+    ($a:expr, $($rest:tt)*) => {
+        $crate::is_boolean_x($a)
     };
 }

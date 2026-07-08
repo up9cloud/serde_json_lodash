@@ -1,6 +1,9 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
-/// See lodash [nth](https://lodash.com/docs/#nth)
+/// Fn form of [nth!](crate::nth!); see it for the full docs
+///
+/// `_x` form: **not provided** — see [nth_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -58,7 +61,9 @@ pub fn nth(v: Value, n: isize) -> Value {
     }
 }
 
-/// Based on [nth()]
+/// See lodash [nth](https://lodash.com/docs/#nth)
+///
+/// Fn form: [nth()] | `_x` form: **not provided** — see [nth_x()]
 ///
 /// Examples:
 ///
@@ -111,13 +116,18 @@ macro_rules! nth {
     };
 }
 
-/// `_x` helper for [nth()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [nth()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [nth!](crate::nth!) and read the returned `Value`.
+///
+/// Macro form: [nth_x!](crate::nth_x!)
 pub fn nth_x() {
     todo!()
 }
-/// Based on [nth_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [nth!](crate::nth!) and read the returned `Value`.
+///
+/// Fn form: [nth_x()]
 #[macro_export]
 macro_rules! nth_x {
     ($($t:tt)*) => {

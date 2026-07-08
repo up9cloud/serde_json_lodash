@@ -1,6 +1,8 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
-/// See lodash [stubObject](https://lodash.com/docs/#stubObject)
+/// Fn form of [stub_object!](crate::stub_object!); see it for the full docs
+///
+/// `_x` form: **not provided** — see [stub_object_x()]
 ///
 /// Additional cases:
 ///
@@ -13,7 +15,9 @@ pub fn stub_object() -> Value {
     json!({})
 }
 
-/// Based on [stub_object()]
+/// See lodash [stubObject](https://lodash.com/docs/#stubObject)
+///
+/// Fn form: [stub_object()] | `_x` form: **not provided** — see [stub_object_x()]
 ///
 /// Examples:
 ///
@@ -29,13 +33,20 @@ macro_rules! stub_object {
     };
 }
 
-/// `_x` helper for [stub_object()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [stub_object()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [stub_object!](crate::stub_object!) and read the
+/// returned `Value`.
+///
+/// Macro form: [stub_object_x!](crate::stub_object_x!)
 pub fn stub_object_x() {
     todo!()
 }
-/// Based on [stub_object_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [stub_object!](crate::stub_object!) and read the
+/// returned `Value`.
+///
+/// Fn form: [stub_object_x()]
 #[macro_export]
 macro_rules! stub_object_x {
     ($($t:tt)*) => {

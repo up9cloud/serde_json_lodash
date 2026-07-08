@@ -1,8 +1,9 @@
 use crate::lib::Value;
 
-/// See lodash [cloneWith](https://lodash.com/docs/#cloneWith)
+/// Fn form of [clone_with!](crate::clone_with!); see it for the full docs
 ///
-/// If `customizer` returns `None` the value is cloned as [clone()](fn@crate::clone) would
+/// `_x` form: **not provided** — see [clone_with_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -17,7 +18,11 @@ pub fn clone_with(v: &Value, customizer: fn(&Value) -> Option<Value>) -> Value {
     }
 }
 
-/// Based on [clone_with()]
+/// See lodash [cloneWith](https://lodash.com/docs/#cloneWith)
+///
+/// If `customizer` returns `None` the value is cloned as [clone()](fn@crate::clone) would
+///
+/// Fn form: [clone_with()] | `_x` form: **not provided** — see [clone_with_x()]
 ///
 /// Examples:
 ///
@@ -56,13 +61,20 @@ macro_rules! clone_with {
     };
 }
 
-/// `_x` helper for [clone_with()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [clone_with()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [clone_with!](crate::clone_with!) and read the returned
+/// `Value`.
+///
+/// Macro form: [clone_with_x!](crate::clone_with_x!)
 pub fn clone_with_x() {
     todo!()
 }
-/// Based on [clone_with_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [clone_with!](crate::clone_with!) and read the returned
+/// `Value`.
+///
+/// Fn form: [clone_with_x()]
 #[macro_export]
 macro_rules! clone_with_x {
     ($($t:tt)*) => {

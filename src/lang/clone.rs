@@ -1,9 +1,9 @@
 use crate::lib::Value;
 
-/// See lodash [clone](https://lodash.com/docs/#clone)
+/// Fn form of [clone!](crate::clone!); see it for the full docs
 ///
-/// *Note:* JS shallow-copy semantic (sharing references) cannot be expressed
-/// with owned `serde_json::Value`, so this is effectively a full copy
+/// `_x` form: **not provided** — see [clone_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -15,7 +15,12 @@ pub fn clone(v: &Value) -> Value {
     v.clone()
 }
 
-/// Based on [clone()]
+/// See lodash [clone](https://lodash.com/docs/#clone)
+///
+/// *Note:* JS shallow-copy semantic (sharing references) cannot be expressed
+/// with owned `serde_json::Value`, so this is effectively a full copy
+///
+/// Fn form: [clone()] | `_x` form: **not provided** — see [clone_x()]
 ///
 /// Examples:
 ///
@@ -49,13 +54,18 @@ macro_rules! clone {
     };
 }
 
-/// `_x` helper for [clone()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [clone()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [clone!](crate::clone!) and read the returned `Value`.
+///
+/// Macro form: [clone_x!](crate::clone_x!)
 pub fn clone_x() {
     todo!()
 }
-/// Based on [clone_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [clone!](crate::clone!) and read the returned `Value`.
+///
+/// Fn form: [clone_x()]
 #[macro_export]
 macro_rules! clone_x {
     ($($t:tt)*) => {

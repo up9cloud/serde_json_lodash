@@ -1,8 +1,11 @@
 use std::mem;
 
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
-/// See lodash [fill](https://lodash.com/docs/#fill)
+/// Fn form of [fill!](crate::fill!); see it for the full docs
+///
+/// `_x` form: **not provided** — see [fill_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -27,7 +30,9 @@ pub fn fill(mut array: Value, value: Value, start: usize, end: usize) -> Value {
     array
 }
 
-/// Based on [fill()]
+/// See lodash [fill](https://lodash.com/docs/#fill)
+///
+/// Fn form: [fill()] | `_x` form: **not provided** — see [fill_x()]
 ///
 /// Examples:
 ///
@@ -92,13 +97,18 @@ macro_rules! fill {
     };
 }
 
-/// `_x` helper for [fill()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [fill()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [fill!](crate::fill!) and read the returned `Value`.
+///
+/// Macro form: [fill_x!](crate::fill_x!)
 pub fn fill_x() {
     todo!()
 }
-/// Based on [fill_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [fill!](crate::fill!) and read the returned `Value`.
+///
+/// Fn form: [fill_x()]
 #[macro_export]
 macro_rules! fill_x {
     ($($t:tt)*) => {

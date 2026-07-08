@@ -1,7 +1,11 @@
 use crate::lib::Value;
+
 use crate::internal::{f64_to_number, value_nan, value_to_option_number};
 
-/// See lodash [subtract](https://lodash.com/docs/#subtract)
+/// Fn form of [subtract!](crate::subtract!); see it for the full docs
+///
+/// `_x` form: **not provided** — see [subtract_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -22,7 +26,9 @@ pub fn subtract(minuend: Value, subtrahend: Value) -> Value {
     }
 }
 
-/// Based on [subtract()]
+/// See lodash [subtract](https://lodash.com/docs/#subtract)
+///
+/// Fn form: [subtract()] | `_x` form: **not provided** — see [subtract_x()]
 ///
 /// Examples:
 ///
@@ -61,13 +67,20 @@ macro_rules! subtract {
     };
 }
 
-/// `_x` helper for [subtract()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [subtract()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [subtract!](crate::subtract!) and read the returned
+/// `Value`.
+///
+/// Macro form: [subtract_x!](crate::subtract_x!)
 pub fn subtract_x() {
     todo!()
 }
-/// Based on [subtract_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [subtract!](crate::subtract!) and read the returned
+/// `Value`.
+///
+/// Fn form: [subtract_x()]
 #[macro_export]
 macro_rules! subtract_x {
     ($($t:tt)*) => {

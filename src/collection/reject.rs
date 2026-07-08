@@ -1,9 +1,11 @@
 use crate::lib::Value;
+
 use crate::collection::collect::collection_values;
 
-/// See lodash [reject](https://lodash.com/docs/#reject)
+/// Fn form of [reject!](crate::reject!); see it for the full docs
 ///
-/// The opposite of [filter()](fn@crate::filter)
+/// `_x` form: **not provided** — see [reject_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -20,7 +22,11 @@ pub fn reject(collection: Value, predicate: fn(&Value) -> bool) -> Value {
     )
 }
 
-/// Based on [reject()]
+/// See lodash [reject](https://lodash.com/docs/#reject)
+///
+/// The opposite of [filter()](fn@crate::filter)
+///
+/// Fn form: [reject()] | `_x` form: **not provided** — see [reject_x()]
 ///
 /// Examples:
 ///
@@ -57,13 +63,20 @@ macro_rules! reject {
     };
 }
 
-/// `_x` helper for [reject()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [reject()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [reject!](crate::reject!) and read the returned
+/// `Value`.
+///
+/// Macro form: [reject_x!](crate::reject_x!)
 pub fn reject_x() {
     todo!()
 }
-/// Based on [reject_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [reject!](crate::reject!) and read the returned
+/// `Value`.
+///
+/// Fn form: [reject_x()]
 #[macro_export]
 macro_rules! reject_x {
     ($($t:tt)*) => {

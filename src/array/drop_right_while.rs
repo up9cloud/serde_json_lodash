@@ -1,8 +1,9 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
-/// See lodash [dropRightWhile](https://lodash.com/docs/#dropRightWhile)
+/// Fn form of [drop_right_while!](crate::drop_right_while!); see it for the full docs
 ///
-/// Drops elements from the end while `predicate` returns `true`
+/// `_x` form: **not provided** — see [drop_right_while_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -26,7 +27,11 @@ pub fn drop_right_while(array: Value, predicate: fn(&Value) -> bool) -> Value {
     }
 }
 
-/// Based on [drop_right_while()]
+/// See lodash [dropRightWhile](https://lodash.com/docs/#dropRightWhile)
+///
+/// Drops elements from the end while `predicate` returns `true`
+///
+/// Fn form: [drop_right_while()] | `_x` form: **not provided** — see [drop_right_while_x()]
 ///
 /// Examples:
 ///
@@ -64,13 +69,20 @@ macro_rules! drop_right_while {
     };
 }
 
-/// `_x` helper for [drop_right_while()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [drop_right_while()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [drop_right_while!](crate::drop_right_while!) and read
+/// the returned `Value`.
+///
+/// Macro form: [drop_right_while_x!](crate::drop_right_while_x!)
 pub fn drop_right_while_x() {
     todo!()
 }
-/// Based on [drop_right_while_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [drop_right_while!](crate::drop_right_while!) and read
+/// the returned `Value`.
+///
+/// Fn form: [drop_right_while_x()]
 #[macro_export]
 macro_rules! drop_right_while_x {
     ($($t:tt)*) => {

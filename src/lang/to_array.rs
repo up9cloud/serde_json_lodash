@@ -1,6 +1,9 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
-/// See lodash [toArray](https://lodash.com/docs/#toArray)
+/// Fn form of [to_array!](crate::to_array!); see it for the full docs
+///
+/// `_x` form: **not provided** — see [to_array_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -17,7 +20,9 @@ pub fn to_array(v: Value) -> Value {
     }
 }
 
-/// Based on [to_array()]
+/// See lodash [toArray](https://lodash.com/docs/#toArray)
+///
+/// Fn form: [to_array()] | `_x` form: **not provided** — see [to_array_x()]
 ///
 /// Examples:
 ///
@@ -51,13 +56,20 @@ macro_rules! to_array {
     };
 }
 
-/// `_x` helper for [to_array()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [to_array()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [to_array!](crate::to_array!) and read the returned
+/// `Value`.
+///
+/// Macro form: [to_array_x!](crate::to_array_x!)
 pub fn to_array_x() {
     todo!()
 }
-/// Based on [to_array_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [to_array!](crate::to_array!) and read the returned
+/// `Value`.
+///
+/// Fn form: [to_array_x()]
 #[macro_export]
 macro_rules! to_array_x {
     ($($t:tt)*) => {

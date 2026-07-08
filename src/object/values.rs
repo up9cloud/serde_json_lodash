@@ -1,6 +1,9 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
-/// See lodash [values](https://lodash.com/docs/#values)
+/// Fn form of [values!](crate::values!); see it for the full docs
+///
+/// `_x` form: **not provided** — see [values_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -17,7 +20,9 @@ pub fn values(v: Value) -> Value {
     }
 }
 
-/// Based on [values()]
+/// See lodash [values](https://lodash.com/docs/#values)
+///
+/// Fn form: [values()] | `_x` form: **not provided** — see [values_x()]
 ///
 /// Examples:
 ///
@@ -50,13 +55,20 @@ macro_rules! values {
     };
 }
 
-/// `_x` helper for [values()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [values()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [values!](crate::values!) and read the returned
+/// `Value`.
+///
+/// Macro form: [values_x!](crate::values_x!)
 pub fn values_x() {
     todo!()
 }
-/// Based on [values_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [values!](crate::values!) and read the returned
+/// `Value`.
+///
+/// Fn form: [values_x()]
 #[macro_export]
 macro_rules! values_x {
     ($($t:tt)*) => {

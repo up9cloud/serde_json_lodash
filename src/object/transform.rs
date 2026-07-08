@@ -1,10 +1,9 @@
 use crate::lib::Value;
 
-/// See lodash [transform](https://lodash.com/docs/#transform)
+/// Fn form of [transform!](crate::transform!); see it for the full docs
 ///
-/// `iteratee` receives `(accumulator, value, key)` and returns
-/// `(next_accumulator, keep_going)`; iteration stops when `keep_going` is
-/// `false`. For arrays the key is the stringified index
+/// `_x` form: **not provided** — see [transform_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -42,7 +41,13 @@ pub fn transform(
     acc
 }
 
-/// Based on [transform()]
+/// See lodash [transform](https://lodash.com/docs/#transform)
+///
+/// `iteratee` receives `(accumulator, value, key)` and returns
+/// `(next_accumulator, keep_going)`; iteration stops when `keep_going` is
+/// `false`. For arrays the key is the stringified index
+///
+/// Fn form: [transform()] | `_x` form: **not provided** — see [transform_x()]
 ///
 /// Examples:
 ///
@@ -90,13 +95,20 @@ macro_rules! transform {
     };
 }
 
-/// `_x` helper for [transform()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [transform()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [transform!](crate::transform!) and read the returned
+/// `Value`.
+///
+/// Macro form: [transform_x!](crate::transform_x!)
 pub fn transform_x() {
     todo!()
 }
-/// Based on [transform_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [transform!](crate::transform!) and read the returned
+/// `Value`.
+///
+/// Fn form: [transform_x()]
 #[macro_export]
 macro_rules! transform_x {
     ($($t:tt)*) => {

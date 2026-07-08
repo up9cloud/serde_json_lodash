@@ -1,18 +1,8 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
-/// `_x` helper for [is_symbol()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
+/// Fn form of [is_symbol!](crate::is_symbol!); see it for the full docs
 ///
-/// Additional cases:
-///
-/// ```rust
-/// # use serde_json_lodash::is_symbol_x;
-/// # use serde_json::json;
-/// assert_eq!(is_symbol_x(&json!({})), false);
-/// ```
-pub fn is_symbol_x(_v: &Value) -> bool {
-    false
-}
-/// See lodash [isSymbol](https://lodash.com/docs/#isSymbol)
+/// `_x` forms: [is_symbol_x!](crate::is_symbol_x!), [is_symbol_x()]
 ///
 /// Additional cases:
 ///
@@ -25,27 +15,9 @@ pub fn is_symbol(_v: &Value) -> Value {
     json!(is_symbol_x(_v))
 }
 
-/// Based on [is_symbol_x()]
-/// Additional cases:
+/// See lodash [isSymbol](https://lodash.com/docs/#isSymbol)
 ///
-/// ```rust
-/// # #[macro_use] extern crate serde_json_lodash;
-/// # use serde_json::json;
-/// assert_eq!(is_symbol_x!(&json!({})), false);
-/// ```
-#[macro_export]
-macro_rules! is_symbol_x {
-    () => {
-        false
-    };
-    ($a:expr $(,)*) => {
-        $crate::is_symbol_x($a)
-    };
-    ($a:expr, $($rest:tt)*) => {
-        $crate::is_symbol_x($a)
-    };
-}
-/// Based on [is_symbol()]
+/// Fn form: [is_symbol()] | `_x` forms: [is_symbol_x!](crate::is_symbol_x!), [is_symbol_x()]
 ///
 /// Examples:
 ///
@@ -67,5 +39,44 @@ macro_rules! is_symbol {
     };
     ($a:expr, $($rest:tt)*) => {
         $crate::is_symbol($a)
+    };
+}
+
+/// `_x` helper for [is_symbol!](crate::is_symbol!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Macro form: [is_symbol_x!](crate::is_symbol_x!) | `Value` forms: [is_symbol!](crate::is_symbol!), [is_symbol()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::is_symbol_x;
+/// # use serde_json::json;
+/// assert_eq!(is_symbol_x(&json!({})), false);
+/// ```
+pub fn is_symbol_x(_v: &Value) -> bool {
+    false
+}
+
+/// `_x` helper for [is_symbol!](crate::is_symbol!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Fn form: [is_symbol_x()] | `Value` forms: [is_symbol!](crate::is_symbol!), [is_symbol()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(is_symbol_x!(&json!({})), false);
+/// ```
+#[macro_export]
+macro_rules! is_symbol_x {
+    () => {
+        false
+    };
+    ($a:expr $(,)*) => {
+        $crate::is_symbol_x($a)
+    };
+    ($a:expr, $($rest:tt)*) => {
+        $crate::is_symbol_x($a)
     };
 }

@@ -6,7 +6,7 @@ pub use crate::lang::*;
 pub use crate::math::*;
 pub use crate::number::*;
 pub use crate::object::*;
+pub use crate::properties::*;
 pub use crate::seq::*;
 pub use crate::string::*;
 pub use crate::util::*;
-pub use crate::properties::*;

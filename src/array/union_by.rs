@@ -1,9 +1,11 @@
 use crate::lib::Value;
+
 use crate::internal::uniq_by_key;
 
-/// See lodash [unionBy](https://lodash.com/docs/#unionBy)
+/// Fn form of [union_by!](crate::union_by!); see it for the full docs
 ///
-/// `iteratee` maps each element to the value used for uniqueness
+/// `_x` form: **not provided** — see [union_by_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -22,7 +24,11 @@ pub fn union_by(array: Value, other: Value, iteratee: fn(&Value) -> Value) -> Va
     Value::Array(uniq_by_key(all, iteratee))
 }
 
-/// Based on [union_by()]
+/// See lodash [unionBy](https://lodash.com/docs/#unionBy)
+///
+/// `iteratee` maps each element to the value used for uniqueness
+///
+/// Fn form: [union_by()] | `_x` form: **not provided** — see [union_by_x()]
 ///
 /// Examples:
 ///
@@ -62,13 +68,20 @@ macro_rules! union_by {
     };
 }
 
-/// `_x` helper for [union_by()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [union_by()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [union_by!](crate::union_by!) and read the returned
+/// `Value`.
+///
+/// Macro form: [union_by_x!](crate::union_by_x!)
 pub fn union_by_x() {
     todo!()
 }
-/// Based on [union_by_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [union_by!](crate::union_by!) and read the returned
+/// `Value`.
+///
+/// Fn form: [union_by_x()]
 #[macro_export]
 macro_rules! union_by_x {
     ($($t:tt)*) => {

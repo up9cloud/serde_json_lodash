@@ -1,6 +1,7 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
 use crate::{to_safe_integer_x, x_range_x};
+
 // internal worker for [range_right()].
 pub(crate) fn x_range_right_x(start: isize, end: isize, step: isize) -> Vec<isize> {
     let mut vec = x_range_x(start, end, step);
@@ -18,21 +19,9 @@ fn x_range_right(start: isize, end: isize, step: isize) -> Value {
     )
 }
 
-/// `_x` helper for [range_right()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
-/// Additional cases:
+/// Fn form of [range_right!](crate::range_right!); see it for the full docs
 ///
-/// ```rust
-/// # use serde_json_lodash::range_right_x;
-/// # use serde_json::json;
-/// assert_eq!(range_right_x(json!(0), json!(4), 1), vec![3_isize, 2, 1, 0]);
-/// ```
-pub fn range_right_x<A: Into<Value>, B: Into<Value>>(start: A, end: B, step: isize) -> Vec<isize> {
-    let start = start.into();
-    let end = end.into();
-    x_range_right_x(to_safe_integer_x(start), to_safe_integer_x(end), step)
-}
-
-/// See lodash [rangeRight](https://lodash.com/docs/#rangeRight)
+/// `_x` forms: [range_right_x!](crate::range_right_x!), [range_right_x()]
 ///
 /// Examples:
 ///
@@ -48,40 +37,9 @@ pub fn range_right<A: Into<Value>, B: Into<Value>>(start: A, end: B, step: isize
     x_range_right(to_safe_integer_x(start), to_safe_integer_x(end), step)
 }
 
-/// Based on [range_right_x()]
-/// Additional cases:
+/// See lodash [rangeRight](https://lodash.com/docs/#rangeRight)
 ///
-/// ```rust
-/// # #[macro_use] extern crate serde_json_lodash;
-/// # use serde_json::json;
-/// assert_eq!(range_right_x!(json!(0), json!(4)), vec![3_isize, 2, 1, 0]);
-/// ```
-#[macro_export]
-macro_rules! range_right_x {
-    () => {{
-        let a: Vec<isize> = vec![];
-        a
-    }};
-    ($a:expr $(,)*) => {{
-        let end = $crate::to_safe_integer_x($a);
-        if end >= 0 {
-            $crate::x_range_right_x(0, end, 1)
-        } else {
-            $crate::x_range_right_x(0, end, -1)
-        }
-    }};
-    ($a:expr, $b:expr $(,)*) => {
-        $crate::range_right_x($a, $b, 1)
-    };
-    ($a:expr, $b:expr, $c:expr $(,)*) => {
-        $crate::range_right_x($a, $b, $c)
-    };
-    ($a:expr, $b:expr, $c:expr, $($rest:tt)*) => {
-        $crate::range_right_x($a, $b, $c)
-    };
-}
-
-/// Based on [range_right()]
+/// Fn form: [range_right()] | `_x` forms: [range_right_x!](crate::range_right_x!), [range_right_x()]
 ///
 /// Examples:
 ///
@@ -146,5 +104,58 @@ macro_rules! range_right {
     };
     ($a:expr, $b:expr, $c:expr, $($rest:tt)*) => {
         $crate::range_right($a, $b, $c)
+    };
+}
+
+/// `_x` helper for [range_right!](crate::range_right!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Macro form: [range_right_x!](crate::range_right_x!) | `Value` forms: [range_right!](crate::range_right!), [range_right()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::range_right_x;
+/// # use serde_json::json;
+/// assert_eq!(range_right_x(json!(0), json!(4), 1), vec![3_isize, 2, 1, 0]);
+/// ```
+pub fn range_right_x<A: Into<Value>, B: Into<Value>>(start: A, end: B, step: isize) -> Vec<isize> {
+    let start = start.into();
+    let end = end.into();
+    x_range_right_x(to_safe_integer_x(start), to_safe_integer_x(end), step)
+}
+
+/// `_x` helper for [range_right!](crate::range_right!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Fn form: [range_right_x()] | `Value` forms: [range_right!](crate::range_right!), [range_right()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(range_right_x!(json!(0), json!(4)), vec![3_isize, 2, 1, 0]);
+/// ```
+#[macro_export]
+macro_rules! range_right_x {
+    () => {{
+        let a: Vec<isize> = vec![];
+        a
+    }};
+    ($a:expr $(,)*) => {{
+        let end = $crate::to_safe_integer_x($a);
+        if end >= 0 {
+            $crate::x_range_right_x(0, end, 1)
+        } else {
+            $crate::x_range_right_x(0, end, -1)
+        }
+    }};
+    ($a:expr, $b:expr $(,)*) => {
+        $crate::range_right_x($a, $b, 1)
+    };
+    ($a:expr, $b:expr, $c:expr $(,)*) => {
+        $crate::range_right_x($a, $b, $c)
+    };
+    ($a:expr, $b:expr, $c:expr, $($rest:tt)*) => {
+        $crate::range_right_x($a, $b, $c)
     };
 }

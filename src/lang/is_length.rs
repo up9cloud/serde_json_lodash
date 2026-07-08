@@ -1,24 +1,8 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
-/// `_x` helper for [is_length()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
+/// Fn form of [is_length!](crate::is_length!); see it for the full docs
 ///
-/// Additional cases:
-///
-/// ```rust
-/// # use serde_json_lodash::is_length_x;
-/// # use serde_json::json;
-/// assert_eq!(is_length_x(&json!(3)), true);
-/// ```
-pub fn is_length_x(v: &Value) -> bool {
-    match v {
-        Value::Number(n) => match n.as_u64() {
-            Some(u) => u <= 9007199254740991, // Number.MAX_SAFE_INTEGER
-            None => false,
-        },
-        _ => false,
-    }
-}
-/// See lodash [isLength](https://lodash.com/docs/#isLength)
+/// `_x` forms: [is_length_x!](crate::is_length_x!), [is_length_x()]
 ///
 /// Additional cases:
 ///
@@ -31,27 +15,9 @@ pub fn is_length(v: &Value) -> Value {
     json!(is_length_x(v))
 }
 
-/// Based on [is_length_x()]
-/// Additional cases:
+/// See lodash [isLength](https://lodash.com/docs/#isLength)
 ///
-/// ```rust
-/// # #[macro_use] extern crate serde_json_lodash;
-/// # use serde_json::json;
-/// assert_eq!(is_length_x!(&json!(3)), true);
-/// ```
-#[macro_export]
-macro_rules! is_length_x {
-    () => {
-        false
-    };
-    ($a:expr $(,)*) => {
-        $crate::is_length_x($a)
-    };
-    ($a:expr, $($rest:tt)*) => {
-        $crate::is_length_x($a)
-    };
-}
-/// Based on [is_length()]
+/// Fn form: [is_length()] | `_x` forms: [is_length_x!](crate::is_length_x!), [is_length_x()]
 ///
 /// Examples:
 ///
@@ -75,5 +41,50 @@ macro_rules! is_length {
     };
     ($a:expr, $($rest:tt)*) => {
         $crate::is_length($a)
+    };
+}
+
+/// `_x` helper for [is_length!](crate::is_length!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Macro form: [is_length_x!](crate::is_length_x!) | `Value` forms: [is_length!](crate::is_length!), [is_length()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::is_length_x;
+/// # use serde_json::json;
+/// assert_eq!(is_length_x(&json!(3)), true);
+/// ```
+pub fn is_length_x(v: &Value) -> bool {
+    match v {
+        Value::Number(n) => match n.as_u64() {
+            Some(u) => u <= 9007199254740991, // Number.MAX_SAFE_INTEGER
+            None => false,
+        },
+        _ => false,
+    }
+}
+
+/// `_x` helper for [is_length!](crate::is_length!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Fn form: [is_length_x()] | `Value` forms: [is_length!](crate::is_length!), [is_length()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(is_length_x!(&json!(3)), true);
+/// ```
+#[macro_export]
+macro_rules! is_length_x {
+    () => {
+        false
+    };
+    ($a:expr $(,)*) => {
+        $crate::is_length_x($a)
+    };
+    ($a:expr, $($rest:tt)*) => {
+        $crate::is_length_x($a)
     };
 }

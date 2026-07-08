@@ -1,4 +1,4 @@
-use crate::lib::{json, Value, Map};
+use crate::lib::{Map, Value, json};
 
 fn item_to_string(v: &Value) -> String {
     match v {
@@ -60,7 +60,10 @@ fn arrays_to_object(vec: Vec<Value>) -> Value {
     Value::Object(map)
 }
 
-/// See lodash [fromPairs](https://lodash.com/docs/#fromPairs)
+/// Fn form of [from_pairs!](crate::from_pairs!); see it for the full docs
+///
+/// `_x` form: **not provided** — see [from_pairs_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -79,7 +82,9 @@ pub fn from_pairs(v: Value) -> Value {
     }
 }
 
-/// Based on [from_pairs()]
+/// See lodash [fromPairs](https://lodash.com/docs/#fromPairs)
+///
+/// Fn form: [from_pairs()] | `_x` form: **not provided** — see [from_pairs_x()]
 ///
 /// Examples:
 ///
@@ -127,13 +132,20 @@ macro_rules! from_pairs {
     };
 }
 
-/// `_x` helper for [from_pairs()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [from_pairs()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [from_pairs!](crate::from_pairs!) and read the returned
+/// `Value`.
+///
+/// Macro form: [from_pairs_x!](crate::from_pairs_x!)
 pub fn from_pairs_x() {
     todo!()
 }
-/// Based on [from_pairs_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [from_pairs!](crate::from_pairs!) and read the returned
+/// `Value`.
+///
+/// Fn form: [from_pairs_x()]
 #[macro_export]
 macro_rules! from_pairs_x {
     ($($t:tt)*) => {

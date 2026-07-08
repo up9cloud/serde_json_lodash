@@ -1,7 +1,11 @@
 use crate::lib::Value;
+
 use crate::collection::collect::collection_values;
 
-/// See lodash [filter](https://lodash.com/docs/#filter)
+/// Fn form of [filter!](crate::filter!); see it for the full docs
+///
+/// `_x` form: **not provided** — see [filter_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -18,7 +22,9 @@ pub fn filter(collection: Value, predicate: fn(&Value) -> bool) -> Value {
     )
 }
 
-/// Based on [filter()]
+/// See lodash [filter](https://lodash.com/docs/#filter)
+///
+/// Fn form: [filter()] | `_x` form: **not provided** — see [filter_x()]
 ///
 /// Examples:
 ///
@@ -56,13 +62,20 @@ macro_rules! filter {
     };
 }
 
-/// `_x` helper for [filter()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [filter()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [filter!](crate::filter!) and read the returned
+/// `Value`.
+///
+/// Macro form: [filter_x!](crate::filter_x!)
 pub fn filter_x() {
     todo!()
 }
-/// Based on [filter_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [filter!](crate::filter!) and read the returned
+/// `Value`.
+///
+/// Fn form: [filter_x()]
 #[macro_export]
 macro_rules! filter_x {
     ($($t:tt)*) => {

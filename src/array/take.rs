@@ -1,6 +1,9 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
-/// See lodash [take](https://lodash.com/docs/#take)
+/// Fn form of [take!](crate::take!); see it for the full docs
+///
+/// `_x` form: **not provided** — see [take_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -18,7 +21,9 @@ pub fn take(array: Value, n: usize) -> Value {
     }
 }
 
-/// Based on [take()]
+/// See lodash [take](https://lodash.com/docs/#take)
+///
+/// Fn form: [take()] | `_x` form: **not provided** — see [take_x()]
 ///
 /// Examples:
 ///
@@ -55,13 +60,18 @@ macro_rules! take {
     };
 }
 
-/// `_x` helper for [take()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [take()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [take!](crate::take!) and read the returned `Value`.
+///
+/// Macro form: [take_x!](crate::take_x!)
 pub fn take_x() {
     todo!()
 }
-/// Based on [take_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [take!](crate::take!) and read the returned `Value`.
+///
+/// Fn form: [take_x()]
 #[macro_export]
 macro_rules! take_x {
     ($($t:tt)*) => {

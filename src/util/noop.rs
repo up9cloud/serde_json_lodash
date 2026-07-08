@@ -1,8 +1,9 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
-/// See lodash [noop](https://lodash.com/docs/#noop)
+/// Fn form of [noop!](crate::noop!); see it for the full docs
 ///
-/// Always returns `Value::Null` (js `undefined`), ignoring any arguments
+/// `_x` form: **not provided** — see [noop_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -14,7 +15,11 @@ pub fn noop() -> Value {
     json!(null)
 }
 
-/// Based on [noop()]
+/// See lodash [noop](https://lodash.com/docs/#noop)
+///
+/// Always returns `Value::Null` (js `undefined`), ignoring any arguments
+///
+/// Fn form: [noop()] | `_x` form: **not provided** — see [noop_x()]
 ///
 /// Examples:
 ///
@@ -42,13 +47,18 @@ macro_rules! noop {
     };
 }
 
-/// `_x` helper for [noop()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [noop()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [noop!](crate::noop!) and read the returned `Value`.
+///
+/// Macro form: [noop_x!](crate::noop_x!)
 pub fn noop_x() {
     todo!()
 }
-/// Based on [noop_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [noop!](crate::noop!) and read the returned `Value`.
+///
+/// Fn form: [noop_x()]
 #[macro_export]
 macro_rules! noop_x {
     ($($t:tt)*) => {

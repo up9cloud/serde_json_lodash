@@ -1,8 +1,9 @@
 use crate::lib::Value;
 
-/// See lodash [forOwnRight](https://lodash.com/docs/#forOwnRight)
+/// Fn form of [for_own_right!](crate::for_own_right!); see it for the full docs
 ///
-/// Like [for_own()](fn@crate::for_own) but iterates in reverse key order
+/// `_x` form: **not provided** — see [for_own_right_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -21,7 +22,11 @@ pub fn for_own_right(object: Value, iteratee: fn(&Value, &str) -> bool) -> Value
     object
 }
 
-/// Based on [for_own_right()]
+/// See lodash [forOwnRight](https://lodash.com/docs/#forOwnRight)
+///
+/// Like [for_own()](fn@crate::for_own) but iterates in reverse key order
+///
+/// Fn form: [for_own_right()] | `_x` form: **not provided** — see [for_own_right_x()]
 ///
 /// Examples:
 ///
@@ -56,13 +61,20 @@ macro_rules! for_own_right {
     };
 }
 
-/// `_x` helper for [for_own_right()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [for_own_right()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [for_own_right!](crate::for_own_right!) and read the
+/// returned `Value`.
+///
+/// Macro form: [for_own_right_x!](crate::for_own_right_x!)
 pub fn for_own_right_x() {
     todo!()
 }
-/// Based on [for_own_right_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [for_own_right!](crate::for_own_right!) and read the
+/// returned `Value`.
+///
+/// Fn form: [for_own_right_x()]
 #[macro_export]
 macro_rules! for_own_right_x {
     ($($t:tt)*) => {

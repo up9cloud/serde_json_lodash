@@ -1,18 +1,8 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
-/// `_x` helper for [is_object_like()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
+/// Fn form of [is_object_like!](crate::is_object_like!); see it for the full docs
 ///
-/// Additional cases:
-///
-/// ```rust
-/// # use serde_json_lodash::is_object_like_x;
-/// # use serde_json::json;
-/// assert_eq!(is_object_like_x(&json!({})), true);
-/// ```
-pub fn is_object_like_x(v: &Value) -> bool {
-    v.is_object() || v.is_array()
-}
-/// See lodash [isObjectLike](https://lodash.com/docs/#isObjectLike)
+/// `_x` forms: [is_object_like_x!](crate::is_object_like_x!), [is_object_like_x()]
 ///
 /// Additional cases:
 ///
@@ -25,27 +15,9 @@ pub fn is_object_like(v: &Value) -> Value {
     json!(is_object_like_x(v))
 }
 
-/// Based on [is_object_like_x()]
-/// Additional cases:
+/// See lodash [isObjectLike](https://lodash.com/docs/#isObjectLike)
 ///
-/// ```rust
-/// # #[macro_use] extern crate serde_json_lodash;
-/// # use serde_json::json;
-/// assert_eq!(is_object_like_x!(&json!({})), true);
-/// ```
-#[macro_export]
-macro_rules! is_object_like_x {
-    () => {
-        false
-    };
-    ($a:expr $(,)*) => {
-        $crate::is_object_like_x($a)
-    };
-    ($a:expr, $($rest:tt)*) => {
-        $crate::is_object_like_x($a)
-    };
-}
-/// Based on [is_object_like()]
+/// Fn form: [is_object_like()] | `_x` forms: [is_object_like_x!](crate::is_object_like_x!), [is_object_like_x()]
 ///
 /// Examples:
 ///
@@ -68,5 +40,44 @@ macro_rules! is_object_like {
     };
     ($a:expr, $($rest:tt)*) => {
         $crate::is_object_like($a)
+    };
+}
+
+/// `_x` helper for [is_object_like!](crate::is_object_like!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Macro form: [is_object_like_x!](crate::is_object_like_x!) | `Value` forms: [is_object_like!](crate::is_object_like!), [is_object_like()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::is_object_like_x;
+/// # use serde_json::json;
+/// assert_eq!(is_object_like_x(&json!({})), true);
+/// ```
+pub fn is_object_like_x(v: &Value) -> bool {
+    v.is_object() || v.is_array()
+}
+
+/// `_x` helper for [is_object_like!](crate::is_object_like!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Fn form: [is_object_like_x()] | `Value` forms: [is_object_like!](crate::is_object_like!), [is_object_like()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(is_object_like_x!(&json!({})), true);
+/// ```
+#[macro_export]
+macro_rules! is_object_like_x {
+    () => {
+        false
+    };
+    ($a:expr $(,)*) => {
+        $crate::is_object_like_x($a)
+    };
+    ($a:expr, $($rest:tt)*) => {
+        $crate::is_object_like_x($a)
     };
 }

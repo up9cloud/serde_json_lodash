@@ -1,11 +1,14 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
 // internal `&str`/primitive worker for [repeat()] / [repeat_x()]
 fn x_repeat_x(s: &str, n: usize) -> String {
     s.repeat(n)
 }
 
-/// See lodash [repeat](https://lodash.com/docs/#repeat)
+/// Fn form of [repeat!](crate::repeat!); see it for the full docs
+///
+/// `_x` forms: [repeat_x!](crate::repeat_x!), [repeat_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -18,7 +21,9 @@ pub fn repeat<A: Into<Value>>(v: A, n: usize) -> Value {
     json!(x_repeat_x(&crate::to_string_x(v), n))
 }
 
-/// Based on [repeat()]
+/// See lodash [repeat](https://lodash.com/docs/#repeat)
+///
+/// Fn form: [repeat()] | `_x` forms: [repeat_x!](crate::repeat_x!), [repeat_x()]
 ///
 /// Examples:
 ///
@@ -64,7 +69,10 @@ macro_rules! repeat {
     };
 }
 
-/// `_x` helper for [repeat()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
+/// `_x` helper for [repeat!](crate::repeat!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Macro form: [repeat_x!](crate::repeat_x!) | `Value` forms: [repeat!](crate::repeat!), [repeat()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -77,8 +85,10 @@ pub fn repeat_x<A: Into<Value>>(v: A, n: usize) -> String {
     x_repeat_x(&crate::to_string_x(v), n)
 }
 
-/// Based on [repeat_x()]
-#[macro_export]
+/// `_x` helper for [repeat!](crate::repeat!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Fn form: [repeat_x()] | `Value` forms: [repeat!](crate::repeat!), [repeat()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -86,6 +96,7 @@ pub fn repeat_x<A: Into<Value>>(v: A, n: usize) -> String {
 /// # use serde_json::json;
 /// assert_eq!(repeat_x!(json!("*"), 3), "***".to_owned());
 /// ```
+#[macro_export]
 macro_rules! repeat_x {
     () => {
         "".to_owned()

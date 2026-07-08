@@ -1,7 +1,11 @@
 use crate::lib::Value;
+
 use crate::internal::{f64_to_number, value_nan, value_to_option_number};
 
-/// See lodash [divide](https://lodash.com/docs/#divide)
+/// Fn form of [divide!](crate::divide!); see it for the full docs
+///
+/// `_x` form: **not provided** — see [divide_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -22,7 +26,9 @@ pub fn divide(dividend: Value, divisor: Value) -> Value {
     }
 }
 
-/// Based on [divide()]
+/// See lodash [divide](https://lodash.com/docs/#divide)
+///
+/// Fn form: [divide()] | `_x` form: **not provided** — see [divide_x()]
 ///
 /// Examples:
 ///
@@ -61,13 +67,20 @@ macro_rules! divide {
     };
 }
 
-/// `_x` helper for [divide()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [divide()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [divide!](crate::divide!) and read the returned
+/// `Value`.
+///
+/// Macro form: [divide_x!](crate::divide_x!)
 pub fn divide_x() {
     todo!()
 }
-/// Based on [divide_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [divide!](crate::divide!) and read the returned
+/// `Value`.
+///
+/// Fn form: [divide_x()]
 #[macro_export]
 macro_rules! divide_x {
     ($($t:tt)*) => {

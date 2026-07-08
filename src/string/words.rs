@@ -1,4 +1,5 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
+
 use crate::internal;
 
 // internal worker for [words()].
@@ -6,10 +7,10 @@ fn x_words(s: &str) -> Value {
     json!(internal::words_vec(s))
 }
 
-/// See lodash [words](https://lodash.com/docs/#words)
+/// Fn form of [words!](crate::words!); see it for the full docs
 ///
-/// *Note:* the `[pattern]` parameter is not supported, only the default
-/// lodash word splitting logic is implemented
+/// `_x` form: **not provided** — see [words_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -22,7 +23,12 @@ pub fn words<A: Into<Value>>(v: A) -> Value {
     x_words(&crate::to_string_x(v))
 }
 
-/// Based on [words()]
+/// See lodash [words](https://lodash.com/docs/#words)
+///
+/// *Note:* the `[pattern]` parameter is not supported, only the default
+/// lodash word splitting logic is implemented
+///
+/// Fn form: [words()] | `_x` form: **not provided** — see [words_x()]
 ///
 /// Examples:
 ///
@@ -59,13 +65,18 @@ macro_rules! words {
     };
 }
 
-/// `_x` helper for [words()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [words()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [words!](crate::words!) and read the returned `Value`.
+///
+/// Macro form: [words_x!](crate::words_x!)
 pub fn words_x() {
     todo!()
 }
-/// Based on [words_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [words!](crate::words!) and read the returned `Value`.
+///
+/// Fn form: [words_x()]
 #[macro_export]
 macro_rules! words_x {
     ($($t:tt)*) => {

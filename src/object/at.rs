@@ -1,9 +1,11 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
+
 use crate::get;
 
-/// See lodash [at](https://lodash.com/docs/#at)
+/// Fn form of [at!](crate::at!); see it for the full docs
 ///
-/// `paths` is an array of path strings; returns the value at each path
+/// `_x` form: **not provided** — see [at_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -22,7 +24,11 @@ pub fn at(object: Value, paths: Value) -> Value {
     }
 }
 
-/// Based on [at()]
+/// See lodash [at](https://lodash.com/docs/#at)
+///
+/// `paths` is an array of path strings; returns the value at each path
+///
+/// Fn form: [at()] | `_x` form: **not provided** — see [at_x()]
 ///
 /// Examples:
 ///
@@ -61,13 +67,18 @@ macro_rules! at {
     };
 }
 
-/// `_x` helper for [at()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [at()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [at!](crate::at!) and read the returned `Value`.
+///
+/// Macro form: [at_x!](crate::at_x!)
 pub fn at_x() {
     todo!()
 }
-/// Based on [at_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [at!](crate::at!) and read the returned `Value`.
+///
+/// Fn form: [at_x()]
 #[macro_export]
 macro_rules! at_x {
     ($($t:tt)*) => {

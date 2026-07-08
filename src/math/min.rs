@@ -1,9 +1,11 @@
 use crate::lib::Value;
+
 use crate::internal::value_to_option_number;
 
-/// See lodash [min](https://lodash.com/docs/#min)
+/// Fn form of [min!](crate::min!); see it for the full docs
 ///
-/// Returns `Value::Null` for an empty array (js `undefined`)
+/// `_x` form: **not provided** — see [min_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -36,7 +38,11 @@ pub fn min(array: Value) -> Value {
     }
 }
 
-/// Based on [min()]
+/// See lodash [min](https://lodash.com/docs/#min)
+///
+/// Returns `Value::Null` for an empty array (js `undefined`)
+///
+/// Fn form: [min()] | `_x` form: **not provided** — see [min_x()]
 ///
 /// Examples:
 ///
@@ -68,13 +74,18 @@ macro_rules! min {
     };
 }
 
-/// `_x` helper for [min()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [min()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [min!](crate::min!) and read the returned `Value`.
+///
+/// Macro form: [min_x!](crate::min_x!)
 pub fn min_x() {
     todo!()
 }
-/// Based on [min_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [min!](crate::min!) and read the returned `Value`.
+///
+/// Fn form: [min_x()]
 #[macro_export]
 macro_rules! min_x {
     ($($t:tt)*) => {

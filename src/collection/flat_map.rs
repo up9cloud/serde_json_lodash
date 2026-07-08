@@ -1,9 +1,11 @@
 use crate::lib::Value;
+
 use crate::collection::collect::collection_values;
 
-/// See lodash [flatMap](https://lodash.com/docs/#flatMap)
+/// Fn form of [flat_map!](crate::flat_map!); see it for the full docs
 ///
-/// Maps each element with `iteratee`, then flattens the result one level
+/// `_x` form: **not provided** — see [flat_map_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -22,7 +24,11 @@ pub fn flat_map(collection: Value, iteratee: fn(&Value) -> Value) -> Value {
     Value::Array(out)
 }
 
-/// Based on [flat_map()]
+/// See lodash [flatMap](https://lodash.com/docs/#flatMap)
+///
+/// Maps each element with `iteratee`, then flattens the result one level
+///
+/// Fn form: [flat_map()] | `_x` form: **not provided** — see [flat_map_x()]
 ///
 /// Examples:
 ///
@@ -59,13 +65,20 @@ macro_rules! flat_map {
     };
 }
 
-/// `_x` helper for [flat_map()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [flat_map()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [flat_map!](crate::flat_map!) and read the returned
+/// `Value`.
+///
+/// Macro form: [flat_map_x!](crate::flat_map_x!)
 pub fn flat_map_x() {
     todo!()
 }
-/// Based on [flat_map_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [flat_map!](crate::flat_map!) and read the returned
+/// `Value`.
+///
+/// Fn form: [flat_map_x()]
 #[macro_export]
 macro_rules! flat_map_x {
     ($($t:tt)*) => {

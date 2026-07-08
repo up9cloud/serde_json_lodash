@@ -1,6 +1,9 @@
-use crate::lib::{Value};
+use crate::lib::Value;
 
-/// See lodash [difference](https://lodash.com/docs/#difference)
+/// Fn form of [difference!](crate::difference!); see it for the full docs
+///
+/// `_x` form: **not provided** — see [difference_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -55,7 +58,9 @@ pub fn difference(v1: Value, v2: Value) -> Value {
     Value::Array(result)
 }
 
-/// Based on [difference()]
+/// See lodash [difference](https://lodash.com/docs/#difference)
+///
+/// Fn form: [difference()] | `_x` form: **not provided** — see [difference_x()]
 ///
 /// Examples:
 ///
@@ -98,13 +103,20 @@ macro_rules! difference {
     };
 }
 
-/// `_x` helper for [difference()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [difference()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [difference!](crate::difference!) and read the returned
+/// `Value`.
+///
+/// Macro form: [difference_x!](crate::difference_x!)
 pub fn difference_x() {
     todo!()
 }
-/// Based on [difference_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [difference!](crate::difference!) and read the returned
+/// `Value`.
+///
+/// Fn form: [difference_x()]
 #[macro_export]
 macro_rules! difference_x {
     ($($t:tt)*) => {

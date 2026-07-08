@@ -2,7 +2,7 @@
 pub fn after() {
     todo!()
 }
-/// Based on [after()]
+/// **Not ported.** Returns a function invoked only after N calls; a function is not a serde_json::Value.
 #[macro_export]
 macro_rules! after {
     ($($t:tt)*) => {
@@ -13,7 +13,7 @@ macro_rules! after {
 pub fn after_x() {
     todo!()
 }
-/// Based on [after_x()]
+/// **Not ported.** Returns a function invoked only after N calls; a function is not a serde_json::Value.
 #[macro_export]
 macro_rules! after_x {
     ($($t:tt)*) => {
@@ -24,7 +24,7 @@ macro_rules! after_x {
 pub fn ary() {
     todo!()
 }
-/// Based on [ary()]
+/// **Not ported.** Caps a function's argument count; operates on a function, not a Value.
 #[macro_export]
 macro_rules! ary {
     ($($t:tt)*) => {
@@ -35,7 +35,7 @@ macro_rules! ary {
 pub fn ary_x() {
     todo!()
 }
-/// Based on [ary_x()]
+/// **Not ported.** Caps a function's argument count; operates on a function, not a Value.
 #[macro_export]
 macro_rules! ary_x {
     ($($t:tt)*) => {
@@ -46,7 +46,7 @@ macro_rules! ary_x {
 pub fn before() {
     todo!()
 }
-/// Based on [before()]
+/// **Not ported.** Returns a function invoked at most N times; not a Value.
 #[macro_export]
 macro_rules! before {
     ($($t:tt)*) => {
@@ -57,7 +57,7 @@ macro_rules! before {
 pub fn before_x() {
     todo!()
 }
-/// Based on [before_x()]
+/// **Not ported.** Returns a function invoked at most N times; not a Value.
 #[macro_export]
 macro_rules! before_x {
     ($($t:tt)*) => {
@@ -68,7 +68,7 @@ macro_rules! before_x {
 pub fn bind() {
     todo!()
 }
-/// Based on [bind()]
+/// **Not ported.** Binds a function to a `this`/arguments; functions are not Values.
 #[macro_export]
 macro_rules! bind {
     ($($t:tt)*) => {
@@ -79,7 +79,7 @@ macro_rules! bind {
 pub fn bind_x() {
     todo!()
 }
-/// Based on [bind_x()]
+/// **Not ported.** Binds a function to a `this`/arguments; functions are not Values.
 #[macro_export]
 macro_rules! bind_x {
     ($($t:tt)*) => {
@@ -90,7 +90,7 @@ macro_rules! bind_x {
 pub fn bind_key() {
     todo!()
 }
-/// Based on [bind_key()]
+/// **Not ported.** Binds an object method by key; JSON objects have no methods.
 #[macro_export]
 macro_rules! bind_key {
     ($($t:tt)*) => {
@@ -101,7 +101,7 @@ macro_rules! bind_key {
 pub fn bind_key_x() {
     todo!()
 }
-/// Based on [bind_key_x()]
+/// **Not ported.** Binds an object method by key; JSON objects have no methods.
 #[macro_export]
 macro_rules! bind_key_x {
     ($($t:tt)*) => {
@@ -114,7 +114,7 @@ build_camel_link!(bindKey, bind_key);
 pub fn curry() {
     todo!()
 }
-/// Based on [curry()]
+/// **Not ported.** Curries a function; operates on a function, not a Value.
 #[macro_export]
 macro_rules! curry {
     ($($t:tt)*) => {
@@ -125,7 +125,7 @@ macro_rules! curry {
 pub fn curry_x() {
     todo!()
 }
-/// Based on [curry_x()]
+/// **Not ported.** Curries a function; operates on a function, not a Value.
 #[macro_export]
 macro_rules! curry_x {
     ($($t:tt)*) => {
@@ -136,7 +136,7 @@ macro_rules! curry_x {
 pub fn curry_right() {
     todo!()
 }
-/// Based on [curry_right()]
+/// **Not ported.** Curries a function from the right; not a Value.
 #[macro_export]
 macro_rules! curry_right {
     ($($t:tt)*) => {
@@ -147,7 +147,7 @@ macro_rules! curry_right {
 pub fn curry_right_x() {
     todo!()
 }
-/// Based on [curry_right_x()]
+/// **Not ported.** Curries a function from the right; not a Value.
 #[macro_export]
 macro_rules! curry_right_x {
     ($($t:tt)*) => {
@@ -160,7 +160,7 @@ build_camel_link!(curryRight, curry_right);
 pub fn debounce() {
     todo!()
 }
-/// Based on [debounce()]
+/// **Not ported.** Wraps a function with debouncing; time/closures are not Values.
 #[macro_export]
 macro_rules! debounce {
     ($($t:tt)*) => {
@@ -171,7 +171,7 @@ macro_rules! debounce {
 pub fn debounce_x() {
     todo!()
 }
-/// Based on [debounce_x()]
+/// **Not ported.** Wraps a function with debouncing; time/closures are not Values.
 #[macro_export]
 macro_rules! debounce_x {
     ($($t:tt)*) => {
@@ -182,7 +182,7 @@ macro_rules! debounce_x {
 pub fn defer() {
     todo!()
 }
-/// Based on [defer()]
+/// **Not ported.** Defers invoking a function; there is no function to invoke.
 #[macro_export]
 macro_rules! defer {
     ($($t:tt)*) => {
@@ -193,7 +193,7 @@ macro_rules! defer {
 pub fn defer_x() {
     todo!()
 }
-/// Based on [defer_x()]
+/// **Not ported.** Defers invoking a function; there is no function to invoke.
 #[macro_export]
 macro_rules! defer_x {
     ($($t:tt)*) => {
@@ -204,7 +204,7 @@ macro_rules! defer_x {
 pub fn delay() {
     todo!()
 }
-/// Based on [delay()]
+/// **Not ported.** Invokes a function after a delay; not a Value.
 #[macro_export]
 macro_rules! delay {
     ($($t:tt)*) => {
@@ -215,7 +215,7 @@ macro_rules! delay {
 pub fn delay_x() {
     todo!()
 }
-/// Based on [delay_x()]
+/// **Not ported.** Invokes a function after a delay; not a Value.
 #[macro_export]
 macro_rules! delay_x {
     ($($t:tt)*) => {
@@ -226,7 +226,7 @@ macro_rules! delay_x {
 pub fn flip() {
     todo!()
 }
-/// Based on [flip()]
+/// **Not ported.** Returns a function with reversed arguments; not a Value.
 #[macro_export]
 macro_rules! flip {
     ($($t:tt)*) => {
@@ -237,7 +237,7 @@ macro_rules! flip {
 pub fn flip_x() {
     todo!()
 }
-/// Based on [flip_x()]
+/// **Not ported.** Returns a function with reversed arguments; not a Value.
 #[macro_export]
 macro_rules! flip_x {
     ($($t:tt)*) => {
@@ -248,7 +248,7 @@ macro_rules! flip_x {
 pub fn memoize() {
     todo!()
 }
-/// Based on [memoize()]
+/// **Not ported.** Memoizes a function; operates on a function, not a Value.
 #[macro_export]
 macro_rules! memoize {
     ($($t:tt)*) => {
@@ -259,7 +259,7 @@ macro_rules! memoize {
 pub fn memoize_x() {
     todo!()
 }
-/// Based on [memoize_x()]
+/// **Not ported.** Memoizes a function; operates on a function, not a Value.
 #[macro_export]
 macro_rules! memoize_x {
     ($($t:tt)*) => {
@@ -270,7 +270,7 @@ macro_rules! memoize_x {
 pub fn negate() {
     todo!()
 }
-/// Based on [negate()]
+/// **Not ported.** Returns a negated predicate function; not a Value.
 #[macro_export]
 macro_rules! negate {
     ($($t:tt)*) => {
@@ -281,7 +281,7 @@ macro_rules! negate {
 pub fn negate_x() {
     todo!()
 }
-/// Based on [negate_x()]
+/// **Not ported.** Returns a negated predicate function; not a Value.
 #[macro_export]
 macro_rules! negate_x {
     ($($t:tt)*) => {
@@ -292,7 +292,7 @@ macro_rules! negate_x {
 pub fn once() {
     todo!()
 }
-/// Based on [once()]
+/// **Not ported.** Returns a function callable once; not a Value.
 #[macro_export]
 macro_rules! once {
     ($($t:tt)*) => {
@@ -303,7 +303,7 @@ macro_rules! once {
 pub fn once_x() {
     todo!()
 }
-/// Based on [once_x()]
+/// **Not ported.** Returns a function callable once; not a Value.
 #[macro_export]
 macro_rules! once_x {
     ($($t:tt)*) => {
@@ -314,7 +314,7 @@ macro_rules! once_x {
 pub fn over_args() {
     todo!()
 }
-/// Based on [over_args()]
+/// **Not ported.** Transforms a function's arguments; not a Value.
 #[macro_export]
 macro_rules! over_args {
     ($($t:tt)*) => {
@@ -325,7 +325,7 @@ macro_rules! over_args {
 pub fn over_args_x() {
     todo!()
 }
-/// Based on [over_args_x()]
+/// **Not ported.** Transforms a function's arguments; not a Value.
 #[macro_export]
 macro_rules! over_args_x {
     ($($t:tt)*) => {
@@ -338,7 +338,7 @@ build_camel_link!(overArgs, over_args);
 pub fn partial() {
     todo!()
 }
-/// Based on [partial()]
+/// **Not ported.** Partially applies a function; not a Value.
 #[macro_export]
 macro_rules! partial {
     ($($t:tt)*) => {
@@ -349,7 +349,7 @@ macro_rules! partial {
 pub fn partial_x() {
     todo!()
 }
-/// Based on [partial_x()]
+/// **Not ported.** Partially applies a function; not a Value.
 #[macro_export]
 macro_rules! partial_x {
     ($($t:tt)*) => {
@@ -360,7 +360,7 @@ macro_rules! partial_x {
 pub fn partial_right() {
     todo!()
 }
-/// Based on [partial_right()]
+/// **Not ported.** Partially applies from the right; not a Value.
 #[macro_export]
 macro_rules! partial_right {
     ($($t:tt)*) => {
@@ -371,7 +371,7 @@ macro_rules! partial_right {
 pub fn partial_right_x() {
     todo!()
 }
-/// Based on [partial_right_x()]
+/// **Not ported.** Partially applies from the right; not a Value.
 #[macro_export]
 macro_rules! partial_right_x {
     ($($t:tt)*) => {
@@ -384,7 +384,7 @@ build_camel_link!(partialRight, partial_right);
 pub fn rearg() {
     todo!()
 }
-/// Based on [rearg()]
+/// **Not ported.** Reorders a function's arguments; not a Value.
 #[macro_export]
 macro_rules! rearg {
     ($($t:tt)*) => {
@@ -395,7 +395,7 @@ macro_rules! rearg {
 pub fn rearg_x() {
     todo!()
 }
-/// Based on [rearg_x()]
+/// **Not ported.** Reorders a function's arguments; not a Value.
 #[macro_export]
 macro_rules! rearg_x {
     ($($t:tt)*) => {
@@ -406,7 +406,7 @@ macro_rules! rearg_x {
 pub fn rest() {
     todo!()
 }
-/// Based on [rest()]
+/// **Not ported.** Turns trailing arguments into an array parameter; not a Value.
 #[macro_export]
 macro_rules! rest {
     ($($t:tt)*) => {
@@ -417,7 +417,7 @@ macro_rules! rest {
 pub fn rest_x() {
     todo!()
 }
-/// Based on [rest_x()]
+/// **Not ported.** Turns trailing arguments into an array parameter; not a Value.
 #[macro_export]
 macro_rules! rest_x {
     ($($t:tt)*) => {
@@ -428,7 +428,7 @@ macro_rules! rest_x {
 pub fn spread() {
     todo!()
 }
-/// Based on [spread()]
+/// **Not ported.** Spreads an array into a function's arguments; not a Value.
 #[macro_export]
 macro_rules! spread {
     ($($t:tt)*) => {
@@ -439,7 +439,7 @@ macro_rules! spread {
 pub fn spread_x() {
     todo!()
 }
-/// Based on [spread_x()]
+/// **Not ported.** Spreads an array into a function's arguments; not a Value.
 #[macro_export]
 macro_rules! spread_x {
     ($($t:tt)*) => {
@@ -450,7 +450,7 @@ macro_rules! spread_x {
 pub fn throttle() {
     todo!()
 }
-/// Based on [throttle()]
+/// **Not ported.** Wraps a function with throttling; not a Value.
 #[macro_export]
 macro_rules! throttle {
     ($($t:tt)*) => {
@@ -461,7 +461,7 @@ macro_rules! throttle {
 pub fn throttle_x() {
     todo!()
 }
-/// Based on [throttle_x()]
+/// **Not ported.** Wraps a function with throttling; not a Value.
 #[macro_export]
 macro_rules! throttle_x {
     ($($t:tt)*) => {
@@ -472,7 +472,7 @@ macro_rules! throttle_x {
 pub fn unary() {
     todo!()
 }
-/// Based on [unary()]
+/// **Not ported.** Caps a function to one argument; not a Value.
 #[macro_export]
 macro_rules! unary {
     ($($t:tt)*) => {
@@ -483,7 +483,7 @@ macro_rules! unary {
 pub fn unary_x() {
     todo!()
 }
-/// Based on [unary_x()]
+/// **Not ported.** Caps a function to one argument; not a Value.
 #[macro_export]
 macro_rules! unary_x {
     ($($t:tt)*) => {
@@ -494,7 +494,7 @@ macro_rules! unary_x {
 pub fn wrap() {
     todo!()
 }
-/// Based on [wrap()]
+/// **Not ported.** Wraps a value in a function; the result is a function, not a Value.
 #[macro_export]
 macro_rules! wrap {
     ($($t:tt)*) => {
@@ -505,7 +505,7 @@ macro_rules! wrap {
 pub fn wrap_x() {
     todo!()
 }
-/// Based on [wrap_x()]
+/// **Not ported.** Wraps a value in a function; the result is a function, not a Value.
 #[macro_export]
 macro_rules! wrap_x {
     ($($t:tt)*) => {

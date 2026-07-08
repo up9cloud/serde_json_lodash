@@ -1,22 +1,10 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
+
 use crate::internal::compare_values;
 
-/// `_x` helper for [lte()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
+/// Fn form of [lte!](crate::lte!); see it for the full docs
 ///
-/// Additional cases:
-///
-/// ```rust
-/// # use serde_json_lodash::lte_x;
-/// # use serde_json::json;
-/// assert_eq!(lte_x(&json!(1), &json!(3)), true);
-/// ```
-pub fn lte_x(a: &Value, b: &Value) -> bool {
-    matches!(
-        compare_values(a, b),
-        Some(std::cmp::Ordering::Less) | Some(std::cmp::Ordering::Equal)
-    )
-}
-/// See lodash [lte](https://lodash.com/docs/#lte)
+/// `_x` forms: [lte_x!](crate::lte_x!), [lte_x()]
 ///
 /// Additional cases:
 ///
@@ -29,30 +17,9 @@ pub fn lte(a: &Value, b: &Value) -> Value {
     json!(lte_x(a, b))
 }
 
-/// Based on [lte_x()]
-/// Additional cases:
+/// See lodash [lte](https://lodash.com/docs/#lte)
 ///
-/// ```rust
-/// # #[macro_use] extern crate serde_json_lodash;
-/// # use serde_json::json;
-/// assert_eq!(lte_x!(&json!(1), &json!(3)), true);
-/// ```
-#[macro_export]
-macro_rules! lte_x {
-    () => {
-        false
-    };
-    ($a:expr $(,)*) => {
-        false
-    };
-    ($a:expr, $b:expr $(,)*) => {
-        $crate::lte_x($a, $b)
-    };
-    ($a:expr, $b:expr, $($rest:tt)*) => {
-        $crate::lte_x($a, $b)
-    };
-}
-/// Based on [lte()]
+/// Fn form: [lte()] | `_x` forms: [lte_x!](crate::lte_x!), [lte_x()]
 ///
 /// Examples:
 ///
@@ -79,5 +46,50 @@ macro_rules! lte {
     };
     ($a:expr, $b:expr, $($rest:tt)*) => {
         $crate::lte($a, $b)
+    };
+}
+
+/// `_x` helper for [lte!](crate::lte!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Macro form: [lte_x!](crate::lte_x!) | `Value` forms: [lte!](crate::lte!), [lte()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::lte_x;
+/// # use serde_json::json;
+/// assert_eq!(lte_x(&json!(1), &json!(3)), true);
+/// ```
+pub fn lte_x(a: &Value, b: &Value) -> bool {
+    matches!(
+        compare_values(a, b),
+        Some(std::cmp::Ordering::Less) | Some(std::cmp::Ordering::Equal)
+    )
+}
+
+/// `_x` helper for [lte!](crate::lte!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Fn form: [lte_x()] | `Value` forms: [lte!](crate::lte!), [lte()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(lte_x!(&json!(1), &json!(3)), true);
+/// ```
+#[macro_export]
+macro_rules! lte_x {
+    () => {
+        false
+    };
+    ($a:expr $(,)*) => {
+        false
+    };
+    ($a:expr, $b:expr $(,)*) => {
+        $crate::lte_x($a, $b)
+    };
+    ($a:expr, $b:expr, $($rest:tt)*) => {
+        $crate::lte_x($a, $b)
     };
 }

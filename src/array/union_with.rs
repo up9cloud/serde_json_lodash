@@ -1,8 +1,9 @@
 use crate::lib::Value;
 
-/// See lodash [unionWith](https://lodash.com/docs/#unionWith)
+/// Fn form of [union_with!](crate::union_with!); see it for the full docs
 ///
-/// `comparator` is invoked to compare elements for uniqueness
+/// `_x` form: **not provided** — see [union_with_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -27,7 +28,11 @@ pub fn union_with(array: Value, other: Value, comparator: fn(&Value, &Value) -> 
     Value::Array(out)
 }
 
-/// Based on [union_with()]
+/// See lodash [unionWith](https://lodash.com/docs/#unionWith)
+///
+/// `comparator` is invoked to compare elements for uniqueness
+///
+/// Fn form: [union_with()] | `_x` form: **not provided** — see [union_with_x()]
 ///
 /// Examples:
 ///
@@ -67,13 +72,20 @@ macro_rules! union_with {
     };
 }
 
-/// `_x` helper for [union_with()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [union_with()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [union_with!](crate::union_with!) and read the returned
+/// `Value`.
+///
+/// Macro form: [union_with_x!](crate::union_with_x!)
 pub fn union_with_x() {
     todo!()
 }
-/// Based on [union_with_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [union_with!](crate::union_with!) and read the returned
+/// `Value`.
+///
+/// Fn form: [union_with_x()]
 #[macro_export]
 macro_rules! union_with_x {
     ($($t:tt)*) => {

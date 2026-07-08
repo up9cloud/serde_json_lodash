@@ -1,6 +1,9 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
-/// See lodash [takeRight](https://lodash.com/docs/#takeRight)
+/// Fn form of [take_right!](crate::take_right!); see it for the full docs
+///
+/// `_x` form: **not provided** — see [take_right_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -18,7 +21,9 @@ pub fn take_right(array: Value, n: usize) -> Value {
     }
 }
 
-/// Based on [take_right()]
+/// See lodash [takeRight](https://lodash.com/docs/#takeRight)
+///
+/// Fn form: [take_right()] | `_x` form: **not provided** — see [take_right_x()]
 ///
 /// Examples:
 ///
@@ -55,13 +60,20 @@ macro_rules! take_right {
     };
 }
 
-/// `_x` helper for [take_right()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [take_right()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [take_right!](crate::take_right!) and read the returned
+/// `Value`.
+///
+/// Macro form: [take_right_x!](crate::take_right_x!)
 pub fn take_right_x() {
     todo!()
 }
-/// Based on [take_right_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [take_right!](crate::take_right!) and read the returned
+/// `Value`.
+///
+/// Fn form: [take_right_x()]
 #[macro_export]
 macro_rules! take_right_x {
     ($($t:tt)*) => {

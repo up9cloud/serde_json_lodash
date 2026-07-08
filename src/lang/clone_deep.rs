@@ -1,6 +1,9 @@
 use crate::lib::Value;
 
-/// See lodash [cloneDeep](https://lodash.com/docs/#cloneDeep)
+/// Fn form of [clone_deep!](crate::clone_deep!); see it for the full docs
+///
+/// `_x` form: **not provided** — see [clone_deep_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -12,7 +15,9 @@ pub fn clone_deep(v: &Value) -> Value {
     v.clone()
 }
 
-/// Based on [clone_deep()]
+/// See lodash [cloneDeep](https://lodash.com/docs/#cloneDeep)
+///
+/// Fn form: [clone_deep()] | `_x` form: **not provided** — see [clone_deep_x()]
 ///
 /// Examples:
 ///
@@ -45,13 +50,20 @@ macro_rules! clone_deep {
     };
 }
 
-/// `_x` helper for [clone_deep()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [clone_deep()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [clone_deep!](crate::clone_deep!) and read the returned
+/// `Value`.
+///
+/// Macro form: [clone_deep_x!](crate::clone_deep_x!)
 pub fn clone_deep_x() {
     todo!()
 }
-/// Based on [clone_deep_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [clone_deep!](crate::clone_deep!) and read the returned
+/// `Value`.
+///
+/// Fn form: [clone_deep_x()]
 #[macro_export]
 macro_rules! clone_deep_x {
     ($($t:tt)*) => {

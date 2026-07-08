@@ -1,9 +1,11 @@
-use crate::lib::{Value, Map};
+use crate::lib::{Map, Value};
+
 use crate::to_string_x;
 
-/// See lodash [pick](https://lodash.com/docs/#pick)
+/// Fn form of [pick!](crate::pick!); see it for the full docs
 ///
-/// `paths` is an array of (top level) property names to keep
+/// `_x` form: **not provided** — see [pick_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -24,7 +26,11 @@ pub fn pick(object: Value, paths: Value) -> Value {
     Value::Object(out)
 }
 
-/// Based on [pick()]
+/// See lodash [pick](https://lodash.com/docs/#pick)
+///
+/// `paths` is an array of (top level) property names to keep
+///
+/// Fn form: [pick()] | `_x` form: **not provided** — see [pick_x()]
 ///
 /// Examples:
 ///
@@ -63,13 +69,18 @@ macro_rules! pick {
     };
 }
 
-/// `_x` helper for [pick()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [pick()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [pick!](crate::pick!) and read the returned `Value`.
+///
+/// Macro form: [pick_x!](crate::pick_x!)
 pub fn pick_x() {
     todo!()
 }
-/// Based on [pick_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [pick!](crate::pick!) and read the returned `Value`.
+///
+/// Fn form: [pick_x()]
 #[macro_export]
 macro_rules! pick_x {
     ($($t:tt)*) => {

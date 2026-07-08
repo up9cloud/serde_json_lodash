@@ -1,6 +1,9 @@
-use crate::lib::{json, Value, Map};
+use crate::lib::{Map, Value, json};
 
-/// See lodash [toPlainObject](https://lodash.com/docs/#toPlainObject)
+/// Fn form of [to_plain_object!](crate::to_plain_object!); see it for the full docs
+///
+/// `_x` form: **not provided** — see [to_plain_object_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -29,7 +32,9 @@ pub fn to_plain_object(v: Value) -> Value {
     }
 }
 
-/// Based on [to_plain_object()]
+/// See lodash [toPlainObject](https://lodash.com/docs/#toPlainObject)
+///
+/// Fn form: [to_plain_object()] | `_x` form: **not provided** — see [to_plain_object_x()]
 ///
 /// Examples:
 ///
@@ -65,13 +70,20 @@ macro_rules! to_plain_object {
     };
 }
 
-/// `_x` helper for [to_plain_object()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [to_plain_object()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [to_plain_object!](crate::to_plain_object!) and read
+/// the returned `Value`.
+///
+/// Macro form: [to_plain_object_x!](crate::to_plain_object_x!)
 pub fn to_plain_object_x() {
     todo!()
 }
-/// Based on [to_plain_object_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [to_plain_object!](crate::to_plain_object!) and read
+/// the returned `Value`.
+///
+/// Fn form: [to_plain_object_x()]
 #[macro_export]
 macro_rules! to_plain_object_x {
     ($($t:tt)*) => {

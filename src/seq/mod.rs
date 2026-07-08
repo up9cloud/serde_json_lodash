@@ -13,7 +13,8 @@
 pub fn chain() {
     todo!()
 }
-/// Based on [chain()]
+/// **Not ported.** Wraps a value to enable explicit method chaining; this
+/// crate has no chaining wrapper (call the functions directly instead).
 #[macro_export]
 macro_rules! chain {
     ($($t:tt)*) => {
@@ -25,7 +26,8 @@ macro_rules! chain {
 pub fn chain_x() {
     todo!()
 }
-/// Based on [chain_x()]
+/// **Not ported.** Wraps a value to enable explicit method chaining; this
+/// crate has no chaining wrapper (call the functions directly instead).
 #[macro_export]
 macro_rules! chain_x {
     ($($t:tt)*) => {
@@ -37,7 +39,8 @@ macro_rules! chain_x {
 pub fn tap() {
     todo!()
 }
-/// Based on [tap()]
+/// **Not ported.** Invokes an interceptor with the value then returns it; part
+/// of the unsupported chaining wrapper.
 #[macro_export]
 macro_rules! tap {
     ($($t:tt)*) => {
@@ -49,7 +52,8 @@ macro_rules! tap {
 pub fn tap_x() {
     todo!()
 }
-/// Based on [tap_x()]
+/// **Not ported.** Invokes an interceptor with the value then returns it; part
+/// of the unsupported chaining wrapper.
 #[macro_export]
 macro_rules! tap_x {
     ($($t:tt)*) => {
@@ -61,7 +65,8 @@ macro_rules! tap_x {
 pub fn thru() {
     todo!()
 }
-/// Based on [thru()]
+/// **Not ported.** Passes the value through an interceptor and returns its
+/// result; part of the unsupported chaining wrapper.
 #[macro_export]
 macro_rules! thru {
     ($($t:tt)*) => {
@@ -73,7 +78,8 @@ macro_rules! thru {
 pub fn thru_x() {
     todo!()
 }
-/// Based on [thru_x()]
+/// **Not ported.** Passes the value through an interceptor and returns its
+/// result; part of the unsupported chaining wrapper.
 #[macro_export]
 macro_rules! thru_x {
     ($($t:tt)*) => {

@@ -1,8 +1,9 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
-/// See lodash [differenceBy](https://lodash.com/docs/#differenceBy)
+/// Fn form of [difference_by!](crate::difference_by!); see it for the full docs
 ///
-/// `iteratee` maps each element to the value used for comparison
+/// `_x` form: **not provided** — see [difference_by_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -27,7 +28,11 @@ pub fn difference_by(array: Value, other: Value, iteratee: fn(&Value) -> Value) 
     )
 }
 
-/// Based on [difference_by()]
+/// See lodash [differenceBy](https://lodash.com/docs/#differenceBy)
+///
+/// `iteratee` maps each element to the value used for comparison
+///
+/// Fn form: [difference_by()] | `_x` form: **not provided** — see [difference_by_x()]
 ///
 /// Examples:
 ///
@@ -67,13 +72,20 @@ macro_rules! difference_by {
     };
 }
 
-/// `_x` helper for [difference_by()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [difference_by()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [difference_by!](crate::difference_by!) and read the
+/// returned `Value`.
+///
+/// Macro form: [difference_by_x!](crate::difference_by_x!)
 pub fn difference_by_x() {
     todo!()
 }
-/// Based on [difference_by_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [difference_by!](crate::difference_by!) and read the
+/// returned `Value`.
+///
+/// Fn form: [difference_by_x()]
 #[macro_export]
 macro_rules! difference_by_x {
     ($($t:tt)*) => {

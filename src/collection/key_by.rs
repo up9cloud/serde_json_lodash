@@ -1,10 +1,13 @@
-use crate::lib::{Value, Map};
+use crate::lib::{Map, Value};
+
 use crate::to_string_x;
+
 use crate::collection::collect::collection_values;
 
-/// See lodash [keyBy](https://lodash.com/docs/#keyBy)
+/// Fn form of [key_by!](crate::key_by!); see it for the full docs
 ///
-/// `iteratee` maps each element to its key (coerced to a string)
+/// `_x` form: **not provided** — see [key_by_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -21,7 +24,11 @@ pub fn key_by(collection: Value, iteratee: fn(&Value) -> Value) -> Value {
     Value::Object(out)
 }
 
-/// Based on [key_by()]
+/// See lodash [keyBy](https://lodash.com/docs/#keyBy)
+///
+/// `iteratee` maps each element to its key (coerced to a string)
+///
+/// Fn form: [key_by()] | `_x` form: **not provided** — see [key_by_x()]
 ///
 /// Examples:
 ///
@@ -65,13 +72,20 @@ macro_rules! key_by {
     };
 }
 
-/// `_x` helper for [key_by()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [key_by()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [key_by!](crate::key_by!) and read the returned
+/// `Value`.
+///
+/// Macro form: [key_by_x!](crate::key_by_x!)
 pub fn key_by_x() {
     todo!()
 }
-/// Based on [key_by_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [key_by!](crate::key_by!) and read the returned
+/// `Value`.
+///
+/// Fn form: [key_by_x()]
 #[macro_export]
 macro_rules! key_by_x {
     ($($t:tt)*) => {

@@ -1,10 +1,10 @@
-use crate::lib::{json, Value, Number};
+use crate::lib::{Number, Value, json};
 
 pub(crate) fn type_name<T>(_: &T) -> &'static str {
     std::any::type_name::<T>()
 }
-// `value_undefined`, `value_nan` and `number_nan` stay `pub` because exported
-// macros (e.g. `ceil!`, `clamp!`) expand to `$crate::internal::...` in other
+// `value_undefined` and `value_nan` stay `pub` because exported macros
+// (e.g. `ceil!`, `clamp!`) expand to `$crate::internal::...` in other
 // crates; the rest of this module is crate-internal.
 pub fn value_undefined() -> Value {
     json!(null)
@@ -12,7 +12,7 @@ pub fn value_undefined() -> Value {
 pub fn value_nan() -> Value {
     json!(f64::NAN)
 }
-pub fn number_nan() -> Number {
+pub(crate) fn number_nan() -> Number {
     Number::from(0)
 }
 pub(crate) fn string_to_option_number(s: String) -> Option<Number> {

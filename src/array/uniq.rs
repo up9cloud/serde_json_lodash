@@ -1,7 +1,11 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
+
 use crate::internal::uniq_by_key;
 
-/// See lodash [uniq](https://lodash.com/docs/#uniq)
+/// Fn form of [uniq!](crate::uniq!); see it for the full docs
+///
+/// `_x` form: **not provided** — see [uniq_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -16,7 +20,9 @@ pub fn uniq(array: Value) -> Value {
     }
 }
 
-/// Based on [uniq()]
+/// See lodash [uniq](https://lodash.com/docs/#uniq)
+///
+/// Fn form: [uniq()] | `_x` form: **not provided** — see [uniq_x()]
 ///
 /// Examples:
 ///
@@ -48,13 +54,18 @@ macro_rules! uniq {
     };
 }
 
-/// `_x` helper for [uniq()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [uniq()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [uniq!](crate::uniq!) and read the returned `Value`.
+///
+/// Macro form: [uniq_x!](crate::uniq_x!)
 pub fn uniq_x() {
     todo!()
 }
-/// Based on [uniq_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [uniq!](crate::uniq!) and read the returned `Value`.
+///
+/// Fn form: [uniq_x()]
 #[macro_export]
 macro_rules! uniq_x {
     ($($t:tt)*) => {

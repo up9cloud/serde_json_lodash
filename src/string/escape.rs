@@ -1,4 +1,4 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
 // internal `&str`/primitive worker for [escape()] / [escape_x()]
 fn x_escape_x(s: &str) -> String {
@@ -16,20 +16,10 @@ fn x_escape_x(s: &str) -> String {
     out
 }
 
-/// `_x` helper for [escape()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
-/// Additional cases:
+/// Fn form of [escape!](crate::escape!); see it for the full docs
 ///
-/// ```rust
-/// # use serde_json_lodash::escape_x;
-/// # use serde_json::json;
-/// assert_eq!(escape_x(json!("fred, barney, & pebbles")), "fred, barney, &amp; pebbles".to_owned());
-/// ```
-pub fn escape_x<A: Into<Value>>(v: A) -> String {
-    let v = v.into();
-    x_escape_x(&crate::to_string_x(v))
-}
-
-/// See lodash [escape](https://lodash.com/docs/#escape)
+/// `_x` forms: [escape_x!](crate::escape_x!), [escape_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -42,7 +32,9 @@ pub fn escape<A: Into<Value>>(v: A) -> Value {
     json!(escape_x(v))
 }
 
-/// Based on [escape()]
+/// See lodash [escape](https://lodash.com/docs/#escape)
+///
+/// Fn form: [escape()] | `_x` forms: [escape_x!](crate::escape_x!), [escape_x()]
 ///
 /// Examples:
 ///
@@ -77,8 +69,26 @@ macro_rules! escape {
     };
 }
 
-/// Based on [escape_x()]
-#[macro_export]
+/// `_x` helper for [escape!](crate::escape!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Macro form: [escape_x!](crate::escape_x!) | `Value` forms: [escape!](crate::escape!), [escape()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::escape_x;
+/// # use serde_json::json;
+/// assert_eq!(escape_x(json!("fred, barney, & pebbles")), "fred, barney, &amp; pebbles".to_owned());
+/// ```
+pub fn escape_x<A: Into<Value>>(v: A) -> String {
+    let v = v.into();
+    x_escape_x(&crate::to_string_x(v))
+}
+
+/// `_x` helper for [escape!](crate::escape!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Fn form: [escape_x()] | `Value` forms: [escape!](crate::escape!), [escape()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -86,6 +96,7 @@ macro_rules! escape {
 /// # use serde_json::json;
 /// assert_eq!(escape_x!(json!("fred, barney, & pebbles")), "fred, barney, &amp; pebbles".to_owned());
 /// ```
+#[macro_export]
 macro_rules! escape_x {
     () => {
         "".to_owned()

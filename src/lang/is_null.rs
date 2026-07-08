@@ -1,18 +1,8 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
-/// `_x` helper for [is_null()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
+/// Fn form of [is_null!](crate::is_null!); see it for the full docs
 ///
-/// Additional cases:
-///
-/// ```rust
-/// # use serde_json_lodash::is_null_x;
-/// # use serde_json::json;
-/// assert_eq!(is_null_x(&json!(null)), true);
-/// ```
-pub fn is_null_x(v: &Value) -> bool {
-    v.is_null()
-}
-/// See lodash [isNull](https://lodash.com/docs/#isNull)
+/// `_x` forms: [is_null_x!](crate::is_null_x!), [is_null_x()]
 ///
 /// Additional cases:
 ///
@@ -25,27 +15,9 @@ pub fn is_null(v: &Value) -> Value {
     json!(is_null_x(v))
 }
 
-/// Based on [is_null_x()]
-/// Additional cases:
+/// See lodash [isNull](https://lodash.com/docs/#isNull)
 ///
-/// ```rust
-/// # #[macro_use] extern crate serde_json_lodash;
-/// # use serde_json::json;
-/// assert_eq!(is_null_x!(&json!(null)), true);
-/// ```
-#[macro_export]
-macro_rules! is_null_x {
-    () => {
-        false
-    };
-    ($a:expr $(,)*) => {
-        $crate::is_null_x($a)
-    };
-    ($a:expr, $($rest:tt)*) => {
-        $crate::is_null_x($a)
-    };
-}
-/// Based on [is_null()]
+/// Fn form: [is_null()] | `_x` forms: [is_null_x!](crate::is_null_x!), [is_null_x()]
 ///
 /// Examples:
 ///
@@ -67,5 +39,44 @@ macro_rules! is_null {
     };
     ($a:expr, $($rest:tt)*) => {
         $crate::is_null($a)
+    };
+}
+
+/// `_x` helper for [is_null!](crate::is_null!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Macro form: [is_null_x!](crate::is_null_x!) | `Value` forms: [is_null!](crate::is_null!), [is_null()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::is_null_x;
+/// # use serde_json::json;
+/// assert_eq!(is_null_x(&json!(null)), true);
+/// ```
+pub fn is_null_x(v: &Value) -> bool {
+    v.is_null()
+}
+
+/// `_x` helper for [is_null!](crate::is_null!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Fn form: [is_null_x()] | `Value` forms: [is_null!](crate::is_null!), [is_null()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(is_null_x!(&json!(null)), true);
+/// ```
+#[macro_export]
+macro_rules! is_null_x {
+    () => {
+        false
+    };
+    ($a:expr $(,)*) => {
+        $crate::is_null_x($a)
+    };
+    ($a:expr, $($rest:tt)*) => {
+        $crate::is_null_x($a)
     };
 }

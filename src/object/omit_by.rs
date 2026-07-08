@@ -1,9 +1,9 @@
-use crate::lib::{Value, Map};
+use crate::lib::{Map, Value};
 
-/// See lodash [omitBy](https://lodash.com/docs/#omitBy)
+/// Fn form of [omit_by!](crate::omit_by!); see it for the full docs
 ///
-/// `predicate` is invoked with each property value; matching properties are
-/// dropped
+/// `_x` form: **not provided** — see [omit_by_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -23,7 +23,12 @@ pub fn omit_by(object: Value, predicate: fn(&Value) -> bool) -> Value {
     Value::Object(out)
 }
 
-/// Based on [omit_by()]
+/// See lodash [omitBy](https://lodash.com/docs/#omitBy)
+///
+/// `predicate` is invoked with each property value; matching properties are
+/// dropped
+///
+/// Fn form: [omit_by()] | `_x` form: **not provided** — see [omit_by_x()]
 ///
 /// Examples:
 ///
@@ -61,13 +66,20 @@ macro_rules! omit_by {
     };
 }
 
-/// `_x` helper for [omit_by()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [omit_by()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [omit_by!](crate::omit_by!) and read the returned
+/// `Value`.
+///
+/// Macro form: [omit_by_x!](crate::omit_by_x!)
 pub fn omit_by_x() {
     todo!()
 }
-/// Based on [omit_by_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [omit_by!](crate::omit_by!) and read the returned
+/// `Value`.
+///
+/// Fn form: [omit_by_x()]
 #[macro_export]
 macro_rules! omit_by_x {
     ($($t:tt)*) => {

@@ -1,35 +1,8 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
-/// `_x` helper for [index_of()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
+/// Fn form of [index_of!](crate::index_of!); see it for the full docs
 ///
-/// Additional cases:
-///
-/// ```rust
-/// # use serde_json_lodash::index_of_x;
-/// # use serde_json::json;
-/// assert_eq!(index_of_x(json!([1, 2, 1, 2]), json!(2), 0), 1);
-/// ```
-pub fn index_of_x(array: Value, value: Value, from_index: usize) -> isize {
-    match value {
-        Value::Null | Value::Bool(_) | Value::Number(_) | Value::String(_) => match array {
-            Value::Null
-            | Value::Bool(_)
-            | Value::Number(_)
-            | Value::String(_)
-            | Value::Object(_) => -1,
-            Value::Array(vec) => {
-                for (i, item) in vec.iter().enumerate().skip(from_index) {
-                    if item == &value {
-                        return i as isize;
-                    }
-                }
-                -1
-            }
-        },
-        Value::Array(_) | Value::Object(_) => -1,
-    }
-}
-/// See lodash [indexOf](https://lodash.com/docs/#indexOf)
+/// `_x` forms: [index_of_x!](crate::index_of_x!), [index_of_x()]
 ///
 /// Additional cases:
 ///
@@ -42,31 +15,9 @@ pub fn index_of(array: Value, value: Value, from_index: usize) -> Value {
     json!(index_of_x(array, value, from_index))
 }
 
-/// Based on [index_of_x()]
-/// Additional cases:
+/// See lodash [indexOf](https://lodash.com/docs/#indexOf)
 ///
-/// ```rust
-/// # #[macro_use] extern crate serde_json_lodash;
-/// # use serde_json::json;
-/// assert_eq!(index_of_x!(json!([1, 2, 1, 2]), json!(2), 0), 1);
-/// ```
-#[macro_export]
-macro_rules! index_of_x {
-    () => {
-        -1
-    };
-    ($a:expr $(,)*) => {
-        -1
-    };
-    ($a:expr, $b:expr $(,)*) => {{ $crate::index_of_x($a, $b, 0) }};
-    ($a:expr, $b:expr, $c:expr $(,)*) => {
-        $crate::index_of_x($a, $b, $c)
-    };
-    ($a:expr, $b:expr, $c:expr, $($rest:tt)*) => {
-        $crate::index_of_x($a, $b, $c)
-    };
-}
-/// Based on [index_of()]
+/// Fn form: [index_of()] | `_x` forms: [index_of_x!](crate::index_of_x!), [index_of_x()]
 ///
 /// Examples:
 ///
@@ -109,5 +60,65 @@ macro_rules! index_of {
     };
     ($a:expr, $b:expr, $c:expr, $($rest:tt)*) => {
         $crate::index_of($a, $b, $c)
+    };
+}
+
+/// `_x` helper for [index_of!](crate::index_of!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Macro form: [index_of_x!](crate::index_of_x!) | `Value` forms: [index_of!](crate::index_of!), [index_of()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::index_of_x;
+/// # use serde_json::json;
+/// assert_eq!(index_of_x(json!([1, 2, 1, 2]), json!(2), 0), 1);
+/// ```
+pub fn index_of_x(array: Value, value: Value, from_index: usize) -> isize {
+    match value {
+        Value::Null | Value::Bool(_) | Value::Number(_) | Value::String(_) => match array {
+            Value::Null
+            | Value::Bool(_)
+            | Value::Number(_)
+            | Value::String(_)
+            | Value::Object(_) => -1,
+            Value::Array(vec) => {
+                for (i, item) in vec.iter().enumerate().skip(from_index) {
+                    if item == &value {
+                        return i as isize;
+                    }
+                }
+                -1
+            }
+        },
+        Value::Array(_) | Value::Object(_) => -1,
+    }
+}
+
+/// `_x` helper for [index_of!](crate::index_of!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Fn form: [index_of_x()] | `Value` forms: [index_of!](crate::index_of!), [index_of()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(index_of_x!(json!([1, 2, 1, 2]), json!(2), 0), 1);
+/// ```
+#[macro_export]
+macro_rules! index_of_x {
+    () => {
+        -1
+    };
+    ($a:expr $(,)*) => {
+        -1
+    };
+    ($a:expr, $b:expr $(,)*) => {{ $crate::index_of_x($a, $b, 0) }};
+    ($a:expr, $b:expr, $c:expr $(,)*) => {
+        $crate::index_of_x($a, $b, $c)
+    };
+    ($a:expr, $b:expr, $c:expr, $($rest:tt)*) => {
+        $crate::index_of_x($a, $b, $c)
     };
 }

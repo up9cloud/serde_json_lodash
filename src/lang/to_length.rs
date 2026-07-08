@@ -1,17 +1,9 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
-/// `_x` helper for [to_length()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
-/// Additional cases:
+/// Fn form of [to_length!](crate::to_length!); see it for the full docs
 ///
-/// ```rust
-/// # use serde_json_lodash::to_length_x;
-/// # use serde_json::json;
-/// assert_eq!(to_length_x(json!(3.2)), 3);
-/// ```
-pub fn to_length_x(v: Value) -> u64 {
-    crate::to_integer_x(v).clamp(0, 4294967295) as u64
-}
-/// See lodash [toLength](https://lodash.com/docs/#toLength)
+/// `_x` forms: [to_length_x!](crate::to_length_x!), [to_length_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -23,7 +15,9 @@ pub fn to_length(v: Value) -> Value {
     json!(to_length_x(v))
 }
 
-/// Based on [to_length()]
+/// See lodash [toLength](https://lodash.com/docs/#toLength)
+///
+/// Fn form: [to_length()] | `_x` forms: [to_length_x!](crate::to_length_x!), [to_length_x()]
 ///
 /// Examples:
 ///
@@ -57,8 +51,25 @@ macro_rules! to_length {
     };
 }
 
-/// Based on [to_length_x()]
-#[macro_export]
+/// `_x` helper for [to_length!](crate::to_length!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Macro form: [to_length_x!](crate::to_length_x!) | `Value` forms: [to_length!](crate::to_length!), [to_length()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::to_length_x;
+/// # use serde_json::json;
+/// assert_eq!(to_length_x(json!(3.2)), 3);
+/// ```
+pub fn to_length_x(v: Value) -> u64 {
+    crate::to_integer_x(v).clamp(0, 4294967295) as u64
+}
+
+/// `_x` helper for [to_length!](crate::to_length!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Fn form: [to_length_x()] | `Value` forms: [to_length!](crate::to_length!), [to_length()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -66,6 +77,7 @@ macro_rules! to_length {
 /// # use serde_json::json;
 /// assert_eq!(to_length_x!(json!(3.2)), 3);
 /// ```
+#[macro_export]
 macro_rules! to_length_x {
     () => {
         0

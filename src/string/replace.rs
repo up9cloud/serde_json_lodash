@@ -1,14 +1,14 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
 // internal `&str`/primitive worker for [replace()] / [replace_x()]
 fn x_replace_x(s: &str, pattern: &str, replacement: &str) -> String {
     s.replacen(pattern, replacement, 1)
 }
 
-/// See lodash [replace](https://lodash.com/docs/#replace)
+/// Fn form of [replace!](crate::replace!); see it for the full docs
 ///
-/// *Note:* `pattern` is matched as a plain string (like the JS string
-/// pattern), regexp patterns are not supported
+/// `_x` forms: [replace_x!](crate::replace_x!), [replace_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -25,7 +25,12 @@ pub fn replace<A: Into<Value>>(v: A, pattern: Value, replacement: Value) -> Valu
     ))
 }
 
-/// Based on [replace()]
+/// See lodash [replace](https://lodash.com/docs/#replace)
+///
+/// *Note:* `pattern` is matched as a plain string (like the JS string
+/// pattern), regexp patterns are not supported
+///
+/// Fn form: [replace()] | `_x` forms: [replace_x!](crate::replace_x!), [replace_x()]
 ///
 /// Examples:
 ///
@@ -67,7 +72,10 @@ macro_rules! replace {
     };
 }
 
-/// `_x` helper for [replace()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
+/// `_x` helper for [replace!](crate::replace!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Macro form: [replace_x!](crate::replace_x!) | `Value` forms: [replace!](crate::replace!), [replace()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -84,8 +92,10 @@ pub fn replace_x<A: Into<Value>>(v: A, pattern: Value, replacement: Value) -> St
     )
 }
 
-/// Based on [replace_x()]
-#[macro_export]
+/// `_x` helper for [replace!](crate::replace!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Fn form: [replace_x()] | `Value` forms: [replace!](crate::replace!), [replace()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -93,6 +103,7 @@ pub fn replace_x<A: Into<Value>>(v: A, pattern: Value, replacement: Value) -> St
 /// # use serde_json::json;
 /// assert_eq!(replace_x!(json!("Hi Fred"), json!("Fred"), json!("Barney")), "Hi Barney".to_owned());
 /// ```
+#[macro_export]
 macro_rules! replace_x {
     () => {
         "".to_owned()

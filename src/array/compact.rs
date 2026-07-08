@@ -1,6 +1,9 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
-/// See lodash [compact](https://lodash.com/docs/#compact)
+/// Fn form of [compact!](crate::compact!); see it for the full docs
+///
+/// `_x` form: **not provided** — see [compact_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -38,7 +41,9 @@ pub fn compact(v: Value) -> Value {
     }
 }
 
-/// Based on [compact()]
+/// See lodash [compact](https://lodash.com/docs/#compact)
+///
+/// Fn form: [compact()] | `_x` form: **not provided** — see [compact_x()]
 ///
 /// Examples:
 ///
@@ -77,13 +82,20 @@ macro_rules! compact {
     };
 }
 
-/// `_x` helper for [compact()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [compact()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [compact!](crate::compact!) and read the returned
+/// `Value`.
+///
+/// Macro form: [compact_x!](crate::compact_x!)
 pub fn compact_x() {
     todo!()
 }
-/// Based on [compact_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [compact!](crate::compact!) and read the returned
+/// `Value`.
+///
+/// Fn form: [compact_x()]
 #[macro_export]
 macro_rules! compact_x {
     ($($t:tt)*) => {

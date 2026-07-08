@@ -1,10 +1,11 @@
 use crate::lib::Value;
+
 use crate::collection::collect::collection_values;
 
-/// See lodash [reduce](https://lodash.com/docs/#reduce)
+/// Fn form of [reduce!](crate::reduce!); see it for the full docs
 ///
-/// `iteratee` receives `(accumulator, value)` and returns the next
-/// accumulator
+/// `_x` form: **not provided** — see [reduce_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -22,7 +23,12 @@ pub fn reduce(
         .fold(accumulator, iteratee)
 }
 
-/// Based on [reduce()]
+/// See lodash [reduce](https://lodash.com/docs/#reduce)
+///
+/// `iteratee` receives `(accumulator, value)` and returns the next
+/// accumulator
+///
+/// Fn form: [reduce()] | `_x` form: **not provided** — see [reduce_x()]
 ///
 /// Examples:
 ///
@@ -62,13 +68,20 @@ macro_rules! reduce {
     };
 }
 
-/// `_x` helper for [reduce()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [reduce()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [reduce!](crate::reduce!) and read the returned
+/// `Value`.
+///
+/// Macro form: [reduce_x!](crate::reduce_x!)
 pub fn reduce_x() {
     todo!()
 }
-/// Based on [reduce_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [reduce!](crate::reduce!) and read the returned
+/// `Value`.
+///
+/// Fn form: [reduce_x()]
 #[macro_export]
 macro_rules! reduce_x {
     ($($t:tt)*) => {

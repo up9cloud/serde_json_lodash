@@ -1,7 +1,11 @@
 use crate::lib::Value;
+
 use crate::internal::{f64_to_number, value_nan, value_to_option_number};
 
-/// See lodash [clamp](https://lodash.com/docs/#clamp)
+/// Fn form of [clamp!](crate::clamp!); see it for the full docs
+///
+/// `_x` form: **not provided** — see [clamp_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -25,7 +29,9 @@ pub fn clamp(number: Value, lower: Value, upper: Value) -> Value {
     }
 }
 
-/// Based on [clamp()]
+/// See lodash [clamp](https://lodash.com/docs/#clamp)
+///
+/// Fn form: [clamp()] | `_x` form: **not provided** — see [clamp_x()]
 ///
 /// Examples:
 ///
@@ -61,13 +67,18 @@ macro_rules! clamp {
     };
 }
 
-/// `_x` helper for [clamp()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [clamp()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [clamp!](crate::clamp!) and read the returned `Value`.
+///
+/// Macro form: [clamp_x!](crate::clamp_x!)
 pub fn clamp_x() {
     todo!()
 }
-/// Based on [clamp_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [clamp!](crate::clamp!) and read the returned `Value`.
+///
+/// Fn form: [clamp_x()]
 #[macro_export]
 macro_rules! clamp_x {
     ($($t:tt)*) => {

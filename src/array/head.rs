@@ -1,6 +1,9 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
-/// See lodash [head](https://lodash.com/docs/#head)
+/// Fn form of [head!](crate::head!); see it for the full docs
+///
+/// `_x` form: **not provided** — see [head_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -28,7 +31,10 @@ pub fn head(v: Value) -> Value {
         Value::Object(_) => json!(null),
     }
 }
-/// Based on [head()]
+
+/// See lodash [head](https://lodash.com/docs/#head)
+///
+/// Fn form: [head()] | `_x` form: **not provided** — see [head_x()]
 ///
 /// Examples:
 ///
@@ -73,13 +79,18 @@ macro_rules! head {
     };
 }
 
-/// `_x` helper for [head()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [head()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [head!](crate::head!) and read the returned `Value`.
+///
+/// Macro form: [head_x!](crate::head_x!)
 pub fn head_x() {
     todo!()
 }
-/// Based on [head_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [head!](crate::head!) and read the returned `Value`.
+///
+/// Fn form: [head_x()]
 #[macro_export]
 macro_rules! head_x {
     ($($t:tt)*) => {

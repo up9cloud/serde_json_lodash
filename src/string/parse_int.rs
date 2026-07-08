@@ -1,4 +1,5 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
+
 use crate::internal::value_nan;
 
 // internal worker for [parse_int()].
@@ -36,11 +37,10 @@ fn x_parse_int(s: &str, radix: u32) -> Value {
     }
 }
 
-/// See lodash [parseInt](https://lodash.com/docs/#parseInt)
+/// Fn form of [parse_int!](crate::parse_int!); see it for the full docs
 ///
-/// `radix = 0` means auto detection (`0x` prefixed strings are parsed as
-/// hexadecimal, everything else as decimal), same as the lodash default.
-/// Unparsable input returns `Value::Null` (there is no `NaN` in serde_json)
+/// `_x` form: **not provided** — see [parse_int_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -53,7 +53,13 @@ pub fn parse_int<A: Into<Value>>(v: A, radix: u32) -> Value {
     x_parse_int(&crate::to_string_x(v), radix)
 }
 
-/// Based on [parse_int()]
+/// See lodash [parseInt](https://lodash.com/docs/#parseInt)
+///
+/// `radix = 0` means auto detection (`0x` prefixed strings are parsed as
+/// hexadecimal, everything else as decimal), same as the lodash default.
+/// Unparsable input returns `Value::Null` (there is no `NaN` in serde_json)
+///
+/// Fn form: [parse_int()] | `_x` form: **not provided** — see [parse_int_x()]
 ///
 /// Examples:
 ///
@@ -94,13 +100,20 @@ macro_rules! parse_int {
     };
 }
 
-/// `_x` helper for [parse_int()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [parse_int()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [parse_int!](crate::parse_int!) and read the returned
+/// `Value`.
+///
+/// Macro form: [parse_int_x!](crate::parse_int_x!)
 pub fn parse_int_x() {
     todo!()
 }
-/// Based on [parse_int_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [parse_int!](crate::parse_int!) and read the returned
+/// `Value`.
+///
+/// Fn form: [parse_int_x()]
 #[macro_export]
 macro_rules! parse_int_x {
     ($($t:tt)*) => {

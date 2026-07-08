@@ -1,4 +1,4 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
 static DEBURR_MAP: &[(&str, &str)] = &[
     ("ÀÁÂÃÄÅĀĂĄ", "A"),
@@ -72,20 +72,10 @@ fn x_deburr_x(s: &str) -> String {
     out
 }
 
-/// `_x` helper for [deburr()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
-/// Additional cases:
+/// Fn form of [deburr!](crate::deburr!); see it for the full docs
 ///
-/// ```rust
-/// # use serde_json_lodash::deburr_x;
-/// # use serde_json::json;
-/// assert_eq!(deburr_x(json!("déjà vu")), "deja vu".to_owned());
-/// ```
-pub fn deburr_x<A: Into<Value>>(v: A) -> String {
-    let v = v.into();
-    x_deburr_x(&crate::to_string_x(v))
-}
-
-/// See lodash [deburr](https://lodash.com/docs/#deburr)
+/// `_x` forms: [deburr_x!](crate::deburr_x!), [deburr_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -98,7 +88,9 @@ pub fn deburr<A: Into<Value>>(v: A) -> Value {
     json!(deburr_x(v))
 }
 
-/// Based on [deburr()]
+/// See lodash [deburr](https://lodash.com/docs/#deburr)
+///
+/// Fn form: [deburr()] | `_x` forms: [deburr_x!](crate::deburr_x!), [deburr_x()]
 ///
 /// Examples:
 ///
@@ -134,8 +126,26 @@ macro_rules! deburr {
     };
 }
 
-/// Based on [deburr_x()]
-#[macro_export]
+/// `_x` helper for [deburr!](crate::deburr!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Macro form: [deburr_x!](crate::deburr_x!) | `Value` forms: [deburr!](crate::deburr!), [deburr()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::deburr_x;
+/// # use serde_json::json;
+/// assert_eq!(deburr_x(json!("déjà vu")), "deja vu".to_owned());
+/// ```
+pub fn deburr_x<A: Into<Value>>(v: A) -> String {
+    let v = v.into();
+    x_deburr_x(&crate::to_string_x(v))
+}
+
+/// `_x` helper for [deburr!](crate::deburr!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Fn form: [deburr_x()] | `Value` forms: [deburr!](crate::deburr!), [deburr()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -143,6 +153,7 @@ macro_rules! deburr {
 /// # use serde_json::json;
 /// assert_eq!(deburr_x!(json!("déjà vu")), "deja vu".to_owned());
 /// ```
+#[macro_export]
 macro_rules! deburr_x {
     () => {
         "".to_owned()

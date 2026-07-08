@@ -24,7 +24,7 @@ pub use at::*;
 pub fn create() {
     todo!()
 }
-/// Based on [create()]
+/// **Not ported.** Creates an object with a given prototype; JSON has no prototype chain.
 #[macro_export]
 macro_rules! create {
     ($($t:tt)*) => {
@@ -35,7 +35,7 @@ macro_rules! create {
 pub fn create_x() {
     todo!()
 }
-/// Based on [create_x()]
+/// **Not ported.** Creates an object with a given prototype; JSON has no prototype chain.
 #[macro_export]
 macro_rules! create_x {
     ($($t:tt)*) => {
@@ -86,7 +86,7 @@ pub use invert_by::*;
 pub fn invoke() {
     todo!()
 }
-/// Based on [invoke()]
+/// **Not ported.** Invokes the method at `path`; JSON values have no methods.
 #[macro_export]
 macro_rules! invoke {
     ($($t:tt)*) => {
@@ -97,7 +97,7 @@ macro_rules! invoke {
 pub fn invoke_x() {
     todo!()
 }
-/// Based on [invoke_x()]
+/// **Not ported.** Invokes the method at `path`; JSON values have no methods.
 #[macro_export]
 macro_rules! invoke_x {
     ($($t:tt)*) => {
@@ -136,7 +136,7 @@ pub use set::*;
 pub fn set_with() {
     todo!()
 }
-/// Based on [set_with()]
+/// **Not ported.** Like `set` but with a customizer for creating intermediate objects; niche, not ported.
 #[macro_export]
 macro_rules! set_with {
     ($($t:tt)*) => {
@@ -147,7 +147,7 @@ macro_rules! set_with {
 pub fn set_with_x() {
     todo!()
 }
-/// Based on [set_with_x()]
+/// **Not ported.** Like `set` but with a customizer for creating intermediate objects; niche, not ported.
 #[macro_export]
 macro_rules! set_with_x {
     ($($t:tt)*) => {
@@ -178,7 +178,7 @@ pub use update::*;
 pub fn update_with() {
     todo!()
 }
-/// Based on [update_with()]
+/// **Not ported.** Like `update` but with a customizer for creating intermediate objects; niche, not ported.
 #[macro_export]
 macro_rules! update_with {
     ($($t:tt)*) => {
@@ -189,7 +189,7 @@ macro_rules! update_with {
 pub fn update_with_x() {
     todo!()
 }
-/// Based on [update_with_x()]
+/// **Not ported.** Like `update` but with a customizer for creating intermediate objects; niche, not ported.
 #[macro_export]
 macro_rules! update_with_x {
     ($($t:tt)*) => {

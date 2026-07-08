@@ -1,9 +1,11 @@
 use crate::lib::Value;
+
 use crate::math::mean::mean_values;
 
-/// See lodash [meanBy](https://lodash.com/docs/#meanBy)
+/// Fn form of [mean_by!](crate::mean_by!); see it for the full docs
 ///
-/// `iteratee` maps each element to the value to be averaged
+/// `_x` form: **not provided** — see [mean_by_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -18,7 +20,11 @@ pub fn mean_by(array: Value, iteratee: fn(&Value) -> Value) -> Value {
     }
 }
 
-/// Based on [mean_by()]
+/// See lodash [meanBy](https://lodash.com/docs/#meanBy)
+///
+/// `iteratee` maps each element to the value to be averaged
+///
+/// Fn form: [mean_by()] | `_x` form: **not provided** — see [mean_by_x()]
 ///
 /// Examples:
 ///
@@ -56,13 +62,20 @@ macro_rules! mean_by {
     };
 }
 
-/// `_x` helper for [mean_by()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [mean_by()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [mean_by!](crate::mean_by!) and read the returned
+/// `Value`.
+///
+/// Macro form: [mean_by_x!](crate::mean_by_x!)
 pub fn mean_by_x() {
     todo!()
 }
-/// Based on [mean_by_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [mean_by!](crate::mean_by!) and read the returned
+/// `Value`.
+///
+/// Fn form: [mean_by_x()]
 #[macro_export]
 macro_rules! mean_by_x {
     ($($t:tt)*) => {

@@ -1,4 +1,5 @@
 use crate::lib::Value;
+
 use crate::internal::type_name;
 
 // Private worker: the actual "upper-first, lower-rest" algorithm on a `&str`.
@@ -17,9 +18,73 @@ fn capitalize_str(s: &str) -> String {
     }
 }
 
-/// `_x` helper for [capitalize()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
+/// Fn form of [capitalize!](crate::capitalize!); see it for the full docs
+///
+/// `_x` forms: [capitalize_x!](crate::capitalize_x!), [capitalize_x()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::capitalize;
+/// # use serde_json::json;
+/// assert_eq!(capitalize("FRED"), json!("Fred"));
+/// assert_eq!(capitalize(json!("FRED")), json!("Fred"));
+/// ```
+pub fn capitalize<A: Into<Value>>(v: A) -> Value {
+    Value::String(capitalize_x(v))
+}
+
+/// See lodash [capitalize](https://lodash.com/docs/#capitalize)
 ///
 /// Accepts anything convertible into a `Value` — a `&str`/`String` primitive or a `json!` value.
+///
+/// Fn form: [capitalize()] | `_x` forms: [capitalize_x!](crate::capitalize_x!), [capitalize_x()]
+///
+/// Examples:
+///
+/// ```rust
+/// #[macro_use] extern crate serde_json_lodash;
+/// use serde_json::json;
+/// assert_eq!(
+///   capitalize!(json!("FRED")),
+///   json!("Fred")
+/// );
+/// // a primitive `&str` argument is accepted too
+/// assert_eq!(capitalize!("FRED"), json!("Fred"));
+/// ```
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(capitalize!(), json!(""));
+/// assert_eq!(capitalize!(json!(null)), json!(""));
+/// assert_eq!(capitalize!(json!(false)), json!("False"));
+/// assert_eq!(capitalize!(json!(-0)), json!("0")); // rust world -0 is 0
+/// assert_eq!(capitalize!(json!("")), json!(""));
+/// assert_eq!(capitalize!(json!([])), json!(""));
+/// assert_eq!(capitalize!(json!([null,'A',{}])), json!("Null,a,serde_json::map::map<alloc::string::string, serde_json::value::value>"));
+/// assert_eq!(capitalize!(json!({})), json!("Serde_json::map::map<alloc::string::string, serde_json::value::value>"));
+/// ```
+#[macro_export]
+macro_rules! capitalize {
+    () => {
+        $crate::lib::json!("")
+    };
+    ($a:expr $(,)*) => {
+        $crate::capitalize($a)
+    };
+    ($a:expr, $($rest:tt)*) => {
+        $crate::capitalize($a)
+    };
+}
+
+/// `_x` helper for [capitalize!](crate::capitalize!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Accepts anything convertible into a `Value` — a `&str`/`String` primitive or a `json!` value.
+///
+/// Macro form: [capitalize_x!](crate::capitalize_x!) | `Value` forms: [capitalize!](crate::capitalize!), [capitalize()]
 ///
 /// Additional cases:
 ///
@@ -64,23 +129,10 @@ pub fn capitalize_x<A: Into<Value>>(v: A) -> String {
         Value::Object(o) => capitalize_str(type_name(&o)),
     }
 }
-/// See lodash [capitalize](https://lodash.com/docs/#capitalize)
-///
-/// Accepts anything convertible into a `Value` — a `&str`/`String` primitive or a `json!` value.
-///
-/// Additional cases:
-///
-/// ```rust
-/// # use serde_json_lodash::capitalize;
-/// # use serde_json::json;
-/// assert_eq!(capitalize("FRED"), json!("Fred"));
-/// assert_eq!(capitalize(json!("FRED")), json!("Fred"));
-/// ```
-pub fn capitalize<A: Into<Value>>(v: A) -> Value {
-    Value::String(capitalize_x(v))
-}
 
-/// Based on [capitalize_x()]
+/// `_x` helper for [capitalize!](crate::capitalize!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Fn form: [capitalize_x()] | `Value` forms: [capitalize!](crate::capitalize!), [capitalize()]
 ///
 /// Additional cases:
 ///
@@ -100,46 +152,5 @@ macro_rules! capitalize_x {
     };
     ($a:expr, $($rest:tt)*) => {
         $crate::capitalize_x($a)
-    };
-}
-/// Based on [capitalize()]
-///
-/// Examples:
-///
-/// ```rust
-/// #[macro_use] extern crate serde_json_lodash;
-/// use serde_json::json;
-/// assert_eq!(
-///   capitalize!(json!("FRED")),
-///   json!("Fred")
-/// );
-/// // a primitive `&str` argument is accepted too
-/// assert_eq!(capitalize!("FRED"), json!("Fred"));
-/// ```
-///
-/// Additional cases:
-///
-/// ```rust
-/// # #[macro_use] extern crate serde_json_lodash;
-/// # use serde_json::json;
-/// assert_eq!(capitalize!(), json!(""));
-/// assert_eq!(capitalize!(json!(null)), json!(""));
-/// assert_eq!(capitalize!(json!(false)), json!("False"));
-/// assert_eq!(capitalize!(json!(-0)), json!("0")); // rust world -0 is 0
-/// assert_eq!(capitalize!(json!("")), json!(""));
-/// assert_eq!(capitalize!(json!([])), json!(""));
-/// assert_eq!(capitalize!(json!([null,'A',{}])), json!("Null,a,serde_json::map::map<alloc::string::string, serde_json::value::value>"));
-/// assert_eq!(capitalize!(json!({})), json!("Serde_json::map::map<alloc::string::string, serde_json::value::value>"));
-/// ```
-#[macro_export]
-macro_rules! capitalize {
-    () => {
-        $crate::lib::json!("")
-    };
-    ($a:expr $(,)*) => {
-        $crate::capitalize($a)
-    };
-    ($a:expr, $($rest:tt)*) => {
-        $crate::capitalize($a)
     };
 }

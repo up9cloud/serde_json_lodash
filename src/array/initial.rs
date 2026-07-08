@@ -1,6 +1,9 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
-/// See lodash [initial](https://lodash.com/docs/#initial)
+/// Fn form of [initial!](crate::initial!); see it for the full docs
+///
+/// `_x` form: **not provided** — see [initial_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -32,7 +35,9 @@ pub fn initial(v: Value) -> Value {
     }
 }
 
-/// Based on [initial()]
+/// See lodash [initial](https://lodash.com/docs/#initial)
+///
+/// Fn form: [initial()] | `_x` form: **not provided** — see [initial_x()]
 ///
 /// Examples:
 ///
@@ -73,13 +78,20 @@ macro_rules! initial {
     };
 }
 
-/// `_x` helper for [initial()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [initial()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [initial!](crate::initial!) and read the returned
+/// `Value`.
+///
+/// Macro form: [initial_x!](crate::initial_x!)
 pub fn initial_x() {
     todo!()
 }
-/// Based on [initial_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [initial!](crate::initial!) and read the returned
+/// `Value`.
+///
+/// Fn form: [initial_x()]
 #[macro_export]
 macro_rules! initial_x {
     ($($t:tt)*) => {

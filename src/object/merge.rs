@@ -1,4 +1,4 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
 fn merge_2_array(object: Value, source: Value) -> Value {
     let mut new_v = vec![];
@@ -28,6 +28,7 @@ fn merge_2_array(object: Value, source: Value) -> Value {
     }
     json!(new_v)
 }
+
 fn merge_2_object(mut object: Value, source: Value) -> Value {
     for (source_k, source_v) in source.as_object().unwrap().iter() {
         match object.get(source_k) {
@@ -79,7 +80,11 @@ fn merge_2_object(mut object: Value, source: Value) -> Value {
     }
     object
 }
-/// See lodash [merge](https://lodash.com/docs/#merge)
+
+/// Fn form of [merge!](crate::merge!); see it for the full docs
+///
+/// `_x` form: **not provided** — see [merge_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -99,7 +104,10 @@ pub fn merge(object: Value, source: Value) -> Value {
     // array with object
     object
 }
-/// Based on [merge()]
+
+/// See lodash [merge](https://lodash.com/docs/#merge)
+///
+/// Fn form: [merge()] | `_x` form: **not provided** — see [merge_x()]
 ///
 /// Examples:
 ///
@@ -156,13 +164,18 @@ macro_rules! merge {
     };
 }
 
-/// `_x` helper for [merge()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [merge()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [merge!](crate::merge!) and read the returned `Value`.
+///
+/// Macro form: [merge_x!](crate::merge_x!)
 pub fn merge_x() {
     todo!()
 }
-/// Based on [merge_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [merge!](crate::merge!) and read the returned `Value`.
+///
+/// Fn form: [merge_x()]
 #[macro_export]
 macro_rules! merge_x {
     ($($t:tt)*) => {

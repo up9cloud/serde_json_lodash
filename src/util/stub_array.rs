@@ -1,6 +1,8 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
-/// See lodash [stubArray](https://lodash.com/docs/#stubArray)
+/// Fn form of [stub_array!](crate::stub_array!); see it for the full docs
+///
+/// `_x` form: **not provided** — see [stub_array_x()]
 ///
 /// Additional cases:
 ///
@@ -13,7 +15,9 @@ pub fn stub_array() -> Value {
     json!([])
 }
 
-/// Based on [stub_array()]
+/// See lodash [stubArray](https://lodash.com/docs/#stubArray)
+///
+/// Fn form: [stub_array()] | `_x` form: **not provided** — see [stub_array_x()]
 ///
 /// Examples:
 ///
@@ -29,13 +33,20 @@ macro_rules! stub_array {
     };
 }
 
-/// `_x` helper for [stub_array()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [stub_array()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [stub_array!](crate::stub_array!) and read the returned
+/// `Value`.
+///
+/// Macro form: [stub_array_x!](crate::stub_array_x!)
 pub fn stub_array_x() {
     todo!()
 }
-/// Based on [stub_array_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [stub_array!](crate::stub_array!) and read the returned
+/// `Value`.
+///
+/// Fn form: [stub_array_x()]
 #[macro_export]
 macro_rules! stub_array_x {
     ($($t:tt)*) => {

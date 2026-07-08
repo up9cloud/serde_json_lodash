@@ -1,18 +1,8 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
-/// `_x` helper for [is_undefined()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
+/// Fn form of [is_undefined!](crate::is_undefined!); see it for the full docs
 ///
-/// Additional cases:
-///
-/// ```rust
-/// # use serde_json_lodash::is_undefined_x;
-/// # use serde_json::json;
-/// assert_eq!(is_undefined_x(&json!(null)), true);
-/// ```
-pub fn is_undefined_x(v: &Value) -> bool {
-    v.is_null()
-}
-/// See lodash [isUndefined](https://lodash.com/docs/#isUndefined)
+/// `_x` forms: [is_undefined_x!](crate::is_undefined_x!), [is_undefined_x()]
 ///
 /// Additional cases:
 ///
@@ -25,27 +15,9 @@ pub fn is_undefined(v: &Value) -> Value {
     json!(is_undefined_x(v))
 }
 
-/// Based on [is_undefined_x()]
-/// Additional cases:
+/// See lodash [isUndefined](https://lodash.com/docs/#isUndefined)
 ///
-/// ```rust
-/// # #[macro_use] extern crate serde_json_lodash;
-/// # use serde_json::json;
-/// assert_eq!(is_undefined_x!(&json!(null)), true);
-/// ```
-#[macro_export]
-macro_rules! is_undefined_x {
-    () => {
-        true
-    };
-    ($a:expr $(,)*) => {
-        $crate::is_undefined_x($a)
-    };
-    ($a:expr, $($rest:tt)*) => {
-        $crate::is_undefined_x($a)
-    };
-}
-/// Based on [is_undefined()]
+/// Fn form: [is_undefined()] | `_x` forms: [is_undefined_x!](crate::is_undefined_x!), [is_undefined_x()]
 ///
 /// Examples:
 ///
@@ -66,5 +38,44 @@ macro_rules! is_undefined {
     };
     ($a:expr, $($rest:tt)*) => {
         $crate::is_undefined($a)
+    };
+}
+
+/// `_x` helper for [is_undefined!](crate::is_undefined!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Macro form: [is_undefined_x!](crate::is_undefined_x!) | `Value` forms: [is_undefined!](crate::is_undefined!), [is_undefined()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::is_undefined_x;
+/// # use serde_json::json;
+/// assert_eq!(is_undefined_x(&json!(null)), true);
+/// ```
+pub fn is_undefined_x(v: &Value) -> bool {
+    v.is_null()
+}
+
+/// `_x` helper for [is_undefined!](crate::is_undefined!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Fn form: [is_undefined_x()] | `Value` forms: [is_undefined!](crate::is_undefined!), [is_undefined()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(is_undefined_x!(&json!(null)), true);
+/// ```
+#[macro_export]
+macro_rules! is_undefined_x {
+    () => {
+        true
+    };
+    ($a:expr $(,)*) => {
+        $crate::is_undefined_x($a)
+    };
+    ($a:expr, $($rest:tt)*) => {
+        $crate::is_undefined_x($a)
     };
 }

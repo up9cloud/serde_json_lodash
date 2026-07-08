@@ -1,10 +1,11 @@
 use crate::lib::Value;
-use crate::internal::{value_to_option_number, value_nan};
 
-/// See lodash [toNumber](https://lodash.com/docs/#toNumber)
+use crate::internal::{value_nan, value_to_option_number};
+
+/// Fn form of [to_number!](crate::to_number!); see it for the full docs
 ///
-/// Unconvertible values return `Value::Null` (there is no `NaN` in
-/// serde_json)
+/// `_x` form: **not provided** — see [to_number_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -19,7 +20,12 @@ pub fn to_number(v: Value) -> Value {
     }
 }
 
-/// Based on [to_number()]
+/// See lodash [toNumber](https://lodash.com/docs/#toNumber)
+///
+/// Unconvertible values return `Value::Null` (there is no `NaN` in
+/// serde_json)
+///
+/// Fn form: [to_number()] | `_x` form: **not provided** — see [to_number_x()]
 ///
 /// Examples:
 ///
@@ -54,13 +60,20 @@ macro_rules! to_number {
     };
 }
 
-/// `_x` helper for [to_number()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [to_number()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [to_number!](crate::to_number!) and read the returned
+/// `Value`.
+///
+/// Macro form: [to_number_x!](crate::to_number_x!)
 pub fn to_number_x() {
     todo!()
 }
-/// Based on [to_number_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [to_number!](crate::to_number!) and read the returned
+/// `Value`.
+///
+/// Fn form: [to_number_x()]
 #[macro_export]
 macro_rules! to_number_x {
     ($($t:tt)*) => {

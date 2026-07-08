@@ -1,10 +1,13 @@
-use crate::lib::{json, Value, Map};
+use crate::lib::{Map, Value, json};
+
 use crate::to_string_x;
+
 use crate::collection::collect::collection_values;
 
-/// See lodash [countBy](https://lodash.com/docs/#countBy)
+/// Fn form of [count_by!](crate::count_by!); see it for the full docs
 ///
-/// `iteratee` maps each element to a grouping key (coerced to a string)
+/// `_x` form: **not provided** — see [count_by_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -22,7 +25,11 @@ pub fn count_by(collection: Value, iteratee: fn(&Value) -> Value) -> Value {
     Value::Object(out)
 }
 
-/// Based on [count_by()]
+/// See lodash [countBy](https://lodash.com/docs/#countBy)
+///
+/// `iteratee` maps each element to a grouping key (coerced to a string)
+///
+/// Fn form: [count_by()] | `_x` form: **not provided** — see [count_by_x()]
 ///
 /// Examples:
 ///
@@ -59,13 +66,20 @@ macro_rules! count_by {
     };
 }
 
-/// `_x` helper for [count_by()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [count_by()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [count_by!](crate::count_by!) and read the returned
+/// `Value`.
+///
+/// Macro form: [count_by_x!](crate::count_by_x!)
 pub fn count_by_x() {
     todo!()
 }
-/// Based on [count_by_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [count_by!](crate::count_by!) and read the returned
+/// `Value`.
+///
+/// Fn form: [count_by_x()]
 #[macro_export]
 macro_rules! count_by_x {
     ($($t:tt)*) => {

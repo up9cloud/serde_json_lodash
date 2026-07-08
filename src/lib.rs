@@ -102,7 +102,7 @@ mod macros;
 /// Re-exports of the [`serde_json`] types this crate operates on, so callers
 /// can name them without a direct `serde_json` dependency.
 pub mod lib {
-    pub use serde_json::{json, Value, Map, Number};
+    pub use serde_json::{Map, Number, Value, json};
 }
 
 #[cfg(feature = "alias")]
@@ -118,13 +118,13 @@ mod date;
 mod function;
 mod lang;
 mod math;
+mod methods;
 mod number;
 mod object;
+mod properties;
 mod seq;
 mod string;
 mod util;
-mod properties;
-mod methods;
 
 mod lib_snake;
 pub use lib_snake::*;

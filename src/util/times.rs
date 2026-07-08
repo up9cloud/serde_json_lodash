@@ -1,4 +1,5 @@
-use crate::lib::{Value};
+use crate::lib::Value;
+
 use crate::to_safe_integer_x;
 
 // internal worker for [times()].
@@ -10,7 +11,10 @@ fn x_times(n: usize, iteratee: fn(usize) -> Value) -> Value {
     Value::Array(vec)
 }
 
-/// See lodash [times](https://lodash.com/docs/#times)
+/// Fn form of [times!](crate::times!); see it for the full docs
+///
+/// `_x` form: **not provided** — see [times_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -23,7 +27,9 @@ pub fn times<A: Into<Value>>(n: A, iteratee: fn(usize) -> Value) -> Value {
     x_times(to_safe_integer_x(n) as usize, iteratee)
 }
 
-/// Based on [times()]
+/// See lodash [times](https://lodash.com/docs/#times)
+///
+/// Fn form: [times()] | `_x` form: **not provided** — see [times_x()]
 ///
 /// Examples:
 ///
@@ -71,13 +77,18 @@ macro_rules! times {
     };
 }
 
-/// `_x` helper for [times()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [times()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [times!](crate::times!) and read the returned `Value`.
+///
+/// Macro form: [times_x!](crate::times_x!)
 pub fn times_x() {
     todo!()
 }
-/// Based on [times_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [times!](crate::times!) and read the returned `Value`.
+///
+/// Fn form: [times_x()]
 #[macro_export]
 macro_rules! times_x {
     ($($t:tt)*) => {

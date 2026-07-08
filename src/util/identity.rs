@@ -1,6 +1,9 @@
 use crate::lib::Value;
 
-/// See lodash [identity](https://lodash.com/docs/#identity)
+/// Fn form of [identity!](crate::identity!); see it for the full docs
+///
+/// `_x` form: **not provided** — see [identity_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -12,7 +15,9 @@ pub fn identity(value: Value) -> Value {
     value
 }
 
-/// Based on [identity()]
+/// See lodash [identity](https://lodash.com/docs/#identity)
+///
+/// Fn form: [identity()] | `_x` form: **not provided** — see [identity_x()]
 ///
 /// Examples:
 ///
@@ -43,13 +48,20 @@ macro_rules! identity {
     };
 }
 
-/// `_x` helper for [identity()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [identity()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [identity!](crate::identity!) and read the returned
+/// `Value`.
+///
+/// Macro form: [identity_x!](crate::identity_x!)
 pub fn identity_x() {
     todo!()
 }
-/// Based on [identity_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [identity!](crate::identity!) and read the returned
+/// `Value`.
+///
+/// Fn form: [identity_x()]
 #[macro_export]
 macro_rules! identity_x {
     ($($t:tt)*) => {

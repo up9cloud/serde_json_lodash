@@ -1,9 +1,9 @@
 use crate::lib::Value;
 
-/// See lodash [defaultTo](https://lodash.com/docs/#defaultTo)
+/// Fn form of [default_to!](crate::default_to!); see it for the full docs
 ///
-/// Returns `value` unless it is `Value::Null` (js `null`/`undefined`/`NaN`),
-/// in which case `default_value` is returned
+/// `_x` form: **not provided** — see [default_to_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -19,7 +19,12 @@ pub fn default_to(value: Value, default_value: Value) -> Value {
     }
 }
 
-/// Based on [default_to()]
+/// See lodash [defaultTo](https://lodash.com/docs/#defaultTo)
+///
+/// Returns `value` unless it is `Value::Null` (js `null`/`undefined`/`NaN`),
+/// in which case `default_value` is returned
+///
+/// Fn form: [default_to()] | `_x` form: **not provided** — see [default_to_x()]
 ///
 /// Examples:
 ///
@@ -55,13 +60,20 @@ macro_rules! default_to {
     };
 }
 
-/// `_x` helper for [default_to()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [default_to()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [default_to!](crate::default_to!) and read the returned
+/// `Value`.
+///
+/// Macro form: [default_to_x!](crate::default_to_x!)
 pub fn default_to_x() {
     todo!()
 }
-/// Based on [default_to_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [default_to!](crate::default_to!) and read the returned
+/// `Value`.
+///
+/// Fn form: [default_to_x()]
 #[macro_export]
 macro_rules! default_to_x {
     ($($t:tt)*) => {

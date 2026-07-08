@@ -1,7 +1,11 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
+
 use crate::internal::uniq_by_key;
 
-/// See lodash [sortedUniq](https://lodash.com/docs/#sortedUniq)
+/// Fn form of [sorted_uniq!](crate::sorted_uniq!); see it for the full docs
+///
+/// `_x` form: **not provided** — see [sorted_uniq_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -16,7 +20,9 @@ pub fn sorted_uniq(array: Value) -> Value {
     }
 }
 
-/// Based on [sorted_uniq()]
+/// See lodash [sortedUniq](https://lodash.com/docs/#sortedUniq)
+///
+/// Fn form: [sorted_uniq()] | `_x` form: **not provided** — see [sorted_uniq_x()]
 ///
 /// Examples:
 ///
@@ -47,13 +53,20 @@ macro_rules! sorted_uniq {
     };
 }
 
-/// `_x` helper for [sorted_uniq()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [sorted_uniq()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [sorted_uniq!](crate::sorted_uniq!) and read the
+/// returned `Value`.
+///
+/// Macro form: [sorted_uniq_x!](crate::sorted_uniq_x!)
 pub fn sorted_uniq_x() {
     todo!()
 }
-/// Based on [sorted_uniq_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [sorted_uniq!](crate::sorted_uniq!) and read the
+/// returned `Value`.
+///
+/// Fn form: [sorted_uniq_x()]
 #[macro_export]
 macro_rules! sorted_uniq_x {
     ($($t:tt)*) => {

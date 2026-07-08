@@ -1,10 +1,13 @@
 use crate::lib::Value;
+
 use crate::collection::collect::collection_values;
+
 use crate::collection::shuffle::shuffle_vec;
 
-/// See lodash [sampleSize](https://lodash.com/docs/#sampleSize)
+/// Fn form of [sample_size!](crate::sample_size!); see it for the full docs
 ///
-/// Returns up to `n` random elements
+/// `_x` form: **not provided** — see [sample_size_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -18,7 +21,11 @@ pub fn sample_size(collection: Value, n: usize) -> Value {
     Value::Array(vec)
 }
 
-/// Based on [sample_size()]
+/// See lodash [sampleSize](https://lodash.com/docs/#sampleSize)
+///
+/// Returns up to `n` random elements
+///
+/// Fn form: [sample_size()] | `_x` form: **not provided** — see [sample_size_x()]
 ///
 /// Examples:
 ///
@@ -54,13 +61,20 @@ macro_rules! sample_size {
     };
 }
 
-/// `_x` helper for [sample_size()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [sample_size()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [sample_size!](crate::sample_size!) and read the
+/// returned `Value`.
+///
+/// Macro form: [sample_size_x!](crate::sample_size_x!)
 pub fn sample_size_x() {
     todo!()
 }
-/// Based on [sample_size_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [sample_size!](crate::sample_size!) and read the
+/// returned `Value`.
+///
+/// Fn form: [sample_size_x()]
 #[macro_export]
 macro_rules! sample_size_x {
     ($($t:tt)*) => {

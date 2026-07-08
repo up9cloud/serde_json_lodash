@@ -1,4 +1,5 @@
-use crate::lib::{Value, Number};
+use crate::lib::{Number, Value};
+
 use crate::internal::{f64_to_number, number_nan, value_nan, value_to_option_number};
 
 // internal `Number` worker for [floor()].
@@ -11,21 +12,10 @@ fn x_floor_x(n: Number, precision: isize) -> Number {
     f64_to_number((f * x).floor() / x).unwrap_or_else(number_nan)
 }
 
-/// `_x` helper for [floor()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [floor()] and read the returned `Value`.
-pub fn floor_x() {
-    todo!()
-}
-/// Based on [floor_x()]
-#[macro_export]
-macro_rules! floor_x {
-    ($($t:tt)*) => {
-        $crate::floor_x()
-    };
-}
-
-/// See lodash [floor](https://lodash.com/docs/#floor)
+/// Fn form of [floor!](crate::floor!); see it for the full docs
+///
+/// `_x` form: **not provided** — see [floor_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -40,7 +30,9 @@ pub fn floor<A: Into<Value>>(number: A, precision: isize) -> Value {
     }
 }
 
-/// Based on [floor()]
+/// See lodash [floor](https://lodash.com/docs/#floor)
+///
+/// Fn form: [floor()] | `_x` form: **not provided** — see [floor_x()]
 ///
 /// Examples:
 ///
@@ -84,5 +76,24 @@ macro_rules! floor {
     };
     ($a:expr, $b:expr, $($rest:tt)*) => {
         $crate::floor($a, $b)
+    };
+}
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [floor!](crate::floor!) and read the returned `Value`.
+///
+/// Macro form: [floor_x!](crate::floor_x!)
+pub fn floor_x() {
+    todo!()
+}
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [floor!](crate::floor!) and read the returned `Value`.
+///
+/// Fn form: [floor_x()]
+#[macro_export]
+macro_rules! floor_x {
+    ($($t:tt)*) => {
+        $crate::floor_x()
     };
 }

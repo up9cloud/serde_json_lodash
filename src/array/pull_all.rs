@@ -1,6 +1,9 @@
-use crate::lib::{Value};
+use crate::lib::Value;
 
-/// See lodash [pullAll](https://lodash.com/docs/#pullAll)
+/// Fn form of [pull_all!](crate::pull_all!); see it for the full docs
+///
+/// `_x` form: **not provided** — see [pull_all_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -38,14 +41,16 @@ pub fn pull_all(mut array: Value, values: Value) -> Value {
     array
 }
 
-/// Based on [pull_all()]
+// => ['b', 'b']
+/// See lodash [pullAll](https://lodash.com/docs/#pullAll)
+///
+/// Fn form: [pull_all()] | `_x` form: **not provided** — see [pull_all_x()]
 ///
 /// Examples:
 ///
 /// ```rust
 /// #[macro_use] extern crate serde_json_lodash;
 /// use serde_json::json;
-// => ['b', 'b']
 /// let mut array = json!(['a', 'b', 'c', 'a', 'b', 'c']);
 /// array = pull_all!(array, json!(['a', 'c']));
 /// assert_eq!(
@@ -87,13 +92,20 @@ macro_rules! pull_all {
     };
 }
 
-/// `_x` helper for [pull_all()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [pull_all()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [pull_all!](crate::pull_all!) and read the returned
+/// `Value`.
+///
+/// Macro form: [pull_all_x!](crate::pull_all_x!)
 pub fn pull_all_x() {
     todo!()
 }
-/// Based on [pull_all_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [pull_all!](crate::pull_all!) and read the returned
+/// `Value`.
+///
+/// Fn form: [pull_all_x()]
 #[macro_export]
 macro_rules! pull_all_x {
     ($($t:tt)*) => {

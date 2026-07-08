@@ -1,9 +1,11 @@
 use crate::lib::Value;
+
 use crate::collection::collect::collection_values;
 
-/// See lodash [reduceRight](https://lodash.com/docs/#reduceRight)
+/// Fn form of [reduce_right!](crate::reduce_right!); see it for the full docs
 ///
-/// Like [reduce()](fn@crate::reduce) but iterates from the end
+/// `_x` form: **not provided** — see [reduce_right_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -22,7 +24,11 @@ pub fn reduce_right(
         .fold(accumulator, iteratee)
 }
 
-/// Based on [reduce_right()]
+/// See lodash [reduceRight](https://lodash.com/docs/#reduceRight)
+///
+/// Like [reduce()](fn@crate::reduce) but iterates from the end
+///
+/// Fn form: [reduce_right()] | `_x` form: **not provided** — see [reduce_right_x()]
 ///
 /// Examples:
 ///
@@ -62,13 +68,20 @@ macro_rules! reduce_right {
     };
 }
 
-/// `_x` helper for [reduce_right()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [reduce_right()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [reduce_right!](crate::reduce_right!) and read the
+/// returned `Value`.
+///
+/// Macro form: [reduce_right_x!](crate::reduce_right_x!)
 pub fn reduce_right_x() {
     todo!()
 }
-/// Based on [reduce_right_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [reduce_right!](crate::reduce_right!) and read the
+/// returned `Value`.
+///
+/// Fn form: [reduce_right_x()]
 #[macro_export]
 macro_rules! reduce_right_x {
     ($($t:tt)*) => {

@@ -1,8 +1,9 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
-/// See lodash [dropWhile](https://lodash.com/docs/#dropWhile)
+/// Fn form of [drop_while!](crate::drop_while!); see it for the full docs
 ///
-/// Drops elements from the start while `predicate` returns `true`
+/// `_x` form: **not provided** — see [drop_while_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -17,7 +18,11 @@ pub fn drop_while(array: Value, predicate: fn(&Value) -> bool) -> Value {
     }
 }
 
-/// Based on [drop_while()]
+/// See lodash [dropWhile](https://lodash.com/docs/#dropWhile)
+///
+/// Drops elements from the start while `predicate` returns `true`
+///
+/// Fn form: [drop_while()] | `_x` form: **not provided** — see [drop_while_x()]
 ///
 /// Examples:
 ///
@@ -55,13 +60,20 @@ macro_rules! drop_while {
     };
 }
 
-/// `_x` helper for [drop_while()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [drop_while()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [drop_while!](crate::drop_while!) and read the returned
+/// `Value`.
+///
+/// Macro form: [drop_while_x!](crate::drop_while_x!)
 pub fn drop_while_x() {
     todo!()
 }
-/// Based on [drop_while_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [drop_while!](crate::drop_while!) and read the returned
+/// `Value`.
+///
+/// Fn form: [drop_while_x()]
 #[macro_export]
 macro_rules! drop_while_x {
     ($($t:tt)*) => {

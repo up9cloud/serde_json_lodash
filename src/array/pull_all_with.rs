@@ -1,6 +1,9 @@
-use crate::lib::{Value};
+use crate::lib::Value;
 
-/// See lodash [pullAllWith](https://lodash.com/docs/#pullAllWith)
+/// Fn form of [pull_all_with!](crate::pull_all_with!); see it for the full docs
+///
+/// `_x` form: **not provided** — see [pull_all_with_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -42,7 +45,9 @@ pub fn pull_all_with(
     array
 }
 
-/// Based on [pull_all_with()]
+/// See lodash [pullAllWith](https://lodash.com/docs/#pullAllWith)
+///
+/// Fn form: [pull_all_with()] | `_x` form: **not provided** — see [pull_all_with_x()]
 ///
 /// Examples:
 ///
@@ -93,13 +98,20 @@ macro_rules! pull_all_with {
     };
 }
 
-/// `_x` helper for [pull_all_with()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [pull_all_with()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [pull_all_with!](crate::pull_all_with!) and read the
+/// returned `Value`.
+///
+/// Macro form: [pull_all_with_x!](crate::pull_all_with_x!)
 pub fn pull_all_with_x() {
     todo!()
 }
-/// Based on [pull_all_with_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [pull_all_with!](crate::pull_all_with!) and read the
+/// returned `Value`.
+///
+/// Fn form: [pull_all_with_x()]
 #[macro_export]
 macro_rules! pull_all_with_x {
     ($($t:tt)*) => {

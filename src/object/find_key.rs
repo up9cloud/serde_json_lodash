@@ -1,8 +1,9 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
-/// See lodash [findKey](https://lodash.com/docs/#findKey)
+/// Fn form of [find_key!](crate::find_key!); see it for the full docs
 ///
-/// Returns the key of the first value matching `predicate`, else `Null`
+/// `_x` form: **not provided** — see [find_key_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -21,7 +22,11 @@ pub fn find_key(object: &Value, predicate: fn(&Value) -> bool) -> Value {
     Value::Null
 }
 
-/// Based on [find_key()]
+/// See lodash [findKey](https://lodash.com/docs/#findKey)
+///
+/// Returns the key of the first value matching `predicate`, else `Null`
+///
+/// Fn form: [find_key()] | `_x` form: **not provided** — see [find_key_x()]
 ///
 /// Examples:
 ///
@@ -63,13 +68,20 @@ macro_rules! find_key {
     };
 }
 
-/// `_x` helper for [find_key()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [find_key()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [find_key!](crate::find_key!) and read the returned
+/// `Value`.
+///
+/// Macro form: [find_key_x!](crate::find_key_x!)
 pub fn find_key_x() {
     todo!()
 }
-/// Based on [find_key_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [find_key!](crate::find_key!) and read the returned
+/// `Value`.
+///
+/// Fn form: [find_key_x()]
 #[macro_export]
 macro_rules! find_key_x {
     ($($t:tt)*) => {

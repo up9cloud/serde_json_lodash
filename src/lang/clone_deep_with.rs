@@ -15,10 +15,10 @@ fn deep(v: &Value, customizer: fn(&Value) -> Option<Value>) -> Value {
     }
 }
 
-/// See lodash [cloneDeepWith](https://lodash.com/docs/#cloneDeepWith)
+/// Fn form of [clone_deep_with!](crate::clone_deep_with!); see it for the full docs
 ///
-/// `customizer` is invoked recursively for every value; returning `None`
-/// falls back to the default deep clone behavior
+/// `_x` form: **not provided** — see [clone_deep_with_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -30,7 +30,12 @@ pub fn clone_deep_with(v: &Value, customizer: fn(&Value) -> Option<Value>) -> Va
     deep(v, customizer)
 }
 
-/// Based on [clone_deep_with()]
+/// See lodash [cloneDeepWith](https://lodash.com/docs/#cloneDeepWith)
+///
+/// `customizer` is invoked recursively for every value; returning `None`
+/// falls back to the default deep clone behavior
+///
+/// Fn form: [clone_deep_with()] | `_x` form: **not provided** — see [clone_deep_with_x()]
 ///
 /// Examples:
 ///
@@ -71,13 +76,20 @@ macro_rules! clone_deep_with {
     };
 }
 
-/// `_x` helper for [clone_deep_with()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [clone_deep_with()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [clone_deep_with!](crate::clone_deep_with!) and read
+/// the returned `Value`.
+///
+/// Macro form: [clone_deep_with_x!](crate::clone_deep_with_x!)
 pub fn clone_deep_with_x() {
     todo!()
 }
-/// Based on [clone_deep_with_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [clone_deep_with!](crate::clone_deep_with!) and read
+/// the returned `Value`.
+///
+/// Fn form: [clone_deep_with_x()]
 #[macro_export]
 macro_rules! clone_deep_with_x {
     ($($t:tt)*) => {

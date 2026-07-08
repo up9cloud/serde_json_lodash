@@ -1,8 +1,9 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
-/// See lodash [without](https://lodash.com/docs/#without)
+/// Fn form of [without!](crate::without!); see it for the full docs
 ///
-/// `values` is an array of elements to exclude
+/// `_x` form: **not provided** — see [without_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -23,7 +24,11 @@ pub fn without(array: Value, values: Value) -> Value {
     }
 }
 
-/// Based on [without()]
+/// See lodash [without](https://lodash.com/docs/#without)
+///
+/// `values` is an array of elements to exclude
+///
+/// Fn form: [without()] | `_x` form: **not provided** — see [without_x()]
 ///
 /// Examples:
 ///
@@ -61,13 +66,20 @@ macro_rules! without {
     };
 }
 
-/// `_x` helper for [without()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [without()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [without!](crate::without!) and read the returned
+/// `Value`.
+///
+/// Macro form: [without_x!](crate::without_x!)
 pub fn without_x() {
     todo!()
 }
-/// Based on [without_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [without!](crate::without!) and read the returned
+/// `Value`.
+///
+/// Fn form: [without_x()]
 #[macro_export]
 macro_rules! without_x {
     ($($t:tt)*) => {

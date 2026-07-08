@@ -4,10 +4,10 @@ fn count_eq(all: &[Value], v: &Value) -> usize {
     all.iter().filter(|x| *x == v).count()
 }
 
-/// See lodash [xor](https://lodash.com/docs/#xor)
+/// Fn form of [xor!](crate::xor!); see it for the full docs
 ///
-/// Returns the symmetric difference: values present in exactly one of the
-/// two arrays
+/// `_x` form: **not provided** — see [xor_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -38,7 +38,12 @@ pub fn xor(array: Value, other: Value) -> Value {
     Value::Array(out)
 }
 
-/// Based on [xor()]
+/// See lodash [xor](https://lodash.com/docs/#xor)
+///
+/// Returns the symmetric difference: values present in exactly one of the
+/// two arrays
+///
+/// Fn form: [xor()] | `_x` form: **not provided** — see [xor_x()]
 ///
 /// Examples:
 ///
@@ -74,13 +79,18 @@ macro_rules! xor {
     }};
 }
 
-/// `_x` helper for [xor()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [xor()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [xor!](crate::xor!) and read the returned `Value`.
+///
+/// Macro form: [xor_x!](crate::xor_x!)
 pub fn xor_x() {
     todo!()
 }
-/// Based on [xor_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [xor!](crate::xor!) and read the returned `Value`.
+///
+/// Fn form: [xor_x()]
 #[macro_export]
 macro_rules! xor_x {
     ($($t:tt)*) => {

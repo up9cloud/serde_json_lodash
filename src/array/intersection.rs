@@ -1,10 +1,82 @@
-use crate::lib::{Value};
+use crate::lib::Value;
 
 #[doc(hidden)]
 pub fn _empty_array() -> Vec<Value> {
     vec![]
 }
-/// `_x` helper for [intersection()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
+
+/// Fn form of [intersection!](crate::intersection!); see it for the full docs
+///
+/// `_x` forms: [intersection_x!](crate::intersection_x!), [intersection_x()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::intersection;
+/// # use serde_json::json;
+/// assert_eq!(intersection(json!([2, 1]), json!([2, 3])), json!([2]));
+/// ```
+pub fn intersection(v1: Value, v2: Value) -> Value {
+    Value::Array(intersection_x(v1, v2))
+}
+
+/// See lodash [intersection](https://lodash.com/docs/#intersection)
+///
+/// Fn form: [intersection()] | `_x` forms: [intersection_x!](crate::intersection_x!), [intersection_x()]
+///
+/// Examples:
+///
+/// ```rust
+/// #[macro_use] extern crate serde_json_lodash;
+/// use serde_json::json;
+/// assert_eq!(
+///   intersection!(json!([2, 1]), json!([2, 3])),
+///   json!([2])
+/// );
+/// ```
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(intersection!(), json!([]));
+/// assert_eq!(intersection!(json!(null)), json!([]));
+/// assert_eq!(intersection!(json!(false)), json!([]));
+/// assert_eq!(intersection!(json!(0)), json!([]));
+/// assert_eq!(intersection!(json!("")), json!([]));
+/// assert_eq!(intersection!(json!("ab")), json!([]));
+/// assert_eq!(intersection!(json!([])), json!([]));
+/// assert_eq!(intersection!(json!({})), json!([]));
+/// assert_eq!(intersection!(json!([null,false,0,"","ab",[],{}])), json!([null,false,0,"","ab",[],{}]));
+/// assert_eq!(intersection!(json!([null,false,0,"","ab",[],{}]), json!([])), json!([]));
+/// assert_eq!(intersection!(json!([null,false,0,"","ab",[],{}]), json!([null,false,0,"","ab",[],{}])), json!([null,false,0,"","ab"]));
+/// assert_eq!(intersection!(json!([null, false, 1]), json!([null,false,0]), json!([false, 2, null])), json!([null,false]));
+/// ```
+#[macro_export]
+macro_rules! intersection {
+    () => (
+        $crate::lib::json!([])
+    );
+    ($a:expr $(,)*) => {{
+        if $a.is_array() {
+            $a
+        } else {
+            $crate::lib::json!([])
+        }
+    }};
+    ($a:expr, $b:expr $(,)*) => {
+        $crate::intersection($a, $b)
+    };
+    ($a:expr, $b:expr, $($rest:tt)*) => {
+        $crate::intersection!($crate::intersection($a, $b), $($rest)*)
+    };
+}
+
+/// `_x` helper for [intersection!](crate::intersection!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Macro form: [intersection_x!](crate::intersection_x!) | `Value` forms: [intersection!](crate::intersection!), [intersection()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -54,19 +126,10 @@ pub fn intersection_x(v1: Value, v2: Value) -> Vec<Value> {
     }
     result
 }
-/// See lodash [intersection](https://lodash.com/docs/#intersection)
-/// Additional cases:
-///
-/// ```rust
-/// # use serde_json_lodash::intersection;
-/// # use serde_json::json;
-/// assert_eq!(intersection(json!([2, 1]), json!([2, 3])), json!([2]));
-/// ```
-pub fn intersection(v1: Value, v2: Value) -> Value {
-    Value::Array(intersection_x(v1, v2))
-}
 
-/// Based on [intersection_x()]
+/// `_x` helper for [intersection!](crate::intersection!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Fn form: [intersection_x()] | `Value` forms: [intersection!](crate::intersection!), [intersection()]
 ///
 /// Examples:
 ///
@@ -105,55 +168,5 @@ macro_rules! intersection_x {
     };
     ($a:expr, $b:expr, $($rest:tt)*) => {
         $crate::intersection_x!($crate::intersection($a, $b), $($rest)*)
-    };
-}
-/// Based on [intersection()]
-///
-/// Examples:
-///
-/// ```rust
-/// #[macro_use] extern crate serde_json_lodash;
-/// use serde_json::json;
-/// assert_eq!(
-///   intersection!(json!([2, 1]), json!([2, 3])),
-///   json!([2])
-/// );
-/// ```
-///
-/// Additional cases:
-///
-/// ```rust
-/// # #[macro_use] extern crate serde_json_lodash;
-/// # use serde_json::json;
-/// assert_eq!(intersection!(), json!([]));
-/// assert_eq!(intersection!(json!(null)), json!([]));
-/// assert_eq!(intersection!(json!(false)), json!([]));
-/// assert_eq!(intersection!(json!(0)), json!([]));
-/// assert_eq!(intersection!(json!("")), json!([]));
-/// assert_eq!(intersection!(json!("ab")), json!([]));
-/// assert_eq!(intersection!(json!([])), json!([]));
-/// assert_eq!(intersection!(json!({})), json!([]));
-/// assert_eq!(intersection!(json!([null,false,0,"","ab",[],{}])), json!([null,false,0,"","ab",[],{}]));
-/// assert_eq!(intersection!(json!([null,false,0,"","ab",[],{}]), json!([])), json!([]));
-/// assert_eq!(intersection!(json!([null,false,0,"","ab",[],{}]), json!([null,false,0,"","ab",[],{}])), json!([null,false,0,"","ab"]));
-/// assert_eq!(intersection!(json!([null, false, 1]), json!([null,false,0]), json!([false, 2, null])), json!([null,false]));
-/// ```
-#[macro_export]
-macro_rules! intersection {
-    () => (
-        $crate::lib::json!([])
-    );
-    ($a:expr $(,)*) => {{
-        if $a.is_array() {
-            $a
-        } else {
-            $crate::lib::json!([])
-        }
-    }};
-    ($a:expr, $b:expr $(,)*) => {
-        $crate::intersection($a, $b)
-    };
-    ($a:expr, $b:expr, $($rest:tt)*) => {
-        $crate::intersection!($crate::intersection($a, $b), $($rest)*)
     };
 }

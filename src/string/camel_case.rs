@@ -1,4 +1,5 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
+
 use crate::internal;
 
 // internal `&str`/primitive worker for [camel_case()] / [camel_case_x()]
@@ -14,20 +15,10 @@ fn x_camel_case_x(s: &str) -> String {
     out
 }
 
-/// `_x` helper for [camel_case()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
-/// Additional cases:
+/// Fn form of [camel_case!](crate::camel_case!); see it for the full docs
 ///
-/// ```rust
-/// # use serde_json_lodash::camel_case_x;
-/// # use serde_json::json;
-/// assert_eq!(camel_case_x(json!("Foo Bar")), "fooBar".to_owned());
-/// ```
-pub fn camel_case_x<A: Into<Value>>(v: A) -> String {
-    let v = v.into();
-    x_camel_case_x(&crate::to_string_x(v))
-}
-
-/// See lodash [camelCase](https://lodash.com/docs/#camelCase)
+/// `_x` forms: [camel_case_x!](crate::camel_case_x!), [camel_case_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -40,7 +31,9 @@ pub fn camel_case<A: Into<Value>>(v: A) -> Value {
     json!(camel_case_x(v))
 }
 
-/// Based on [camel_case()]
+/// See lodash [camelCase](https://lodash.com/docs/#camelCase)
+///
+/// Fn form: [camel_case()] | `_x` forms: [camel_case_x!](crate::camel_case_x!), [camel_case_x()]
 ///
 /// Examples:
 ///
@@ -84,8 +77,26 @@ macro_rules! camel_case {
     };
 }
 
-/// Based on [camel_case_x()]
-#[macro_export]
+/// `_x` helper for [camel_case!](crate::camel_case!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Macro form: [camel_case_x!](crate::camel_case_x!) | `Value` forms: [camel_case!](crate::camel_case!), [camel_case()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::camel_case_x;
+/// # use serde_json::json;
+/// assert_eq!(camel_case_x(json!("Foo Bar")), "fooBar".to_owned());
+/// ```
+pub fn camel_case_x<A: Into<Value>>(v: A) -> String {
+    let v = v.into();
+    x_camel_case_x(&crate::to_string_x(v))
+}
+
+/// `_x` helper for [camel_case!](crate::camel_case!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Fn form: [camel_case_x()] | `Value` forms: [camel_case!](crate::camel_case!), [camel_case()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -93,6 +104,7 @@ macro_rules! camel_case {
 /// # use serde_json::json;
 /// assert_eq!(camel_case_x!(json!("Foo Bar")), "fooBar".to_owned());
 /// ```
+#[macro_export]
 macro_rules! camel_case_x {
     () => {
         "".to_owned()

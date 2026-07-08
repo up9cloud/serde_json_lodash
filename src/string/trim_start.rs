@@ -1,4 +1,4 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
 // internal `&str`/primitive worker for [trim_start()] / [trim_start_x()]
 fn x_trim_start_x(s: &str, chars: &str) -> String {
@@ -8,7 +8,10 @@ fn x_trim_start_x(s: &str, chars: &str) -> String {
     s.trim_start_matches(|c| chars.contains(c)).into()
 }
 
-/// See lodash [trimStart](https://lodash.com/docs/#trimStart)
+/// Fn form of [trim_start!](crate::trim_start!); see it for the full docs
+///
+/// `_x` forms: [trim_start_x!](crate::trim_start_x!), [trim_start_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -21,7 +24,9 @@ pub fn trim_start<A: Into<Value>>(v: A, chars: &str) -> Value {
     json!(x_trim_start_x(&crate::to_string_x(v), chars))
 }
 
-/// Based on [trim_start()]
+/// See lodash [trimStart](https://lodash.com/docs/#trimStart)
+///
+/// Fn form: [trim_start()] | `_x` forms: [trim_start_x!](crate::trim_start_x!), [trim_start_x()]
 ///
 /// Examples:
 ///
@@ -62,7 +67,10 @@ macro_rules! trim_start {
     };
 }
 
-/// `_x` helper for [trim_start()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
+/// `_x` helper for [trim_start!](crate::trim_start!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Macro form: [trim_start_x!](crate::trim_start_x!) | `Value` forms: [trim_start!](crate::trim_start!), [trim_start()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -75,8 +83,10 @@ pub fn trim_start_x<A: Into<Value>>(v: A, chars: &str) -> String {
     x_trim_start_x(&crate::to_string_x(v), chars)
 }
 
-/// Based on [trim_start_x()]
-#[macro_export]
+/// `_x` helper for [trim_start!](crate::trim_start!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Fn form: [trim_start_x()] | `Value` forms: [trim_start!](crate::trim_start!), [trim_start()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -84,6 +94,7 @@ pub fn trim_start_x<A: Into<Value>>(v: A, chars: &str) -> String {
 /// # use serde_json::json;
 /// assert_eq!(trim_start_x!(json!("-_-abc-_-"), "_-"), "abc-_-".to_owned());
 /// ```
+#[macro_export]
 macro_rules! trim_start_x {
     () => {
         "".to_owned()

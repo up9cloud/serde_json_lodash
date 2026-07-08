@@ -1,8 +1,9 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
-/// See lodash [mapValues](https://lodash.com/docs/#mapValues)
+/// Fn form of [map_values!](crate::map_values!); see it for the full docs
 ///
-/// `iteratee` is invoked with each property value
+/// `_x` form: **not provided** — see [map_values_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -19,7 +20,11 @@ pub fn map_values(object: Value, iteratee: fn(&Value) -> Value) -> Value {
     }
 }
 
-/// Based on [map_values()]
+/// See lodash [mapValues](https://lodash.com/docs/#mapValues)
+///
+/// `iteratee` is invoked with each property value
+///
+/// Fn form: [map_values()] | `_x` form: **not provided** — see [map_values_x()]
 ///
 /// Examples:
 ///
@@ -60,13 +65,20 @@ macro_rules! map_values {
     };
 }
 
-/// `_x` helper for [map_values()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [map_values()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [map_values!](crate::map_values!) and read the returned
+/// `Value`.
+///
+/// Macro form: [map_values_x!](crate::map_values_x!)
 pub fn map_values_x() {
     todo!()
 }
-/// Based on [map_values_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [map_values!](crate::map_values!) and read the returned
+/// `Value`.
+///
+/// Fn form: [map_values_x()]
 #[macro_export]
 macro_rules! map_values_x {
     ($($t:tt)*) => {

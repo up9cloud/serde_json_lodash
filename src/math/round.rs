@@ -1,4 +1,5 @@
-use crate::lib::{Value, Number};
+use crate::lib::{Number, Value};
+
 use crate::internal::{f64_to_number, number_nan, value_nan, value_to_option_number};
 
 // internal `Number` worker for [round()].
@@ -11,21 +12,10 @@ fn x_round_x(n: Number, precision: isize) -> Number {
     f64_to_number((f * x).round() / x).unwrap_or_else(number_nan)
 }
 
-/// `_x` helper for [round()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [round()] and read the returned `Value`.
-pub fn round_x() {
-    todo!()
-}
-/// Based on [round_x()]
-#[macro_export]
-macro_rules! round_x {
-    ($($t:tt)*) => {
-        $crate::round_x()
-    };
-}
-
-/// See lodash [round](https://lodash.com/docs/#round)
+/// Fn form of [round!](crate::round!); see it for the full docs
+///
+/// `_x` form: **not provided** — see [round_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -40,7 +30,9 @@ pub fn round<A: Into<Value>>(number: A, precision: isize) -> Value {
     }
 }
 
-/// Based on [round()]
+/// See lodash [round](https://lodash.com/docs/#round)
+///
+/// Fn form: [round()] | `_x` form: **not provided** — see [round_x()]
 ///
 /// Examples:
 ///
@@ -84,5 +76,24 @@ macro_rules! round {
     };
     ($a:expr, $b:expr, $($rest:tt)*) => {
         $crate::round($a, $b)
+    };
+}
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [round!](crate::round!) and read the returned `Value`.
+///
+/// Macro form: [round_x!](crate::round_x!)
+pub fn round_x() {
+    todo!()
+}
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [round!](crate::round!) and read the returned `Value`.
+///
+/// Fn form: [round_x()]
+#[macro_export]
+macro_rules! round_x {
+    ($($t:tt)*) => {
+        $crate::round_x()
     };
 }

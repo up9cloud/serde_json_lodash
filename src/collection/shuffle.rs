@@ -1,5 +1,7 @@
 use crate::lib::Value;
+
 use crate::internal::rand_f64;
+
 use crate::collection::collect::collection_values;
 
 pub(crate) fn shuffle_vec(mut vec: Vec<Value>) -> Vec<Value> {
@@ -12,7 +14,10 @@ pub(crate) fn shuffle_vec(mut vec: Vec<Value>) -> Vec<Value> {
     vec
 }
 
-/// See lodash [shuffle](https://lodash.com/docs/#shuffle)
+/// Fn form of [shuffle!](crate::shuffle!); see it for the full docs
+///
+/// `_x` form: **not provided** — see [shuffle_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -24,7 +29,9 @@ pub fn shuffle(collection: Value) -> Value {
     Value::Array(shuffle_vec(collection_values(&collection)))
 }
 
-/// Based on [shuffle()]
+/// See lodash [shuffle](https://lodash.com/docs/#shuffle)
+///
+/// Fn form: [shuffle()] | `_x` form: **not provided** — see [shuffle_x()]
 ///
 /// Examples:
 ///
@@ -57,13 +64,20 @@ macro_rules! shuffle {
     };
 }
 
-/// `_x` helper for [shuffle()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [shuffle()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [shuffle!](crate::shuffle!) and read the returned
+/// `Value`.
+///
+/// Macro form: [shuffle_x!](crate::shuffle_x!)
 pub fn shuffle_x() {
     todo!()
 }
-/// Based on [shuffle_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [shuffle!](crate::shuffle!) and read the returned
+/// `Value`.
+///
+/// Fn form: [shuffle_x()]
 #[macro_export]
 macro_rules! shuffle_x {
     ($($t:tt)*) => {

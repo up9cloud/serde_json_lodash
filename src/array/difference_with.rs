@@ -1,8 +1,9 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
-/// See lodash [differenceWith](https://lodash.com/docs/#differenceWith)
+/// Fn form of [difference_with!](crate::difference_with!); see it for the full docs
 ///
-/// `comparator` is invoked to compare elements
+/// `_x` form: **not provided** — see [difference_with_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -30,7 +31,11 @@ pub fn difference_with(
     )
 }
 
-/// Based on [difference_with()]
+/// See lodash [differenceWith](https://lodash.com/docs/#differenceWith)
+///
+/// `comparator` is invoked to compare elements
+///
+/// Fn form: [difference_with()] | `_x` form: **not provided** — see [difference_with_x()]
 ///
 /// Examples:
 ///
@@ -70,13 +75,20 @@ macro_rules! difference_with {
     };
 }
 
-/// `_x` helper for [difference_with()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [difference_with()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [difference_with!](crate::difference_with!) and read
+/// the returned `Value`.
+///
+/// Macro form: [difference_with_x!](crate::difference_with_x!)
 pub fn difference_with_x() {
     todo!()
 }
-/// Based on [difference_with_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [difference_with!](crate::difference_with!) and read
+/// the returned `Value`.
+///
+/// Fn form: [difference_with_x()]
 #[macro_export]
 macro_rules! difference_with_x {
     ($($t:tt)*) => {

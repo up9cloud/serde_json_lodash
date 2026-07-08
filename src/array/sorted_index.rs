@@ -1,5 +1,7 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
+
 use crate::internal::compare_values;
+
 use std::cmp::Ordering;
 
 pub(crate) fn sorted_index_impl(
@@ -31,19 +33,9 @@ pub(crate) fn sorted_index_impl(
     lo
 }
 
-/// `_x` helper for [sorted_index()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
+/// Fn form of [sorted_index!](crate::sorted_index!); see it for the full docs
 ///
-/// Additional cases:
-///
-/// ```rust
-/// # use serde_json_lodash::sorted_index_x;
-/// # use serde_json::json;
-/// assert_eq!(sorted_index_x(json!([30, 50]), json!(40)), 1);
-/// ```
-pub fn sorted_index_x(array: Value, value: Value) -> usize {
-    sorted_index_impl(&array, &value, false, |v| v.clone())
-}
-/// See lodash [sortedIndex](https://lodash.com/docs/#sortedIndex)
+/// `_x` forms: [sorted_index_x!](crate::sorted_index_x!), [sorted_index_x()]
 ///
 /// Additional cases:
 ///
@@ -56,30 +48,9 @@ pub fn sorted_index(array: Value, value: Value) -> Value {
     json!(sorted_index_x(array, value))
 }
 
-/// Based on [sorted_index_x()]
-/// Additional cases:
+/// See lodash [sortedIndex](https://lodash.com/docs/#sortedIndex)
 ///
-/// ```rust
-/// # #[macro_use] extern crate serde_json_lodash;
-/// # use serde_json::json;
-/// assert_eq!(sorted_index_x!(json!([30, 50]), json!(40)), 1);
-/// ```
-#[macro_export]
-macro_rules! sorted_index_x {
-    () => {
-        0
-    };
-    ($a:expr $(,)*) => {
-        0
-    };
-    ($a:expr, $b:expr $(,)*) => {
-        $crate::sorted_index_x($a, $b)
-    };
-    ($a:expr, $b:expr, $($rest:tt)*) => {
-        $crate::sorted_index_x($a, $b)
-    };
-}
-/// Based on [sorted_index()]
+/// Fn form: [sorted_index()] | `_x` forms: [sorted_index_x!](crate::sorted_index_x!), [sorted_index_x()]
 ///
 /// Examples:
 ///
@@ -104,5 +75,47 @@ macro_rules! sorted_index {
     };
     ($a:expr, $b:expr, $($rest:tt)*) => {
         $crate::sorted_index($a, $b)
+    };
+}
+
+/// `_x` helper for [sorted_index!](crate::sorted_index!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Macro form: [sorted_index_x!](crate::sorted_index_x!) | `Value` forms: [sorted_index!](crate::sorted_index!), [sorted_index()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::sorted_index_x;
+/// # use serde_json::json;
+/// assert_eq!(sorted_index_x(json!([30, 50]), json!(40)), 1);
+/// ```
+pub fn sorted_index_x(array: Value, value: Value) -> usize {
+    sorted_index_impl(&array, &value, false, |v| v.clone())
+}
+
+/// `_x` helper for [sorted_index!](crate::sorted_index!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Fn form: [sorted_index_x()] | `Value` forms: [sorted_index!](crate::sorted_index!), [sorted_index()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(sorted_index_x!(json!([30, 50]), json!(40)), 1);
+/// ```
+#[macro_export]
+macro_rules! sorted_index_x {
+    () => {
+        0
+    };
+    ($a:expr $(,)*) => {
+        0
+    };
+    ($a:expr, $b:expr $(,)*) => {
+        $crate::sorted_index_x($a, $b)
+    };
+    ($a:expr, $b:expr, $($rest:tt)*) => {
+        $crate::sorted_index_x($a, $b)
     };
 }

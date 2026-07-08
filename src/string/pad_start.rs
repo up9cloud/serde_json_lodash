@@ -1,4 +1,5 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
+
 use super::pad::make_padding;
 
 // internal `&str`/primitive worker for [pad_start()] / [pad_start_x()]
@@ -12,7 +13,10 @@ fn x_pad_start_x(s: &str, length: usize, chars: &str) -> String {
     out
 }
 
-/// See lodash [padStart](https://lodash.com/docs/#padStart)
+/// Fn form of [pad_start!](crate::pad_start!); see it for the full docs
+///
+/// `_x` forms: [pad_start_x!](crate::pad_start_x!), [pad_start_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -25,7 +29,9 @@ pub fn pad_start<A: Into<Value>>(v: A, length: usize, chars: &str) -> Value {
     json!(x_pad_start_x(&crate::to_string_x(v), length, chars))
 }
 
-/// Based on [pad_start()]
+/// See lodash [padStart](https://lodash.com/docs/#padStart)
+///
+/// Fn form: [pad_start()] | `_x` forms: [pad_start_x!](crate::pad_start_x!), [pad_start_x()]
 ///
 /// Examples:
 ///
@@ -74,7 +80,10 @@ macro_rules! pad_start {
     };
 }
 
-/// `_x` helper for [pad_start()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
+/// `_x` helper for [pad_start!](crate::pad_start!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Macro form: [pad_start_x!](crate::pad_start_x!) | `Value` forms: [pad_start!](crate::pad_start!), [pad_start()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -87,8 +96,10 @@ pub fn pad_start_x<A: Into<Value>>(v: A, length: usize, chars: &str) -> String {
     x_pad_start_x(&crate::to_string_x(v), length, chars)
 }
 
-/// Based on [pad_start_x()]
-#[macro_export]
+/// `_x` helper for [pad_start!](crate::pad_start!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Fn form: [pad_start_x()] | `Value` forms: [pad_start!](crate::pad_start!), [pad_start()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -96,6 +107,7 @@ pub fn pad_start_x<A: Into<Value>>(v: A, length: usize, chars: &str) -> String {
 /// # use serde_json::json;
 /// assert_eq!(pad_start_x!(json!("abc"), 6, "_-"), "_-_abc".to_owned());
 /// ```
+#[macro_export]
 macro_rules! pad_start_x {
     () => {
         "".to_owned()

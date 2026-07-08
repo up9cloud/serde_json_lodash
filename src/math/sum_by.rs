@@ -1,9 +1,11 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
+
 use crate::math::sum::sum_values;
 
-/// See lodash [sumBy](https://lodash.com/docs/#sumBy)
+/// Fn form of [sum_by!](crate::sum_by!); see it for the full docs
 ///
-/// `iteratee` maps each element to the value to be summed
+/// `_x` form: **not provided** — see [sum_by_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -18,7 +20,11 @@ pub fn sum_by(array: Value, iteratee: fn(&Value) -> Value) -> Value {
     }
 }
 
-/// Based on [sum_by()]
+/// See lodash [sumBy](https://lodash.com/docs/#sumBy)
+///
+/// `iteratee` maps each element to the value to be summed
+///
+/// Fn form: [sum_by()] | `_x` form: **not provided** — see [sum_by_x()]
 ///
 /// Examples:
 ///
@@ -56,13 +62,20 @@ macro_rules! sum_by {
     };
 }
 
-/// `_x` helper for [sum_by()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [sum_by()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [sum_by!](crate::sum_by!) and read the returned
+/// `Value`.
+///
+/// Macro form: [sum_by_x!](crate::sum_by_x!)
 pub fn sum_by_x() {
     todo!()
 }
-/// Based on [sum_by_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [sum_by!](crate::sum_by!) and read the returned
+/// `Value`.
+///
+/// Fn form: [sum_by_x()]
 #[macro_export]
 macro_rules! sum_by_x {
     ($($t:tt)*) => {

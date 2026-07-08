@@ -1,8 +1,9 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
-/// See lodash [uniqWith](https://lodash.com/docs/#uniqWith)
+/// Fn form of [uniq_with!](crate::uniq_with!); see it for the full docs
 ///
-/// `comparator` is invoked to compare elements for uniqueness
+/// `_x` form: **not provided** — see [uniq_with_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -25,7 +26,11 @@ pub fn uniq_with(array: Value, comparator: fn(&Value, &Value) -> bool) -> Value 
     }
 }
 
-/// Based on [uniq_with()]
+/// See lodash [uniqWith](https://lodash.com/docs/#uniqWith)
+///
+/// `comparator` is invoked to compare elements for uniqueness
+///
+/// Fn form: [uniq_with()] | `_x` form: **not provided** — see [uniq_with_x()]
 ///
 /// Examples:
 ///
@@ -62,13 +67,20 @@ macro_rules! uniq_with {
     };
 }
 
-/// `_x` helper for [uniq_with()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [uniq_with()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [uniq_with!](crate::uniq_with!) and read the returned
+/// `Value`.
+///
+/// Macro form: [uniq_with_x!](crate::uniq_with_x!)
 pub fn uniq_with_x() {
     todo!()
 }
-/// Based on [uniq_with_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [uniq_with!](crate::uniq_with!) and read the returned
+/// `Value`.
+///
+/// Fn form: [uniq_with_x()]
 #[macro_export]
 macro_rules! uniq_with_x {
     ($($t:tt)*) => {

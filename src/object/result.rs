@@ -1,11 +1,11 @@
 use crate::lib::Value;
+
 use crate::get;
 
-/// See lodash [result](https://lodash.com/docs/#result)
+/// Fn form of [result!](crate::result!); see it for the full docs
 ///
-/// Like [get()], but returns `default` when the resolved value is `null`.
-/// Method resolution (invoking functions at the path) is not applicable to
-/// JSON
+/// `_x` form: **not provided** — see [result_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -20,7 +20,13 @@ pub fn result(object: Value, path: Value, default: Value) -> Value {
     }
 }
 
-/// Based on [result()]
+/// See lodash [result](https://lodash.com/docs/#result)
+///
+/// Like [get()], but returns `default` when the resolved value is `null`.
+/// Method resolution (invoking functions at the path) is not applicable to
+/// JSON
+///
+/// Fn form: [result()] | `_x` form: **not provided** — see [result_x()]
 ///
 /// Examples:
 ///
@@ -60,13 +66,20 @@ macro_rules! result {
     };
 }
 
-/// `_x` helper for [result()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [result()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [result!](crate::result!) and read the returned
+/// `Value`.
+///
+/// Macro form: [result_x!](crate::result_x!)
 pub fn result_x() {
     todo!()
 }
-/// Based on [result_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [result!](crate::result!) and read the returned
+/// `Value`.
+///
+/// Fn form: [result_x()]
 #[macro_export]
 macro_rules! result_x {
     ($($t:tt)*) => {

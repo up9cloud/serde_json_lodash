@@ -1,4 +1,5 @@
-use crate::lib::{Value, Number};
+use crate::lib::{Number, Value};
+
 use crate::internal::{number_nan, value_nan, value_to_option_number};
 
 // internal `Number` worker for [ceil()].
@@ -45,23 +46,9 @@ fn x_ceil_x(n: Number, precision: isize) -> Number {
     Number::from_f64(result).unwrap_or_else(number_nan)
 }
 
-/// `_x` helper for [ceil()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [ceil()] and read the returned `Value`.
-pub fn ceil_x() {
-    todo!()
-}
-/// Based on [ceil_x()]
-#[macro_export]
-macro_rules! ceil_x {
-    ($($t:tt)*) => {
-        $crate::ceil_x()
-    };
-}
-
-/// See lodash [ceil](https://lodash.com/docs/#ceil)
+/// Fn form of [ceil!](crate::ceil!); see it for the full docs
 ///
-/// Accepts anything convertible into a `Value` — an `f64`/`Number` primitive or a `json!` value.
+/// `_x` form: **not provided** — see [ceil_x()]
 ///
 /// Additional cases:
 ///
@@ -78,7 +65,11 @@ pub fn ceil<A: Into<Value>>(number: A, precision: isize) -> Value {
     }
 }
 
-/// Based on [ceil()]
+/// See lodash [ceil](https://lodash.com/docs/#ceil)
+///
+/// Accepts anything convertible into a `Value` — an `f64`/`Number` primitive or a `json!` value.
+///
+/// Fn form: [ceil()] | `_x` form: **not provided** — see [ceil_x()]
 ///
 /// Examples:
 ///
@@ -134,5 +125,24 @@ macro_rules! ceil {
     };
     ($a:expr, $b:expr, $($rest:tt)*) => {
         $crate::ceil($a, $b)
+    };
+}
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [ceil!](crate::ceil!) and read the returned `Value`.
+///
+/// Macro form: [ceil_x!](crate::ceil_x!)
+pub fn ceil_x() {
+    todo!()
+}
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [ceil!](crate::ceil!) and read the returned `Value`.
+///
+/// Fn form: [ceil_x()]
+#[macro_export]
+macro_rules! ceil_x {
+    ($($t:tt)*) => {
+        $crate::ceil_x()
     };
 }

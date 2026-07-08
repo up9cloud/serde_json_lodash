@@ -1,4 +1,4 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
 // internal `&str`/primitive worker for [trim_end()] / [trim_end_x()]
 fn x_trim_end_x(s: &str, chars: &str) -> String {
@@ -8,7 +8,10 @@ fn x_trim_end_x(s: &str, chars: &str) -> String {
     s.trim_end_matches(|c| chars.contains(c)).into()
 }
 
-/// See lodash [trimEnd](https://lodash.com/docs/#trimEnd)
+/// Fn form of [trim_end!](crate::trim_end!); see it for the full docs
+///
+/// `_x` forms: [trim_end_x!](crate::trim_end_x!), [trim_end_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -21,7 +24,9 @@ pub fn trim_end<A: Into<Value>>(v: A, chars: &str) -> Value {
     json!(x_trim_end_x(&crate::to_string_x(v), chars))
 }
 
-/// Based on [trim_end()]
+/// See lodash [trimEnd](https://lodash.com/docs/#trimEnd)
+///
+/// Fn form: [trim_end()] | `_x` forms: [trim_end_x!](crate::trim_end_x!), [trim_end_x()]
 ///
 /// Examples:
 ///
@@ -62,7 +67,10 @@ macro_rules! trim_end {
     };
 }
 
-/// `_x` helper for [trim_end()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
+/// `_x` helper for [trim_end!](crate::trim_end!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Macro form: [trim_end_x!](crate::trim_end_x!) | `Value` forms: [trim_end!](crate::trim_end!), [trim_end()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -75,8 +83,10 @@ pub fn trim_end_x<A: Into<Value>>(v: A, chars: &str) -> String {
     x_trim_end_x(&crate::to_string_x(v), chars)
 }
 
-/// Based on [trim_end_x()]
-#[macro_export]
+/// `_x` helper for [trim_end!](crate::trim_end!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Fn form: [trim_end_x()] | `Value` forms: [trim_end!](crate::trim_end!), [trim_end()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -84,6 +94,7 @@ pub fn trim_end_x<A: Into<Value>>(v: A, chars: &str) -> String {
 /// # use serde_json::json;
 /// assert_eq!(trim_end_x!(json!("-_-abc-_-"), "_-"), "-_-abc".to_owned());
 /// ```
+#[macro_export]
 macro_rules! trim_end_x {
     () => {
         "".to_owned()

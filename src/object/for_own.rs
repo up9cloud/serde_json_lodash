@@ -1,9 +1,9 @@
 use crate::lib::Value;
 
-/// See lodash [forOwn](https://lodash.com/docs/#forOwn)
+/// Fn form of [for_own!](crate::for_own!); see it for the full docs
 ///
-/// Iterates over own properties invoking `iteratee(value, key)`. Returning
-/// `false` from `iteratee` stops iteration early. Returns `object`
+/// `_x` form: **not provided** — see [for_own_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -22,7 +22,12 @@ pub fn for_own(object: Value, iteratee: fn(&Value, &str) -> bool) -> Value {
     object
 }
 
-/// Based on [for_own()]
+/// See lodash [forOwn](https://lodash.com/docs/#forOwn)
+///
+/// Iterates over own properties invoking `iteratee(value, key)`. Returning
+/// `false` from `iteratee` stops iteration early. Returns `object`
+///
+/// Fn form: [for_own()] | `_x` form: **not provided** — see [for_own_x()]
 ///
 /// Examples:
 ///
@@ -59,13 +64,20 @@ macro_rules! for_own {
     };
 }
 
-/// `_x` helper for [for_own()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [for_own()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [for_own!](crate::for_own!) and read the returned
+/// `Value`.
+///
+/// Macro form: [for_own_x!](crate::for_own_x!)
 pub fn for_own_x() {
     todo!()
 }
-/// Based on [for_own_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [for_own!](crate::for_own!) and read the returned
+/// `Value`.
+///
+/// Fn form: [for_own_x()]
 #[macro_export]
 macro_rules! for_own_x {
     ($($t:tt)*) => {

@@ -1,4 +1,4 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
 // internal `&str`/primitive worker for [escape_reg_exp()] / [escape_reg_exp_x()]
 fn x_escape_reg_exp_x(s: &str) -> String {
@@ -15,20 +15,10 @@ fn x_escape_reg_exp_x(s: &str) -> String {
     out
 }
 
-/// `_x` helper for [escape_reg_exp()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
-/// Additional cases:
+/// Fn form of [escape_reg_exp!](crate::escape_reg_exp!); see it for the full docs
 ///
-/// ```rust
-/// # use serde_json_lodash::escape_reg_exp_x;
-/// # use serde_json::json;
-/// assert_eq!(escape_reg_exp_x(json!("[lodash](https://lodash.com/)")), "\\[lodash\\]\\(https://lodash\\.com/\\)".to_owned());
-/// ```
-pub fn escape_reg_exp_x<A: Into<Value>>(v: A) -> String {
-    let v = v.into();
-    x_escape_reg_exp_x(&crate::to_string_x(v))
-}
-
-/// See lodash [escapeRegExp](https://lodash.com/docs/#escapeRegExp)
+/// `_x` forms: [escape_reg_exp_x!](crate::escape_reg_exp_x!), [escape_reg_exp_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -41,7 +31,9 @@ pub fn escape_reg_exp<A: Into<Value>>(v: A) -> Value {
     json!(escape_reg_exp_x(v))
 }
 
-/// Based on [escape_reg_exp()]
+/// See lodash [escapeRegExp](https://lodash.com/docs/#escapeRegExp)
+///
+/// Fn form: [escape_reg_exp()] | `_x` forms: [escape_reg_exp_x!](crate::escape_reg_exp_x!), [escape_reg_exp_x()]
 ///
 /// Examples:
 ///
@@ -76,8 +68,26 @@ macro_rules! escape_reg_exp {
     };
 }
 
-/// Based on [escape_reg_exp_x()]
-#[macro_export]
+/// `_x` helper for [escape_reg_exp!](crate::escape_reg_exp!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Macro form: [escape_reg_exp_x!](crate::escape_reg_exp_x!) | `Value` forms: [escape_reg_exp!](crate::escape_reg_exp!), [escape_reg_exp()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::escape_reg_exp_x;
+/// # use serde_json::json;
+/// assert_eq!(escape_reg_exp_x(json!("[lodash](https://lodash.com/)")), "\\[lodash\\]\\(https://lodash\\.com/\\)".to_owned());
+/// ```
+pub fn escape_reg_exp_x<A: Into<Value>>(v: A) -> String {
+    let v = v.into();
+    x_escape_reg_exp_x(&crate::to_string_x(v))
+}
+
+/// `_x` helper for [escape_reg_exp!](crate::escape_reg_exp!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Fn form: [escape_reg_exp_x()] | `Value` forms: [escape_reg_exp!](crate::escape_reg_exp!), [escape_reg_exp()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -85,6 +95,7 @@ macro_rules! escape_reg_exp {
 /// # use serde_json::json;
 /// assert_eq!(escape_reg_exp_x!(json!("[lodash](https://lodash.com/)")), "\\[lodash\\]\\(https://lodash\\.com/\\)".to_owned());
 /// ```
+#[macro_export]
 macro_rules! escape_reg_exp_x {
     () => {
         "".to_owned()

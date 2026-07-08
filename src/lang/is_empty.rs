@@ -1,23 +1,8 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
-/// `_x` helper for [is_empty()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
+/// Fn form of [is_empty!](crate::is_empty!); see it for the full docs
 ///
-/// Additional cases:
-///
-/// ```rust
-/// # use serde_json_lodash::is_empty_x;
-/// # use serde_json::json;
-/// assert_eq!(is_empty_x(&json!(null)), true);
-/// ```
-pub fn is_empty_x(v: &Value) -> bool {
-    match v {
-        Value::Null | Value::Bool(_) | Value::Number(_) => true,
-        Value::String(s) => s.is_empty(),
-        Value::Array(vec) => vec.is_empty(),
-        Value::Object(o) => o.is_empty(),
-    }
-}
-/// See lodash [isEmpty](https://lodash.com/docs/#isEmpty)
+/// `_x` forms: [is_empty_x!](crate::is_empty_x!), [is_empty_x()]
 ///
 /// Additional cases:
 ///
@@ -30,27 +15,9 @@ pub fn is_empty(v: &Value) -> Value {
     json!(is_empty_x(v))
 }
 
-/// Based on [is_empty_x()]
-/// Additional cases:
+/// See lodash [isEmpty](https://lodash.com/docs/#isEmpty)
 ///
-/// ```rust
-/// # #[macro_use] extern crate serde_json_lodash;
-/// # use serde_json::json;
-/// assert_eq!(is_empty_x!(&json!(null)), true);
-/// ```
-#[macro_export]
-macro_rules! is_empty_x {
-    () => {
-        true
-    };
-    ($a:expr $(,)*) => {
-        $crate::is_empty_x($a)
-    };
-    ($a:expr, $($rest:tt)*) => {
-        $crate::is_empty_x($a)
-    };
-}
-/// Based on [is_empty()]
+/// Fn form: [is_empty()] | `_x` forms: [is_empty_x!](crate::is_empty_x!), [is_empty_x()]
 ///
 /// Examples:
 ///
@@ -78,5 +45,49 @@ macro_rules! is_empty {
     };
     ($a:expr, $($rest:tt)*) => {
         $crate::is_empty($a)
+    };
+}
+
+/// `_x` helper for [is_empty!](crate::is_empty!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Macro form: [is_empty_x!](crate::is_empty_x!) | `Value` forms: [is_empty!](crate::is_empty!), [is_empty()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::is_empty_x;
+/// # use serde_json::json;
+/// assert_eq!(is_empty_x(&json!(null)), true);
+/// ```
+pub fn is_empty_x(v: &Value) -> bool {
+    match v {
+        Value::Null | Value::Bool(_) | Value::Number(_) => true,
+        Value::String(s) => s.is_empty(),
+        Value::Array(vec) => vec.is_empty(),
+        Value::Object(o) => o.is_empty(),
+    }
+}
+
+/// `_x` helper for [is_empty!](crate::is_empty!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Fn form: [is_empty_x()] | `Value` forms: [is_empty!](crate::is_empty!), [is_empty()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(is_empty_x!(&json!(null)), true);
+/// ```
+#[macro_export]
+macro_rules! is_empty_x {
+    () => {
+        true
+    };
+    ($a:expr $(,)*) => {
+        $crate::is_empty_x($a)
+    };
+    ($a:expr, $($rest:tt)*) => {
+        $crate::is_empty_x($a)
     };
 }

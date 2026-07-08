@@ -1,8 +1,9 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
-/// See lodash [slice](https://lodash.com/docs/#slice)
+/// Fn form of [slice!](crate::slice!); see it for the full docs
 ///
-/// `start` and `end` may be negative to count from the end
+/// `_x` form: **not provided** — see [slice_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -34,7 +35,11 @@ pub fn slice(array: Value, start: isize, end: isize) -> Value {
     }
 }
 
-/// Based on [slice()]
+/// See lodash [slice](https://lodash.com/docs/#slice)
+///
+/// `start` and `end` may be negative to count from the end
+///
+/// Fn form: [slice()] | `_x` form: **not provided** — see [slice_x()]
 ///
 /// Examples:
 ///
@@ -74,13 +79,18 @@ macro_rules! slice {
     };
 }
 
-/// `_x` helper for [slice()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [slice()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [slice!](crate::slice!) and read the returned `Value`.
+///
+/// Macro form: [slice_x!](crate::slice_x!)
 pub fn slice_x() {
     todo!()
 }
-/// Based on [slice_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [slice!](crate::slice!) and read the returned `Value`.
+///
+/// Fn form: [slice_x()]
 #[macro_export]
 macro_rules! slice_x {
     ($($t:tt)*) => {

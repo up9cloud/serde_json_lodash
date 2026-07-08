@@ -1,18 +1,8 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
-/// `_x` helper for [is_typed_array()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
+/// Fn form of [is_typed_array!](crate::is_typed_array!); see it for the full docs
 ///
-/// Additional cases:
-///
-/// ```rust
-/// # use serde_json_lodash::is_typed_array_x;
-/// # use serde_json::json;
-/// assert_eq!(is_typed_array_x(&json!({})), false);
-/// ```
-pub fn is_typed_array_x(_v: &Value) -> bool {
-    false
-}
-/// See lodash [isTypedArray](https://lodash.com/docs/#isTypedArray)
+/// `_x` forms: [is_typed_array_x!](crate::is_typed_array_x!), [is_typed_array_x()]
 ///
 /// Additional cases:
 ///
@@ -25,27 +15,9 @@ pub fn is_typed_array(_v: &Value) -> Value {
     json!(is_typed_array_x(_v))
 }
 
-/// Based on [is_typed_array_x()]
-/// Additional cases:
+/// See lodash [isTypedArray](https://lodash.com/docs/#isTypedArray)
 ///
-/// ```rust
-/// # #[macro_use] extern crate serde_json_lodash;
-/// # use serde_json::json;
-/// assert_eq!(is_typed_array_x!(&json!({})), false);
-/// ```
-#[macro_export]
-macro_rules! is_typed_array_x {
-    () => {
-        false
-    };
-    ($a:expr $(,)*) => {
-        $crate::is_typed_array_x($a)
-    };
-    ($a:expr, $($rest:tt)*) => {
-        $crate::is_typed_array_x($a)
-    };
-}
-/// Based on [is_typed_array()]
+/// Fn form: [is_typed_array()] | `_x` forms: [is_typed_array_x!](crate::is_typed_array_x!), [is_typed_array_x()]
 ///
 /// Examples:
 ///
@@ -67,5 +39,44 @@ macro_rules! is_typed_array {
     };
     ($a:expr, $($rest:tt)*) => {
         $crate::is_typed_array($a)
+    };
+}
+
+/// `_x` helper for [is_typed_array!](crate::is_typed_array!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Macro form: [is_typed_array_x!](crate::is_typed_array_x!) | `Value` forms: [is_typed_array!](crate::is_typed_array!), [is_typed_array()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::is_typed_array_x;
+/// # use serde_json::json;
+/// assert_eq!(is_typed_array_x(&json!({})), false);
+/// ```
+pub fn is_typed_array_x(_v: &Value) -> bool {
+    false
+}
+
+/// `_x` helper for [is_typed_array!](crate::is_typed_array!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Fn form: [is_typed_array_x()] | `Value` forms: [is_typed_array!](crate::is_typed_array!), [is_typed_array()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(is_typed_array_x!(&json!({})), false);
+/// ```
+#[macro_export]
+macro_rules! is_typed_array_x {
+    () => {
+        false
+    };
+    ($a:expr $(,)*) => {
+        $crate::is_typed_array_x($a)
+    };
+    ($a:expr, $($rest:tt)*) => {
+        $crate::is_typed_array_x($a)
     };
 }

@@ -1,6 +1,9 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
-/// See lodash [chunk](https://lodash.com/docs/#chunk)
+/// Fn form of [chunk!](crate::chunk!); see it for the full docs
+///
+/// `_x` form: **not provided** — see [chunk_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -39,7 +42,9 @@ pub fn chunk(v: Value, size: usize) -> Value {
     }
 }
 
-/// Based on [chunk()]
+/// See lodash [chunk](https://lodash.com/docs/#chunk)
+///
+/// Fn form: [chunk()] | `_x` form: **not provided** — see [chunk_x()]
 ///
 /// Examples:
 ///
@@ -87,13 +92,18 @@ macro_rules! chunk {
     };
 }
 
-/// `_x` helper for [chunk()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [chunk()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [chunk!](crate::chunk!) and read the returned `Value`.
+///
+/// Macro form: [chunk_x!](crate::chunk_x!)
 pub fn chunk_x() {
     todo!()
 }
-/// Based on [chunk_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [chunk!](crate::chunk!) and read the returned `Value`.
+///
+/// Fn form: [chunk_x()]
 #[macro_export]
 macro_rules! chunk_x {
     ($($t:tt)*) => {

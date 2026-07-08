@@ -1,9 +1,11 @@
 use crate::lib::Value;
+
 use crate::collection::collect::collection_values;
 
-/// See lodash [find](https://lodash.com/docs/#find)
+/// Fn form of [find!](crate::find!); see it for the full docs
 ///
-/// Returns the first matching element, or `Null` if none match
+/// `_x` form: **not provided** — see [find_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -18,7 +20,11 @@ pub fn find(collection: Value, predicate: fn(&Value) -> bool) -> Value {
         .unwrap_or(Value::Null)
 }
 
-/// Based on [find()]
+/// See lodash [find](https://lodash.com/docs/#find)
+///
+/// Returns the first matching element, or `Null` if none match
+///
+/// Fn form: [find()] | `_x` form: **not provided** — see [find_x()]
 ///
 /// Examples:
 ///
@@ -55,13 +61,18 @@ macro_rules! find {
     };
 }
 
-/// `_x` helper for [find()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [find()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [find!](crate::find!) and read the returned `Value`.
+///
+/// Macro form: [find_x!](crate::find_x!)
 pub fn find_x() {
     todo!()
 }
-/// Based on [find_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [find!](crate::find!) and read the returned `Value`.
+///
+/// Fn form: [find_x()]
 #[macro_export]
 macro_rules! find_x {
     ($($t:tt)*) => {

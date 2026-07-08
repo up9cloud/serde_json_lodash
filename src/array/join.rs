@@ -1,39 +1,9 @@
-use crate::lib::{Value};
+use crate::lib::Value;
 
-/// `_x` helper for [join()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
-/// Additional cases:
+/// Fn form of [join!](crate::join!); see it for the full docs
 ///
-/// ```rust
-/// # use serde_json_lodash::join_x;
-/// # use serde_json::json;
-/// assert_eq!(join_x(json!(['a', 'b', 'c']), "~"), "a~b~c".to_owned());
-/// ```
-pub fn join_x(v: Value, sep: &str) -> String {
-    match v {
-        Value::Null => "".into(),
-        Value::Bool(_) => "".into(),
-        Value::Number(_) => "".into(),
-        Value::String(s) => {
-            if s.is_empty() {
-                return "".into();
-            }
-            s.chars()
-                .map(|c| c.into())
-                .collect::<Vec<String>>()
-                .join(sep)
-        }
-        Value::Array(vec) => {
-            let mut result = vec![];
-            for item in vec.into_iter() {
-                result.push(crate::to_string_x(item));
-            }
-            result.join(sep)
-        }
-        Value::Object(_) => "".into(),
-    }
-}
-
-/// See lodash [join](https://lodash.com/docs/#join)
+/// `_x` forms: [join_x!](crate::join_x!), [join_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -45,42 +15,9 @@ pub fn join(v: Value, sep: &str) -> Value {
     Value::String(join_x(v, sep))
 }
 
-/// Based on [join_x()]
+/// See lodash [join](https://lodash.com/docs/#join)
 ///
-/// Examples:
-///
-/// ```rust
-/// #[macro_use] extern crate serde_json_lodash;
-/// use serde_json::json;
-/// assert_eq!(
-///   join_x!(json!(['a', 'b', 'c']), "~"),
-///   "a~b~c".to_owned()
-/// );
-/// ```
-///
-/// Additional cases:
-///
-/// ```rust
-/// # #[macro_use] extern crate serde_json_lodash;
-/// # use serde_json::json;
-/// assert_eq!(join!(), "".to_owned());
-/// ```
-#[macro_export]
-macro_rules! join_x {
-    () => {
-        "".to_owned()
-    };
-    ($a:expr $(,)*) => {
-        $crate::join_x($a, ",")
-    };
-    ($a:expr, $b:expr $(,)*) => {
-        $crate::join_x($a, $b)
-    };
-    ($a:expr, $b:expr, $($rest:tt)*) => {
-        $crate::join_x($a, $b)
-    };
-}
-/// Based on [join()]
+/// Fn form: [join()] | `_x` forms: [join_x!](crate::join_x!), [join_x()]
 ///
 /// Examples:
 ///
@@ -122,5 +59,79 @@ macro_rules! join {
     };
     ($a:expr, $b:expr, $($rest:tt)*) => {
         $crate::join($a, $b)
+    };
+}
+
+/// `_x` helper for [join!](crate::join!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Macro form: [join_x!](crate::join_x!) | `Value` forms: [join!](crate::join!), [join()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::join_x;
+/// # use serde_json::json;
+/// assert_eq!(join_x(json!(['a', 'b', 'c']), "~"), "a~b~c".to_owned());
+/// ```
+pub fn join_x(v: Value, sep: &str) -> String {
+    match v {
+        Value::Null => "".into(),
+        Value::Bool(_) => "".into(),
+        Value::Number(_) => "".into(),
+        Value::String(s) => {
+            if s.is_empty() {
+                return "".into();
+            }
+            s.chars()
+                .map(|c| c.into())
+                .collect::<Vec<String>>()
+                .join(sep)
+        }
+        Value::Array(vec) => {
+            let mut result = vec![];
+            for item in vec.into_iter() {
+                result.push(crate::to_string_x(item));
+            }
+            result.join(sep)
+        }
+        Value::Object(_) => "".into(),
+    }
+}
+
+/// `_x` helper for [join!](crate::join!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Fn form: [join_x()] | `Value` forms: [join!](crate::join!), [join()]
+///
+/// Examples:
+///
+/// ```rust
+/// #[macro_use] extern crate serde_json_lodash;
+/// use serde_json::json;
+/// assert_eq!(
+///   join_x!(json!(['a', 'b', 'c']), "~"),
+///   "a~b~c".to_owned()
+/// );
+/// ```
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(join!(), "".to_owned());
+/// ```
+#[macro_export]
+macro_rules! join_x {
+    () => {
+        "".to_owned()
+    };
+    ($a:expr $(,)*) => {
+        $crate::join_x($a, ",")
+    };
+    ($a:expr, $b:expr $(,)*) => {
+        $crate::join_x($a, $b)
+    };
+    ($a:expr, $b:expr, $($rest:tt)*) => {
+        $crate::join_x($a, $b)
     };
 }

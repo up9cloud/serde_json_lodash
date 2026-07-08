@@ -1,19 +1,10 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
+
 use crate::collection::collect::collection_values;
 
-/// `_x` helper for [some()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
+/// Fn form of [some!](crate::some!); see it for the full docs
 ///
-/// Additional cases:
-///
-/// ```rust
-/// # use serde_json_lodash::some_x;
-/// # use serde_json::json;
-/// assert_eq!(some_x(json!([1, 2, 3]), |n| n.as_i64().unwrap() > 2), true);
-/// ```
-pub fn some_x(collection: Value, predicate: fn(&Value) -> bool) -> bool {
-    collection_values(&collection).iter().any(predicate)
-}
-/// See lodash [some](https://lodash.com/docs/#some)
+/// `_x` forms: [some_x!](crate::some_x!), [some_x()]
 ///
 /// Additional cases:
 ///
@@ -26,30 +17,9 @@ pub fn some(collection: Value, predicate: fn(&Value) -> bool) -> Value {
     json!(some_x(collection, predicate))
 }
 
-/// Based on [some_x()]
-/// Additional cases:
+/// See lodash [some](https://lodash.com/docs/#some)
 ///
-/// ```rust
-/// # #[macro_use] extern crate serde_json_lodash;
-/// # use serde_json::json;
-/// assert_eq!(some_x!(json!([1, 2, 3]), |n| n.as_i64().unwrap() > 2), true);
-/// ```
-#[macro_export]
-macro_rules! some_x {
-    () => {
-        false
-    };
-    ($a:expr $(,)*) => {
-        false
-    };
-    ($a:expr, $b:expr $(,)*) => {
-        $crate::some_x($a, $b)
-    };
-    ($a:expr, $b:expr, $($rest:tt)*) => {
-        $crate::some_x($a, $b)
-    };
-}
-/// Based on [some()]
+/// Fn form: [some()] | `_x` forms: [some_x!](crate::some_x!), [some_x()]
 ///
 /// Examples:
 ///
@@ -74,5 +44,47 @@ macro_rules! some {
     };
     ($a:expr, $b:expr, $($rest:tt)*) => {
         $crate::some($a, $b)
+    };
+}
+
+/// `_x` helper for [some!](crate::some!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Macro form: [some_x!](crate::some_x!) | `Value` forms: [some!](crate::some!), [some()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # use serde_json_lodash::some_x;
+/// # use serde_json::json;
+/// assert_eq!(some_x(json!([1, 2, 3]), |n| n.as_i64().unwrap() > 2), true);
+/// ```
+pub fn some_x(collection: Value, predicate: fn(&Value) -> bool) -> bool {
+    collection_values(&collection).iter().any(predicate)
+}
+
+/// `_x` helper for [some!](crate::some!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Fn form: [some_x()] | `Value` forms: [some!](crate::some!), [some()]
+///
+/// Additional cases:
+///
+/// ```rust
+/// # #[macro_use] extern crate serde_json_lodash;
+/// # use serde_json::json;
+/// assert_eq!(some_x!(json!([1, 2, 3]), |n| n.as_i64().unwrap() > 2), true);
+/// ```
+#[macro_export]
+macro_rules! some_x {
+    () => {
+        false
+    };
+    ($a:expr $(,)*) => {
+        false
+    };
+    ($a:expr, $b:expr $(,)*) => {
+        $crate::some_x($a, $b)
+    };
+    ($a:expr, $b:expr, $($rest:tt)*) => {
+        $crate::some_x($a, $b)
     };
 }

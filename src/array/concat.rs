@@ -1,6 +1,9 @@
-use crate::lib::{Value};
+use crate::lib::Value;
 
-/// See lodash [concat](https://lodash.com/docs/#concat)
+/// Fn form of [concat!](crate::concat!); see it for the full docs
+///
+/// `_x` form: **not provided** — see [concat_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -32,7 +35,9 @@ pub fn concat(v: Value, v2: Value) -> Value {
     Value::Array(result)
 }
 
-/// Based on [concat()]
+/// See lodash [concat](https://lodash.com/docs/#concat)
+///
+/// Fn form: [concat()] | `_x` form: **not provided** — see [concat_x()]
 ///
 /// Examples:
 ///
@@ -80,13 +85,20 @@ macro_rules! concat {
     };
 }
 
-/// `_x` helper for [concat()]: not provided — the result is a composite
-/// or runtime-dynamic `Value` with no single primitive to downgrade to;
-/// use [concat()] and read the returned `Value`.
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [concat!](crate::concat!) and read the returned
+/// `Value`.
+///
+/// Macro form: [concat_x!](crate::concat_x!)
 pub fn concat_x() {
     todo!()
 }
-/// Based on [concat_x()]
+
+/// **Not provided.** The result is a composite or runtime-dynamic `Value` with no single
+/// primitive to downgrade to; use [concat!](crate::concat!) and read the returned
+/// `Value`.
+///
+/// Fn form: [concat_x()]
 #[macro_export]
 macro_rules! concat_x {
     ($($t:tt)*) => {

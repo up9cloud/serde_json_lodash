@@ -1,4 +1,4 @@
-use crate::lib::{json, Value};
+use crate::lib::{Value, json};
 
 // internal `&str`/primitive worker for [truncate()] / [truncate_x()]
 fn x_truncate_x(s: &str, options: &Value) -> String {
@@ -19,10 +19,10 @@ fn x_truncate_x(s: &str, options: &Value) -> String {
     result
 }
 
-/// See lodash [truncate](https://lodash.com/docs/#truncate)
+/// Fn form of [truncate!](crate::truncate!); see it for the full docs
 ///
-/// `options` is an object like `json!({"length": 24, "omission": "...",
-/// "separator": " "})`; regexp separators are not supported
+/// `_x` forms: [truncate_x!](crate::truncate_x!), [truncate_x()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -35,7 +35,12 @@ pub fn truncate<A: Into<Value>>(v: A, options: Value) -> Value {
     json!(x_truncate_x(&crate::to_string_x(v), &options))
 }
 
-/// Based on [truncate()]
+/// See lodash [truncate](https://lodash.com/docs/#truncate)
+///
+/// `options` is an object like `json!({"length": 24, "omission": "...",
+/// "separator": " "})`; regexp separators are not supported
+///
+/// Fn form: [truncate()] | `_x` forms: [truncate_x!](crate::truncate_x!), [truncate_x()]
 ///
 /// Examples:
 ///
@@ -81,7 +86,10 @@ macro_rules! truncate {
     };
 }
 
-/// `_x` helper for [truncate()]: returns a primitive value instead of a [`Value`](crate::lib::Value).
+/// `_x` helper for [truncate!](crate::truncate!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Macro form: [truncate_x!](crate::truncate_x!) | `Value` forms: [truncate!](crate::truncate!), [truncate()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -94,8 +102,10 @@ pub fn truncate_x<A: Into<Value>>(v: A, options: Value) -> String {
     x_truncate_x(&crate::to_string_x(v), &options)
 }
 
-/// Based on [truncate_x()]
-#[macro_export]
+/// `_x` helper for [truncate!](crate::truncate!): returns a primitive value instead of a [`Value`](crate::lib::Value).
+///
+/// Fn form: [truncate_x()] | `Value` forms: [truncate!](crate::truncate!), [truncate()]
+///
 /// Additional cases:
 ///
 /// ```rust
@@ -103,6 +113,7 @@ pub fn truncate_x<A: Into<Value>>(v: A, options: Value) -> String {
 /// # use serde_json::json;
 /// assert_eq!(truncate_x!(json!("hi-diddly-ho there, neighborino"), json!({"length": 24, "separator": " "})), "hi-diddly-ho there,...".to_owned());
 /// ```
+#[macro_export]
 macro_rules! truncate_x {
     () => {
         "".to_owned()
