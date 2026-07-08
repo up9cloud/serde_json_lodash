@@ -1,7 +1,5 @@
 use crate::lib::Value;
 
-use crate::collection::collect::collection_values;
-
 /// Fn form of [each_right!](crate::each_right!); see it for the full docs
 ///
 /// `_x` form: **not provided** — see [each_right_x()]
@@ -14,10 +12,30 @@ use crate::collection::collect::collection_values;
 /// assert_eq!(each_right(json!([1, 2, 3]), |_| true), json!([1, 2, 3]));
 /// ```
 pub fn each_right(collection: Value, iteratee: fn(&Value) -> bool) -> Value {
-    for v in collection_values(&collection).iter().rev() {
-        if !iteratee(v) {
-            break;
+    // borrow-iterate in reverse; see [each()] for why nothing is cloned
+    match &collection {
+        Value::Array(vec) => {
+            for v in vec.iter().rev() {
+                if !iteratee(v) {
+                    break;
+                }
+            }
         }
+        Value::Object(o) => {
+            for v in o.values().rev() {
+                if !iteratee(v) {
+                    break;
+                }
+            }
+        }
+        Value::String(s) => {
+            for c in s.chars().rev() {
+                if !iteratee(&Value::String(c.to_string())) {
+                    break;
+                }
+            }
+        }
+        _ => {}
     }
     collection
 }

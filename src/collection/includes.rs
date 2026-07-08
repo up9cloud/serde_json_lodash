@@ -1,7 +1,5 @@
 use crate::lib::{Value, json};
 
-use crate::collection::collect::collection_values;
-
 /// Fn form of [includes!](crate::includes!); see it for the full docs
 ///
 /// `_x` forms: [includes_x!](crate::includes_x!), [includes_x()]
@@ -65,7 +63,9 @@ pub fn includes_x(collection: &Value, value: &Value) -> bool {
             Value::String(sub) => s.contains(sub.as_str()),
             _ => false,
         },
-        _ => collection_values(collection).contains(value),
+        Value::Array(vec) => vec.contains(value),
+        Value::Object(o) => o.values().any(|v| v == value),
+        _ => false,
     }
 }
 

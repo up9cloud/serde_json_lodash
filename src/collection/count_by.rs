@@ -17,7 +17,7 @@ use crate::collection::collect::collection_values;
 /// ```
 pub fn count_by(collection: Value, iteratee: fn(&Value) -> Value) -> Value {
     let mut out: Map<String, Value> = Map::new();
-    for v in collection_values(&collection) {
+    for v in collection_values(collection) {
         let key = to_string_x(iteratee(&v));
         let entry = out.entry(key).or_insert(json!(0));
         *entry = json!(entry.as_i64().unwrap_or(0) + 1);

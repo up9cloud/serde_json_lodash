@@ -26,7 +26,7 @@ fn flatten_depth(v: Value, depth: isize, out: &mut Vec<Value>) {
 /// ```
 pub fn flat_map_depth(collection: Value, iteratee: fn(&Value) -> Value, depth: isize) -> Value {
     let mut out = vec![];
-    for v in collection_values(&collection) {
+    for v in collection_values(collection) {
         // the iteratee result is flattened `depth` levels, mirroring lodash
         flatten_depth(iteratee(&v), depth, &mut out);
     }

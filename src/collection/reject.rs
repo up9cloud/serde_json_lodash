@@ -15,7 +15,7 @@ use crate::collection::collect::collection_values;
 /// ```
 pub fn reject(collection: Value, predicate: fn(&Value) -> bool) -> Value {
     Value::Array(
-        collection_values(&collection)
+        collection_values(collection)
             .into_iter()
             .filter(|v| !predicate(v))
             .collect(),

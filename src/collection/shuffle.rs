@@ -26,7 +26,7 @@ pub(crate) fn shuffle_vec(mut vec: Vec<Value>) -> Vec<Value> {
 /// assert_eq!(shuffle(json!([])), json!([]));
 /// ```
 pub fn shuffle(collection: Value) -> Value {
-    Value::Array(shuffle_vec(collection_values(&collection)))
+    Value::Array(shuffle_vec(collection_values(collection)))
 }
 
 /// See lodash [shuffle](https://lodash.com/docs/#shuffle)

@@ -16,7 +16,7 @@ use crate::collection::collect::collection_values;
 /// assert_eq!(sample(json!([])), json!(null));
 /// ```
 pub fn sample(collection: Value) -> Value {
-    let vec = collection_values(&collection);
+    let vec = collection_values(collection);
     if vec.is_empty() {
         return Value::Null;
     }

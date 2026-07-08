@@ -18,12 +18,16 @@ use std::cmp::Ordering;
 /// assert_eq!(order_by(json!([1, 3, 2]), |v| v.clone(), false), json!([3, 2, 1]));
 /// ```
 pub fn order_by(collection: Value, iteratee: fn(&Value) -> Value, ascending: bool) -> Value {
-    let mut vec = collection_values(&collection);
-    vec.sort_by(|a, b| {
-        let ord = compare_values(&iteratee(a), &iteratee(b)).unwrap_or(Ordering::Equal);
+    // Schwartzian transform, like [sort_by()]
+    let mut keyed: Vec<(Value, Value)> = collection_values(collection)
+        .into_iter()
+        .map(|v| (iteratee(&v), v))
+        .collect();
+    keyed.sort_by(|(ka, _), (kb, _)| {
+        let ord = compare_values(ka, kb).unwrap_or(Ordering::Equal);
         if ascending { ord } else { ord.reverse() }
     });
-    Value::Array(vec)
+    Value::Array(keyed.into_iter().map(|(_, v)| v).collect())
 }
 
 /// See lodash [orderBy](https://lodash.com/docs/#orderBy)

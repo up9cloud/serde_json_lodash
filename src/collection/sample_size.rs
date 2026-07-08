@@ -16,7 +16,7 @@ use crate::collection::shuffle::shuffle_vec;
 /// assert_eq!(sample_size(json!([1, 2, 3]), 0), json!([]));
 /// ```
 pub fn sample_size(collection: Value, n: usize) -> Value {
-    let mut vec = shuffle_vec(collection_values(&collection));
+    let mut vec = shuffle_vec(collection_values(collection));
     vec.truncate(n);
     Value::Array(vec)
 }

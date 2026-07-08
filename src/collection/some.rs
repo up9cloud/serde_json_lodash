@@ -59,7 +59,7 @@ macro_rules! some {
 /// assert_eq!(some_x(json!([1, 2, 3]), |n| n.as_i64().unwrap() > 2), true);
 /// ```
 pub fn some_x(collection: Value, predicate: fn(&Value) -> bool) -> bool {
-    collection_values(&collection).iter().any(predicate)
+    collection_values(collection).iter().any(predicate)
 }
 
 /// `_x` helper for [some!](crate::some!): returns a primitive value instead of a [`Value`](crate::lib::Value).

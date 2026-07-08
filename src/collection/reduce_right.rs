@@ -18,7 +18,7 @@ pub fn reduce_right(
     iteratee: fn(Value, &Value) -> Value,
     accumulator: Value,
 ) -> Value {
-    collection_values(&collection)
+    collection_values(collection)
         .iter()
         .rev()
         .fold(accumulator, iteratee)

@@ -15,7 +15,7 @@ pub fn value_nan() -> Value {
 pub(crate) fn number_nan() -> Number {
     Number::from(0)
 }
-pub(crate) fn string_to_option_number(s: String) -> Option<Number> {
+pub(crate) fn string_to_option_number(s: &str) -> Option<Number> {
     if s.is_empty() {
         Some(0.into())
     } else if let Ok(n) = s.parse::<usize>() {
@@ -31,7 +31,7 @@ pub(crate) fn string_to_option_number(s: String) -> Option<Number> {
 pub(crate) fn vec_value_to_option_number(vec: Vec<Value>) -> Option<Number> {
     match vec.len() {
         0 => Some(value_null_to_number()),
-        1 => value_to_option_number(vec[0].clone()),
+        1 => value_to_option_number_ref(&vec[0]),
         _ => None,
     }
 }
@@ -93,8 +93,8 @@ pub(crate) fn compare_values(a: &Value, b: &Value) -> Option<std::cmp::Ordering>
     if let (Value::String(sa), Value::String(sb)) = (a, b) {
         return Some(sa.cmp(sb));
     }
-    let na = value_to_option_number(a.clone())?.as_f64()?;
-    let nb = value_to_option_number(b.clone())?.as_f64()?;
+    let na = value_to_option_number_ref(a)?.as_f64()?;
+    let nb = value_to_option_number_ref(b)?.as_f64()?;
     na.partial_cmp(&nb)
 }
 
@@ -225,11 +225,23 @@ pub(crate) fn upper_first_word(w: &str) -> String {
 }
 pub(crate) fn value_to_option_number(value: Value) -> Option<Number> {
     match value {
-        Value::Null => Some(value_null_to_number()),
-        Value::Bool(b) => Some(bool_to_number(b)),
         Value::Number(n) => Some(n),
+        other => value_to_option_number_ref(&other),
+    }
+}
+// Borrowing variant: coerces without cloning the value (a `Number` clone is
+// a plain enum copy), so per-comparison callers like compare_values stay cheap
+pub(crate) fn value_to_option_number_ref(value: &Value) -> Option<Number> {
+    match value {
+        Value::Null => Some(value_null_to_number()),
+        Value::Bool(b) => Some(bool_to_number(*b)),
+        Value::Number(n) => Some(n.clone()),
         Value::String(s) => string_to_option_number(s),
-        Value::Array(vec) => vec_value_to_option_number(vec),
+        Value::Array(vec) => match vec.len() {
+            0 => Some(value_null_to_number()),
+            1 => value_to_option_number_ref(&vec[0]),
+            _ => None,
+        },
         Value::Object(_) => None,
     }
 }

@@ -1,6 +1,7 @@
 use crate::lib::Value;
 
-use crate::{get, set};
+use crate::object::get::get_in;
+use crate::{set, to_path_x};
 
 /// Fn form of [update!](crate::update!); see it for the full docs
 ///
@@ -14,7 +15,12 @@ use crate::{get, set};
 /// assert_eq!(update(json!({}), json!("a.b"), |_| json!(1)), json!({"a": {"b": 1}}));
 /// ```
 pub fn update(object: Value, path: Value, updater: fn(Value) -> Value) -> Value {
-    let current = get(object.clone(), path.clone(), Value::Null);
+    let p_vec = to_path_x(path.clone());
+    let current = if p_vec.is_empty() {
+        Value::Null
+    } else {
+        get_in(&object, &p_vec).unwrap_or(Value::Null)
+    };
     set(object, path, updater(current))
 }
 

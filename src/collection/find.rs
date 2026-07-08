@@ -14,7 +14,7 @@ use crate::collection::collect::collection_values;
 /// assert_eq!(find(json!([1, 2, 3]), |n| n.as_i64().unwrap() > 1), json!(2));
 /// ```
 pub fn find(collection: Value, predicate: fn(&Value) -> bool) -> Value {
-    collection_values(&collection)
+    collection_values(collection)
         .into_iter()
         .find(predicate)
         .unwrap_or(Value::Null)

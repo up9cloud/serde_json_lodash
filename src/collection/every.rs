@@ -59,7 +59,7 @@ macro_rules! every {
 /// assert_eq!(every_x(json!([1, 2, 3]), |n| n.as_i64().unwrap() > 0), true);
 /// ```
 pub fn every_x(collection: Value, predicate: fn(&Value) -> bool) -> bool {
-    collection_values(&collection).iter().all(predicate)
+    collection_values(collection).iter().all(predicate)
 }
 
 /// `_x` helper for [every!](crate::every!): returns a primitive value instead of a [`Value`](crate::lib::Value).

@@ -1,6 +1,7 @@
 use crate::lib::{Value, json};
 
-use crate::get;
+use crate::object::get::get_in;
+use crate::to_path_x;
 
 /// Fn form of [at!](crate::at!); see it for the full docs
 ///
@@ -17,7 +18,14 @@ pub fn at(object: Value, paths: Value) -> Value {
     match paths {
         Value::Array(keys) => Value::Array(
             keys.into_iter()
-                .map(|p| get(object.clone(), p, Value::Null))
+                .map(|p| {
+                    let p_vec = to_path_x(p);
+                    if p_vec.is_empty() {
+                        Value::Null
+                    } else {
+                        get_in(&object, &p_vec).unwrap_or(Value::Null)
+                    }
+                })
                 .collect(),
         ),
         _ => json!([]),

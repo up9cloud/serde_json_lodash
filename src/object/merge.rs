@@ -1,84 +1,50 @@
-use crate::lib::{Value, json};
+use crate::lib::{Map, Value};
 
-fn merge_2_array(object: Value, source: Value) -> Value {
-    let mut new_v = vec![];
-    let object_vec = object.as_array().unwrap();
-    let object_vec_len = object_vec.len();
-    if object_vec_len == 0 {
-        return source;
+// Both helpers consume their inputs so the recursion never clones: object
+// subtrees are taken out with mem::take and source values are moved in.
+fn merge_2_array(object_vec: Vec<Value>, source_vec: Vec<Value>) -> Value {
+    if object_vec.is_empty() {
+        return Value::Array(source_vec);
     }
-    let source_vec = source.as_array().unwrap();
     if source_vec.is_empty() {
-        return object;
+        return Value::Array(object_vec);
     }
-    for (i, v) in source_vec.iter().enumerate() {
-        if i > object_vec_len - 1 {
-            new_v.push(v.clone());
-            continue;
-        }
-        if v.is_object() && object_vec[i].is_object() {
-            new_v.push(merge_2_object(object_vec[i].clone(), v.clone()));
-            continue;
-        }
-        if v.is_array() && object_vec[i].is_array() {
-            new_v.push(merge_2_array(object_vec[i].clone(), v.clone()));
-            continue;
-        }
-        new_v.push(v.clone())
+    let mut object_it = object_vec.into_iter();
+    let mut new_v = vec![];
+    for v in source_vec {
+        new_v.push(match (object_it.next(), v) {
+            (Some(Value::Object(om)), Value::Object(sm)) => merge_2_object(om, sm),
+            (Some(Value::Array(oa)), Value::Array(sa)) => merge_2_array(oa, sa),
+            (_, v) => v,
+        });
     }
-    json!(new_v)
+    Value::Array(new_v)
 }
 
-fn merge_2_object(mut object: Value, source: Value) -> Value {
-    for (source_k, source_v) in source.as_object().unwrap().iter() {
-        match object.get(source_k) {
-            Some(object_v) => match object_v {
-                Value::Null => {
-                    if !source_v.is_null() {
-                        *object.get_mut(source_k).unwrap() = source_v.clone();
+fn merge_2_object(mut object: Map<String, Value>, source: Map<String, Value>) -> Value {
+    for (k, sv) in source {
+        match object.get_mut(&k) {
+            Some(ov) => {
+                let owned = std::mem::take(ov);
+                *ov = match (owned, sv) {
+                    (Value::Null, sv) => {
+                        if sv.is_null() {
+                            Value::Null
+                        } else {
+                            sv
+                        }
                     }
-                }
-                Value::Bool(_) => {
-                    *object.get_mut(source_k).unwrap() = source_v.clone();
-                }
-                Value::String(_) => {
-                    *object.get_mut(source_k).unwrap() = source_v.clone();
-                }
-                Value::Number(_) => {
-                    *object.get_mut(source_k).unwrap() = source_v.clone();
-                }
-                Value::Array(_) => {
-                    if source_v.is_array() {
-                        let new_v = merge_2_array(object_v.clone(), source_v.clone());
-                        object
-                            .as_object_mut()
-                            .unwrap()
-                            .insert(source_k.clone(), new_v);
-                    } else {
-                        *object.get_mut(source_k).unwrap() = source_v.clone();
-                    }
-                }
-                Value::Object(_) => {
-                    if source_v.is_object() {
-                        let new_v = merge_2_object(object_v.clone(), source_v.clone());
-                        object
-                            .as_object_mut()
-                            .unwrap()
-                            .insert(source_k.clone(), new_v);
-                    } else {
-                        *object.get_mut(source_k).unwrap() = source_v.clone();
-                    }
-                }
-            },
+                    (Value::Array(oa), Value::Array(sa)) => merge_2_array(oa, sa),
+                    (Value::Object(om), Value::Object(sm)) => merge_2_object(om, sm),
+                    (_, sv) => sv,
+                };
+            }
             None => {
-                object
-                    .as_object_mut()
-                    .unwrap()
-                    .insert(source_k.clone(), source_v.clone());
+                object.insert(k, sv);
             }
         }
     }
-    object
+    Value::Object(object)
 }
 
 /// Fn form of [merge!](crate::merge!); see it for the full docs
@@ -93,16 +59,14 @@ fn merge_2_object(mut object: Value, source: Value) -> Value {
 /// assert_eq!(merge(json!({"a": 1}), json!({"b": 2})), json!({"a": 1, "b": 2}));
 /// ```
 pub fn merge(object: Value, source: Value) -> Value {
-    if object.is_object() && source.is_object() {
-        return merge_2_object(object, source);
+    match (object, source) {
+        (Value::Object(o), Value::Object(s)) => merge_2_object(o, s),
+        (Value::Array(o), Value::Array(s)) => merge_2_array(o, s),
+        // TODO:
+        // object with array
+        // array with object
+        (object, _) => object,
     }
-    if object.is_array() && source.is_array() {
-        return merge_2_array(object, source);
-    }
-    // TODO:
-    // object with array
-    // array with object
-    object
 }
 
 /// See lodash [merge](https://lodash.com/docs/#merge)
@@ -135,6 +99,7 @@ pub fn merge(object: Value, source: Value) -> Value {
 /// # #[macro_use] extern crate serde_json_lodash;
 /// # use serde_json::json;
 /// assert_eq!(merge!(), json!({}));
+/// assert_eq!(merge!(json!({'a':1})), json!({'a':1}));
 /// # assert_eq!(
 /// #   merge!(json!({'a':1}), json!({'b':2}), ),
 /// #   json!({'a':1, 'b':2})
@@ -154,7 +119,7 @@ macro_rules! merge {
         $crate::lib::json!({})
     );
     ($a:expr $(,)*) => {
-        $crate::merge($a, $crate::lib::json!)
+        $crate::merge($a, $crate::lib::json!({}))
     };
     ($a:expr, $b:expr $(,)*) => {
         $crate::merge($a, $b)

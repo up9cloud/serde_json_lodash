@@ -26,7 +26,7 @@ fn flatten_all(v: Value, out: &mut Vec<Value>) {
 /// ```
 pub fn flat_map_deep(collection: Value, iteratee: fn(&Value) -> Value) -> Value {
     let mut out = vec![];
-    for v in collection_values(&collection) {
+    for v in collection_values(collection) {
         flatten_all(iteratee(&v), &mut out);
     }
     Value::Array(out)

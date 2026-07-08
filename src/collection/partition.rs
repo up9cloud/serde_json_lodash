@@ -14,7 +14,7 @@ use crate::collection::collect::collection_values;
 /// assert_eq!(partition(json!([1, 2, 3, 4]), |n| n.as_i64().unwrap() % 2 == 1), json!([[1, 3], [2, 4]]));
 /// ```
 pub fn partition(collection: Value, predicate: fn(&Value) -> bool) -> Value {
-    let (yes, no): (Vec<Value>, Vec<Value>) = collection_values(&collection)
+    let (yes, no): (Vec<Value>, Vec<Value>) = collection_values(collection)
         .into_iter()
         .partition(predicate);
     json!([yes, no])

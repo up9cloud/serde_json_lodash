@@ -14,12 +14,7 @@ use crate::collection::collect::collection_values;
 /// assert_eq!(map(json!([1, 2]), |n| json!(n.as_i64().unwrap() * 2)), json!([2, 4]));
 /// ```
 pub fn map(collection: Value, iteratee: fn(&Value) -> Value) -> Value {
-    Value::Array(
-        collection_values(&collection)
-            .iter()
-            .map(iteratee)
-            .collect(),
-    )
+    Value::Array(collection_values(collection).iter().map(iteratee).collect())
 }
 
 /// See lodash [map](https://lodash.com/docs/#map)

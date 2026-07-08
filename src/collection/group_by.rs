@@ -17,7 +17,7 @@ use crate::collection::collect::collection_values;
 /// ```
 pub fn group_by(collection: Value, iteratee: fn(&Value) -> Value) -> Value {
     let mut out: Map<String, Value> = Map::new();
-    for v in collection_values(&collection) {
+    for v in collection_values(collection) {
         let key = to_string_x(iteratee(&v));
         out.entry(key)
             .or_insert_with(|| json!([]))

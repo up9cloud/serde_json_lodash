@@ -18,31 +18,31 @@ pub fn get(object: Value, path: Value, default: Value) -> Value {
     if p_vec.is_empty() {
         return default;
     }
-    let mut cur: Value = object;
-    for k in p_vec.iter() {
-        cur = match cur {
-            Value::String(s) => match k.parse::<usize>() {
-                Ok(n) => match s.chars().nth(n) {
-                    Some(s) => json!(s),
-                    None => return default,
-                },
-                Err(_) => return default,
-            },
-            Value::Array(_) => match k.parse::<usize>() {
-                Ok(n) => match cur.get(n) {
-                    Some(v) => v.clone(),
-                    None => return default,
-                },
-                Err(_) => return default,
-            },
-            Value::Object(_) => match cur.get(k) {
-                Some(v) => v.clone(),
-                None => return default,
-            },
-            _ => return default,
+    get_in(&object, &p_vec).unwrap_or(default)
+}
+
+// Descends by reference and clones only the final value, so intermediate
+// subtrees are never copied. Shared with [at()] / [update()], which resolve
+// paths against a borrowed object.
+pub(crate) fn get_in(object: &Value, path: &[String]) -> Option<Value> {
+    let (k, rest) = match path.split_first() {
+        Some(x) => x,
+        None => return Some(object.clone()),
+    };
+    match object {
+        Value::String(s) => {
+            let c = s.chars().nth(k.parse::<usize>().ok()?)?;
+            let v = json!(c);
+            if rest.is_empty() {
+                Some(v)
+            } else {
+                get_in(&v, rest)
+            }
         }
+        Value::Array(vec) => get_in(vec.get(k.parse::<usize>().ok()?)?, rest),
+        Value::Object(map) => get_in(map.get(k)?, rest),
+        _ => None,
     }
-    cur
 }
 
 /// See lodash [get](https://lodash.com/docs/#get)
